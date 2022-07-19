@@ -13,4 +13,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "JJBACSA"
-include ':app'
+include (":app")
