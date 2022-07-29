@@ -12,7 +12,7 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "JJBAKSA-AOS"
-include ':app'
-include ':data'
-include ':domain'
+rootProject.name = "JJBAKSA"
+include(":app")
+include(":data")
+include(":domain")
