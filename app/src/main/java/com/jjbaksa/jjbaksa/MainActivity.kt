@@ -1,4 +1,4 @@
-package com.hous.jjbaksa_aos
+package com.jjbaksa.jjbaksa
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

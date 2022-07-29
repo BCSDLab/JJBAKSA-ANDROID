@@ -1,4 +1,4 @@
-package com.hous.data
+package com.jjbaksa.jjbaksa
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

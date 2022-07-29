@@ -7,7 +7,7 @@ android {
     compileSdk 32
 
     defaultConfig {
-        applicationId "com.hous.jjbaksa_aos"
+        applicationId "com.jjbaksa.jjbaksa"
         minSdk 24
         targetSdk 32
         versionCode 1
