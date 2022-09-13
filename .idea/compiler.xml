@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel target="1.8">
+      <module name="JJBAKSA-ANDROID.buildSrc" target="11" />
+      <module name="JJBAKSA-ANDROID.buildSrc.main" target="11" />
+      <module name="JJBAKSA-ANDROID.buildSrc.test" target="11" />
+      <module name="JJBAKSA-AOS.app" target="11" />
+      <module name="JJBAKSA-AOS.data" target="11" />
+      <module name="JJBAKSA.app" target="11" />
+      <module name="JJBAKSA.data" target="11" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
