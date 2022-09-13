@@ -25,7 +25,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
             textViewSignUp.setOnClickListener {
                 goToSignUpActivity()
             }
-
         }
     }
     fun goToSocialLoginActivity() {
