@@ -1,13 +1,11 @@
 package com.jjbaksa.jjbaksa.base
 
 import android.os.Bundle
-import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 
 abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
-    @get:LayoutRes
     abstract val layoutId: Int
     private lateinit var _binding: T
     val binding: T
