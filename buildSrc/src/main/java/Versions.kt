@@ -14,7 +14,7 @@ object Versions {
     const val timberVersion = "5.0.1"
     const val recyclerviewVersion = "1.2.1"
     const val coroutineVersion = "1.6.3"
-    const val hiltVersion = "2.38.1"
+    const val hiltVersion = "2.42"
     const val retrofit2Version = "2.9.0"
 
     const val activityKTXVersion = "1.5.1"
