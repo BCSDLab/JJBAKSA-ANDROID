@@ -39,6 +39,7 @@ android {
     }
 
     buildFeatures {
+        viewBinding = true
         dataBinding = true
     }
 }
@@ -59,6 +60,8 @@ dependencies {
         implementation(activityKTX)
         implementation(fragmentKTX)
         implementation(lifecycleKTX)
+        implementation(navigationFragmentKTX)
+        implementation(navigationUiKTX)
     }
 
     AndroidXDependencies.run {
