@@ -44,6 +44,12 @@ object ThirdPartyDependencies {
         "com.squareup.retrofit2:converter-gson:${Versions.retrofit2Version}"
     const val timber = "com.jakewharton.timber:timber:${Versions.timberVersion}"
 }
+object FirebaseDependencies {
+    const val firebaseBom = "com.google.firebase:firebase-bom:${Versions.firebaseBomVersion}"
+    const val firebaseAnalytics = "com.google.firebase:firebase-analytics-ktx"
+    const val firebaseAuth = "com.google.firebase:firebase-auth-ktx"
+
+}
 
 object ClassPathPlugins {
     const val hilt = "com.google.dagger:hilt-android-gradle-plugin:${Versions.hiltVersion}"
