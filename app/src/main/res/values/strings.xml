@@ -7,4 +7,5 @@
     <string name="auto_login">자동로그인</string>
     <string name="social_login">소셜 로그인</string>
     <string name="sign_up">회원가입</string>
+    <string name="kakao_login">카카오 로그인</string>
 </resources>

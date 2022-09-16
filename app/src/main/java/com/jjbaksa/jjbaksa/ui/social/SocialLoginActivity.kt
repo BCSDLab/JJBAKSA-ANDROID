@@ -1,12 +1,20 @@
 package com.jjbaksa.jjbaksa.ui.social
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.jjbaksa.jjbaksa.R
+import com.jjbaksa.jjbaksa.base.BaseActivity
+import com.jjbaksa.jjbaksa.databinding.ActivitySocialLoginBinding
 
-class SocialLoginActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_social_login)
+class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
+    override val layoutId: Int
+        get() = R.layout.activity_social_login
+
+    override fun initView() {
+    }
+
+    override fun subscribe() {
+    }
+
+    override fun initEvent() {
     }
 }
