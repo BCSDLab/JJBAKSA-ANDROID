@@ -6,11 +6,11 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class KakaoLoginViewModel @Inject constructor(private val kakaoLoginRepository: KakaoLoginRepository) :
+class KakaoLoginViewModel @Inject constructor(private val handleKakaoLoginUseCase: HandleKakaoLoginUseCase) :
     ViewModel() {
 
     fun handleKakaoLogin() {
-        kakaoLoginRepository.handleKakaoLogin()
+        handleKakaoLoginUseCase()
 
     }
 

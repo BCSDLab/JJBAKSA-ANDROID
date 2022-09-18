@@ -1,6 +1,7 @@
 package com.jjbaksa.jjbaksa.di
 
 import android.content.Context
+import com.jjbaksa.jjbaksa.HandleKakaoLoginUseCase
 import com.jjbaksa.jjbaksa.KakaoLoginRepository
 import com.jjbaksa.jjbaksa.KakaoLoginRepositoryImpl
 import dagger.Module
@@ -18,6 +19,14 @@ object RepositoryModule {
     @Provides
     fun provideKakaoLoginRepository(@ApplicationContext context: Context): KakaoLoginRepository {
         return KakaoLoginRepositoryImpl(context)
+    }
+
+    @Singleton
+    @Provides
+    fun provideHandleKakaoLoginUseCase(kakaoLoginRepository: KakaoLoginRepository): HandleKakaoLoginUseCase{
+        return HandleKakaoLoginUseCase(
+            kakaoLoginRepository = kakaoLoginRepository
+        )
     }
 
 }
