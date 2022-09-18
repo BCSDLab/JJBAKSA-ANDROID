@@ -1,11 +1,17 @@
 package com.jjbaksa.jjbaksa.ui.social
 
-import android.os.Bundle
+import androidx.activity.viewModels
+import com.jjbaksa.jjbaksa.KakaoLoginViewModel
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseActivity
 import com.jjbaksa.jjbaksa.databinding.ActivitySocialLoginBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
+
+    private val kakaoLoginViewModel: KakaoLoginViewModel by viewModels()
+
     override val layoutId: Int
         get() = R.layout.activity_social_login
 
@@ -16,5 +22,15 @@ class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
     }
 
     override fun initEvent() {
+        with(binding) {
+            buttonKakaoLogin.setOnClickListener {
+                kakaoLoginViewModel.handleKakaoLogin()
+
+            }
+
+        }
     }
+
+
 }
+

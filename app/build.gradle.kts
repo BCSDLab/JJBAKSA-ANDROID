@@ -20,9 +20,9 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String",
-            "KAKAO_NATIVE_APP_KEY",
-            getKakaoNaiveAppKey("KAKAO_NATIVE_APP_KEY"))
-        resValue("string","KAKAO_OAUTH_HOST",getKakaoOauthHostKey("KAKAO_OAUTH_HOST"))
+            "kakao_native_app_key",
+            getKakaoNaiveAppKey("kakao_native_app_key"))
+        resValue("string","kakao_oauth_host",getKakaoOauthHostKey("kakao_oauth_host"))
     }
 
     buildTypes {
@@ -55,10 +55,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.5.0")
     implementation("com.google.android.material:material:1.4.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("com.kakao.sdk:v2-all:2.11.0") // 전체 모듈 설치, 2.11.0 버전부터 지원
-    implementation("com.kakao.sdk:v2-user:2.11.0") // 카카오 로그인
-    implementation("com.kakao.sdk:v2-talk:2.11.0") // 친구, 메시지(카카오톡)
-
+    implementation("com.kakao.sdk:v2-user:2.11.0")
 
     KotlinDependencies.run {
         implementation(kotlin)
