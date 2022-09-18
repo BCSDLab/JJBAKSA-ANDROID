@@ -43,12 +43,15 @@ object ThirdPartyDependencies {
     const val retrofit2Converter =
         "com.squareup.retrofit2:converter-gson:${Versions.retrofit2Version}"
     const val timber = "com.jakewharton.timber:timber:${Versions.timberVersion}"
+    const val roomRuntime =  "androidx.room:room-runtime:${Versions.roomVersion}"
+    const val roomKtx = "androidx.room:room-ktx:${Versions.roomVersion}"
+    const val roomCompiler = "androidx.room:room-compiler:${Versions.roomVersion}"
+    const val roomKapComplier = "androidx.room:room-compiler:${Versions.roomVersion}"
 }
 object FirebaseDependencies {
     const val firebaseBom = "com.google.firebase:firebase-bom:${Versions.firebaseBomVersion}"
     const val firebaseAnalytics = "com.google.firebase:firebase-analytics-ktx"
     const val firebaseAuth = "com.google.firebase:firebase-auth-ktx"
-
 }
 
 object ClassPathPlugins {
