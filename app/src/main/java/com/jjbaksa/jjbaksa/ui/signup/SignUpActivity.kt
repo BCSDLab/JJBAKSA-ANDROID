@@ -1,12 +1,20 @@
 package com.jjbaksa.jjbaksa.ui.signup
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import com.jjbaksa.jjbaksa.R
+import com.jjbaksa.jjbaksa.base.BaseActivity
+import com.jjbaksa.jjbaksa.databinding.ActivitySignUpBinding
 
-class SignUpActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sign_up)
+class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
+
+    override val layoutId: Int
+        get() = R.layout.activity_sign_up
+
+    override fun initView() {
+    }
+
+    override fun subscribe() {
+    }
+
+    override fun initEvent() {
     }
 }

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@+id/fragment_nav_graph_terms">
+
+    <fragment
+        android:id="@+id/fragment_nav_graph_terms"
+        android:name="com.jjbaksa.jjbaksa.ui.signup.TermsFragment"
+        android:label="Terms"
+        tools:layout="@layout/fragment_terms">
+
+        <action
+            android:id="@+id/action_nav_graph_move_to_register"
+            app:destination="@id/fragment_nav_graph_register"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_nav_graph_register"
+        android:name="com.jjbaksa.jjbaksa.ui.signup.SignUpFragment"
+        android:label="Register"
+        tools:layout="@layout/fragment_sign_up">
+
+        <action
+            android:id="@+id/action_nav_graph_move_to_welcome"
+            app:destination="@id/fragment_nav_graph_welcome"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_nav_graph_welcome"
+        android:name="com.jjbaksa.jjbaksa.ui.signup.WelcomeFragment"
+        android:label="Welcome"
+        tools:layout="@layout/fragment_welcome" />
+
+</navigation>
