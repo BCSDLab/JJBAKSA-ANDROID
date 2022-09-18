@@ -1,3 +1,4 @@
+
 plugins {
     id("com.android.library")
     kotlin("android")
@@ -52,6 +53,10 @@ dependencies {
         implementation(gson)
         implementation(retrofit2)
         implementation(retrofit2Converter)
+        implementation(roomRuntime)
+        implementation(roomKtx)
+        annotationProcessor(roomCompiler)
+        kapt(roomKapComplier)
     }
 }
 

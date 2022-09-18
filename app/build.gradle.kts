@@ -89,6 +89,10 @@ dependencies {
         implementation(gson)
         implementation(retrofit2)
         implementation(retrofit2Converter)
+        implementation(roomRuntime)
+        implementation(roomKtx)
+        annotationProcessor(roomCompiler)
+        kapt(roomKapComplier)
     }
     FirebaseDependencies.run {
         implementation(platform(FirebaseDependencies.firebaseBom))

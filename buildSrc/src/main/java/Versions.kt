@@ -28,4 +28,6 @@ object Versions {
     const val jvmVersion = "1.8"
 
     const val firebaseBomVersion = "30.2.0"
+
+    const val roomVersion = "2.4.1"
 }
