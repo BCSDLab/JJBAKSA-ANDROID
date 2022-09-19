@@ -7,8 +7,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class KakaoLoginViewModel @Inject constructor(
-    private val handleKakaoLoginUseCase: HandleKakaoLoginUseCase
-    ) : ViewModel() {
+    private val handleKakaoLoginUseCase: HandleKakaoLoginUseCase,
+) : ViewModel() {
 
     fun handleKakaoLogin() {
         handleKakaoLoginUseCase()
