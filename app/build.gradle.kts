@@ -6,6 +6,7 @@ plugins {
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
     id("org.jlleitschuh.gradle.ktlint") version "10.3.0"
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -96,6 +97,15 @@ dependencies {
         implementation(gson)
         implementation(retrofit2)
         implementation(retrofit2Converter)
+        implementation(roomRuntime)
+        implementation(roomKtx)
+        annotationProcessor(roomCompiler)
+        kapt(roomKapComplier)
+    }
+    FirebaseDependencies.run {
+        implementation(platform(FirebaseDependencies.firebaseBom))
+        implementation(FirebaseDependencies.firebaseAnalytics)
+        implementation(FirebaseDependencies.firebaseAuth)
     }
 }
 
