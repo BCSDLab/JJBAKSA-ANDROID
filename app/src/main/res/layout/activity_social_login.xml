@@ -10,7 +10,7 @@
 android:layout_width="match_parent"
 android:layout_height="match_parent">
 <com.google.android.gms.common.SignInButton
-    android:id="@+id/btn_google_sign_in"
+    android:id="@+id/btn_social_login_google_sign_in"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:layout_constraintTop_toTopOf="parent"
