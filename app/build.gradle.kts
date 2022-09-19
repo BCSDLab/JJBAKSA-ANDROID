@@ -22,8 +22,8 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String",
             "kakao_native_app_key",
-            getKakaoNaiveAppKey("kakao_native_app_key"))
-        resValue("string","kakao_oauth_host",getKakaoOauthHostKey("kakao_oauth_host"))
+            getPropertyKey("kakao_native_app_key"))
+        resValue("string","kakao_oauth_host",getPropertyKey("kakao_oauth_host"))
     }
 
     buildTypes {
@@ -121,10 +121,7 @@ ktlint {
     }
 }
 
-fun getKakaoNaiveAppKey(propertyKey: String): String {
-    return gradleLocalProperties(rootDir).getProperty(propertyKey)
-}
-
-fun getKakaoOauthHostKey(propertyKey: String): String {
-    return gradleLocalProperties(rootDir).getProperty(propertyKey)
+fun getPropertyKey(propertyKey: String): String {
+    val nullableProperty: String?= gradleLocalProperties(rootDir).getProperty(propertyKey)
+    return nullableProperty ?: "null"
 }
