@@ -1,4 +1,4 @@
-package com.jjbaksa.jjbaksa
+package com.jjbaksa.domain.repository
 
 interface KakaoLoginRepository {
     fun handleKakaoLogin()

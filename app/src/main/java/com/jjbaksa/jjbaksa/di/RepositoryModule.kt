@@ -8,9 +8,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import android.content.Context
-import com.jjbaksa.jjbaksa.HandleKakaoLoginUseCase
-import com.jjbaksa.jjbaksa.KakaoLoginRepository
-import com.jjbaksa.jjbaksa.KakaoLoginRepositoryImpl
+import com.jjbaksa.domain.repository.KakaoLoginRepository
+import com.jjbaksa.data.repository.KakaoLoginRepositoryImpl
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
@@ -22,11 +21,10 @@ object RepositoryModule {
     @Provides
     fun provideUserRepository(
         userRemoteDataSource: UserRemoteDataSource,
-        userLocalDataSource: UserLocalDataSource
+        userLocalDataSource: UserLocalDataSource,
     ): UserRepository {
         return UserRepositoryImpl(userRemoteDataSource, userLocalDataSource)
     }
-}
 
     @Singleton
     @Provides
@@ -34,12 +32,9 @@ object RepositoryModule {
         return KakaoLoginRepositoryImpl(context)
     }
 
-    @Singleton
-    @Provides
-    fun provideHandleKakaoLoginUseCase(kakaoLoginRepository: KakaoLoginRepository): HandleKakaoLoginUseCase{
-        return HandleKakaoLoginUseCase(
-            kakaoLoginRepository = kakaoLoginRepository
-        )
-    }
-
 }
+
+
+
+
+

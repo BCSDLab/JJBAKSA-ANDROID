@@ -1,8 +1,8 @@
-package com.jjbaksa.jjbaksa
+package com.jjbaksa.data.repository
 
 import android.content.Context
 import android.util.Log
-import android.widget.Toast
+import com.jjbaksa.domain.repository.KakaoLoginRepository
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
@@ -19,7 +19,6 @@ class KakaoLoginRepositoryImpl(val context: Context) : KakaoLoginRepository {
             if (error != null) {
                 Log.d(TAG, "토큰 정보 보기 실패", error)
             } else if (tokenInfo != null) {
-                Toast.makeText(context, "토큰 정보 보기 성공", Toast.LENGTH_SHORT).show()
                 Log.d(TAG, "토큰 정보 보기 성공", error)
             }
 
@@ -38,7 +37,6 @@ class KakaoLoginRepositoryImpl(val context: Context) : KakaoLoginRepository {
         if (UserApiClient.instance.isKakaoTalkLoginAvailable(context)) {
             UserApiClient.instance.loginWithKakaoTalk(context) { token, error ->
                 if (error != null) {
-                    Toast.makeText(context, "카카오톡으로 로그인 실패", Toast.LENGTH_SHORT).show()
                     Log.e(TAG, "카카오톡으로 로그인 실패", error)
 
                     if (error is ClientError && error.reason == ClientErrorCause.Cancelled) {
@@ -46,7 +44,6 @@ class KakaoLoginRepositoryImpl(val context: Context) : KakaoLoginRepository {
                     }
                     UserApiClient.instance.loginWithKakaoAccount(context, callback = callback)
                 } else if (token != null) {
-                    Toast.makeText(context, "카카오톡으로 로그인 성공", Toast.LENGTH_SHORT).show()
                     Log.i(TAG, "카카오톡으로 로그인 성공 ${token.accessToken}")
                 }
             }

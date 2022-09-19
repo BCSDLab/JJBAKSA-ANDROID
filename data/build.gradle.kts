@@ -28,6 +28,7 @@ android {
 
 dependencies {
     implementation(project(":domain"))
+    implementation("com.kakao.sdk:v2-user:2.11.0")
 
     KotlinDependencies.run {
         implementation(kotlin)
