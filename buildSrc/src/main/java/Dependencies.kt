@@ -48,7 +48,6 @@ object FirebaseDependencies {
     const val firebaseBom = "com.google.firebase:firebase-bom:${Versions.firebaseBomVersion}"
     const val firebaseAnalytics = "com.google.firebase:firebase-analytics-ktx"
     const val firebaseAuth = "com.google.firebase:firebase-auth-ktx"
-
 }
 
 object ClassPathPlugins {
