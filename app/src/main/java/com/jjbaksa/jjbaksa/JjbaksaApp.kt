@@ -37,4 +37,3 @@ class JjbaksaApp : Application() {
             private set
     }
 }
-

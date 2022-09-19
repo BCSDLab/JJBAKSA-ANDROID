@@ -25,12 +25,7 @@ class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
         with(binding) {
             buttonKakaoLogin.setOnClickListener {
                 kakaoLoginViewModel.handleKakaoLogin()
-
             }
-
         }
     }
-
-
 }
-
