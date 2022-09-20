@@ -40,19 +40,37 @@ class SignUpFragment : Fragment() {
         binding.jjEditTextSignUpId.addTextChangedListener {
             // Add check id logic here
             isIdTyped = it.toString().isNotEmpty()
-            isTypeCompleted()
+            updateSignUpNextButton(isIdTyped)
+        }
+
+        binding.jjEditTextSignUpId.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                updateSignUpNextButton(isIdTyped)
+            }
         }
 
         binding.jjEditTextSignUpEmail.addTextChangedListener {
             // Add check email logic here
             isEmailTyped = it.toString().isNotEmpty()
-            isTypeCompleted()
+            updateSignUpNextButton(isEmailTyped)
+        }
+
+        binding.jjEditTextSignUpEmail.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                updateSignUpNextButton(isEmailTyped)
+            }
         }
 
         binding.jjEditTextSignUpPassword.addTextChangedListener {
             // Add check password logic here
             isPasswordTyped = it.toString().isNotEmpty()
-            isTypeCompleted()
+            updateSignUpNextButton(isPasswordTyped)
+        }
+
+        binding.jjEditTextSignUpPassword.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                updateSignUpNextButton(isPasswordTyped)
+            }
         }
 
         binding.jjEditTextSignUpPasswordConfirm.addTextChangedListener {
@@ -62,19 +80,32 @@ class SignUpFragment : Fragment() {
                 showAlert(PASSWORD_NOT_MATCH)
             else
                 hideAlert()
-            isTypeCompleted()
+            updateSignUpNextButton(isPasswordConfirmed)
+        }
+
+        binding.jjEditTextSignUpPasswordConfirm.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                updateSignUpNextButton(isPasswordConfirmed)
+            }
         }
 
         binding.buttonSignUpNext.setOnClickListener {
-            findNavController().navigate(R.id.action_nav_graph_move_to_welcome)
+            if (isPasswordConfirmed) {
+                findNavController().navigate(R.id.action_nav_graph_move_to_welcome)
+            } else if (isPasswordTyped) {
+                binding.jjEditTextSignUpPasswordConfirm.requestFocus()
+            } else if (isEmailTyped) {
+                binding.jjEditTextSignUpPassword.requestFocus()
+            } else if (isIdTyped) {
+                binding.jjEditTextSignUpEmail.requestFocus()
+            }
         }
 
         return binding.root
     }
 
-    private fun isTypeCompleted() {
-        binding.buttonSignUpNext.isEnabled =
-            isIdTyped && isEmailTyped && isPasswordTyped && isPasswordConfirmed
+    private fun updateSignUpNextButton(isEnabled: Boolean) {
+        binding.buttonSignUpNext.isEnabled = isEnabled
     }
 
     private fun showAlert(alertType: SignUpAlertEnum) {
