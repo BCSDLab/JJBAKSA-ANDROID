@@ -33,6 +33,12 @@ open class JjCheckBox constructor(context: Context, attrs: AttributeSet?) :
 
     private var isMoreInfoOpened = false
 
+    var isChecked: Boolean
+        get() = binding.checkBoxJjCheckBox.isChecked
+        set(value) {
+            binding.checkBoxJjCheckBox.isChecked = value
+        }
+
     init {
         initView()
         setTitle()
@@ -94,10 +100,6 @@ open class JjCheckBox constructor(context: Context, attrs: AttributeSet?) :
         binding.textViewJjCheckBoxMoreInfo.text = moreInfo
     }
 
-    fun setChecked(isChecked: Boolean) {
-        binding.checkBoxJjCheckBox.isChecked = isChecked
-    }
-
     private fun setOnClickListener() {
         binding.checkBoxJjCheckBox.setOnClickListener {
             onClickListener.onClick(it)
@@ -120,10 +122,6 @@ open class JjCheckBox constructor(context: Context, attrs: AttributeSet?) :
         }
 
         binding.imageButtonJjCheckBoxMoreInfo.setImageResource(moreInfoDrawable)
-    }
-
-    fun isChecked(): Boolean {
-        return binding.checkBoxJjCheckBox.isChecked
     }
 
     interface OnClickListener {

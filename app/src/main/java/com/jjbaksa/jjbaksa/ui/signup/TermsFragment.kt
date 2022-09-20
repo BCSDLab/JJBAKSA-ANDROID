@@ -30,7 +30,7 @@ class TermsFragment : Fragment() {
         }
 
         binding.jjCheckBoxTermsTermsCheckAll.setOnClickListener {
-            checkAllCheckBox(binding.jjCheckBoxTermsTermsCheckAll.isChecked())
+            checkAllCheckBox(binding.jjCheckBoxTermsTermsCheckAll.isChecked)
             isAllCheckBoxChecked()
         }
 
@@ -43,14 +43,14 @@ class TermsFragment : Fragment() {
 
     private fun isAllCheckBoxChecked() {
         val isAllCheckBoxChecked =
-            binding.jjCheckBoxTermsTermsOne.isChecked() && binding.jjCheckBoxTermsTermsTwo.isChecked()
+            binding.jjCheckBoxTermsTermsOne.isChecked && binding.jjCheckBoxTermsTermsTwo.isChecked
 
-        binding.jjCheckBoxTermsTermsCheckAll.setChecked(isAllCheckBoxChecked)
+        binding.jjCheckBoxTermsTermsCheckAll.isChecked = isAllCheckBoxChecked
         binding.buttonTermsNext.isEnabled = isAllCheckBoxChecked
     }
 
     private fun checkAllCheckBox(isChecked: Boolean) {
-        binding.jjCheckBoxTermsTermsOne.setChecked(isChecked)
-        binding.jjCheckBoxTermsTermsTwo.setChecked(isChecked)
+        binding.jjCheckBoxTermsTermsOne.isChecked = isChecked
+        binding.jjCheckBoxTermsTermsTwo.isChecked = isChecked
     }
 }
