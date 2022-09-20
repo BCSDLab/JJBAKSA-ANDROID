@@ -33,7 +33,7 @@
                 app:layout_constraintTop_toBottomOf="@id/include_terms_header"
                 app:layout_constraintVertical_chainStyle="packed" />
 
-            <com.jjbaksa.jjbaksa.jj.JjCheckBox
+            <com.jjbaksa.jjbaksa.view.JjCheckBox
                 android:id="@+id/jj_check_box_terms_terms_one"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
                 app:moreInfo_textSize="11sp"
                 app:title="@string/privacy_term_title" />
 
-            <com.jjbaksa.jjbaksa.jj.JjCheckBox
+            <com.jjbaksa.jjbaksa.view.JjCheckBox
                 android:id="@+id/jj_check_box_terms_terms_two"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -70,7 +70,7 @@
                 app:layout_constraintTop_toBottomOf="@id/jj_check_box_terms_terms_two"
                 app:layout_constraintVertical_bias="1">
 
-                <com.jjbaksa.jjbaksa.jj.JjCheckBox
+                <com.jjbaksa.jjbaksa.view.JjCheckBox
                     android:id="@+id/jj_check_box_terms_terms_check_all"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

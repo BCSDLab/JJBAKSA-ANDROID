@@ -1,4 +1,4 @@
-package com.jjbaksa.jjbaksa.jj
+package com.jjbaksa.jjbaksa.view
 
 import android.content.Context
 import android.text.Editable

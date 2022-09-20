@@ -46,7 +46,7 @@
                 app:layout_constraintStart_toEndOf="@id/image_view_sign_up_alert"
                 app:layout_constraintTop_toTopOf="@id/image_view_sign_up_alert" />
 
-            <com.jjbaksa.jjbaksa.jj.JjEditText
+            <com.jjbaksa.jjbaksa.view.JjEditText
                 android:id="@+id/jj_edit_text_sign_up_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
                 app:title="@string/id"
                 app:titleSize="14sp" />
 
-            <com.jjbaksa.jjbaksa.jj.JjEditText
+            <com.jjbaksa.jjbaksa.view.JjEditText
                 android:id="@+id/jj_edit_text_sign_up_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -76,7 +76,7 @@
                 app:title="@string/email"
                 app:titleSize="14sp" />
 
-            <com.jjbaksa.jjbaksa.jj.JjEditText
+            <com.jjbaksa.jjbaksa.view.JjEditText
                 android:id="@+id/jj_edit_text_sign_up_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -90,7 +90,7 @@
                 app:title="@string/password"
                 app:titleSize="14sp" />
 
-            <com.jjbaksa.jjbaksa.jj.JjEditText
+            <com.jjbaksa.jjbaksa.view.JjEditText
                 android:id="@+id/jj_edit_text_sign_up_password_confirm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
