@@ -17,6 +17,7 @@ import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.databinding.JjEditTextBinding
 
 typealias TextChanged = (Editable?) -> Unit
+typealias FocusChanged = (View, Boolean) -> Unit
 
 open class JjEditText constructor(context: Context, attrs: AttributeSet?) :
     ConstraintLayout(context, attrs) {
@@ -24,6 +25,7 @@ open class JjEditText constructor(context: Context, attrs: AttributeSet?) :
     private lateinit var binding: JjEditTextBinding
 
     private lateinit var textChanged: TextChanged
+    private lateinit var focusChanged: FocusChanged
 
     var onButtonClickListener: OnClickListener? = null
 
@@ -73,11 +75,18 @@ open class JjEditText constructor(context: Context, attrs: AttributeSet?) :
         hasButton()
 
         setAddTextChangedListener()
+        setOnFocusChangeListener()
     }
 
     private fun setAddTextChangedListener() {
         binding.editTextJjEditTextInput.addTextChangedListener {
             textChanged.invoke(it)
+        }
+    }
+
+    private fun setOnFocusChangeListener() {
+        binding.editTextJjEditTextInput.setOnFocusChangeListener { view, hasFocus ->
+            focusChanged.invoke(view, hasFocus)
         }
     }
 
@@ -169,6 +178,10 @@ open class JjEditText constructor(context: Context, attrs: AttributeSet?) :
 
     fun addTextChangedListener(textChanged: TextChanged) {
         this.textChanged = textChanged
+    }
+
+    fun setOnFocusChangeListener(focusChanged: FocusChanged) {
+        this.focusChanged = focusChanged
     }
 
     interface OnClickListener {
