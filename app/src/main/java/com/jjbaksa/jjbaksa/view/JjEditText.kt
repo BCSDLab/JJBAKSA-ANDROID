@@ -16,12 +16,14 @@ import androidx.databinding.DataBindingUtil
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.databinding.JjEditTextBinding
 
+typealias TextChanged = (Editable?) -> Unit
+
 open class JjEditText constructor(context: Context, attrs: AttributeSet?) :
     ConstraintLayout(context, attrs) {
 
     private lateinit var binding: JjEditTextBinding
 
-    lateinit var addTextChangedListener: AddTextChangedListener
+    private lateinit var textChanged: TextChanged
 
     var onButtonClickListener: OnClickListener? = null
 
@@ -75,7 +77,7 @@ open class JjEditText constructor(context: Context, attrs: AttributeSet?) :
 
     private fun setAddTextChangedListener() {
         binding.editTextJjEditTextInput.addTextChangedListener {
-            addTextChangedListener.textChanged(it)
+            textChanged.invoke(it)
         }
     }
 
@@ -165,20 +167,12 @@ open class JjEditText constructor(context: Context, attrs: AttributeSet?) :
         }
     }
 
-    interface AddTextChangedListener {
-        fun textChanged(s: Editable?)
+    fun addTextChangedListener(textChanged: TextChanged) {
+        this.textChanged = textChanged
     }
 
     interface OnClickListener {
         fun onClick(view: View)
-    }
-
-    inline fun addTextChangedListener(crossinline textChanged: (Editable?) -> Unit) {
-        this.addTextChangedListener = object : AddTextChangedListener {
-            override fun textChanged(s: Editable?) {
-                textChanged(s)
-            }
-        }
     }
 
     inline fun setOnClickListener(crossinline onClick: (View) -> Unit) {
