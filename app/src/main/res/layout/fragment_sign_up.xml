@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.signup.SignUpFragment">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="72dp">
+
+            <include
+                android:id="@+id/include_sign_up_header"
+                layout="@layout/header_sign_up"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/image_view_sign_up_alert"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:src="@drawable/sel_sign_up_alert_shown"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toTopOf="@id/jj_edit_text_sign_up_id"
+                app:layout_constraintEnd_toStartOf="@id/text_view_sign_up_alert"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/include_sign_up_header" />
+
+            <TextView
+                android:id="@+id/text_view_sign_up_alert"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:textColor="#ff7f23"
+                android:textSize="11sp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@id/image_view_sign_up_alert"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/image_view_sign_up_alert"
+                app:layout_constraintTop_toTopOf="@id/image_view_sign_up_alert" />
+
+            <com.jjbaksa.jjbaksa.view.JjEditText
+                android:id="@+id/jj_edit_text_sign_up_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
+                android:paddingBottom="16dp"
+                app:button_text="@string/id_check"
+                app:button_textSize="14sp"
+                app:has_button="true"
+                app:has_title="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/include_sign_up_header"
+                app:title="@string/id"
+                app:titleSize="14sp" />
+
+            <com.jjbaksa.jjbaksa.view.JjEditText
+                android:id="@+id/jj_edit_text_sign_up_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:paddingBottom="16dp"
+                app:has_title="true"
+                app:is_email="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/jj_edit_text_sign_up_id"
+                app:title="@string/email"
+                app:titleSize="14sp" />
+
+            <com.jjbaksa.jjbaksa.view.JjEditText
+                android:id="@+id/jj_edit_text_sign_up_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:paddingBottom="16dp"
+                app:has_title="true"
+                app:is_password="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/jj_edit_text_sign_up_email"
+                app:title="@string/password"
+                app:titleSize="14sp" />
+
+            <com.jjbaksa.jjbaksa.view.JjEditText
+                android:id="@+id/jj_edit_text_sign_up_password_confirm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:has_title="true"
+                app:is_password="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/jj_edit_text_sign_up_password"
+                app:title="@string/password_confirm"
+                app:titleSize="14sp" />
+
+            <Button
+                android:id="@+id/button_sign_up_next"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="45dp"
+                android:layout_marginBottom="101dp"
+                android:background="@drawable/sel_sign_up_button"
+                android:enabled="false"
+                android:text="@string/next"
+                android:textColor="@color/color_ffffff"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/jj_edit_text_sign_up_password_confirm"
+                app:layout_constraintVertical_bias="1" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>

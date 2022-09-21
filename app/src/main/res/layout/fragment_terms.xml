@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.signup.TermsFragment">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="72dp">
+
+            <include
+                android:id="@+id/include_terms_header"
+                layout="@layout/header_sign_up"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/text_view_terms_terms_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="36dp"
+                android:text="@string/terms_agreement"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/include_terms_header"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <com.jjbaksa.jjbaksa.view.JjCheckBox
+                android:id="@+id/jj_check_box_terms_terms_one"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checkedButton="@drawable/sel_jj_check_box_check_box"
+                app:checkBox_textSize="14sp"
+                app:has_moreInfo="true"
+                app:layout_constraintBottom_toTopOf="@id/jj_check_box_terms_terms_two"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_view_terms_terms_title"
+                app:moreInfo="@string/privacy_term_text"
+                app:moreInfo_textSize="11sp"
+                app:title="@string/privacy_term_title" />
+
+            <com.jjbaksa.jjbaksa.view.JjCheckBox
+                android:id="@+id/jj_check_box_terms_terms_two"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:checkBox_textSize="14sp"
+                app:has_moreInfo="true"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/jj_check_box_terms_terms_one"
+                app:moreInfo="@string/jjbaksa_term_text"
+                app:moreInfo_textSize="11sp"
+                app:title="@string/jjbaksa_term_title" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraint_layout_terms_bottom_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/jj_check_box_terms_terms_two"
+                app:layout_constraintVertical_bias="1">
+
+                <com.jjbaksa.jjbaksa.view.JjCheckBox
+                    android:id="@+id/jj_check_box_terms_terms_check_all"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="40dp"
+                    app:backgroundTint="@null"
+                    app:checkBox_textSize="14sp"
+                    app:layout_constraintBottom_toTopOf="@id/button_terms_next"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="1"
+                    app:title="@string/terms_agree_all" />
+
+                <Button
+                    android:id="@+id/button_terms_next"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginBottom="101dp"
+                    android:background="@drawable/sel_sign_up_button"
+                    android:enabled="false"
+                    android:text="@string/next"
+                    android:textColor="@color/color_ffffff"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/jj_check_box_terms_terms_check_all" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>

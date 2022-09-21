@@ -18,6 +18,8 @@ object KTXDependencies {
     const val lifecycleKTX =
         "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycleKTXVersion}"
     const val fragmentKTX = "androidx.fragment:fragment-ktx:${Versions.fragmentKTXVersion}"
+    const val navigationFragmentKTX = "androidx.navigation:navigation-fragment:${Versions.navigationFragmentKTXVersion}"
+    const val navigationUiKTX = "androidx.navigation:navigation-ui:${Versions.navigationUiKTXVersion}"
 }
 
 object TestDependencies {

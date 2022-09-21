@@ -7,4 +7,26 @@
     <string name="auto_login">자동로그인</string>
     <string name="social_login">소셜 로그인</string>
     <string name="sign_up">회원가입</string>
+
+    <string name="terms_agreement">약관 동의</string>
+    <string name="privacy_term_title">개인정보 이용약관(필수)</string>
+    <string name="privacy_term_text">제1조(목적)\n쩝쩝박사 서비스 이용약관은 bcsd lab에서 서비스를 제공함에 있어, 이용자간의 관리, 의무 및 책임 사항 등을 목적으로 합니다.</string>
+    <string name="jjbaksa_term_title">쩝쩝박사 이용약관(필수)</string>
+    <string name="jjbaksa_term_text">제1조(목적)\n쩝쩝박사 서비스 이용약관은 bcsd lab에서 서비스를 제공함에 있어, 이용자간의 관리, 의무 및 책임 사항 등을 목적으로 합니다.</string>
+    <string name="terms_agree_all">전체동의</string>
+
+    <string name="id_already_exist">이미 존재하는 아이디입니다.</string>
+    <string name="email_not_found">존재하지 않는 도메인입니다.</string>
+    <string name="password_rule_not_match">비밀번호는 문자, 숫자, 특수문자를 포함한 2~16자리로 이루어져야합니다.</string>
+    <string name="password_not_match">비밀번호가 일치하지 않습니다.</string>
+    <string name="need_id_check">아이디 중복확인을 해주세요.</string>
+
+    <string name="welcome_text">회원가입을 축하합니다!\n당신을 어떻게 부르면 좋을까요?</string>
+
+    <string name="next">다음</string>
+    <string name="complete">완료</string>
+
+    <string name="id_check">중복확인</string>
+    <string name="email">이메일</string>
+    <string name="password_confirm">비밀번호 확인</string>
 </resources>
