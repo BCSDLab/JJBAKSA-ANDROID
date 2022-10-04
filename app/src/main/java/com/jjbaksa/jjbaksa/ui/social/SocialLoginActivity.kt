@@ -74,13 +74,15 @@ class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
                             if (error is ClientError && error.reason == ClientErrorCause.Cancelled) {
                                 return@loginWithKakaoTalk
                             }
-                            UserApiClient.instance.loginWithKakaoAccount(this@SocialLoginActivity, callback = callback)
+                            UserApiClient.instance.loginWithKakaoAccount(this@SocialLoginActivity,
+                                callback = callback)
                         } else if (token != null) {
                             Log.i(TAG, "카카오톡으로 로그인 성공 ${token.accessToken}")
                         }
                     }
                 } else {
-                    UserApiClient.instance.loginWithKakaoAccount(this@SocialLoginActivity, callback = callback)
+                    UserApiClient.instance.loginWithKakaoAccount(this@SocialLoginActivity,
+                        callback = callback)
                 }
             }
             buttonNaverLogin.setOnClickListener {
@@ -161,7 +163,7 @@ class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
                     userEmail = firebaseUser.email.toString()
                     Log.d(TAG, tokenId.toString())
                 } else {
-                    Log.d(TAG,"signInWithCredential failure")
+                    Log.d(TAG, "signInWithCredential failure")
                 }
             }
     }
