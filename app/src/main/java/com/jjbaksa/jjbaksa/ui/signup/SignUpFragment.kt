@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.jjbaksa.domain.enums.SignUpAlertEnum
 import com.jjbaksa.domain.enums.SignUpAlertEnum.EMAIL_NOT_FOUND
@@ -15,7 +16,10 @@ import com.jjbaksa.domain.enums.SignUpAlertEnum.PASSWORD_NOT_MATCH
 import com.jjbaksa.domain.enums.SignUpAlertEnum.PASSWORD_RULE_NOT_MATCH
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.databinding.FragmentSignUpBinding
+import com.jjbaksa.jjbaksa.viewmodel.SignUpViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SignUpFragment : Fragment() {
 
     private lateinit var binding: FragmentSignUpBinding
@@ -24,6 +28,7 @@ class SignUpFragment : Fragment() {
     private var isEmailTyped = false
     private var isPasswordTyped = false
     private var isPasswordConfirmed = false
+    private var isAlertShown = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -109,6 +114,7 @@ class SignUpFragment : Fragment() {
     }
 
     private fun showAlert(alertType: SignUpAlertEnum) {
+        isAlertShown = true
         binding.textViewSignUpAlert.visibility = View.VISIBLE
         binding.imageViewSignUpAlert.visibility = View.VISIBLE
         binding.textViewSignUpAlert.text = when (alertType) {
@@ -121,6 +127,7 @@ class SignUpFragment : Fragment() {
     }
 
     private fun hideAlert() {
+        isAlertShown = false
         binding.textViewSignUpAlert.visibility = View.INVISIBLE
         binding.imageViewSignUpAlert.visibility = View.INVISIBLE
     }
