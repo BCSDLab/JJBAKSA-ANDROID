@@ -94,21 +94,21 @@ class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
                 NaverIdLoginSDK.authenticate(
                     this@SocialLoginActivity,
                     object : OAuthLoginCallback {
-                    override fun onSuccess() {
-                        Log.d(TAG, "onSuccess")
-                    }
+                        override fun onSuccess() {
+                            Log.d(TAG, "onSuccess")
+                        }
 
-                    override fun onFailure(httpStatus: Int, message: String) {
-                        val errorCode = NaverIdLoginSDK.getLastErrorCode().code
-                        val errorDescription = NaverIdLoginSDK.getLastErrorDescription()
-                        Log.d(TAG, "authenticate onFailure()")
-                        Log.d(TAG, "errorCode : $errorCode / errorDesc : $errorDescription")
-                    }
+                        override fun onFailure(httpStatus: Int, message: String) {
+                            val errorCode = NaverIdLoginSDK.getLastErrorCode().code
+                            val errorDescription = NaverIdLoginSDK.getLastErrorDescription()
+                            Log.d(TAG, "authenticate onFailure()")
+                            Log.d(TAG, "errorCode : $errorCode / errorDesc : $errorDescription")
+                        }
 
-                    override fun onError(errorCode: Int, message: String) {
-                        onFailure(errorCode, message)
+                        override fun onError(errorCode: Int, message: String) {
+                            onFailure(errorCode, message)
+                        }
                     }
-                }
                 )
             }
             buttonGoogleLogin.setOnClickListener {
