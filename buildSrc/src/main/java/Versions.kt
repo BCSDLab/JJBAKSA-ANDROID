@@ -20,6 +20,8 @@ object Versions {
     const val activityKTXVersion = "1.5.1"
     const val lifecycleKTXVersion = "2.6.0-alpha01"
     const val fragmentKTXVersion = "1.5.0"
+    const val navigationFragmentKTXVersion = "2.5.2"
+    const val navigationUiKTXVersion = "2.5.2"
 
     const val gradleVersion = "7.1.1"
     const val kotlinVersion = "1.6.20"

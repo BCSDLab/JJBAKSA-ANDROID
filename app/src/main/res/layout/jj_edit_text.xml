@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_layout_base_term_check_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/text_view_jj_edit_text_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/edit_text_jj_edit_text_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_jj_edit_text_title" />
+
+        <Button
+            android:id="@+id/button_jj_edit_text_button"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:background="@drawable/shape_rect_ff7f23_stroke_ffffff_solid_radius_22"
+            android:textColor="#ff7f23"
+            android:visibility="gone"
+            app:backgroundTint="@null"
+            app:layout_constraintBottom_toBottomOf="@id/edit_text_jj_edit_text_input"
+            app:layout_constraintEnd_toEndOf="@id/edit_text_jj_edit_text_input"
+            app:layout_constraintTop_toTopOf="@id/edit_text_jj_edit_text_input" />
+
+        <ImageButton
+            android:id="@+id/image_button_jj_edit_text_password_hide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:paddingStart="13dp"
+            android:paddingTop="9dp"
+            android:paddingEnd="13dp"
+            android:paddingBottom="9dp"
+            android:src="@drawable/sel_jj_edit_text_password_show_unchecked"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/edit_text_jj_edit_text_input"
+            app:layout_constraintEnd_toEndOf="@id/edit_text_jj_edit_text_input"
+            app:layout_constraintTop_toTopOf="@id/edit_text_jj_edit_text_input" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
