@@ -8,19 +8,71 @@
         android:layout_height="match_parent"
         tools:context=".ui.social.SocialLoginActivity">
 
-        <ImageButton
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_view_social_login_app_name"
+            android:layout_width="219dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="144dp"
+            android:text="@string/social_login_title"
+            android:textAlignment="center"
+            android:textColor="@color/color_000000"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_google_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/shape_rect_c4c4c4_solid_ffffff_stroke_radius_24_google_login_box"
+            android:drawableLeft="@drawable/layerlist_logo_google"
+            android:drawablePadding="47dp"
+            android:outlineProvider="none"
+            android:paddingLeft="16dp"
+            android:text="@string/google_login"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@+id/button_naver_login"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_naver_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/shape_rect_03c75a_solid_radius_24_naver_login_box"
+            android:drawableLeft="@drawable/layerlist_logo_naver"
+            android:drawablePadding="42.88dp"
+            android:outlineProvider="none"
+            android:paddingLeft="18dp"
+            android:text="@string/naver_login"
+            android:textAlignment="textStart"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/button_kakao_login"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_kakao_login"
-            android:layout_width="216dp"
+            android:layout_width="227dp"
             android:layout_height="48dp"
             android:layout_marginLeft="72dp"
             android:layout_marginTop="39dp"
             android:layout_marginRight="72dp"
             android:layout_marginBottom="200dp"
-            android:background="@android:color/transparent"
-            android:src="@drawable/kakao_login_medium_narrow"
+            android:background="@drawable/shape_rect_fee500_solid_radius_24_kakao_login_box"
+            android:drawableLeft="@drawable/layerlist_logo_kakao"
+            android:drawablePadding="40dp"
+            android:paddingLeft="17dp"
             android:text="@string/kakao_login"
+            android:textAlignment="textStart"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

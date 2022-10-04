@@ -21,6 +21,9 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "kakao_native_app_key", getPropertyKey("kakao_native_app_key"))
+        buildConfigField("String", "naver_client_id", getPropertyKey("naver_client_id"))
+        buildConfigField("String", "naver_client_secret", getPropertyKey("naver_client_secret"))
+        buildConfigField("String", "naver_client_name", getPropertyKey("naver_client_name"))
         resValue("string", "kakao_oauth_host", getPropertyKey("kakao_oauth_host"))
     }
 
@@ -55,6 +58,7 @@ dependencies {
     implementation("com.google.android.material:material:1.4.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("com.kakao.sdk:v2-user:2.11.0")
+    implementation("com.google.android.gms:play-services-auth:20.3.0")
 
     KotlinDependencies.run {
         implementation(kotlin)

@@ -8,4 +8,7 @@
     <string name="social_login">소셜 로그인</string>
     <string name="sign_up">회원가입</string>
     <string name="kakao_login">카카오 로그인</string>
+    <string name="social_login_title">소셜 계정으로 로그인</string>
+    <string name="google_login">구글 로그인</string>
+    <string name="naver_login">네이버 로그인</string>
 </resources>
