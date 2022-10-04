@@ -16,7 +16,12 @@ class SignUpViewModel @Inject constructor(private val checkIdAvailableUseCase: C
     private val _isIdAvailable = MutableLiveData<Boolean>()
     val isIdAvailable: LiveData<Boolean>
         get() = _isIdAvailable
-    
+
+    private lateinit var id: String
+    private lateinit var password: String
+    private lateinit var email: String
+    private lateinit var nickname: String
+
     fun checkAccountAvailable(account: String) {
         viewModelScope.launch {
             runCatching {
@@ -27,5 +32,15 @@ class SignUpViewModel @Inject constructor(private val checkIdAvailableUseCase: C
                 // Handle error here
             }
         }
+    }
+
+    fun submitIdPasswordEmail(id: String, password: String, email: String){
+        this.id = id
+        this.password = password
+        this.email = email
+    }
+
+    fun submitNickname(nickname: String){
+        this.nickname = nickname
     }
 }

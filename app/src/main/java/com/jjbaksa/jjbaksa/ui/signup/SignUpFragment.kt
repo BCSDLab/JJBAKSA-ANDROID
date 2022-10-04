@@ -114,7 +114,17 @@ class SignUpFragment : Fragment() {
 
         binding.buttonSignUpNext.setOnClickListener {
             if (isPasswordConfirmed) {
-                findNavController().navigate(R.id.action_nav_graph_move_to_welcome)
+                if (isIdChecked) {
+                    signUpViewModel.submitIdPasswordEmail(
+                        binding.jjEditTextSignUpId.getText().toString(),
+                        binding.jjEditTextSignUpPassword.getText().toString(),
+                        binding.jjEditTextSignUpEmail.getText().toString()
+                    )
+
+                    findNavController().navigate(R.id.action_nav_graph_move_to_welcome)
+                } else {
+                    showAlert(NEED_ID_CHECK)
+                }
             } else if (isPasswordTyped) {
                 binding.jjEditTextSignUpPasswordConfirm.requestFocus()
             } else if (isEmailTyped) {
