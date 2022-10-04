@@ -40,12 +40,17 @@ dependencies {
     AndroidXDependencies.run {
         implementation(appCompat)
         implementation(constraintLayout)
+        implementation(hilt)
     }
 
     TestDependencies.run {
         implementation(jUnit)
         implementation(androidTest)
         implementation(espresso)
+    }
+
+    KaptDependencies.run {
+        kapt(hiltKapt)
     }
 
     ThirdPartyDependencies.run {
