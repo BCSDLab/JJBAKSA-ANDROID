@@ -13,4 +13,8 @@ class UserLocalDataSource @Inject constructor(
     override suspend fun postSignUp(signUpReq: SignUpReq): Response<SignUpResp>? {
         return null
     }
+
+    override suspend fun checkIdAvailable(account: String): String {
+        TODO("Not yet implemented")
+    }
 }

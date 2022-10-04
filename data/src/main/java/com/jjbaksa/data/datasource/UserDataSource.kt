@@ -6,4 +6,5 @@ import retrofit2.Response
 
 interface UserDataSource {
     suspend fun postSignUp(signUpReq: SignUpReq): Response<SignUpResp>?
+    suspend fun checkIdAvailable(account: String): String
 }
