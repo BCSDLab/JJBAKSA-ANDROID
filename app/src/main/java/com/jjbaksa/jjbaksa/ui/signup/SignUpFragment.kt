@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.jjbaksa.domain.enums.SignUpAlertEnum
 import com.jjbaksa.domain.enums.SignUpAlertEnum.EMAIL_NOT_FOUND
@@ -24,6 +25,9 @@ class SignUpFragment : Fragment() {
 
     private lateinit var binding: FragmentSignUpBinding
 
+    private val signUpViewModel: SignUpViewModel by activityViewModels()
+
+    private var isIdChecked = false
     private var isIdTyped = false
     private var isEmailTyped = false
     private var isPasswordTyped = false
@@ -39,7 +43,21 @@ class SignUpFragment : Fragment() {
             DataBindingUtil.inflate(layoutInflater, R.layout.fragment_sign_up, container, false)
 
         binding.jjEditTextSignUpId.setOnClickListener {
-            // Add id check logic here
+            if (!isIdChecked) {
+                signUpViewModel.checkAccountAvailable(binding.jjEditTextSignUpId.getText().toString())
+
+                signUpViewModel.isIdAvailable.observe(viewLifecycleOwner) {
+                    if (it) {
+                        binding.jjEditTextSignUpId.updateButtonStyle(true)
+                        isIdChecked = true
+                        if (isAlertShown) {
+                            hideAlert()
+                        }
+                    } else {
+                        showAlert(ID_EXIST)
+                    }
+                }
+            }
         }
 
         binding.jjEditTextSignUpId.addTextChangedListener {
