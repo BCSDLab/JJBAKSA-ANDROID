@@ -47,7 +47,7 @@ open class JjEditText constructor(context: Context, attrs: AttributeSet?) :
     )
 
     private var showPasswordConfirm = false
-    private var isButtonClicked = false
+    var isButtonClicked = false
 
     init {
         initView()
@@ -112,7 +112,6 @@ open class JjEditText constructor(context: Context, attrs: AttributeSet?) :
             )
 
             binding.buttonJjEditTextButton.setOnClickListener {
-                isButtonClicked = true
                 updateButtonStyle()
                 onButtonClickListener?.onClick(it)
             }
@@ -148,6 +147,11 @@ open class JjEditText constructor(context: Context, attrs: AttributeSet?) :
 
     fun getText(): Editable? {
         return binding.editTextJjEditTextInput.text
+    }
+
+    fun updateButtonStyle(isClicked: Boolean) {
+        isButtonClicked = isClicked
+        updateButtonStyle()
     }
 
     private fun updateButtonStyle() {
