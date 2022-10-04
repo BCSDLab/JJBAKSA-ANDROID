@@ -74,20 +74,26 @@ class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
                             if (error is ClientError && error.reason == ClientErrorCause.Cancelled) {
                                 return@loginWithKakaoTalk
                             }
-                            UserApiClient.instance.loginWithKakaoAccount(this@SocialLoginActivity,
-                                callback = callback)
+                            UserApiClient.instance.loginWithKakaoAccount(
+                                this@SocialLoginActivity,
+                                callback = callback
+                            )
                         } else if (token != null) {
                             Log.i(TAG, "카카오톡으로 로그인 성공 ${token.accessToken}")
                         }
                     }
                 } else {
-                    UserApiClient.instance.loginWithKakaoAccount(this@SocialLoginActivity,
-                        callback = callback)
+                    UserApiClient.instance.loginWithKakaoAccount(
+                        this@SocialLoginActivity,
+                        callback = callback
+                    )
                 }
             }
             buttonNaverLogin.setOnClickListener {
                 NaverIdLoginSDK.behavior = NidOAuthBehavior.DEFAULT
-                NaverIdLoginSDK.authenticate(this@SocialLoginActivity, object : OAuthLoginCallback {
+                NaverIdLoginSDK.authenticate(
+                    this@SocialLoginActivity,
+                    object : OAuthLoginCallback {
                     override fun onSuccess() {
                         Log.d(TAG, "onSuccess")
                     }
@@ -102,8 +108,8 @@ class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
                     override fun onError(errorCode: Int, message: String) {
                         onFailure(errorCode, message)
                     }
-
-                })
+                }
+                )
             }
             buttonGoogleLogin.setOnClickListener {
                 val googleSignInOptions =
@@ -122,10 +128,12 @@ class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
     private fun initNaverLogin() {
         NaverIdLoginSDK.apply {
             showDevelopersLog(true)
-            initialize(this@SocialLoginActivity,
+            initialize(
+                this@SocialLoginActivity,
                 BuildConfig.naver_client_id,
                 BuildConfig.naver_client_secret,
-                BuildConfig.naver_client_name)
+                BuildConfig.naver_client_name
+            )
             isShowMarketLink = true
             isShowBottomTab = true
         }
@@ -133,7 +141,8 @@ class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
 
     private fun initGoogleLogin() {
         activityResultLauncher = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult(), ActivityResultCallback
+            ActivityResultContracts.StartActivityForResult(),
+            ActivityResultCallback
             { activityResult ->
                 if (activityResult.resultCode == RESULT_OK) {
                     val task = GoogleSignIn.getSignedInAccountFromIntent(activityResult.data)
@@ -148,7 +157,8 @@ class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
                         }
                     }
                 }
-            })
+            }
+        )
     }
 
     private fun firebaseAuthWithGoogle(
