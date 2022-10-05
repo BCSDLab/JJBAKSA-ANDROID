@@ -3,7 +3,7 @@ package com.jjbaksa.data.repository
 import com.jjbaksa.data.datasource.local.UserLocalDataSource
 import com.jjbaksa.data.datasource.remote.UserRemoteDataSource
 import com.jjbaksa.data.mapper.CheckAccountAvailableMapper
-import com.jjbaksa.data.resp.user.SignUpReq
+import com.jjbaksa.domain.resp.user.SignUpReq
 import com.jjbaksa.domain.repository.UserRepository
 import javax.inject.Inject
 
