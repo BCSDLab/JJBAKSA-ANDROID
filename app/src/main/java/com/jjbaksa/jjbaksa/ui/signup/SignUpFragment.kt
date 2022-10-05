@@ -85,9 +85,16 @@ class SignUpFragment : Fragment() {
         }
 
         binding.jjEditTextSignUpPassword.addTextChangedListener {
-            // Add check password logic here
-            isPasswordTyped = it.toString().isNotEmpty()
-            updateSignUpNextButton(isPasswordTyped)
+            val regex = Regex("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@\$!%*#?&])[A-Za-z\\d@\$!%*#?&]{2,16}\$")
+            if (regex.containsMatchIn(it.toString())) {
+                isPasswordTyped = it.toString().isNotEmpty()
+                updateSignUpNextButton(isPasswordTyped)
+                if (isAlertShown) {
+                    hideAlert()
+                }
+            } else {
+                showAlert(PASSWORD_RULE_NOT_MATCH)
+            }
         }
 
         binding.jjEditTextSignUpPassword.setOnFocusChangeListener { _, hasFocus ->
