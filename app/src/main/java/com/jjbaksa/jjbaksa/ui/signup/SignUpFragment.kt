@@ -7,17 +7,17 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.jjbaksa.domain.enums.SignUpAlertEnum
-import com.jjbaksa.domain.enums.SignUpAlertEnum.EMAIL_NOT_FOUND
-import com.jjbaksa.domain.enums.SignUpAlertEnum.ID_EXIST
-import com.jjbaksa.domain.enums.SignUpAlertEnum.NEED_ID_CHECK
-import com.jjbaksa.domain.enums.SignUpAlertEnum.PASSWORD_NOT_MATCH
-import com.jjbaksa.domain.enums.SignUpAlertEnum.PASSWORD_RULE_NOT_MATCH
+import com.jjbaksa.domain.enums.SignUpAlertEnum.*
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.databinding.FragmentSignUpBinding
 import com.jjbaksa.jjbaksa.viewmodel.SignUpViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SignUpFragment : Fragment() {
@@ -26,12 +26,10 @@ class SignUpFragment : Fragment() {
 
     private val signUpViewModel: SignUpViewModel by activityViewModels()
 
-    private var isIdChecked = false
     private var isIdTyped = false
     private var isEmailTyped = false
     private var isPasswordTyped = false
     private var isPasswordConfirmed = false
-    private var isAlertShown = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,19 +39,32 @@ class SignUpFragment : Fragment() {
         binding =
             DataBindingUtil.inflate(layoutInflater, R.layout.fragment_sign_up, container, false)
 
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                signUpViewModel.uiState.collect {
+                    binding.jjEditTextSignUpId.updateButtonStyle(it.isIdChecked)
+                    setAlert(it.alertType)
+                    binding.textViewSignUpAlert.visibility =
+                        if (it.isAlertShown) View.VISIBLE else View.INVISIBLE
+                    binding.imageViewSignUpAlert.visibility =
+                        if (it.isAlertShown) View.VISIBLE else View.INVISIBLE
+                }
+            }
+        }
+
         binding.jjEditTextSignUpId.setOnClickListener {
-            if (!isIdChecked) {
-                signUpViewModel.checkAccountAvailable(binding.jjEditTextSignUpId.getText().toString())
+            if (!signUpViewModel.uiState.value.isIdChecked) {
+                signUpViewModel.checkAccountAvailable(
+                    binding.jjEditTextSignUpId.getText().toString()
+                )
 
                 signUpViewModel.isIdAvailable.observe(viewLifecycleOwner) {
                     if (it) {
-                        binding.jjEditTextSignUpId.updateButtonStyle(true)
-                        isIdChecked = true
-                        if (isAlertShown) {
-                            hideAlert()
-                        }
+                        signUpViewModel.updateIdCheckedState(true)
+                        signUpViewModel.updateAlertState(false)
                     } else {
-                        showAlert(ID_EXIST)
+                        signUpViewModel.updateAlertType(ID_EXIST)
+                        signUpViewModel.updateAlertState(true)
                     }
                 }
             }
@@ -84,15 +95,17 @@ class SignUpFragment : Fragment() {
         }
 
         binding.jjEditTextSignUpPassword.addTextChangedListener {
-            val regex = Regex("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@\$!%*#?&])[A-Za-z\\d@\$!%*#?&]{2,16}\$")
+            val regex =
+                Regex("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@\$!%*#?&])[A-Za-z\\d@\$!%*#?&]{2,16}\$")
             if (regex.containsMatchIn(it.toString())) {
                 isPasswordTyped = it.toString().isNotEmpty()
                 updateSignUpNextButton(isPasswordTyped)
-                if (isAlertShown) {
-                    hideAlert()
+                if (signUpViewModel.uiState.value.isAlertShown) {
+                    signUpViewModel.updateAlertState(false)
                 }
             } else {
-                showAlert(PASSWORD_RULE_NOT_MATCH)
+                signUpViewModel.updateAlertType(PASSWORD_RULE_NOT_MATCH)
+                signUpViewModel.updateAlertState(true)
             }
         }
 
@@ -105,10 +118,12 @@ class SignUpFragment : Fragment() {
         binding.jjEditTextSignUpPasswordConfirm.addTextChangedListener {
             isPasswordConfirmed =
                 it.toString() == binding.jjEditTextSignUpPassword.getText().toString()
-            if (!isPasswordConfirmed)
-                showAlert(PASSWORD_NOT_MATCH)
-            else
-                hideAlert()
+            if (!isPasswordConfirmed) {
+                signUpViewModel.updateAlertType(PASSWORD_NOT_MATCH)
+                signUpViewModel.updateAlertState(true)
+            } else {
+                signUpViewModel.updateAlertState(false)
+            }
             updateSignUpNextButton(isPasswordConfirmed)
         }
 
@@ -120,7 +135,7 @@ class SignUpFragment : Fragment() {
 
         binding.buttonSignUpNext.setOnClickListener {
             if (isPasswordConfirmed) {
-                if (isIdChecked) {
+                if (signUpViewModel.uiState.value.isIdChecked) {
                     signUpViewModel.submitIdPasswordEmail(
                         binding.jjEditTextSignUpId.getText().toString(),
                         binding.jjEditTextSignUpPassword.getText().toString(),
@@ -129,7 +144,8 @@ class SignUpFragment : Fragment() {
 
                     findNavController().navigate(R.id.action_nav_graph_move_to_welcome)
                 } else {
-                    showAlert(NEED_ID_CHECK)
+                    signUpViewModel.updateAlertType(NEED_ID_CHECK)
+                    signUpViewModel.updateAlertState(true)
                 }
             } else if (isPasswordTyped) {
                 binding.jjEditTextSignUpPasswordConfirm.requestFocus()
@@ -147,10 +163,7 @@ class SignUpFragment : Fragment() {
         binding.buttonSignUpNext.isEnabled = isEnabled
     }
 
-    private fun showAlert(alertType: SignUpAlertEnum) {
-        isAlertShown = true
-        binding.textViewSignUpAlert.visibility = View.VISIBLE
-        binding.imageViewSignUpAlert.visibility = View.VISIBLE
+    private fun setAlert(alertType: SignUpAlertEnum) {
         binding.textViewSignUpAlert.text = when (alertType) {
             ID_EXIST -> context?.getString(R.string.id_already_exist)
             EMAIL_NOT_FOUND -> context?.getString(R.string.email_not_found)
@@ -158,11 +171,5 @@ class SignUpFragment : Fragment() {
             PASSWORD_NOT_MATCH -> context?.getString(R.string.password_not_match)
             NEED_ID_CHECK -> context?.getString(R.string.need_id_check)
         }
-    }
-
-    private fun hideAlert() {
-        isAlertShown = false
-        binding.textViewSignUpAlert.visibility = View.INVISIBLE
-        binding.imageViewSignUpAlert.visibility = View.INVISIBLE
     }
 }
