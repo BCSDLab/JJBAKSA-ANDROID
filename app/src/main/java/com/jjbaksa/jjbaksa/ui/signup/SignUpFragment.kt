@@ -12,7 +12,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.jjbaksa.domain.enums.SignUpAlertEnum
-import com.jjbaksa.domain.enums.SignUpAlertEnum.*
+import com.jjbaksa.domain.enums.SignUpAlertEnum.EMAIL_NOT_FOUND
+import com.jjbaksa.domain.enums.SignUpAlertEnum.ID_EXIST
+import com.jjbaksa.domain.enums.SignUpAlertEnum.NEED_ID_CHECK
+import com.jjbaksa.domain.enums.SignUpAlertEnum.PASSWORD_NOT_MATCH
+import com.jjbaksa.domain.enums.SignUpAlertEnum.PASSWORD_RULE_NOT_MATCH
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.databinding.FragmentSignUpBinding
 import com.jjbaksa.jjbaksa.util.RegexUtil.isPasswordRuleMatch
