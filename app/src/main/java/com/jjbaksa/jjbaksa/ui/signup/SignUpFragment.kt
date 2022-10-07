@@ -15,6 +15,7 @@ import com.jjbaksa.domain.enums.SignUpAlertEnum
 import com.jjbaksa.domain.enums.SignUpAlertEnum.*
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.databinding.FragmentSignUpBinding
+import com.jjbaksa.jjbaksa.util.RegexUtil.isPasswordRuleMatch
 import com.jjbaksa.jjbaksa.viewmodel.SignUpViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -95,9 +96,7 @@ class SignUpFragment : Fragment() {
         }
 
         binding.jjEditTextSignUpPassword.addTextChangedListener {
-            val regex =
-                Regex("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@\$!%*#?&])[A-Za-z\\d@\$!%*#?&]{2,16}\$")
-            if (regex.containsMatchIn(it.toString())) {
+            if (it.toString().isPasswordRuleMatch()) {
                 isPasswordTyped = it.toString().isNotEmpty()
                 updateSignUpNextButton(isPasswordTyped)
                 if (signUpViewModel.uiState.value.isAlertShown) {
