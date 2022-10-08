@@ -17,7 +17,7 @@
 
     <string name="id_already_exist">이미 존재하는 아이디입니다.</string>
     <string name="email_not_found">존재하지 않는 도메인입니다.</string>
-    <string name="password_rule_not_match">비밀번호는 문자, 숫자, 특수문자를 포함한 2~16자리로 이루어져야합니다.</string>
+    <string name="password_rule_not_match">비밀번호는 문자, 숫자, 특수문자를 포함한 8~16자리로 이루어져야합니다.</string>
     <string name="password_not_match">비밀번호가 일치하지 않습니다.</string>
     <string name="need_id_check">아이디 중복확인을 해주세요.</string>
 
