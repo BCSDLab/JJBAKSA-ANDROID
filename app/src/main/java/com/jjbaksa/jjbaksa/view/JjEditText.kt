@@ -35,6 +35,7 @@ open class JjEditText constructor(context: Context, attrs: AttributeSet?) :
     private var isEmail = typedArray.getBoolean(R.styleable.JjEditText_is_email, false)
     private var hasTitle = typedArray.getBoolean(R.styleable.JjEditText_has_title, false)
     private var hasButton = typedArray.getBoolean(R.styleable.JjEditText_has_button, false)
+    private var editTextGravity = typedArray.getInt(R.styleable.JjEditText_editText_gravity, 0x03)
 
     private var title = typedArray.getString(R.styleable.JjEditText_title)
     private var titleSize = typedArray.getDimensionPixelSize(
@@ -73,6 +74,7 @@ open class JjEditText constructor(context: Context, attrs: AttributeSet?) :
 
         setViewTitle()
         hasButton()
+        setEditTextGravity()
 
         setAddTextChangedListener()
         setOnFocusChangeListener()
@@ -99,6 +101,10 @@ open class JjEditText constructor(context: Context, attrs: AttributeSet?) :
                 titleSize.toFloat()
             )
         }
+    }
+
+    private fun setEditTextGravity() {
+        binding.editTextJjEditTextInput.gravity = editTextGravity
     }
 
     private fun hasButton() {
