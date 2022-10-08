@@ -16,7 +16,7 @@ class UserRemoteDataSource @Inject constructor(
         return noAuthApi.signUp(signUpReq)
     }
 
-    override suspend fun checkIdAvailable(account: String): String {
+    override suspend fun checkIdAvailable(account: String): Response<String> {
         return noAuthApi.checkIdAvailable(account)
     }
 }
