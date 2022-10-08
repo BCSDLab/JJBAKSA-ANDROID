@@ -29,4 +29,5 @@
     <string name="id_check">중복확인</string>
     <string name="email">이메일</string>
     <string name="password_confirm">비밀번호 확인</string>
+    <string name="type_nickname">닉네임을 입력해주세요.</string>
 </resources>
