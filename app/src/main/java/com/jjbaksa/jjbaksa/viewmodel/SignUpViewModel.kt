@@ -35,10 +35,10 @@ class SignUpViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(SignUpUIState())
     val uiState: StateFlow<SignUpUIState> = _uiState.asStateFlow()
 
-    private lateinit var id: String
-    private lateinit var password: String
-    private lateinit var email: String
-    private lateinit var nickname: String
+    var id: String = ""
+    var email: String = ""
+    var password: String = ""
+    var nickname: String = ""
 
     fun checkAccountAvailable(account: String) {
         viewModelScope.launch {
@@ -54,16 +54,6 @@ class SignUpViewModel @Inject constructor(
                 // Handle error here
             }
         }
-    }
-
-    fun submitIdPasswordEmail(id: String, password: String, email: String) {
-        this.id = id
-        this.password = password
-        this.email = email
-    }
-
-    fun submitNickname(nickname: String) {
-        this.nickname = nickname
     }
 
     fun updateIdCheckedState(newState: Boolean) {

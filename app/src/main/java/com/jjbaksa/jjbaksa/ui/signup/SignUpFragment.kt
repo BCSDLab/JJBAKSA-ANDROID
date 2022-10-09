@@ -59,7 +59,7 @@ class SignUpFragment : Fragment() {
 
         binding.jjEditTextSignUpId.setOnClickListener {
             signUpViewModel.checkAccountAvailable(
-                binding.jjEditTextSignUpId.getText().toString()
+                binding.jjEditTextSignUpId.editTextText
             )
 
             signUpViewModel.isIdAvailable.observe(viewLifecycleOwner) {
@@ -76,6 +76,9 @@ class SignUpFragment : Fragment() {
         binding.jjEditTextSignUpId.addTextChangedListener {
             // Add check id logic here
             isIdTyped = it.toString().isNotEmpty()
+            if (isIdTyped) {
+                signUpViewModel.id = it.toString()
+            }
             updateSignUpNextButton(isIdTyped)
             // Enable button again if id modified
             binding.jjEditTextSignUpId.isButtonEnabled = true
@@ -92,6 +95,9 @@ class SignUpFragment : Fragment() {
         binding.jjEditTextSignUpEmail.addTextChangedListener {
             // Add check email logic here
             isEmailTyped = it.toString().isNotEmpty()
+            if (isEmailTyped) {
+                signUpViewModel.email = it.toString()
+            }
             updateSignUpNextButton(isEmailTyped)
         }
 
@@ -102,9 +108,15 @@ class SignUpFragment : Fragment() {
         }
 
         binding.jjEditTextSignUpPassword.addTextChangedListener {
+            val isPasswordRuleMatch = it.toString().isPasswordRuleMatch()
+            isPasswordTyped = it.toString().isNotEmpty()
+
+            if (isPasswordTyped) {
+                signUpViewModel.password = it.toString()
+            }
+
             if (it.toString().isPasswordRuleMatch()) {
-                isPasswordTyped = it.toString().isNotEmpty()
-                updateSignUpNextButton(isPasswordTyped)
+                updateSignUpNextButton(isPasswordTyped && isPasswordRuleMatch)
                 if (signUpViewModel.uiState.value.isAlertShown) {
                     signUpViewModel.updateAlertState(false)
                 }
@@ -122,7 +134,7 @@ class SignUpFragment : Fragment() {
 
         binding.jjEditTextSignUpPasswordConfirm.addTextChangedListener {
             isPasswordConfirmed =
-                it.toString() == binding.jjEditTextSignUpPassword.getText().toString()
+                it.toString() == binding.jjEditTextSignUpPassword.editTextText
             if (!isPasswordConfirmed) {
                 signUpViewModel.updateAlertType(PASSWORD_NOT_MATCH)
                 signUpViewModel.updateAlertState(true)
@@ -141,12 +153,6 @@ class SignUpFragment : Fragment() {
         binding.buttonSignUpNext.setOnClickListener {
             if (isPasswordConfirmed) {
                 if (signUpViewModel.uiState.value.isIdChecked) {
-                    signUpViewModel.submitIdPasswordEmail(
-                        binding.jjEditTextSignUpId.getText().toString(),
-                        binding.jjEditTextSignUpPassword.getText().toString(),
-                        binding.jjEditTextSignUpEmail.getText().toString()
-                    )
-
                     findNavController().navigate(R.id.action_nav_graph_move_to_welcome)
                 } else {
                     signUpViewModel.updateAlertType(NEED_ID_CHECK)
@@ -162,6 +168,21 @@ class SignUpFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (signUpViewModel.id.isNotEmpty()) {
+            binding.jjEditTextSignUpId.editTextText = signUpViewModel.id
+        }
+
+        if (signUpViewModel.email.isNotEmpty()) {
+            binding.jjEditTextSignUpEmail.editTextText = signUpViewModel.email
+        }
+
+        if (signUpViewModel.password.isNotEmpty()) {
+            binding.jjEditTextSignUpPassword.editTextText = signUpViewModel.password
+        }
     }
 
     private fun updateSignUpNextButton(isEnabled: Boolean) {

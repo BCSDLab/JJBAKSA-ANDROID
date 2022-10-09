@@ -31,12 +31,15 @@ class WelcomeFragment : Fragment() {
 
         binding.jjEditTextWelcomeName.addTextChangedListener {
             binding.buttonWelcomeComplete.isEnabled = it?.isNotEmpty() == true
+
+            if (it?.isNotEmpty() == true) {
+                signUpViewModel.nickname = it.toString()
+            }
         }
 
         binding.jjEditTextWelcomeName.setOnFocusChangeListener { _, _ -> }
 
         binding.buttonWelcomeComplete.setOnClickListener {
-            signUpViewModel.submitNickname(binding.jjEditTextWelcomeName.getText().toString())
             signUpViewModel.signUpRequest()
             signUpViewModel.isSignUpSuccess.observe(viewLifecycleOwner) {
                 if (it) {
@@ -46,5 +49,12 @@ class WelcomeFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (signUpViewModel.nickname.isNotEmpty()) {
+            binding.jjEditTextWelcomeName.editTextText = signUpViewModel.id
+        }
     }
 }
