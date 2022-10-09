@@ -53,7 +53,6 @@ open class JjEditText constructor(context: Context, attrs: AttributeSet?) :
         set(value) {
             field = value
             binding.buttonJjEditTextButton.isEnabled = value
-            binding.buttonJjEditTextButton.invalidate()
         }
 
     init {
