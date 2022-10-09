@@ -47,7 +47,7 @@ class SignUpFragment : Fragment() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 signUpViewModel.uiState.collect {
-                    binding.jjEditTextSignUpId.updateButtonStyle(it.isIdChecked)
+                    binding.jjEditTextSignUpId.isButtonEnabled = !it.isIdChecked
                     setAlert(it.alertType)
                     binding.textViewSignUpAlert.visibility =
                         if (it.isAlertShown) View.VISIBLE else View.INVISIBLE
@@ -58,19 +58,17 @@ class SignUpFragment : Fragment() {
         }
 
         binding.jjEditTextSignUpId.setOnClickListener {
-            if (!signUpViewModel.uiState.value.isIdChecked) {
-                signUpViewModel.checkAccountAvailable(
-                    binding.jjEditTextSignUpId.getText().toString()
-                )
+            signUpViewModel.checkAccountAvailable(
+                binding.jjEditTextSignUpId.getText().toString()
+            )
 
-                signUpViewModel.isIdAvailable.observe(viewLifecycleOwner) {
-                    if (it) {
-                        signUpViewModel.updateIdCheckedState(true)
-                        signUpViewModel.updateAlertState(false)
-                    } else {
-                        signUpViewModel.updateAlertType(ID_EXIST)
-                        signUpViewModel.updateAlertState(true)
-                    }
+            signUpViewModel.isIdAvailable.observe(viewLifecycleOwner) {
+                if (it) {
+                    signUpViewModel.updateIdCheckedState(true)
+                    signUpViewModel.updateAlertState(false)
+                } else {
+                    signUpViewModel.updateAlertType(ID_EXIST)
+                    signUpViewModel.updateAlertState(true)
                 }
             }
         }
@@ -79,6 +77,10 @@ class SignUpFragment : Fragment() {
             // Add check id logic here
             isIdTyped = it.toString().isNotEmpty()
             updateSignUpNextButton(isIdTyped)
+            // Enable button again if id modified
+            binding.jjEditTextSignUpId.isButtonEnabled = true
+            // Set Id Checked state to false if id modified
+            signUpViewModel.updateIdCheckedState(false)
         }
 
         binding.jjEditTextSignUpId.setOnFocusChangeListener { _, hasFocus ->
