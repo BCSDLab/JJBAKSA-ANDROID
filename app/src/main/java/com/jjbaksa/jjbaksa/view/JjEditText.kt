@@ -55,6 +55,13 @@ open class JjEditText constructor(context: Context, attrs: AttributeSet?) :
             binding.buttonJjEditTextButton.isEnabled = value
         }
 
+    var editTextText: String = ""
+        get() = binding.editTextJjEditTextInput.text.toString()
+        set(value) {
+            field = value
+            binding.editTextJjEditTextInput.setText(value)
+        }
+
     init {
         initView()
     }
@@ -73,6 +80,7 @@ open class JjEditText constructor(context: Context, attrs: AttributeSet?) :
                 R.drawable.shape_rect_eeeeee_solid_radius_100_padding_7_11_11_8
             )
         binding.editTextJjEditTextInput.hint = editTextHint
+        binding.editTextJjEditTextInput.setText(editTextText)
 
         isPasswordField()
         isEmailField()
@@ -153,10 +161,6 @@ open class JjEditText constructor(context: Context, attrs: AttributeSet?) :
                 }
             }
         }
-    }
-
-    fun getText(): Editable? {
-        return binding.editTextJjEditTextInput.text
     }
 
     fun addTextChangedListener(textChanged: TextChanged) {
