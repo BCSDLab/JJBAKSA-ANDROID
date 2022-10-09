@@ -48,7 +48,13 @@ open class JjEditText constructor(context: Context, attrs: AttributeSet?) :
     )
 
     private var showPasswordConfirm = false
-    var isButtonClicked = false
+
+    var isButtonEnabled = true
+        set(value) {
+            field = value
+            binding.buttonJjEditTextButton.isEnabled = value
+            binding.buttonJjEditTextButton.invalidate()
+        }
 
     init {
         initView()
@@ -118,7 +124,6 @@ open class JjEditText constructor(context: Context, attrs: AttributeSet?) :
             )
 
             binding.buttonJjEditTextButton.setOnClickListener {
-                updateButtonStyle()
                 onButtonClickListener?.onClick(it)
             }
         }
@@ -153,37 +158,6 @@ open class JjEditText constructor(context: Context, attrs: AttributeSet?) :
 
     fun getText(): Editable? {
         return binding.editTextJjEditTextInput.text
-    }
-
-    fun updateButtonStyle(isClicked: Boolean) {
-        isButtonClicked = isClicked
-        updateButtonStyle()
-    }
-
-    private fun updateButtonStyle() {
-        if (isButtonClicked) {
-            binding.buttonJjEditTextButton.background = ContextCompat.getDrawable(
-                binding.root.context,
-                R.drawable.shape_rect_ff7f23_solid_radius_22
-            )
-            binding.buttonJjEditTextButton.setTextColor(
-                ContextCompat.getColor(
-                    binding.buttonJjEditTextButton.context,
-                    R.color.color_ffffff
-                )
-            )
-        } else {
-            binding.buttonJjEditTextButton.background = ContextCompat.getDrawable(
-                binding.root.context,
-                R.drawable.shape_rect_ff7f23_stroke_ffffff_solid_radius_22
-            )
-            binding.buttonJjEditTextButton.setTextColor(
-                ContextCompat.getColor(
-                    binding.buttonJjEditTextButton.context,
-                    R.color.color_ff7f23
-                )
-            )
-        }
     }
 
     fun addTextChangedListener(textChanged: TextChanged) {
