@@ -35,6 +35,8 @@ class SignUpViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(SignUpUIState())
     val uiState: StateFlow<SignUpUIState> = _uiState.asStateFlow()
 
+    private var availableId = ""
+
     var id: String = ""
     var email: String = ""
     var password: String = ""
@@ -49,11 +51,17 @@ class SignUpViewModel @Inject constructor(
                 if (!result) {
                     updateAlertType(SignUpAlertEnum.ID_EXIST)
                     updateAlertState(true)
+                } else {
+                    availableId = id
                 }
             }.onFailure {
                 // Handle error here
             }
         }
+    }
+
+    fun isTypedIdChanged(): Boolean {
+        return availableId != id
     }
 
     fun updateIdCheckedState(newState: Boolean) {

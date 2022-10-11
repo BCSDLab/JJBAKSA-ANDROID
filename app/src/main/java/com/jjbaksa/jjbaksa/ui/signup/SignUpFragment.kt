@@ -80,10 +80,12 @@ class SignUpFragment : Fragment() {
                 signUpViewModel.id = it.toString()
             }
             updateSignUpNextButton(isIdTyped)
-            // Enable button again if id modified
-            binding.jjEditTextSignUpId.isButtonEnabled = true
-            // Set Id Checked state to false if id modified
-            signUpViewModel.updateIdCheckedState(false)
+            if (signUpViewModel.isTypedIdChanged()) {
+                // Enable button again if id modified
+                binding.jjEditTextSignUpId.isButtonEnabled = true
+                // Set Id Checked state to false if id modified
+                signUpViewModel.updateIdCheckedState(false)
+            }
         }
 
         binding.jjEditTextSignUpId.setOnFocusChangeListener { _, hasFocus ->
