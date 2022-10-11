@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:width="14.12dp"
+        android:height="14dp"
+        android:drawable="@drawable/logo_naver" />
+</layer-list>

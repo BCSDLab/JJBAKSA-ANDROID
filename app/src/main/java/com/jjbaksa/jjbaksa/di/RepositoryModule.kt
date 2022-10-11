@@ -17,7 +17,7 @@ object RepositoryModule {
     @Provides
     fun provideUserRepository(
         userRemoteDataSource: UserRemoteDataSource,
-        userLocalDataSource: UserLocalDataSource
+        userLocalDataSource: UserLocalDataSource,
     ): UserRepository {
         return UserRepositoryImpl(userRemoteDataSource, userLocalDataSource)
     }

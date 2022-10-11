@@ -1,6 +1,7 @@
 package com.jjbaksa.jjbaksa
 
 import android.app.Application
+import com.kakao.sdk.common.KakaoSdk
 import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
@@ -11,6 +12,11 @@ class JjbaksaApp : Application() {
     val appContext: Context = this
     val isDebug
         get() = isDebug(appContext)
+
+    override fun onCreate() {
+        super.onCreate()
+        KakaoSdk.init(this, BuildConfig.kakao_native_app_key)
+    }
 
     /**
      * 디버그모드인지 확인하는 함수

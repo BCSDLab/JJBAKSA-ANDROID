@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -18,6 +20,11 @@ android {
         versionName = Constants.versionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "kakao_native_app_key", getPropertyKey("kakao_native_app_key"))
+        buildConfigField("String", "naver_client_id", getPropertyKey("naver_client_id"))
+        buildConfigField("String", "naver_client_secret", getPropertyKey("naver_client_secret"))
+        buildConfigField("String", "naver_client_name", getPropertyKey("naver_client_name"))
+        resValue("string", "kakao_oauth_host", getPropertyKey("kakao_oauth_host"))
     }
 
     buildTypes {
@@ -51,6 +58,9 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.5.0")
     implementation("com.google.android.material:material:1.4.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation("com.kakao.sdk:v2-user:2.11.0")
+    implementation("com.google.android.gms:play-services-auth:20.3.0")
+    implementation("com.navercorp.nid:oauth:5.1.1")
     KotlinDependencies.run {
         implementation(kotlin)
         implementation(coroutine)
@@ -114,4 +124,9 @@ ktlint {
         reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.PLAIN)
         reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE)
     }
+}
+
+fun getPropertyKey(propertyKey: String): String {
+    val nullableProperty: String? = gradleLocalProperties(rootDir).getProperty(propertyKey)
+    return nullableProperty ?: "null"
 }
