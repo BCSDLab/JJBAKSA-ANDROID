@@ -5,5 +5,5 @@ import com.jjbaksa.domain.resp.user.SignUpResp
 
 interface UserRepository {
     suspend fun postSignUp(signUpReq: SignUpReq): SignUpResp?
-    suspend fun checkIdAvailable(account: String): Boolean
+    suspend fun checkAccountAvailable(account: String): Boolean
 }

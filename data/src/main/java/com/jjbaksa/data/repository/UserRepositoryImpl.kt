@@ -17,8 +17,8 @@ class UserRepositoryImpl @Inject constructor(
         return resp.body()
     }
 
-    override suspend fun checkIdAvailable(account: String): Boolean {
-        val result = userRemoteDataSource.checkIdAvailable(account)
+    override suspend fun checkAccountAvailable(account: String): Boolean {
+        val result = userRemoteDataSource.checkAccountAvailable(account)
         return CheckAccountAvailableMapper.mapToBoolean(result.code())
     }
 }

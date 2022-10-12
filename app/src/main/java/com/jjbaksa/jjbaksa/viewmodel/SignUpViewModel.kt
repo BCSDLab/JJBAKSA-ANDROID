@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jjbaksa.domain.enums.SignUpAlertEnum
 import com.jjbaksa.domain.resp.user.SignUpReq
-import com.jjbaksa.domain.usecase.CheckIdAvailableUseCase
+import com.jjbaksa.domain.usecase.CheckAccountAvailableUseCase
 import com.jjbaksa.domain.usecase.SignUpUseCase
 import com.jjbaksa.jjbaksa.viewmodel.state.SignUpUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-    private val checkIdAvailableUseCase: CheckIdAvailableUseCase,
+    private val checkAccountAvailableUseCase: CheckAccountAvailableUseCase,
     private val signUpUseCase: SignUpUseCase
 ) :
     ViewModel() {
@@ -45,7 +45,7 @@ class SignUpViewModel @Inject constructor(
     fun checkAccountAvailable(account: String) {
         viewModelScope.launch {
             runCatching {
-                checkIdAvailableUseCase(account)
+                checkAccountAvailableUseCase(account)
             }.onSuccess { result ->
                 _isIdAvailable.value = result
                 if (!result) {
