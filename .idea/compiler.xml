@@ -8,6 +8,9 @@
       <module name="JJBAKSA-AOS.app" target="11" />
       <module name="JJBAKSA-AOS.data" target="11" />
       <module name="JJBAKSA.app" target="11" />
+      <module name="JJBAKSA.buildSrc" target="11" />
+      <module name="JJBAKSA.buildSrc.main" target="11" />
+      <module name="JJBAKSA.buildSrc.test" target="11" />
       <module name="JJBAKSA.data" target="11" />
     </bytecodeTargetLevel>
   </component>

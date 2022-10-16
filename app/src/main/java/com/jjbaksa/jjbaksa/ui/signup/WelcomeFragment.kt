@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.databinding.FragmentWelcomeBinding
-import com.jjbaksa.jjbaksa.viewmodel.SignUpViewModel
+import com.jjbaksa.jjbaksa.ui.signup.viewmodel.SignUpViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

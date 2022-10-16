@@ -1,4 +1,4 @@
-package com.jjbaksa.jjbaksa.viewmodel.state
+package com.jjbaksa.jjbaksa.ui.signup.viewmodel.state
 
 import com.jjbaksa.domain.enums.SignUpAlertEnum
 
