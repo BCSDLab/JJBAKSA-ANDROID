@@ -24,6 +24,6 @@ object DataSourceModule {
     @Provides
     @Singleton
     fun provideLocalDataSource(@ApplicationContext context: Context, userDao: UserDao): UserLocalDataSource {
-        return UserLocalDataSource(context,userDao)
+        return UserLocalDataSource(context, userDao)
     }
 }

@@ -7,21 +7,19 @@ import androidx.lifecycle.viewModelScope
 import com.jjbaksa.domain.repository.UserRepository
 import com.jjbaksa.domain.resp.user.LoginResult
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val repository: UserRepository
-): ViewModel() {
+) : ViewModel() {
     val account = MutableLiveData<String>("")
     val password = MutableLiveData<String>("")
     val isAutoLogin = MutableLiveData<Boolean>(false)
 
     private val _loginState = MutableLiveData<LoginResult>(LoginResult())
     val loginState: LiveData<LoginResult> get() = _loginState
-
 
     fun login() {
         viewModelScope.launch {

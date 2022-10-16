@@ -9,4 +9,3 @@ open class BaseResp {
     @SerializedName("code")
     val code: Int = 0
 }
-

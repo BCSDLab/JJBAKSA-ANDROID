@@ -25,5 +25,4 @@ interface NoAuthApi {
     suspend fun login(
         @Body loginReq: LoginReq
     ): Response<LoginResp>
-
 }
