@@ -1,4 +1,4 @@
-package com.jjbaksa.data.resp.user
+package com.jjbaksa.domain.resp.user
 
 data class SignUpResp(
     val account: String,

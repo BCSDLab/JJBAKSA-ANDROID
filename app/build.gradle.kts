@@ -71,6 +71,7 @@ dependencies {
         implementation(activityKTX)
         implementation(fragmentKTX)
         implementation(lifecycleKTX)
+        implementation(viewModelKTX)
         implementation(navigationFragmentKTX)
         implementation(navigationUiKTX)
     }

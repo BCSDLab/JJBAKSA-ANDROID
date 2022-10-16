@@ -35,6 +35,7 @@ open class JjEditText constructor(context: Context, attrs: AttributeSet?) :
     private var isEmail = typedArray.getBoolean(R.styleable.JjEditText_is_email, false)
     private var hasTitle = typedArray.getBoolean(R.styleable.JjEditText_has_title, false)
     private var hasButton = typedArray.getBoolean(R.styleable.JjEditText_has_button, false)
+    private var editTextGravity = typedArray.getInt(R.styleable.JjEditText_editText_gravity, 0x03)
 
     private var title = typedArray.getString(R.styleable.JjEditText_title)
     private var titleSize = typedArray.getDimensionPixelSize(
@@ -47,7 +48,19 @@ open class JjEditText constructor(context: Context, attrs: AttributeSet?) :
     )
 
     private var showPasswordConfirm = false
-    private var isButtonClicked = false
+
+    var isButtonEnabled = true
+        set(value) {
+            field = value
+            binding.buttonJjEditTextButton.isEnabled = value
+        }
+
+    var editTextText: String = ""
+        get() = binding.editTextJjEditTextInput.text.toString()
+        set(value) {
+            field = value
+            binding.editTextJjEditTextInput.setText(value)
+        }
 
     init {
         initView()
@@ -67,12 +80,14 @@ open class JjEditText constructor(context: Context, attrs: AttributeSet?) :
                 R.drawable.shape_rect_eeeeee_solid_radius_100_padding_7_11_11_8
             )
         binding.editTextJjEditTextInput.hint = editTextHint
+        binding.editTextJjEditTextInput.setText(editTextText)
 
         isPasswordField()
         isEmailField()
 
         setViewTitle()
         hasButton()
+        setEditTextGravity()
 
         setAddTextChangedListener()
         setOnFocusChangeListener()
@@ -101,6 +116,10 @@ open class JjEditText constructor(context: Context, attrs: AttributeSet?) :
         }
     }
 
+    private fun setEditTextGravity() {
+        binding.editTextJjEditTextInput.gravity = editTextGravity
+    }
+
     private fun hasButton() {
         if (hasButton) {
             binding.buttonJjEditTextButton.visibility = View.VISIBLE
@@ -112,8 +131,6 @@ open class JjEditText constructor(context: Context, attrs: AttributeSet?) :
             )
 
             binding.buttonJjEditTextButton.setOnClickListener {
-                isButtonClicked = true
-                updateButtonStyle()
                 onButtonClickListener?.onClick(it)
             }
         }
@@ -143,36 +160,6 @@ open class JjEditText constructor(context: Context, attrs: AttributeSet?) :
                         PasswordTransformationMethod.getInstance()
                 }
             }
-        }
-    }
-
-    fun getText(): Editable? {
-        return binding.editTextJjEditTextInput.text
-    }
-
-    private fun updateButtonStyle() {
-        if (isButtonClicked) {
-            binding.buttonJjEditTextButton.background = ContextCompat.getDrawable(
-                binding.root.context,
-                R.drawable.shape_rect_ff7f23_solid_radius_22
-            )
-            binding.buttonJjEditTextButton.setTextColor(
-                ContextCompat.getColor(
-                    binding.buttonJjEditTextButton.context,
-                    R.color.color_ffffff
-                )
-            )
-        } else {
-            binding.buttonJjEditTextButton.background = ContextCompat.getDrawable(
-                binding.root.context,
-                R.drawable.shape_rect_ff7f23_stroke_ffffff_solid_radius_22
-            )
-            binding.buttonJjEditTextButton.setTextColor(
-                ContextCompat.getColor(
-                    binding.buttonJjEditTextButton.context,
-                    R.color.color_ff7f23
-                )
-            )
         }
     }
 

@@ -109,7 +109,7 @@ open class JjCheckBox constructor(context: Context, attrs: AttributeSet?) :
     private fun openCloseMoreInfo() {
         isMoreInfoOpened = !isMoreInfoOpened
 
-        binding.textViewJjCheckBoxMoreInfo.visibility = if (isMoreInfoOpened) {
+        binding.nestedScrollViewJjCheckBoxMoreInfo.visibility = if (isMoreInfoOpened) {
             View.VISIBLE
         } else {
             View.GONE

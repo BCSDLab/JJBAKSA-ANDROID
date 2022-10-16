@@ -1,7 +1,7 @@
-package com.jjbaksa.data.resp.user
+package com.jjbaksa.domain.resp.user
 
 data class SignUpReq(
-    val acctoun: String,
+    val account: String,
     val email: String,
     val nickname: String,
     val password: String
