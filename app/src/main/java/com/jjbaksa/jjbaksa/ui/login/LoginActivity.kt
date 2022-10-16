@@ -3,6 +3,7 @@ package com.jjbaksa.jjbaksa.ui.login
 import android.content.Intent
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.widget.addTextChangedListener
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseActivity
 import com.jjbaksa.jjbaksa.databinding.ActivityLoginBinding
@@ -52,6 +53,13 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                 if (viewModel.account.value!!.isNotEmpty() && viewModel.password.value!!.isNotEmpty()) {
                     viewModel.login()
                 }
+            }
+            editTextId.addTextChangedListener {
+                buttonLogin.isSelected =
+                    it.toString().isNotEmpty() && editTextPassword.text.toString().isNotEmpty()
+            }
+            editTextPassword.addTextChangedListener {
+                buttonLogin.isSelected = it.toString().isNotEmpty() && editTextId.text.toString().isNotEmpty()
             }
         }
     }

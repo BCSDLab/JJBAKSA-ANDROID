@@ -71,6 +71,7 @@
                 android:hint="@string/password"
                 android:textColorHint="@color/color_c4c4c4"
                 android:textSize="12sp"
+                android:inputType="textPassword"
                 android:text="@={vm.password}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -103,16 +104,16 @@
                 android:id="@+id/button_login"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginHorizontal="72dp"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/selector_rect_radius_100_c4c4c4_ff7f23"
+                android:gravity="center"
                 android:text="@string/login"
                 android:textColor="@color/color_ffffff"
-                app:layout_constraintTop_toBottomOf="@+id/switch_auto_login"
-                android:layout_marginTop="41dp"
-                android:gravity="center"
                 android:textSize="14sp"
-                android:background="@drawable/shape_rect_c4c4c4_solid_radius_100" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/switch_auto_login" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_social_login"
