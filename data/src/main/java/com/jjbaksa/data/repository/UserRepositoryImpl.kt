@@ -34,22 +34,43 @@ class UserRepositoryImpl @Inject constructor(
     ) {
 
         val response = userRemoteDataSource.postLogin(LoginReq(account, password))
-        if (response!!.isSuccessful) {
-            if (response.body()!!.code == SUCCESS) {
-                if (isAutoLogin) {
-                    userLocalDataSource.saveAccessToken(response.body()!!.accessToken)
-                    userLocalDataSource.saveRefreshToken(response.body()!!.refreshToken)
-                    userLocalDataSource.saveAccount(account)
-                    userLocalDataSource.savePassword(password)
+        if (response != null) {
+            if (response.isSuccessful) {
+                if (response.body()?.code == SUCCESS) {
+                    if (isAutoLogin) {
+                        userLocalDataSource.saveAccessToken(response.body()!!.accessToken)
+                        userLocalDataSource.saveRefreshToken(response.body()!!.refreshToken)
+                        userLocalDataSource.saveAccount(account)
+                        userLocalDataSource.savePassword(password)
+                        userLocalDataSource.saveAutoLogin(isAutoLogin)
+                    }
+                    onResult(LoginResult(isSuccess = true))
+                } else {
+                    onResult(LoginResult(erroMessage = response.body()!!.errorMessage))
                 }
-                onResult(LoginResult(isSuccess = true))
             } else {
-                onResult(LoginResult(erroMessage = response.body()!!.errorMessage))
+                var errorBodyJson = "${response.errorBody()!!.string()}"
+                val errorBody = RespMapper.errorMapper(errorBodyJson)
+                onResult(LoginResult(erroMessage = errorBody.errorMessage))
             }
-        } else {
-            var errorBodyJson = "${response.errorBody()!!.string()}"
-            val errorBody = RespMapper.errorMapper(errorBodyJson)
-            onResult(LoginResult(erroMessage = errorBody.errorMessage))
         }
+    }
+    override suspend fun me() {
+    }
+
+    override fun getAutoLoginFlag(): Boolean {
+        return userLocalDataSource.getAutoLoginFlag()
+    }
+
+    override fun getAccount(): String {
+        return userLocalDataSource.getAcount()
+    }
+
+    override fun getPasswrod(): String {
+        return userLocalDataSource.getPassword()
+    }
+
+    override fun getAccessToken(): String {
+        return userLocalDataSource.getAccessToken()
     }
 }

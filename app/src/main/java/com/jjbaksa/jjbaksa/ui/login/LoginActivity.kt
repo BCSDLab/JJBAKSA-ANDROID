@@ -19,10 +19,12 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     val viewModel: LoginViewModel by viewModels()
     override fun initView() {
         binding.vm = viewModel
+        viewModel.getAutoLoginFlag()
     }
 
     override fun subscribe() {
         with(viewModel) {
+
             loginState.observe(this@LoginActivity) {
                 if (it != null) {
                     if (it.isSuccess) {
@@ -50,9 +52,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                 goToSignUpActivity()
             }
             buttonLogin.setOnClickListener {
-                if (viewModel.account.value!!.isNotEmpty() && viewModel.password.value!!.isNotEmpty()) {
-                    viewModel.login()
-                }
+                viewModel.login()
             }
             editTextId.addTextChangedListener {
                 buttonLogin.isSelected =

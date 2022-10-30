@@ -14,4 +14,9 @@ interface UserDataSource {
     suspend fun saveAccount(account: String)
     suspend fun savePassword(password: String)
     suspend fun saveRefreshToken(refreshToken: String)
+    suspend fun saveAutoLogin(isAutoLogin: Boolean)
+    fun getAutoLoginFlag(): Boolean
+    fun getAcount(): String
+    fun getPassword(): String
+    fun getAccessToken(): String
 }

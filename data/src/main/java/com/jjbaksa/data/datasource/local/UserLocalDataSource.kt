@@ -11,6 +11,8 @@ import com.jjbaksa.domain.resp.user.LoginReq
 import com.jjbaksa.domain.resp.user.SignUpReq
 import com.jjbaksa.domain.resp.user.SignUpResp
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -52,6 +54,36 @@ class UserLocalDataSource @Inject constructor(
     override suspend fun saveRefreshToken(refreshToken: String) {
         dataStore.edit {
             it[PreferenceKeys.REFRESH_TOKEN] = refreshToken
+        }
+    }
+
+    override suspend fun saveAutoLogin(isAutoLogin: Boolean) {
+        dataStore.edit {
+            it[PreferenceKeys.AUTO_LOGIN] = isAutoLogin
+        }
+    }
+
+    override fun getAutoLoginFlag(): Boolean {
+        return runBlocking {
+            dataStore.data.first()[PreferenceKeys.AUTO_LOGIN] ?: false
+        }
+    }
+
+    override fun getAcount(): String {
+        return runBlocking {
+            dataStore.data.first()[PreferenceKeys.ACCOUNT] ?: ""
+        }
+    }
+
+    override fun getPassword(): String {
+        return runBlocking {
+            dataStore.data.first()[PreferenceKeys.PASSWORD] ?: ""
+        }
+    }
+
+    override fun getAccessToken(): String {
+        return runBlocking {
+            dataStore.data.first()[PreferenceKeys.ACCESS_TOKEN] ?: ""
         }
     }
 }

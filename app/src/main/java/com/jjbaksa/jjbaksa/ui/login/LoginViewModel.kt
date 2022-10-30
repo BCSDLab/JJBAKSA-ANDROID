@@ -1,11 +1,12 @@
 package com.jjbaksa.jjbaksa.ui.login
 
-import androidx.lifecycle.LiveData
+import android.text.TextUtils
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jjbaksa.domain.repository.UserRepository
 import com.jjbaksa.domain.resp.user.LoginResult
+import com.jjbaksa.jjbaksa.base.BaseViewModel
+import com.jjbaksa.jjbaksa.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -13,18 +14,35 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val repository: UserRepository
-) : ViewModel() {
+) : BaseViewModel() {
     val account = MutableLiveData<String>("")
     val password = MutableLiveData<String>("")
     val isAutoLogin = MutableLiveData<Boolean>(false)
 
-    private val _loginState = MutableLiveData<LoginResult>(LoginResult())
-    val loginState: LiveData<LoginResult> get() = _loginState
+    private val _loginState = SingleLiveEvent<LoginResult>()
+    val loginState: SingleLiveEvent<LoginResult> get() = _loginState
+
+    private val _autoLoginState = SingleLiveEvent<Boolean>()
+    val autoLoginState: SingleLiveEvent<Boolean> get() = _autoLoginState
 
     fun login() {
-        viewModelScope.launch {
-            repository.postLogin(account.value!!, password.value!!, isAutoLogin.value!!) {
-                _loginState.value = it
+        if (!TextUtils.isEmpty(account.value) && !TextUtils.isEmpty(password.value)) {
+            viewModelScope.launch(ceh) {
+                repository.postLogin(account.value!!, password.value!!, isAutoLogin.value!!) {
+                    _loginState.value = it
+                }
+            }
+        }
+    }
+
+    fun getAutoLoginFlag() {
+        viewModelScope.launch(ceh) {
+
+            if (repository.getAutoLoginFlag()) {
+                isAutoLogin.value = true
+                account.value = repository.getAccount()
+                password.value = repository.getPasswrod()
+                login()
             }
         }
     }

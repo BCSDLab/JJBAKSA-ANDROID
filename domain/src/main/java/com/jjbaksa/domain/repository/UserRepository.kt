@@ -13,4 +13,9 @@ interface UserRepository {
         isAutoLogin: Boolean,
         onResult: (LoginResult) -> Unit
     )
+    suspend fun me()
+    fun getAutoLoginFlag(): Boolean
+    fun getAccount(): String
+    fun getPasswrod(): String
+    fun getAccessToken(): String
 }
