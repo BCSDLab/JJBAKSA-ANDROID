@@ -25,6 +25,9 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
             textViewSignUp.setOnClickListener {
                 goToSignUpActivity()
             }
+            textViewFindId.setOnClickListener {
+                goToFindIdActivity()
+            }
         }
     }
     fun goToSocialLoginActivity() {
@@ -32,5 +35,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     }
     fun goToSignUpActivity() {
         Intent(this, SignUpActivity::class.java).also { startActivity(it) }
+    }
+    fun goToFindIdActivity() {
+        Intent(this, FindIdActivity::class.java).also { startActivity(it) }
     }
 }

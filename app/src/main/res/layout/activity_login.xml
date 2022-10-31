@@ -132,6 +132,18 @@
                 android:layout_marginTop="32dp"
                 android:text="@string/sign_up"/>
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_view_find_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textColor="@color/color_ff7f23"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_sign_up"
+                android:layout_marginTop="16dp"
+                android:text="@string/find_id"/>
+
 
 
 
