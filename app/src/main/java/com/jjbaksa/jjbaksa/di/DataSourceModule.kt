@@ -1,5 +1,6 @@
 package com.jjbaksa.jjbaksa.di
 
+import android.content.Context
 import com.jjbaksa.data.api.AuthApi
 import com.jjbaksa.data.api.NoAuthApi
 import com.jjbaksa.data.database.UserDao
@@ -8,6 +9,7 @@ import com.jjbaksa.data.datasource.remote.UserRemoteDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -21,7 +23,7 @@ object DataSourceModule {
     }
     @Provides
     @Singleton
-    fun provideLocalDataSource(userDao: UserDao): UserLocalDataSource {
-        return UserLocalDataSource(userDao)
+    fun provideLocalDataSource(@ApplicationContext context: Context, userDao: UserDao): UserLocalDataSource {
+        return UserLocalDataSource(context, userDao)
     }
 }

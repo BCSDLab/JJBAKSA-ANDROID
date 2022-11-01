@@ -20,7 +20,7 @@ import com.jjbaksa.domain.enums.SignUpAlertEnum.PASSWORD_RULE_NOT_MATCH
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.databinding.FragmentSignUpBinding
 import com.jjbaksa.jjbaksa.util.RegexUtil.isPasswordRuleMatch
-import com.jjbaksa.jjbaksa.viewmodel.SignUpViewModel
+import com.jjbaksa.jjbaksa.ui.signup.viewmodel.SignUpViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 

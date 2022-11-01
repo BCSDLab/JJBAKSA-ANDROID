@@ -13,6 +13,7 @@ dependencies {
     KotlinDependencies.run {
         implementation(kotlin)
         implementation(inject)
+        implementation(coroutine)
     }
 }
 

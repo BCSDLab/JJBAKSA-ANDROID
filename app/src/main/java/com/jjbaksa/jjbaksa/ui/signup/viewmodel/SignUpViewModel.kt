@@ -1,4 +1,4 @@
-package com.jjbaksa.jjbaksa.viewmodel
+package com.jjbaksa.jjbaksa.ui.signup.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,7 +8,7 @@ import com.jjbaksa.domain.enums.SignUpAlertEnum
 import com.jjbaksa.domain.resp.user.SignUpReq
 import com.jjbaksa.domain.usecase.CheckAccountAvailableUseCase
 import com.jjbaksa.domain.usecase.SignUpUseCase
-import com.jjbaksa.jjbaksa.viewmodel.state.SignUpUIState
+import com.jjbaksa.jjbaksa.ui.signup.viewmodel.state.SignUpUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
