@@ -4,6 +4,7 @@ import android.content.Intent
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseActivity
 import com.jjbaksa.jjbaksa.databinding.ActivityLoginBinding
+import com.jjbaksa.jjbaksa.ui.findid.FindIdActivity
 import com.jjbaksa.jjbaksa.ui.signup.SignUpActivity
 import com.jjbaksa.jjbaksa.ui.social.SocialLoginActivity
 

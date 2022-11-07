@@ -1,4 +1,4 @@
-package com.jjbaksa.jjbaksa.ui.login
+package com.jjbaksa.jjbaksa.ui.findid
 
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseActivity
