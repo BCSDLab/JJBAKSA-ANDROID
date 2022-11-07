@@ -18,8 +18,11 @@
         <entry key="..\:/Users/seong/StudioProjects/JJBAKSA-ANDROID/app/src/main/res/drawable/google_login_box.xml" value="0.2295" />
         <entry key="..\:/Users/seong/StudioProjects/JJBAKSA-ANDROID/app/src/main/res/drawable/ic_bookmark.xml" value="0.1405" />
         <entry key="..\:/Users/seong/StudioProjects/JJBAKSA-ANDROID/app/src/main/res/drawable/ic_button_search.xml" value="0.1405" />
+        <entry key="..\:/Users/seong/StudioProjects/JJBAKSA-ANDROID/app/src/main/res/drawable/ic_friend.xml" value="0.1405" />
         <entry key="..\:/Users/seong/StudioProjects/JJBAKSA-ANDROID/app/src/main/res/drawable/ic_hamburger_menu.xml" value="0.1405" />
         <entry key="..\:/Users/seong/StudioProjects/JJBAKSA-ANDROID/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1405" />
+        <entry key="..\:/Users/seong/StudioProjects/JJBAKSA-ANDROID/app/src/main/res/drawable/ic_map.xml" value="0.1405" />
+        <entry key="..\:/Users/seong/StudioProjects/JJBAKSA-ANDROID/app/src/main/res/drawable/ic_menu_item_home.xml" value="0.1405" />
         <entry key="..\:/Users/seong/StudioProjects/JJBAKSA-ANDROID/app/src/main/res/drawable/kakao_login_box.xml" value="0.2295" />
         <entry key="..\:/Users/seong/StudioProjects/JJBAKSA-ANDROID/app/src/main/res/drawable/layerlist_button_bookmark.xml" value="0.152" />
         <entry key="..\:/Users/seong/StudioProjects/JJBAKSA-ANDROID/app/src/main/res/drawable/layerlist_button_friend.xml" value="0.152" />
@@ -41,6 +44,8 @@
         <entry key="..\:/Users/seong/StudioProjects/JJBAKSA-ANDROID/app/src/main/res/drawable/sel_jj_check_box_check_box_unchecked.xml" value="0.1405" />
         <entry key="..\:/Users/seong/StudioProjects/JJBAKSA-ANDROID/app/src/main/res/drawable/sel_jj_check_box_more_info_closed.xml" value="0.1405" />
         <entry key="..\:/Users/seong/StudioProjects/JJBAKSA-ANDROID/app/src/main/res/drawable/sel_jj_check_box_more_info_opened.xml" value="0.1405" />
+        <entry key="..\:/Users/seong/StudioProjects/JJBAKSA-ANDROID/app/src/main/res/drawable/sel_jj_edit_text_button_background.xml" value="0.1405" />
+        <entry key="..\:/Users/seong/StudioProjects/JJBAKSA-ANDROID/app/src/main/res/drawable/sel_jj_edit_text_password_show.xml" value="0.1405" />
         <entry key="..\:/Users/seong/StudioProjects/JJBAKSA-ANDROID/app/src/main/res/drawable/sel_main_page_bottom_navigation_icon.xml" value="0.1405" />
         <entry key="..\:/Users/seong/StudioProjects/JJBAKSA-ANDROID/app/src/main/res/drawable/selector_ff7f23_c4c4c4.xml" value="0.2215" />
         <entry key="..\:/Users/seong/StudioProjects/JJBAKSA-ANDROID/app/src/main/res/drawable/shape_circ_222222_solid.xml" value="0.152" />
@@ -53,12 +58,14 @@
         <entry key="..\:/Users/seong/StudioProjects/JJBAKSA-ANDROID/app/src/main/res/drawable/shape_rect_c4c4c4_solid_radius_100.xml" value="0.2215" />
         <entry key="..\:/Users/seong/StudioProjects/JJBAKSA-ANDROID/app/src/main/res/drawable/shape_rect_c4c4c4_solid_radius_24_swich_off.xml" value="0.2215" />
         <entry key="..\:/Users/seong/StudioProjects/JJBAKSA-ANDROID/app/src/main/res/drawable/shape_rect_eeeeee_solid_radius_100_main_page_search_box.xml" value="0.1305" />
+        <entry key="..\:/Users/seong/StudioProjects/JJBAKSA-ANDROID/app/src/main/res/drawable/shape_rect_f6bf54_solid_ffffff_stroke_radius_13_floating_edit_text_box.xml" value="0.1405" />
         <entry key="..\:/Users/seong/StudioProjects/JJBAKSA-ANDROID/app/src/main/res/drawable/shape_rect_fee500_solid_radius_24_kakao_login_box.xml" value="0.1" />
         <entry key="..\:/Users/seong/StudioProjects/JJBAKSA-ANDROID/app/src/main/res/drawable/shape_rect_ff7f23_solid_ffffff_stroke_radius_100.xml" value="0.2215" />
-        <entry key="..\:/Users/seong/StudioProjects/JJBAKSA-ANDROID/app/src/main/res/drawable/shape_rect_ff7f23_solid_radius_24_switch_on.xml" value="0.2215" />
+        <entry key="..\:/Users/seong/StudioProjects/JJBAKSA-ANDROID/app/src/main/res/drawable/shape_rect_ff7f23_solid_radius_24_switch_on.xml" value="0.152" />
+        <entry key="..\:/Users/seong/StudioProjects/JJBAKSA-ANDROID/app/src/main/res/drawable/shape_rect_ff7f23_stroke_ffffff_solid_radius_22.xml" value="0.1405" />
         <entry key="..\:/Users/seong/StudioProjects/JJBAKSA-ANDROID/app/src/main/res/layout/activity_login.xml" value="0.25729166666666664" />
         <entry key="..\:/Users/seong/StudioProjects/JJBAKSA-ANDROID/app/src/main/res/layout/activity_main.xml" value="0.25729166666666664" />
-        <entry key="..\:/Users/seong/StudioProjects/JJBAKSA-ANDROID/app/src/main/res/layout/activity_main_page.xml" value="0.33" />
+        <entry key="..\:/Users/seong/StudioProjects/JJBAKSA-ANDROID/app/src/main/res/layout/activity_main_page.xml" value="0.264" />
         <entry key="..\:/Users/seong/StudioProjects/JJBAKSA-ANDROID/app/src/main/res/layout/activity_search.xml" value="0.2" />
         <entry key="..\:/Users/seong/StudioProjects/JJBAKSA-ANDROID/app/src/main/res/layout/activity_sign_up.xml" value="0.18070652173913043" />
         <entry key="..\:/Users/seong/StudioProjects/JJBAKSA-ANDROID/app/src/main/res/layout/activity_social_login.xml" value="0.264" />
