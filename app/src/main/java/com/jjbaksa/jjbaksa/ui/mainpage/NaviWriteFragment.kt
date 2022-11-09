@@ -13,6 +13,6 @@ class NaviWriteFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_navi_write,container,false)
+        return inflater.inflate(R.layout.fragment_navi_write, container, false)
     }
 }

@@ -1,8 +1,6 @@
 package com.jjbaksa.jjbaksa.ui.mainpage
 
-import android.graphics.Color
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseActivity
