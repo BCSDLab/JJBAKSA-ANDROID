@@ -3,6 +3,9 @@ package com.jjbaksa.data.datasource.remote
 import com.jjbaksa.data.api.AuthApi
 import com.jjbaksa.data.api.NoAuthApi
 import com.jjbaksa.data.datasource.UserDataSource
+import com.jjbaksa.data.model.user.LoginResp
+import com.jjbaksa.data.model.user.UserResp
+import com.jjbaksa.domain.resp.user.LoginReq
 import com.jjbaksa.domain.resp.user.SignUpReq
 import com.jjbaksa.domain.resp.user.SignUpResp
 import retrofit2.Response
@@ -18,5 +21,44 @@ class UserRemoteDataSource @Inject constructor(
 
     override suspend fun checkAccountAvailable(account: String): Response<String> {
         return noAuthApi.checkIdAvailable(account)
+    }
+
+    override suspend fun postLogin(loginReq: LoginReq): Response<LoginResp>? {
+        return noAuthApi.login(loginReq)
+    }
+
+    override suspend fun saveAccessToken(accessToken: String) {
+    }
+
+    override suspend fun saveAccount(account: String) {
+    }
+
+    override suspend fun savePassword(password: String) {
+    }
+
+    override suspend fun saveRefreshToken(refreshToken: String) {
+    }
+
+    override suspend fun saveAutoLogin(isAutoLogin: Boolean) {
+    }
+
+    suspend fun me(): Response<UserResp> {
+        return authApi.userMe()
+    }
+
+    override fun getAutoLoginFlag(): Boolean {
+        return false
+    }
+
+    override fun getAcount(): String {
+        return ""
+    }
+
+    override fun getPassword(): String {
+        return ""
+    }
+
+    override fun getAccessToken(): String {
+        return ""
     }
 }

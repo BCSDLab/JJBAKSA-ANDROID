@@ -1,10 +1,14 @@
 package com.jjbaksa.data.repository
 
+import com.jjbaksa.data.SUCCESS
 import com.jjbaksa.data.datasource.local.UserLocalDataSource
 import com.jjbaksa.data.datasource.remote.UserRemoteDataSource
 import com.jjbaksa.data.mapper.CheckAccountAvailableMapper
+import com.jjbaksa.data.mapper.RespMapper
 import com.jjbaksa.domain.resp.user.SignUpReq
 import com.jjbaksa.domain.repository.UserRepository
+import com.jjbaksa.domain.resp.user.LoginReq
+import com.jjbaksa.domain.resp.user.LoginResult
 import com.jjbaksa.domain.resp.user.SignUpResp
 import javax.inject.Inject
 
@@ -20,5 +24,53 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun checkAccountAvailable(account: String): Boolean {
         val result = userRemoteDataSource.checkAccountAvailable(account)
         return CheckAccountAvailableMapper.mapToBoolean(result.code())
+    }
+
+    override suspend fun postLogin(
+        account: String,
+        password: String,
+        isAutoLogin: Boolean,
+        onResult: (LoginResult) -> Unit
+    ) {
+
+        val response = userRemoteDataSource.postLogin(LoginReq(account, password))
+        if (response != null) {
+            if (response.isSuccessful) {
+                if (response.body()?.code == SUCCESS) {
+                    if (isAutoLogin) {
+                        userLocalDataSource.saveAccessToken(response.body()!!.accessToken)
+                        userLocalDataSource.saveRefreshToken(response.body()!!.refreshToken)
+                        userLocalDataSource.saveAccount(account)
+                        userLocalDataSource.savePassword(password)
+                        userLocalDataSource.saveAutoLogin(isAutoLogin)
+                    }
+                    onResult(LoginResult(isSuccess = true))
+                } else {
+                    onResult(LoginResult(erroMessage = response.body()!!.errorMessage))
+                }
+            } else {
+                var errorBodyJson = "${response.errorBody()!!.string()}"
+                val errorBody = RespMapper.errorMapper(errorBodyJson)
+                onResult(LoginResult(erroMessage = errorBody.errorMessage))
+            }
+        }
+    }
+    override suspend fun me() {
+    }
+
+    override fun getAutoLoginFlag(): Boolean {
+        return userLocalDataSource.getAutoLoginFlag()
+    }
+
+    override fun getAccount(): String {
+        return userLocalDataSource.getAcount()
+    }
+
+    override fun getPasswrod(): String {
+        return userLocalDataSource.getPassword()
+    }
+
+    override fun getAccessToken(): String {
+        return userLocalDataSource.getAccessToken()
     }
 }
