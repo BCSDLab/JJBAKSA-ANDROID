@@ -11,8 +11,18 @@ class NaviHomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         return inflater.inflate(R.layout.fragment_navi_home, container, false)
+    }
+
+    companion object {
+        fun newInstance(): NaviHomeFragment {
+            val args = Bundle().apply {
+            }
+            val fragment = NaviHomeFragment()
+            fragment.arguments = args
+            return fragment
+        }
     }
 }

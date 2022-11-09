@@ -9,9 +9,9 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainPageActivity : BaseActivity<ActivityMainPageBinding>() {
-    private val naviFragmentHome by lazy { NaviHomeFragment() }
-    private val naviFragmentWrite by lazy { NaviWriteFragment() }
-    private val naviFragmentMyPage by lazy { NaviMyPageFragment() }
+    private val naviFragmentHome by lazy { NaviHomeFragment.newInstance() }
+    private val naviFragmentWrite by lazy { NaviWriteFragment.newInstance() }
+    private val naviFragmentMyPage by lazy { NaviMyPageFragment.newInstance() }
     private var isFloatingMenuButtonClicked: Boolean = false
     override val layoutId: Int
         get() = R.layout.activity_main_page

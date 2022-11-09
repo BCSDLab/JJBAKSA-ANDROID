@@ -11,8 +11,18 @@ class NaviWriteFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         return inflater.inflate(R.layout.fragment_navi_write, container, false)
+    }
+
+    companion object {
+        fun newInstance(): NaviWriteFragment {
+            val args = Bundle().apply {
+            }
+            val fragment = NaviWriteFragment()
+            fragment.arguments = args
+            return fragment
+        }
     }
 }
