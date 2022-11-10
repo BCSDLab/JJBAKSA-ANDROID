@@ -161,8 +161,8 @@
             app:layout_constraintBottom_toTopOf="@+id/image_button_plus"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <FrameLayout
-            android:id="@+id/frame_layout"
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragment_container_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@id/navigation_view"

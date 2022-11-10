@@ -89,7 +89,7 @@ class MainPageActivity : BaseActivity<ActivityMainPageBinding>() {
     private fun changeFragment(fragment: Fragment) {
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.frame_layout, fragment)
+            .replace(R.id.fragment_container_view, fragment)
             .commit()
     }
 }
