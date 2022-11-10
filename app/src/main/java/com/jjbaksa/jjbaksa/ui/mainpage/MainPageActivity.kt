@@ -1,6 +1,5 @@
 package com.jjbaksa.jjbaksa.ui.mainpage
 
-import android.view.View
 import androidx.fragment.app.Fragment
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseActivity
@@ -12,7 +11,6 @@ class MainPageActivity : BaseActivity<ActivityMainPageBinding>() {
     private val naviFragmentHome by lazy { NaviHomeFragment.newInstance() }
     private val naviFragmentWrite by lazy { NaviWriteFragment.newInstance() }
     private val naviFragmentMyPage by lazy { NaviMyPageFragment.newInstance() }
-    private var isFloatingMenuButtonClicked: Boolean = false
     override val layoutId: Int
         get() = R.layout.activity_main_page
 
@@ -25,45 +23,6 @@ class MainPageActivity : BaseActivity<ActivityMainPageBinding>() {
 
     override fun initEvent() {
         initNavigationBar()
-        setFloatingMenuInvisible()
-
-        binding.buttonHamburger.setOnClickListener {
-            if (isFloatingMenuButtonClicked) {
-                setFloatingMenuInvisible()
-            } else setFloatingMenuVisible()
-        }
-    }
-
-    private fun setFloatingMenuInvisible() {
-        with(binding) {
-            buttonBookmark.visibility = View.GONE
-            buttonFriend.visibility = View.GONE
-            buttonMap.visibility = View.GONE
-
-            textViewBookmark.visibility = View.GONE
-            textViewFriend.visibility = View.GONE
-            textViewFindStore.visibility = View.GONE
-
-            imageButtonPlus.visibility = View.VISIBLE
-            imageButtonMinus.visibility = View.VISIBLE
-        }
-        isFloatingMenuButtonClicked = false
-    }
-
-    private fun setFloatingMenuVisible() {
-        with(binding) {
-            buttonBookmark.visibility = View.VISIBLE
-            buttonFriend.visibility = View.VISIBLE
-            buttonMap.visibility = View.VISIBLE
-
-            textViewBookmark.visibility = View.VISIBLE
-            textViewFriend.visibility = View.VISIBLE
-            textViewFindStore.visibility = View.VISIBLE
-
-            imageButtonPlus.visibility = View.GONE
-            imageButtonMinus.visibility = View.GONE
-        }
-        isFloatingMenuButtonClicked = true
     }
 
     private fun initNavigationBar() {
