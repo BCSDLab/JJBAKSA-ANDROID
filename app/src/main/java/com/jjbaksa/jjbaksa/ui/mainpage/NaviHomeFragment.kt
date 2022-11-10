@@ -12,7 +12,7 @@ import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.databinding.FragmentNaviHomeBinding
 
 class NaviHomeFragment : Fragment() {
-    lateinit var binding : FragmentNaviHomeBinding
+    lateinit var binding: FragmentNaviHomeBinding
     private var isFloatingMenuButtonClicked: Boolean = false
 
     override fun onCreateView(
@@ -20,7 +20,7 @@ class NaviHomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_navi_home,container,false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_navi_home, container, false)
         return binding.root
     }
 
