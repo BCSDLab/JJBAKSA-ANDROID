@@ -113,6 +113,8 @@ open class JjEditText constructor(context: Context, attrs: AttributeSet?) :
                 TypedValue.COMPLEX_UNIT_PX,
                 titleSize.toFloat()
             )
+        } else {
+            binding.textViewJjEditTextTitle.visibility = View.GONE
         }
     }
 
