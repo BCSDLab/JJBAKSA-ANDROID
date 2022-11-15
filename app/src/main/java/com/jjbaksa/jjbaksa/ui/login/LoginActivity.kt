@@ -7,7 +7,6 @@ import androidx.core.widget.addTextChangedListener
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseActivity
 import com.jjbaksa.jjbaksa.databinding.ActivityLoginBinding
-import com.jjbaksa.jjbaksa.ui.main.MainActivity
 import com.jjbaksa.jjbaksa.ui.mainpage.MainPageActivity
 import com.jjbaksa.jjbaksa.ui.signup.SignUpActivity
 import com.jjbaksa.jjbaksa.ui.social.SocialLoginActivity
