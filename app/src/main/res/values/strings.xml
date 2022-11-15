@@ -34,4 +34,11 @@
     <string name="email">이메일</string>
     <string name="password_confirm">비밀번호 확인</string>
     <string name="type_nickname">닉네임을 입력해주세요.</string>
+    <string name="main_page_search_edit_text_hint">검색어를 입력해주세요.</string>
+    <string name="menu_title_home">홈</string>
+    <string name="menu_title_write">글쓰기</string>
+    <string name="menu_title_my_page">마이페이지</string>
+    <string name="floating_action_button_text_bookmark">북마크 음식점</string>
+    <string name="floating_action_button_text_find_friend_store">친구 음식점 찾기</string>
+    <string name="floating_action_button_text_find_near_store">가까운 음식점 찾기</string>
 </resources>
