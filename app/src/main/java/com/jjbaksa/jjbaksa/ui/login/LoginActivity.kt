@@ -8,6 +8,7 @@ import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseActivity
 import com.jjbaksa.jjbaksa.databinding.ActivityLoginBinding
 import com.jjbaksa.jjbaksa.ui.main.MainActivity
+import com.jjbaksa.jjbaksa.ui.mainpage.MainPageActivity
 import com.jjbaksa.jjbaksa.ui.signup.SignUpActivity
 import com.jjbaksa.jjbaksa.ui.social.SocialLoginActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -73,6 +74,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     }
 
     fun goToMainActivity() {
-        Intent(this, MainActivity::class.java).also { startActivity(it) }
+        Intent(this, MainPageActivity::class.java).also { startActivity(it) }
     }
 }
