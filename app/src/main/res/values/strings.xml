@@ -27,6 +27,7 @@
     <string name="input_verification_code_from_email">이메일로 발송된\n인증번호를 입력해 주세요.</string>
     <string name="resend_verification_code">인증번호 재발송</string>
     <string name="not_correct_email_format">이메일 형식이 올바르지 않습니다.</string>
+    <string name="not_correct_email_format_and_not_exist_account">계정이 존재하지 않거나\n이메일 형식이 올바르지 않습니다.</string>
     <string name="not_correct_verification_code">인증번호가 올바르지 않습니다.</string>
     
     <string name="id_already_exist">이미 존재하는 아이디입니다.</string>

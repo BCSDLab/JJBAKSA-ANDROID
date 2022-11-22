@@ -32,6 +32,7 @@
                 android:id="@+id/text_view_find_id_not_correct_email_format"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="invisible"
                 android:text="@string/not_correct_verification_code"
                 android:textSize="11sp"
                 android:textColor="@color/color_ff7f23"
