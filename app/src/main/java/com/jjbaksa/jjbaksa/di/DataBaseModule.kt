@@ -3,6 +3,7 @@ package com.jjbaksa.jjbaksa.di
 import android.content.Context
 import androidx.room.Room
 import com.jjbaksa.data.database.AppDatabase
+import com.jjbaksa.data.database.SearchHistoryDao
 import com.jjbaksa.data.database.UserDao
 import dagger.Module
 import dagger.Provides
@@ -26,5 +27,11 @@ object DataBaseModule {
     @Singleton
     fun provideVideoDao(appDatabase: AppDatabase): UserDao {
         return appDatabase.userDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideSearchHistoryDao(appDatabase: AppDatabase): SearchHistoryDao {
+        return appDatabase.searchHistoryDao()
     }
 }
