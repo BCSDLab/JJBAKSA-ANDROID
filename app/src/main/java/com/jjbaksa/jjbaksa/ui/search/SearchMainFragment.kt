@@ -88,9 +88,7 @@ class SearchMainFragment : Fragment() {
         searchMainViewModel.getTrendingsData()
 
         searchTrendingAdapter.setOnClickListener {
-            binding.jjEditTextSearchMainSearchBox.editTextText = it
-            searchViewModel.updateSearchKeyword(it)
-            enableSearching(true)
+            search(it)
         }
 
         searchHistoryAdapter.setOnClickListener {
