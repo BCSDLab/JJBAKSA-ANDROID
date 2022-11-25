@@ -3,6 +3,7 @@ package com.jjbaksa.jjbaksa.di
 import android.content.Context
 import com.jjbaksa.data.api.AuthApi
 import com.jjbaksa.data.api.NoAuthApi
+import com.jjbaksa.data.database.SearchHistoryDao
 import com.jjbaksa.data.database.UserDao
 import com.jjbaksa.data.datasource.local.ShopLocalDataSource
 import com.jjbaksa.data.datasource.local.UserLocalDataSource
@@ -37,7 +38,10 @@ object DataSourceModule {
 
     @Provides
     @Singleton
-    fun provideShopLocalDataSource(): ShopLocalDataSource {
-        return ShopLocalDataSource()
+    fun provideShopLocalDataSource(
+        @ApplicationContext context: Context,
+        searchHistoryDao: SearchHistoryDao
+    ): ShopLocalDataSource {
+        return ShopLocalDataSource(context, searchHistoryDao)
     }
 }
