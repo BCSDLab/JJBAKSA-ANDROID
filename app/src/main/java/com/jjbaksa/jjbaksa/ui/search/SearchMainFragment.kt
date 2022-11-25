@@ -92,7 +92,6 @@ class SearchMainFragment : Fragment() {
         }
 
         searchHistoryAdapter.setOnClickListener {
-            binding.jjEditTextSearchMainSearchBox.editTextText = it
             search(it)
         }
 
