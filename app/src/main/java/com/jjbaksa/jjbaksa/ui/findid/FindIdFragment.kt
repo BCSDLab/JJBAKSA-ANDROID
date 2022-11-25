@@ -1,6 +1,8 @@
 package com.jjbaksa.jjbaksa.ui.findid
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -17,8 +19,6 @@ import java.util.regex.Pattern
 class FindIdFragment: Fragment() {
     private lateinit var binding: FragmentFindIdBinding
 
-
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -26,13 +26,12 @@ class FindIdFragment: Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_find_id, container, false)
 
-        binding.textViewFindIdNotCorrectEmailFormat.visibility = View.INVISIBLE
 
         inputEmailAddress()
         binding.buttonFindIdSendToVerificationCode.setOnClickListener {
             if (checkEmailFormat()){
                 // Email format is OK
-                binding.editTextFindIdToEmail.setText(null)
+//                binding.editTextFindIdToEmail.setText(null)
                 findNavController().navigate(R.id.action_find_id_to_input_id_verification_code)
             } else {
                 // Email format is Fail
@@ -43,9 +42,20 @@ class FindIdFragment: Fragment() {
         return binding.root
     }
 
+    override fun onStart() {
+        super.onStart()
+        with(binding){
+            textViewFindIdNotCorrectEmailFormat.visibility = View.INVISIBLE
+            buttonFindIdSendToVerificationCode.isEnabled = false
+            editTextFindIdToEmail.setText(null)
+        }
+    }
+
     private fun inputEmailAddress(){
         binding.editTextFindIdToEmail.addTextChangedListener {
-            binding.buttonFindIdSendToVerificationCode.isEnabled = true
+            if (it?.length!! > 0){
+                binding.buttonFindIdSendToVerificationCode.isEnabled = true
+            }
         }
     }
 

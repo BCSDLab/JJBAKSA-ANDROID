@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.jjbaksa.jjbaksa.R
@@ -18,6 +20,18 @@ class FindIdInputVerificationCodeFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_find_id_input_verification_code, container, false)
+
+        moveNextCodeBox()
         return binding.root
+    }
+
+    private fun moveNextCodeBox(){
+        with(binding){
+            editTextFindIdVerificationCodeOne.addTextChangedListener{
+                if (it?.length!! == 1){
+                    editTextFindIdVerificationCodeTwo.requestFocus()
+                }
+            }
+        }
     }
 }

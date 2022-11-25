@@ -52,7 +52,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/text_view_find_id_verification_code">
 
                 <EditText
-                    android:id="@+id/text_view_find_id_verification_code_one"
+                    android:id="@+id/edit_text_find_id_verification_code_one"
                     android:layout_width="48dp"
                     android:layout_height="58dp"
                     android:layout_marginEnd="8dp"
@@ -63,7 +63,7 @@
                     android:textSize="20sp" />
 
                 <EditText
-                    android:id="@+id/text_view_find_id_verification_code_two"
+                    android:id="@+id/edit_text_find_id_verification_code_two"
                     android:layout_width="48dp"
                     android:layout_height="58dp"
                     android:layout_marginEnd="8dp"
@@ -74,7 +74,7 @@
                     android:textSize="20sp" />
 
                 <EditText
-                    android:id="@+id/text_view_find_id_verification_code_three"
+                    android:id="@+id/edit_text_find_id_verification_code_three"
                     android:layout_width="48dp"
                     android:layout_height="58dp"
                     android:layout_marginEnd="8dp"
@@ -85,7 +85,7 @@
                     android:textSize="20sp" />
 
                 <EditText
-                    android:id="@+id/text_view_find_id_verification_code_four"
+                    android:id="@+id/edit_text_find_id_verification_code_four"
                     android:layout_width="48dp"
                     android:layout_height="58dp"
                     android:background="@drawable/shape_rect_eeeeee_solid_radius_8"
