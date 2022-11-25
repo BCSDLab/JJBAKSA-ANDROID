@@ -43,4 +43,13 @@
     <string name="floating_action_button_text_find_near_store">가까운 음식점 찾기</string>
 
     <string name="search_activity_title">검색</string>
+
+    <string name="search_hint">검색어를 입력해주세요.</string>
+    <string name="search_recommend_item">#%s</string>
+    <string name="search_trending_title">TRENDING</string>
+
+    <string-array name="search_titles_array">
+        <item>오늘은\n어떤 음식이 땡기나요?</item>
+        <item>기름진\n음식이 그리운 날!</item>
+    </string-array>
 </resources>
