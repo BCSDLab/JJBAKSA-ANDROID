@@ -20,6 +20,10 @@
             android:name=".ui.mainpage.MainPageActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.search.SearchActivity"
+            android:exported="false"
+            android:label="@string/search_activity_title" />
+        <activity
             android:name=".ui.signup.SignUpActivity"
             android:exported="false" />
         <activity

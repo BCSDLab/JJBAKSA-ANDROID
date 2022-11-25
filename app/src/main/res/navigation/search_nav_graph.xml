@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@+id/fragment_search_nav_graph_search_main">
+
+    <fragment
+        android:id="@+id/fragment_search_nav_graph_search_main"
+        android:name="com.jjbaksa.jjbaksa.ui.search.SearchMainFragment"
+        android:label="Search Main"
+        tools:layout="@layout/fragment_search_main">
+
+        <action
+            android:id="@+id/action_search_nav_graph_move_to_search_result"
+            app:destination="@id/fragment_search_nav_graph_search_result"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_search_nav_graph_search_result"
+        android:name="com.jjbaksa.jjbaksa.ui.search.SearchResultFragment"
+        android:label="Search Result"
+        tools:layout="@layout/fragment_search_result" />
+
+</navigation>
