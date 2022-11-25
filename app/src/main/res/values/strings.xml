@@ -43,6 +43,12 @@
     <string name="floating_action_button_text_find_near_store">가까운 음식점 찾기</string>
 
     <string name="search_activity_title">검색</string>
+    <string name="search_ask_locate_permission_dialog_title">위치 권한이 필요합니다!</string>
+    <string name="search_ask_locate_permission_dialog_message">상점 검색 기능을 이용하기 위해서는 위치 권한이 필요합니다!</string>
+    <string name="search_ask_locate_permission_dialog_ok">허용</string>
+    <string name="search_ask_locate_permission_dialog_cancel">거부</string>
+    <string name="search_ask_locate_permission_setting">권한에서 위치 권한을 허용해주세요!</string>
+    <string name="search_need_permission_toast_message">위치 권한이 없어 상점 검색을 사용할 수 없습니다!</string>
 
     <string name="search_hint">검색어를 입력해주세요.</string>
     <string name="search_recommend_item">#%s</string>
