@@ -1,5 +1,6 @@
 package com.jjbaksa.jjbaksa.ui.search.viewmodel
 
+import android.location.Location
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.jjbaksa.jjbaksa.base.BaseViewModel
@@ -17,6 +18,10 @@ class SearchViewModel : BaseViewModel() {
     val isSearching: LiveData<Boolean>
         get() = _isSearching
 
+    private val _locationData = MutableLiveData<Location>()
+    val locationData: LiveData<Location>
+        get() = _locationData
+
     fun updateTitle(title: String) {
         _title.value = title
     }
@@ -27,5 +32,9 @@ class SearchViewModel : BaseViewModel() {
 
     fun setSearching(isSearching: Boolean) {
         _isSearching.value = isSearching
+    }
+
+    fun setNewLocation(location: Location) {
+        _locationData.value = location
     }
 }

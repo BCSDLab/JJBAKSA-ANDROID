@@ -1,11 +1,15 @@
 package com.jjbaksa.jjbaksa.ui.search
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseActivity
 import com.jjbaksa.jjbaksa.databinding.ActivitySearchBinding
@@ -13,6 +17,7 @@ import com.jjbaksa.jjbaksa.ui.search.viewmodel.SearchMainViewModel
 import com.jjbaksa.jjbaksa.ui.search.viewmodel.SearchViewModel
 import com.jjbaksa.jjbaksa.util.OpenSettings
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class SearchActivity : BaseActivity<ActivitySearchBinding>() {
@@ -22,12 +27,14 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>() {
     private val searchViewModel: SearchViewModel by viewModels()
     private val searchMainViewModel: SearchMainViewModel by viewModels()
 
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+
     private val requestPermission =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { results ->
             for (result in results) {
                 when (result.value) {
                     true -> {
-                        // Get location
+                        getGPSLocation()
                     }
                     else -> {
                         when (
@@ -96,6 +103,20 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>() {
             }
             .setCancelable(false)
         builder.show()
+    }
+
+    @SuppressLint("MissingPermission")
+    fun getGPSLocation() {
+        val priority = Priority.PRIORITY_HIGH_ACCURACY
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+
+        fusedLocationProviderClient.getCurrentLocation(priority, null)
+            .addOnSuccessListener { location ->
+                searchViewModel.setNewLocation(location)
+            }
+            .addOnFailureListener { exception ->
+                Timber.d("location failed $exception")
+            }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
