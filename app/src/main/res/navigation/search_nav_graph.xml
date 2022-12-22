@@ -12,7 +12,7 @@
 
         <action
             android:id="@+id/action_search_nav_graph_move_to_search_result"
-            app:destination="@id/fragment_search_nav_graph_search_result"
+            app:destination="@id/fragment_search_nav_graph_search_shop_list"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
@@ -21,9 +21,9 @@
     </fragment>
 
     <fragment
-        android:id="@+id/fragment_search_nav_graph_search_result"
-        android:name="com.jjbaksa.jjbaksa.ui.search.SearchResultFragment"
+        android:id="@+id/fragment_search_nav_graph_search_shop_list"
+        android:name="com.jjbaksa.jjbaksa.ui.search.SearchShopListFragment"
         android:label="Search Result"
-        tools:layout="@layout/fragment_search_result" />
+        tools:layout="@layout/fragment_search_shop_list" />
 
 </navigation>
