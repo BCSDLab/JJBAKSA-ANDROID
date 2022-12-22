@@ -4,6 +4,7 @@ import android.content.Context
 import com.jjbaksa.data.database.SearchHistoryDao
 import com.jjbaksa.data.datasource.ShopDataSource
 import com.jjbaksa.data.entity.SearchHistoryEntity
+import com.jjbaksa.domain.resp.shop.ShopsResp
 import com.jjbaksa.data.model.shop.TrendingResp
 import dagger.hilt.android.qualifiers.ApplicationContext
 import retrofit2.Response
@@ -23,5 +24,15 @@ class ShopLocalDataSource @Inject constructor(
 
     override suspend fun addSearchHistory(searchKeyword: SearchHistoryEntity) {
         searchHistoryDao.insert(searchKeyword)
+    }
+
+    override suspend fun searchShops(
+        keyword: String,
+        x: Double,
+        y: Double,
+        page: Int,
+        size: Int
+    ): Response<ShopsResp> {
+        TODO("Not yet implemented")
     }
 }
