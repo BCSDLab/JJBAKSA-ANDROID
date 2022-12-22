@@ -22,7 +22,6 @@ typealias TextChanged = (Editable?) -> Unit
 typealias FocusChanged = (View, Boolean) -> Unit
 typealias ActionListener = (TextView, Int, KeyEvent?) -> Unit
 
-
 open class JjEditText constructor(context: Context, attrs: AttributeSet?) :
     ConstraintLayout(context, attrs) {
 
