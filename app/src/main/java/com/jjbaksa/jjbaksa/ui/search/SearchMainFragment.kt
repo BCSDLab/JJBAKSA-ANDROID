@@ -106,6 +106,10 @@ class SearchMainFragment : Fragment() {
             }
         }
 
+        binding.jjEditTextSearchMainSearchBox.setOnEditorActionListener { view, _, _ ->
+            search(view.text.toString())
+        }
+
         binding.jjEditTextSearchMainSearchBox.addTextChangedListener {
             isTyping = !it.isNullOrEmpty()
         }
