@@ -92,6 +92,7 @@ class SearchMainFragment : Fragment() {
         }
 
         searchHistoryAdapter.setOnClickListener {
+            isTyping = false
             search(it)
         }
 
@@ -107,6 +108,7 @@ class SearchMainFragment : Fragment() {
         }
 
         binding.jjEditTextSearchMainSearchBox.setOnEditorActionListener { view, _, _ ->
+            isTyping = false
             search(view.text.toString())
         }
 
