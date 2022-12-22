@@ -28,6 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="24dp"
+            app:editText_imeOptions="actionSearch"
             app:hint="@string/search_hint"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -72,8 +73,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_search_main_search_history"
             android:layout_width="match_parent"
-            android:layout_marginTop="24dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
