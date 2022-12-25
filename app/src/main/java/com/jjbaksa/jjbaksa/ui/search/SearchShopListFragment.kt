@@ -1,5 +1,8 @@
 package com.jjbaksa.jjbaksa.ui.search
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +13,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.jjbaksa.domain.resp.shop.ShopsRespContent
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.adapter.SearchShopListAdapter
 import com.jjbaksa.jjbaksa.databinding.FragmentSearchShopListBinding
@@ -26,13 +30,20 @@ class SearchShopListFragment : Fragment() {
 
     private val searchShopListAdapter = SearchShopListAdapter()
 
+    private lateinit var chosenPlace: ShopsRespContent
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding =
-            DataBindingUtil.inflate(layoutInflater, R.layout.fragment_search_shop_list, container, false)
+            DataBindingUtil.inflate(
+                layoutInflater,
+                R.layout.fragment_search_shop_list,
+                container,
+                false
+            )
 
         searchViewModel.updateTitle(searchViewModel.searchKeyword.value!!)
         searchViewModel.setSearching(false)
@@ -53,13 +64,40 @@ class SearchShopListFragment : Fragment() {
         }
 
         searchShopListAdapter.setOnClickListener {
+            chosenPlace = it
             binding.constraintLayoutSearchShopListMapChooser.visibility = View.VISIBLE
         }
 
         binding.buttonSearchShopListNaverMap.setOnClickListener {
+            try {
+                val naverMapUrl = "nmap://map?" +
+                    "lat=${chosenPlace.x}" +
+                    "&lng=${chosenPlace.y}" +
+                    "&zoom=20" +
+                    "&appname=${context?.packageName}"
+
+                val naverMapIntent = Intent(Intent.ACTION_VIEW, Uri.parse(naverMapUrl))
+                startActivity(naverMapIntent)
+            } catch (e: ActivityNotFoundException) {
+                // If naver map not installed
+                val naverMapMarket = "market://details?id=com.nhn.android.nmap"
+                val marketIntent = Intent(Intent.ACTION_VIEW, Uri.parse(naverMapMarket))
+                startActivity(marketIntent)
+            }
         }
 
         binding.buttonSearchShopListKakaoMap.setOnClickListener {
+            try {
+                val kakaoMapUrl = "kakaomap://look?p=${chosenPlace.x},${chosenPlace.y}"
+
+                val kakaoMapIntent = Intent(Intent.ACTION_VIEW, Uri.parse(kakaoMapUrl))
+                startActivity(kakaoMapIntent)
+            } catch (e: ActivityNotFoundException) {
+                // If kakao map not installed
+                val kakaoMapMarket = "market://details?id=net.daum.android.map"
+                val marketIntent = Intent(Intent.ACTION_VIEW, Uri.parse(kakaoMapMarket))
+                startActivity(marketIntent)
+            }
         }
 
         binding.buttonSearchShopListCloseMapChooser.setOnClickListener {
