@@ -54,7 +54,7 @@
     <string name="search_recommend_item">#%s</string>
     <string name="search_trending_title">TRENDING</string>
 
-    <string name="search_shop_item_open_in_naver_map">네이버 지도에서 열기기</string>
+    <string name="search_shop_item_open_in_naver_map">네이버 지도에서 열기</string>
     <string name="search_shop_item_open_in_kakao_map">카카오 맵에서 열기</string>
     <string name="search_shop_item_close_map_chooser">닫기</string>
 
