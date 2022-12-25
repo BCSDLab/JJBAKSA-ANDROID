@@ -4,7 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.jjbaksa.domain.resp.shop.ShopsRespContent
+import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.databinding.ItemSearchShopListBinding
 import com.jjbaksa.jjbaksa.util.ShopListDiffUtil
 
@@ -32,6 +34,10 @@ class SearchShopListAdapter :
             onClickListener: OnClickListener,
         ) {
             binding.item = item
+            // TODO Update image url after API provides it
+            binding.imageViewSearchRestaurantImage.load(R.mipmap.ic_shop_item_placeholder) {
+                placeholder(R.mipmap.ic_shop_item_placeholder)
+            }
 
             binding.imageButtonSearchRestaurantMap.setOnClickListener {
                 onClickListener.onClick(item)

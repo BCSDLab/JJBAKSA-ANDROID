@@ -20,7 +20,6 @@
             android:id="@+id/image_view_search_restaurant_image"
             android:layout_width="117dp"
             android:layout_height="117dp"
-            android:src="@mipmap/ic_shop_item_placeholder"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
