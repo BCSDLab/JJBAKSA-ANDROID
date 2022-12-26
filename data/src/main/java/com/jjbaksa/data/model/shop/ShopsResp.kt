@@ -14,7 +14,7 @@ data class ShopsResp(
     val first: Boolean,
     val numberOfElements: Int,
     val empty: Boolean
-): BaseResp()
+) : BaseResp()
 
 data class ShopsRespContent(
     val shopId: Int,

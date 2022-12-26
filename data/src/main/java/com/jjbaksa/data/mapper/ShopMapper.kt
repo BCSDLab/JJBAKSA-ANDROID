@@ -8,7 +8,6 @@ import com.jjbaksa.domain.resp.shop.ShopsResultContent
 import com.jjbaksa.domain.resp.shop.ShopsResultPageable
 import com.jjbaksa.domain.resp.shop.ShopsResultSort
 
-
 object ShopMapper {
     fun ShopsResp.mapShopToResult(): RespResult<ShopsResult> {
         return if (this.code == 0) {
