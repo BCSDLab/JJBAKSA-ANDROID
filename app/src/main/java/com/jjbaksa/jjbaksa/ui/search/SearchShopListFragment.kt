@@ -2,7 +2,6 @@ package com.jjbaksa.jjbaksa.ui.search
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,6 +19,7 @@ import com.jjbaksa.jjbaksa.adapter.SearchShopListAdapter
 import com.jjbaksa.jjbaksa.databinding.FragmentSearchShopListBinding
 import com.jjbaksa.jjbaksa.ui.search.viewmodel.SearchShopListViewModel
 import com.jjbaksa.jjbaksa.ui.search.viewmodel.SearchViewModel
+import com.jjbaksa.jjbaksa.util.UrlUtil
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -71,32 +71,30 @@ class SearchShopListFragment : Fragment() {
 
         binding.buttonSearchShopListNaverMap.setOnClickListener {
             try {
-                val naverMapUrl = "nmap://map?" +
-                    "lat=${chosenPlace.x}" +
-                    "&lng=${chosenPlace.y}" +
-                    "&zoom=20" +
-                    "&appname=${context?.packageName}"
-
-                val naverMapIntent = Intent(Intent.ACTION_VIEW, Uri.parse(naverMapUrl))
+                val naverMapIntent = Intent(
+                    Intent.ACTION_VIEW,
+                    UrlUtil.makeNaverMapUrl(chosenPlace.x, chosenPlace.y, context?.packageName!!)
+                )
                 startActivity(naverMapIntent)
             } catch (e: ActivityNotFoundException) {
                 // If naver map not installed
-                val naverMapMarket = "market://details?id=com.nhn.android.nmap"
-                val marketIntent = Intent(Intent.ACTION_VIEW, Uri.parse(naverMapMarket))
+                val marketIntent =
+                    Intent(Intent.ACTION_VIEW, UrlUtil.makeMarketURl("com.nhn.android.nmap"))
                 startActivity(marketIntent)
             }
         }
 
         binding.buttonSearchShopListKakaoMap.setOnClickListener {
             try {
-                val kakaoMapUrl = "kakaomap://look?p=${chosenPlace.x},${chosenPlace.y}"
-
-                val kakaoMapIntent = Intent(Intent.ACTION_VIEW, Uri.parse(kakaoMapUrl))
+                val kakaoMapIntent = Intent(
+                    Intent.ACTION_VIEW,
+                    UrlUtil.makeKakaoMapUrl(chosenPlace.x, chosenPlace.y)
+                )
                 startActivity(kakaoMapIntent)
             } catch (e: ActivityNotFoundException) {
                 // If kakao map not installed
-                val kakaoMapMarket = "market://details?id=net.daum.android.map"
-                val marketIntent = Intent(Intent.ACTION_VIEW, Uri.parse(kakaoMapMarket))
+                val marketIntent =
+                    Intent(Intent.ACTION_VIEW, UrlUtil.makeMarketURl("net.daum.android.map"))
                 startActivity(marketIntent)
             }
         }
