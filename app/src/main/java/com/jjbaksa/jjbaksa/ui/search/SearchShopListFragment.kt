@@ -46,6 +46,12 @@ class SearchShopListFragment : Fragment() {
                 false
             )
 
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         searchViewModel.updateTitle(searchViewModel.searchKeyword.value!!)
         searchViewModel.setSearching(false)
 
@@ -106,8 +112,6 @@ class SearchShopListFragment : Fragment() {
         searchShopListViewModel.errorType.observe(viewLifecycleOwner) {
             Toast.makeText(context, "${it.code}: ${it.errorMessage}", Toast.LENGTH_SHORT).show()
         }
-
-        return binding.root
     }
 
     private fun searchShops() {

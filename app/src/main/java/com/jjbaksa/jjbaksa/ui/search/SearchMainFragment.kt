@@ -59,6 +59,12 @@ class SearchMainFragment : Fragment() {
         binding =
             DataBindingUtil.inflate(layoutInflater, R.layout.fragment_search_main, container, false)
 
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         searchViewModel.updateTitle(getString(R.string.search_activity_title))
         searchViewModel.setSearching(false)
 
@@ -136,10 +142,7 @@ class SearchMainFragment : Fragment() {
         searchMainViewModel.errorType.observe(viewLifecycleOwner) {
             Toast.makeText(context, "${it.code}: ${it.errorMessage}", Toast.LENGTH_SHORT).show()
         }
-
-        return binding.root
     }
-
     private fun enableSearching(isSearching: Boolean) {
         if (isSearching) {
             with(binding) {
