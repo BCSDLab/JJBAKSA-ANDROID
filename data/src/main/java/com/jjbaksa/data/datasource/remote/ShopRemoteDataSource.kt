@@ -1,6 +1,5 @@
 package com.jjbaksa.data.datasource.remote
 
-import android.util.Log
 import com.jjbaksa.data.api.AuthApi
 import com.jjbaksa.data.api.NoAuthApi
 import com.jjbaksa.data.datasource.ShopDataSource
@@ -33,8 +32,6 @@ class ShopRemoteDataSource @Inject constructor(
         page: Int,
         size: Int
     ): Response<ShopsResp> {
-        val tmp = authApi.shops(keyword, x, y, page, size)
-        Log.d("Test", tmp.toString())
-        return tmp
+        return authApi.shops(keyword, x, y, page, size)
     }
 }
