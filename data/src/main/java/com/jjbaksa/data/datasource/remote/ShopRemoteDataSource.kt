@@ -5,7 +5,7 @@ import com.jjbaksa.data.api.AuthApi
 import com.jjbaksa.data.api.NoAuthApi
 import com.jjbaksa.data.datasource.ShopDataSource
 import com.jjbaksa.data.entity.SearchHistoryEntity
-import com.jjbaksa.domain.resp.shop.ShopsResp
+import com.jjbaksa.data.model.shop.ShopsResp
 import com.jjbaksa.data.model.shop.TrendingResp
 import retrofit2.Response
 import javax.inject.Inject

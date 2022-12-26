@@ -1,7 +1,7 @@
 package com.jjbaksa.domain.repository
 
 import com.jjbaksa.domain.base.RespResult
-import com.jjbaksa.domain.resp.shop.ShopsResp
+import com.jjbaksa.domain.resp.shop.ShopsResult
 import com.jjbaksa.domain.resp.shop.TrendingResult
 
 interface ShopRepository {
@@ -14,5 +14,5 @@ interface ShopRepository {
         y: Double,
         page: Int,
         size: Int,
-    ): ShopsResp?
+    ): RespResult<ShopsResult>
 }

@@ -1,6 +1,6 @@
 package com.jjbaksa.data.api
 
-import com.jjbaksa.domain.resp.shop.ShopsResp
+import com.jjbaksa.data.model.shop.ShopsResp
 import com.jjbaksa.data.model.shop.TrendingResp
 import com.jjbaksa.data.model.user.UserResp
 import retrofit2.Response

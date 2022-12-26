@@ -6,7 +6,7 @@
 
         <variable
             name="item"
-            type="com.jjbaksa.domain.resp.shop.ShopsRespContent" />
+            type="com.jjbaksa.domain.resp.shop.ShopsResultContent" />
 
     </data>
 

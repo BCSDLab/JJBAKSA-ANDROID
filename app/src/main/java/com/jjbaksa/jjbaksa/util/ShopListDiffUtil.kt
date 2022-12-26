@@ -1,14 +1,14 @@
 package com.jjbaksa.jjbaksa.util
 
 import androidx.recyclerview.widget.DiffUtil
-import com.jjbaksa.domain.resp.shop.ShopsRespContent
+import com.jjbaksa.domain.resp.shop.ShopsResultContent
 
-object ShopListDiffUtil : DiffUtil.ItemCallback<ShopsRespContent>() {
-    override fun areItemsTheSame(oldItem: ShopsRespContent, newItem: ShopsRespContent): Boolean {
+object ShopListDiffUtil : DiffUtil.ItemCallback<ShopsResultContent>() {
+    override fun areItemsTheSame(oldItem: ShopsResultContent, newItem: ShopsResultContent): Boolean {
         return oldItem.shopId == newItem.shopId
     }
 
-    override fun areContentsTheSame(oldItem: ShopsRespContent, newItem: ShopsRespContent): Boolean {
+    override fun areContentsTheSame(oldItem: ShopsResultContent, newItem: ShopsResultContent): Boolean {
         return oldItem == newItem
     }
 }

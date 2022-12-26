@@ -6,10 +6,11 @@ import com.jjbaksa.data.entity.SearchHistoryEntity
 import com.jjbaksa.data.mapper.RespMapper
 import com.jjbaksa.data.mapper.SearchHistoryMapper.mapToSearchHistoryResult
 import com.jjbaksa.data.mapper.TrendingMapper.mapTrendingToResult
+import com.jjbaksa.data.mapper.ShopMapper.mapShopToResult
+import com.jjbaksa.domain.resp.shop.ShopsResult
 import com.jjbaksa.domain.base.ErrorType
 import com.jjbaksa.domain.base.RespResult
 import com.jjbaksa.domain.repository.ShopRepository
-import com.jjbaksa.domain.resp.shop.ShopsResp
 import com.jjbaksa.domain.resp.shop.TrendingResult
 import javax.inject.Inject
 
@@ -43,7 +44,14 @@ class ShopRepositoryImpl @Inject constructor(
         y: Double,
         page: Int,
         size: Int
-    ): ShopsResp? {
-        return shopRemoteDataSource.searchShops(keyword, x, y, page, size).body()
+    ): RespResult<ShopsResult> {
+        val resp = shopRemoteDataSource.searchShops(keyword, x, y, page, size)
+        return if (resp.isSuccessful) {
+            resp.body()!!.mapShopToResult()
+        } else {
+            val errorBodyJson = resp.errorBody()!!.string()
+            val errorBody = RespMapper.errorMapper(errorBodyJson)
+            RespResult.Error(ErrorType(errorBody.errorMessage, errorBody.code))
+        }
     }
 }

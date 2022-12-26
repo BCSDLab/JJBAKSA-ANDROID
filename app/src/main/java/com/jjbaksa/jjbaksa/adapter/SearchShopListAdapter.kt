@@ -5,13 +5,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.jjbaksa.domain.resp.shop.ShopsRespContent
+import com.jjbaksa.domain.resp.shop.ShopsResultContent
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.databinding.ItemSearchShopListBinding
 import com.jjbaksa.jjbaksa.util.ShopListDiffUtil
 
 class SearchShopListAdapter :
-    ListAdapter<ShopsRespContent, SearchShopListAdapter.ViewHolder>(ShopListDiffUtil) {
+    ListAdapter<ShopsResultContent, SearchShopListAdapter.ViewHolder>(ShopListDiffUtil) {
 
     lateinit var onClickListener: OnClickListener
 
@@ -30,7 +30,7 @@ class SearchShopListAdapter :
     class ViewHolder(private val binding: ItemSearchShopListBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(
-            item: ShopsRespContent,
+            item: ShopsResultContent,
             onClickListener: OnClickListener,
         ) {
             binding.item = item
@@ -46,12 +46,12 @@ class SearchShopListAdapter :
     }
 
     interface OnClickListener {
-        fun onClick(item: ShopsRespContent)
+        fun onClick(item: ShopsResultContent)
     }
 
-    inline fun setOnClickListener(crossinline item: (ShopsRespContent) -> Unit) {
+    inline fun setOnClickListener(crossinline item: (ShopsResultContent) -> Unit) {
         this.onClickListener = object : OnClickListener {
-            override fun onClick(item: ShopsRespContent) {
+            override fun onClick(item: ShopsResultContent) {
                 item(item)
             }
         }

@@ -1,20 +1,20 @@
 package com.jjbaksa.domain.resp.shop
 
-data class ShopsResp(
-    val content: List<ShopsRespContent>,
-    val pageable: ShopsRespPageable,
+data class ShopsResult(
+    val content: List<ShopsResultContent>,
+    val pageable: ShopsResultPageable,
     val last: Boolean,
     val totalPages: Int,
     val totalElements: Int,
     val size: Int,
     val number: Int,
-    val sort: ShopsRespSort,
+    val sort: ShopsResultSort,
     val first: Boolean,
     val numberOfElements: Int,
     val empty: Boolean
 )
 
-data class ShopsRespContent(
+data class ShopsResultContent(
     val shopId: Int,
     val placeId: String,
     val placeName: String,
@@ -25,8 +25,8 @@ data class ShopsRespContent(
     val score: Double
 )
 
-data class ShopsRespPageable(
-    val sort: ShopsRespSort,
+data class ShopsResultPageable(
+    val sort: ShopsResultSort,
     val offset: Int,
     val pageNumber: Int,
     val pageSize: Int,
@@ -34,7 +34,7 @@ data class ShopsRespPageable(
     val unpaged: Boolean
 )
 
-data class ShopsRespSort(
+data class ShopsResultSort(
     val empty: Boolean,
     val sorted: Boolean,
     val unsorted: Boolean

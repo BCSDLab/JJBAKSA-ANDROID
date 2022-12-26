@@ -1,7 +1,8 @@
 package com.jjbaksa.domain.usecase
 
+import com.jjbaksa.domain.base.RespResult
 import com.jjbaksa.domain.repository.ShopRepository
-import com.jjbaksa.domain.resp.shop.ShopsResp
+import com.jjbaksa.domain.resp.shop.ShopsResult
 import javax.inject.Inject
 
 class SearchShopsUseCase @Inject constructor(
@@ -13,7 +14,7 @@ class SearchShopsUseCase @Inject constructor(
         y: Double,
         page: Int,
         size: Int
-    ): ShopsResp? {
+    ): RespResult<ShopsResult> {
         return shopRepository.searchShops(keyword, x, y, page, size)
     }
 }

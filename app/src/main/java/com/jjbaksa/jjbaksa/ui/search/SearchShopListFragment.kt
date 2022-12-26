@@ -7,13 +7,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.jjbaksa.domain.resp.shop.ShopsRespContent
+import com.jjbaksa.domain.resp.shop.ShopsResultContent
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.adapter.SearchShopListAdapter
 import com.jjbaksa.jjbaksa.databinding.FragmentSearchShopListBinding
@@ -30,7 +31,7 @@ class SearchShopListFragment : Fragment() {
 
     private val searchShopListAdapter = SearchShopListAdapter()
 
-    private lateinit var chosenPlace: ShopsRespContent
+    private lateinit var chosenPlace: ShopsResultContent
 
     override fun onCreateView(
         inflater: LayoutInflater,
