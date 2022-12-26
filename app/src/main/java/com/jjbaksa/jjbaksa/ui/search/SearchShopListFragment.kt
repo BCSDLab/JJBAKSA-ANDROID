@@ -105,6 +105,10 @@ class SearchShopListFragment : Fragment() {
             binding.constraintLayoutSearchShopListMapChooser.visibility = View.GONE
         }
 
+        searchShopListViewModel.errorType.observe(viewLifecycleOwner) {
+            Toast.makeText(context, "${it.code}: ${it.errorMessage}", Toast.LENGTH_SHORT).show()
+        }
+
         return binding.root
     }
 
