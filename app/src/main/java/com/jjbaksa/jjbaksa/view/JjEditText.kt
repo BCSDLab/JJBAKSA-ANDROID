@@ -41,7 +41,7 @@ open class JjEditText constructor(context: Context, attrs: AttributeSet?) :
     private var hasButton = typedArray.getBoolean(R.styleable.JjEditText_has_button, false)
     private var editTextGravity = typedArray.getInt(R.styleable.JjEditText_editText_gravity, 0x03)
     private var editTextImeOptions =
-        typedArray.getInt(R.styleable.JjEditText_editText_gravity, 0x00000000)
+        typedArray.getInt(R.styleable.JjEditText_editText_imeOptions, 0x00000000)
 
     private var title = typedArray.getString(R.styleable.JjEditText_title)
     private var titleSize = typedArray.getDimensionPixelSize(
