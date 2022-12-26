@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -130,6 +131,10 @@ class SearchMainFragment : Fragment() {
 
         searchMainViewModel.searchHistory.observe(viewLifecycleOwner) {
             searchHistoryAdapter.submitList(it)
+        }
+
+        searchMainViewModel.errorType.observe(viewLifecycleOwner) {
+            Toast.makeText(context, "${it.code}: ${it.errorMessage}", Toast.LENGTH_SHORT).show()
         }
 
         return binding.root

@@ -3,6 +3,8 @@ package com.jjbaksa.jjbaksa.ui.search.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.jjbaksa.domain.base.ErrorType
+import com.jjbaksa.domain.base.RespResult
 import com.jjbaksa.domain.resp.shop.TrendingResult
 import com.jjbaksa.domain.usecase.AddSearchHistoryUseCase
 import com.jjbaksa.domain.usecase.GetSearchHistoryUseCase
@@ -22,6 +24,10 @@ class SearchMainViewModel @Inject constructor(
     val trending: LiveData<TrendingResult>
         get() = _trendings
 
+    private val _errorType = MutableLiveData<ErrorType>()
+    val errorType: LiveData<ErrorType>
+        get() = _errorType
+
     private val _searchHistory = MutableLiveData<List<String>>()
     val searchHistory: LiveData<List<String>>
         get() = _searchHistory
@@ -31,7 +37,14 @@ class SearchMainViewModel @Inject constructor(
             runCatching {
                 getTrendingsUseCase()
             }.onSuccess {
-                _trendings.value = it
+                when (it) {
+                    is RespResult.Error -> {
+                        _errorType.value = it.errorType
+                    }
+                    is RespResult.Success -> {
+                        _trendings.value = it.data!!
+                    }
+                }
             }.onFailure {
             }
         }
