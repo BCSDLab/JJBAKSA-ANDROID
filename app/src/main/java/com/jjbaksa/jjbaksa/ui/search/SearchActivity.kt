@@ -115,6 +115,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>() {
                 searchViewModel.setNewLocation(location)
             }
             .addOnFailureListener { exception ->
+                finish()
                 Timber.d("location failed $exception")
             }
     }
