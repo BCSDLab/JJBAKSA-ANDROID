@@ -3,10 +3,13 @@ package com.jjbaksa.data.repository
 import com.jjbaksa.data.datasource.local.ShopLocalDataSource
 import com.jjbaksa.data.datasource.remote.ShopRemoteDataSource
 import com.jjbaksa.data.entity.SearchHistoryEntity
+import com.jjbaksa.data.mapper.RespMapper
 import com.jjbaksa.data.mapper.SearchHistoryMapper.mapToSearchHistoryResult
-import com.jjbaksa.data.mapper.TrendingMapper.mapToTrendingResult
-import com.jjbaksa.domain.resp.shop.ShopsResp
+import com.jjbaksa.data.mapper.TrendingMapper.mapTrendingToResult
+import com.jjbaksa.domain.base.ErrorType
+import com.jjbaksa.domain.base.RespResult
 import com.jjbaksa.domain.repository.ShopRepository
+import com.jjbaksa.domain.resp.shop.ShopsResp
 import com.jjbaksa.domain.resp.shop.TrendingResult
 import javax.inject.Inject
 
@@ -14,9 +17,15 @@ class ShopRepositoryImpl @Inject constructor(
     private val shopRemoteDataSource: ShopRemoteDataSource,
     private val shopLocalDataSource: ShopLocalDataSource
 ) : ShopRepository {
-    override suspend fun getTrendings(): TrendingResult? {
-        val resp = shopRemoteDataSource.getTrendings().body()
-        return resp?.mapToTrendingResult()
+    override suspend fun getTrendings(): RespResult<TrendingResult> {
+        val resp = shopRemoteDataSource.getTrendings()
+        return if (resp.isSuccessful) {
+            resp.body()!!.mapTrendingToResult()
+        } else {
+            val errorBodyJson = resp.errorBody()!!.string()
+            val errorBody = RespMapper.errorMapper(errorBodyJson)
+            RespResult.Error(ErrorType(errorBody.errorMessage, errorBody.code))
+        }
     }
 
     override suspend fun getSearchHistory(): List<String> {
