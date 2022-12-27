@@ -32,6 +32,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>() {
                 when (result.value) {
                     true -> {
                         getGPSLocation()
+                        break
                     }
                     else -> {
                         when (
