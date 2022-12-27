@@ -8,4 +8,7 @@ import javax.inject.Inject
 class LocationRepositoryImpl @Inject constructor(
     private val locationRemoteDataSource: LocationRemoteDataSource
 ) : LocationRepository {
+    override suspend fun getLocation(): GPSData {
+        return locationRemoteDataSource.getLocation()
+    }
 }
