@@ -1,15 +1,12 @@
 package com.jjbaksa.jjbaksa.ui.search
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.view.MenuItem
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
-import com.google.android.gms.location.Priority
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseActivity
 import com.jjbaksa.jjbaksa.databinding.ActivitySearchBinding
@@ -17,7 +14,6 @@ import com.jjbaksa.jjbaksa.ui.search.viewmodel.SearchMainViewModel
 import com.jjbaksa.jjbaksa.ui.search.viewmodel.SearchViewModel
 import com.jjbaksa.jjbaksa.util.OpenSettings
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class SearchActivity : BaseActivity<ActivitySearchBinding>() {
@@ -26,8 +22,6 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>() {
 
     private val searchViewModel: SearchViewModel by viewModels()
     private val searchMainViewModel: SearchMainViewModel by viewModels()
-
-    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
     private val requestPermission =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { results ->
@@ -57,6 +51,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>() {
 
     override fun initView() {
         binding.lifecycleOwner = this
+        binding.vm = searchViewModel
         binding.toolbarSearchTitle.setNavigationIcon(R.drawable.ic_toolbar_back)
         setSupportActionBar(binding.toolbarSearchTitle)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -67,6 +62,19 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>() {
     override fun subscribe() {
         searchViewModel.title.observe(this) {
             supportActionBar?.title = it
+        }
+
+        searchViewModel.isLoading.observe(this) {
+            if (it) {
+                window.setFlags(
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+                )
+            } else {
+                window.clearFlags(
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+                )
+            }
         }
     }
 
@@ -105,19 +113,8 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>() {
         builder.show()
     }
 
-    @SuppressLint("MissingPermission")
-    fun getGPSLocation() {
-        val priority = Priority.PRIORITY_HIGH_ACCURACY
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-
-        fusedLocationProviderClient.getCurrentLocation(priority, null)
-            .addOnSuccessListener { location ->
-                searchViewModel.setNewLocation(location)
-            }
-            .addOnFailureListener { exception ->
-                finish()
-                Timber.d("location failed $exception")
-            }
+    private fun getGPSLocation() {
+        searchViewModel.getLocation()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
