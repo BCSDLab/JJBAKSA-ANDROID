@@ -50,6 +50,12 @@
     <string name="search_ask_locate_permission_setting">권한에서 위치 권한을 허용해주세요!</string>
     <string name="search_need_permission_toast_message">위치 권한이 없어 상점 검색을 사용할 수 없습니다!</string>
 
+    <string name="search_ask_location_needed_dialog_title">위치를 활성화 해주세요!</string>
+    <string name="search_ask_location_needed_dialog_message">위치를 받아올 수 없습니다!\n 설정에서 위치를 활성화 해주세요!</string>
+    <string name="search_ask_location_needed_dialog_ok">활성화 하러가기</string>
+    <string name="search_ask_location_needed_dialog_cancel">거부</string>
+    <string name="search_need_location_toast_message">현재 위치를 알 수 없어 검색을 할 수 없습니다!</string>
+
     <string name="search_hint">검색어를 입력해주세요.</string>
     <string name="search_recommend_item">#%s</string>
     <string name="search_trending_title">TRENDING</string>

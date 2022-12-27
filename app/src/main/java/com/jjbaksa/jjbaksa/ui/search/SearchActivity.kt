@@ -1,6 +1,9 @@
 package com.jjbaksa.jjbaksa.ui.search
 
 import android.Manifest
+import android.content.Intent
+import android.location.LocationManager
+import android.provider.Settings
 import android.view.MenuItem
 import android.view.WindowManager
 import android.widget.Toast
@@ -47,6 +50,11 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>() {
     private val openSettings =
         registerForActivityResult(OpenSettings()) {
             checkPermission()
+        }
+
+    private val openLocationSettings =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            getGPSLocation()
         }
 
     override fun initView() {
@@ -114,7 +122,30 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>() {
     }
 
     private fun getGPSLocation() {
-        searchViewModel.getLocation()
+        val locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
+
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            locationDialog()
+        } else {
+            searchViewModel.getLocation()
+        }
+    }
+
+    private fun locationDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(getString(R.string.search_ask_location_needed_dialog_title))
+            .setMessage(getString(R.string.search_ask_location_needed_dialog_message))
+            .setPositiveButton(getString(R.string.search_ask_location_needed_dialog_ok)) { dialog, _ ->
+                Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS).also { openLocationSettings.launch(it) }
+                dialog.dismiss()
+            }
+            .setNegativeButton(getString(R.string.search_ask_location_needed_dialog_cancel)) { dialog, _ ->
+                dialog.dismiss()
+                Toast.makeText(this, getString(R.string.search_need_location_toast_message), Toast.LENGTH_SHORT).show()
+                finish()
+            }
+            .setCancelable(false)
+        builder.show()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
