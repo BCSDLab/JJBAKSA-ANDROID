@@ -7,6 +7,7 @@ import com.jjbaksa.data.database.SearchHistoryDao
 import com.jjbaksa.data.database.UserDao
 import com.jjbaksa.data.datasource.local.ShopLocalDataSource
 import com.jjbaksa.data.datasource.local.UserLocalDataSource
+import com.jjbaksa.data.datasource.remote.LocationRemoteDataSource
 import com.jjbaksa.data.datasource.remote.ShopRemoteDataSource
 import com.jjbaksa.data.datasource.remote.UserRemoteDataSource
 import dagger.Module
@@ -43,5 +44,11 @@ object DataSourceModule {
         searchHistoryDao: SearchHistoryDao
     ): ShopLocalDataSource {
         return ShopLocalDataSource(context, searchHistoryDao)
+    }
+
+    @Provides
+    @Singleton
+    fun provideLocationRemoteDataSource(@ApplicationContext context: Context): LocationRemoteDataSource {
+        return LocationRemoteDataSource(context)
     }
 }
