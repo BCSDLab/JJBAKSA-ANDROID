@@ -24,7 +24,6 @@ import com.jjbaksa.jjbaksa.ui.mainpage.MainPageActivity
 import com.jjbaksa.jjbaksa.util.RegexUtil
 import com.kakao.sdk.user.UserApiClient
 import com.navercorp.nid.NaverIdLoginSDK
-import com.navercorp.nid.oauth.NidOAuthBehavior
 import com.navercorp.nid.oauth.NidOAuthLogin
 import com.navercorp.nid.oauth.OAuthLoginCallback
 import com.navercorp.nid.profile.NidProfileCallback
@@ -98,7 +97,7 @@ class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
                                 Log.e(TAG, "네이버 로그인한 유저 정보 - 닉네임 : $naverNickname")
                                 naverAccount = RegexUtil.matchNaverAccount(naverAccount)
                                 Log.e(TAG,"정규표현식 적용 네이버 계정 : $naverAccount")
-                                viewModel.isNaverSocialIdExist(naverAccount,naverEmail,naverNickname)
+                                viewModel.naverSignUp(viewModel.getCustomNaverId(naverAccount),naverEmail,naverNickname)
                             }
 
                             override fun onFailure(httpStatus: Int, message: String) {
@@ -119,7 +118,7 @@ class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
                     }
 
                     override fun onFailure(httpStatus: Int, message: String) {
-                        //
+
                     }
                 }
                 NaverIdLoginSDK.authenticate(this@SocialLoginActivity, oAuthLoginCallback)
@@ -153,7 +152,7 @@ class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
         viewModel.loginState.observe(this@SocialLoginActivity) {
             if (it != null) {
                 if (it.isSuccess) {
-                    Log.i(TAG, "소셜 로그인 성공?!")
+                    Log.i(TAG, "소셜 로그인 성공")
                     goToMainActivity()
 
                 } else {
@@ -243,30 +242,6 @@ class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
         }
     }
 
-    private fun getNaverToken() {
-
-        NaverIdLoginSDK.behavior = NidOAuthBehavior.DEFAULT
-        NaverIdLoginSDK.authenticate(this@SocialLoginActivity, object : OAuthLoginCallback {
-            override fun onSuccess() {
-                Log.d(TAG, "authenticate onSuccess()")
-                naverAccessToken = NaverIdLoginSDK.getAccessToken().toString()
-                Log.d(TAG, "naver token : ${naverAccessToken}")
-            }
-
-            override fun onFailure(httpStatus: Int, message: String) {
-                val errorCode = NaverIdLoginSDK.getLastErrorCode().code
-                val errorDescription = NaverIdLoginSDK.getLastErrorDescription()
-                Log.d(TAG, "authenticate onFailure()")
-                Log.d(TAG, "errorCode : $errorCode / errorDesc : $errorDescription")
-            }
-
-            override fun onError(errorCode: Int, message: String) {
-                onFailure(errorCode, message)
-            }
-        })
-
-    }
-
     private fun goToMainActivity() {
         Intent(this, MainPageActivity::class.java).also { startActivity(it) }
     }
@@ -292,53 +267,19 @@ class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
         }
     }
 
-    private fun checkNaverSoicalLogin(onSuccess:()->Unit) {
-
-        Log.d(TAG, "checkNaverSocialLogin 함수 실행")
-        NidOAuthLogin().callProfileApi(object : NidProfileCallback<NidProfileResponse> {
-            override fun onSuccess(response: NidProfileResponse) {
-                Log.d(TAG, "naver id : ${response.profile?.id}")
-                Log.d(TAG, "naver Email : ${response.profile?.email}")
-                Log.d(TAG, "naver nickname : ${response.profile?.nickname}")
-                naverAccount = response.profile?.id.toString()
-                naverEmail = response.profile?.email.toString()
-                naverNickname = response.profile?.nickname.toString()
-                onSuccess()
-            }
-
-            override fun onFailure(httpStatus: Int, message: String) {
-                val errorCode = NaverIdLoginSDK.getLastErrorCode().code
-                val errorDescription = NaverIdLoginSDK.getLastErrorDescription()
-                Log.d(TAG, "callProfileApi onFailure()")
-                Log.d(TAG, "errorCode : $errorCode / errorDesc : $errorDescription")
-            }
-
-            override fun onError(errorCode: Int, message: String) {
-                onFailure(errorCode, message)
-            }
-        })
-
-    }
-
-
     private fun startNaverDeleteToken() {
         NidOAuthLogin().callDeleteTokenApi(this, object : OAuthLoginCallback {
             override fun onSuccess() {
-                //서버에서 토큰 삭제에 성공한 상태입니다.
                 Toast.makeText(this@SocialLoginActivity, "네이버 아이디 토큰삭제 성공!", Toast.LENGTH_SHORT)
                     .show()
             }
 
             override fun onFailure(httpStatus: Int, message: String) {
-                // 서버에서 토큰 삭제에 실패했어도 클라이언트에 있는 토큰은 삭제되어 로그아웃된 상태입니다.
-                // 클라이언트에 토큰 정보가 없기 때문에 추가로 처리할 수 있는 작업은 없습니다.
                 Log.d("naver", "errorCode: ${NaverIdLoginSDK.getLastErrorCode().code}")
                 Log.d("naver", "errorDesc: ${NaverIdLoginSDK.getLastErrorDescription()}")
             }
 
             override fun onError(errorCode: Int, message: String) {
-                // 서버에서 토큰 삭제에 실패했어도 클라이언트에 있는 토큰은 삭제되어 로그아웃된 상태입니다.
-                // 클라이언트에 토큰 정보가 없기 때문에 추가로 처리할 수 있는 작업은 없습니다.
                 onFailure(errorCode, message)
             }
         })

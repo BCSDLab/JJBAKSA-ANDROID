@@ -85,24 +85,6 @@ class SocialLoginViewModel @Inject constructor(
         }
     }
 
-    fun socialNaverSignUp(id: String, email: String, nickname: String) {
-        Log.i(TAG, "sign up 함수 실행")
-        val signUpReq = SignUpReq(id, email, nickname, "signup0000!")
-        viewModelScope.launch {
-            runCatching {
-                repository.postSignUp(signUpReq)
-            }.onSuccess {
-                Log.i(TAG, "naver 회원가입 응답 계정 : ${it?.account}, 응답 이메일 : ${it?.email} ${it}")
-                if (it?.account != null) {
-                    _isNaverSignUpSuccess.value = true
-                } else login(id)
-
-            }.onFailure {
-                Log.i(TAG, "naver postSignUp 실패")
-            }
-        }
-    }
-
     fun isKakaoSocialIdExist(kakaoAccount: String){
         viewModelScope.launch {
             if (checkSocialIdExist(getCustomKakaoId(kakaoAccount))) {
@@ -118,15 +100,20 @@ class SocialLoginViewModel @Inject constructor(
         }
     }
 
-    fun isNaverSocialIdExist(account: String, email: String, nickname: String) {
+    fun naverSignUp(account: String, email: String, nickname: String) {
+        Log.i(TAG, "sign up 함수 실행")
+        val signUpReq = SignUpReq(account, email,nickname, "signup0000!")
         viewModelScope.launch {
-            if (checkSocialIdExist(getCustomNaverId(account))) {
-                Log.i(SocialLoginActivity.TAG, "아이디 존재")
-                login(getCustomNaverId(account))
-            } else {
-                // token 으로 회원가입에 필요한 정보 요청 후 회원가입
-                Log.i(SocialLoginActivity.TAG, "회원가입 요청")
-                socialNaverSignUp(getCustomNaverId(account), email, nickname)
+            runCatching {
+                repository.postSignUp(signUpReq)
+            }.onSuccess {
+                Log.i(TAG, "test naver 회원가입 응답 계정 : ${it?.account}, 응답 이메일 : ${it?.email} ${it}")
+                if (it?.account != null) {
+                    _isNaverSignUpSuccess.value = true
+                } else login(account)
+
+            }.onFailure {
+                Log.i(TAG, "test naver postSignUp 실패")
             }
         }
     }
