@@ -53,4 +53,3 @@ suspend fun UserApiClient.Companion.loginWithKakaoAccount(context: Context): OAu
         }
     }
 }
-

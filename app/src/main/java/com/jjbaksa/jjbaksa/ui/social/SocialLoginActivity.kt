@@ -28,7 +28,9 @@ import com.navercorp.nid.oauth.OAuthLoginCallback
 import com.navercorp.nid.profile.NidProfileCallback
 import com.navercorp.nid.profile.data.NidProfileResponse
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
@@ -83,28 +85,30 @@ class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
                     override fun onSuccess() {
                         naverAccessToken = NaverIdLoginSDK.getAccessToken().toString()
                         NidOAuthLogin().callProfileApi(object :
-                            NidProfileCallback<NidProfileResponse> {
-                            override fun onSuccess(result: NidProfileResponse) {
-                                naverAccount = result.profile?.id.toString()
-                                naverEmail = result.profile?.email.toString()
-                                naverNickname = result.profile?.nickname.toString()
-                                naverAccount = RegexUtil.matchNaverAccount(naverAccount)
-                                viewModel.naverSignUp(viewModel.getCustomNaverId(naverAccount),
-                                    naverEmail,
-                                    naverNickname)
-                            }
+                                NidProfileCallback<NidProfileResponse> {
+                                override fun onSuccess(result: NidProfileResponse) {
+                                    naverAccount = result.profile?.id.toString()
+                                    naverEmail = result.profile?.email.toString()
+                                    naverNickname = result.profile?.nickname.toString()
+                                    naverAccount = RegexUtil.matchNaverAccount(naverAccount)
+                                    viewModel.naverSignUp(
+                                        viewModel.getCustomNaverId(naverAccount),
+                                        naverEmail,
+                                        naverNickname
+                                    )
+                                }
 
-                            override fun onFailure(httpStatus: Int, message: String) {
-                                val errorCode = NaverIdLoginSDK.getLastErrorCode().code
-                                val errorDescription = NaverIdLoginSDK.getLastErrorDescription()
-                                Log.d(TAG, "authenticate onFailure()")
-                                Log.d(TAG, "errorCode : $errorCode / errorDesc : $errorDescription")
-                            }
+                                override fun onFailure(httpStatus: Int, message: String) {
+                                    val errorCode = NaverIdLoginSDK.getLastErrorCode().code
+                                    val errorDescription = NaverIdLoginSDK.getLastErrorDescription()
+                                    Log.d(TAG, "authenticate onFailure()")
+                                    Log.d(TAG, "errorCode : $errorCode / errorDesc : $errorDescription")
+                                }
 
-                            override fun onError(errorCode: Int, message: String) {
-                                onFailure(errorCode, message)
-                            }
-                        })
+                                override fun onError(errorCode: Int, message: String) {
+                                    onFailure(errorCode, message)
+                                }
+                            })
                     }
 
                     override fun onError(errorCode: Int, message: String) {
@@ -112,7 +116,6 @@ class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
                     }
 
                     override fun onFailure(httpStatus: Int, message: String) {
-
                     }
                 }
                 NaverIdLoginSDK.authenticate(this@SocialLoginActivity, oAuthLoginCallback)
@@ -143,7 +146,6 @@ class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
             if (it != null) {
                 if (it.isSuccess) {
                     goToMainActivity()
-
                 } else {
                     if (it.erroMessage.isNotEmpty()) {
                         showToast(it.erroMessage)
@@ -181,7 +183,6 @@ class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
                             val authCredential: AuthCredential =
                                 GoogleAuthProvider.getCredential(account.idToken, null)
                             firebaseAuthWithGoogle(authCredential, account)
-
                         }
                     }
                 }

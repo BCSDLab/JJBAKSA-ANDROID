@@ -36,7 +36,6 @@ class SocialLoginViewModel @Inject constructor(
     val password = MutableLiveData<String>("")
     val isAutoLogin = MutableLiveData<Boolean>(false)
 
-
     val kakaoSignUpId = "kakao"
     val googleSignUpId = "google"
     val naverSignUpId = "naver"
@@ -66,7 +65,6 @@ class SocialLoginViewModel @Inject constructor(
                 if (it?.account != null) {
                     _isKakaoSignUpSuccess.value = true
                 } else socialLogin(id)
-
             }.onFailure {
                 Log.i(TAG, "kakao postSignUp 실패")
             }
@@ -78,9 +76,11 @@ class SocialLoginViewModel @Inject constructor(
             if (checkSocialIdExist(getCustomKakaoId(kakaoAccount))) {
                 socialLogin(getCustomKakaoId(kakaoAccount))
             } else {
-                kakaoSignUp(getCustomKakaoId(kakaoAccount),
+                kakaoSignUp(
+                    getCustomKakaoId(kakaoAccount),
                     R.string.social_kakao_signup_email.toString(),
-                    R.string.social_kakao_signup_nickname.toString())
+                    R.string.social_kakao_signup_nickname.toString()
+                )
             }
         }
     }
