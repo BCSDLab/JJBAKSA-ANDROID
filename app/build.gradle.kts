@@ -24,6 +24,7 @@ android {
         buildConfigField("String", "naver_client_id", getPropertyKey("naver_client_id"))
         buildConfigField("String", "naver_client_secret", getPropertyKey("naver_client_secret"))
         buildConfigField("String", "naver_client_name", getPropertyKey("naver_client_name"))
+        buildConfigField("String", "social_login_password", getPropertyKey("social_login_password"))
         resValue("string", "kakao_oauth_host", getPropertyKey("kakao_oauth_host"))
     }
 
