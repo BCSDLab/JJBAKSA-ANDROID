@@ -12,7 +12,7 @@ import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 suspend fun UserApiClient.Companion.loginWithKakao(context: Context): OAuthToken {
-    return withContext(Dispatchers.IO){
+    return withContext(Dispatchers.IO) {
         if (instance.isKakaoTalkLoginAvailable(context)) {
             try {
                 UserApiClient.loginWithKakaoTalk(context)

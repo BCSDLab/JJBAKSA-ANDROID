@@ -10,7 +10,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.jjbaksa.jjbaksa.BuildConfig
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.viewModels
-import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.common.api.ApiException
