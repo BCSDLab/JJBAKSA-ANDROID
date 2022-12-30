@@ -59,6 +59,7 @@ class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
     override fun initView() {
         initGoogleLogin()
         initNaverLogin()
+        viewModel.getAutoLoginFlag()
     }
 
     override fun subscribe() {
@@ -69,35 +70,29 @@ class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
             buttonKakaoLogin.setOnClickListener {
                 CoroutineScope(Dispatchers.IO).launch {
                     val oAuthToken = UserApiClient.loginWithKakao(this@SocialLoginActivity)
-                    Log.d(TAG, "kakao token > ${oAuthToken.accessToken}")
-                    checkKakaoSocialLogin(){
+                    checkKakaoSocialLogin() {
                         viewModel.isKakaoSocialIdExist(kakaoAccount)
                     }
                 }
-//                viewModel.onKakaoButtonClick()
 
                 viewModel.isKakaoSignUpSuccess.observe(this@SocialLoginActivity) {
-                    Log.i(TAG, "iskakaosignupsuccess 참 됨")
-                    viewModel.login(viewModel.getCustomKakaoId(kakaoAccount))
+                    viewModel.socialLogin(viewModel.getCustomKakaoId(kakaoAccount))
                 }
             }
             buttonNaverLogin.setOnClickListener {
                 val oAuthLoginCallback = object : OAuthLoginCallback {
                     override fun onSuccess() {
                         naverAccessToken = NaverIdLoginSDK.getAccessToken().toString()
-                        Log.e(TAG, "naverAccessToken : ${NaverIdLoginSDK.getAccessToken()}")
                         NidOAuthLogin().callProfileApi(object :
                             NidProfileCallback<NidProfileResponse> {
                             override fun onSuccess(result: NidProfileResponse) {
                                 naverAccount = result.profile?.id.toString()
                                 naverEmail = result.profile?.email.toString()
                                 naverNickname = result.profile?.nickname.toString()
-                                Log.e(TAG, "네이버 로그인한 유저 정보 - 계정 : $naverAccount")
-                                Log.e(TAG, "네이버 로그인한 유저 정보 - 이메일 : $naverEmail")
-                                Log.e(TAG, "네이버 로그인한 유저 정보 - 닉네임 : $naverNickname")
                                 naverAccount = RegexUtil.matchNaverAccount(naverAccount)
-                                Log.e(TAG,"정규표현식 적용 네이버 계정 : $naverAccount")
-                                viewModel.naverSignUp(viewModel.getCustomNaverId(naverAccount),naverEmail,naverNickname)
+                                viewModel.naverSignUp(viewModel.getCustomNaverId(naverAccount),
+                                    naverEmail,
+                                    naverNickname)
                             }
 
                             override fun onFailure(httpStatus: Int, message: String) {
@@ -123,8 +118,7 @@ class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
                 }
                 NaverIdLoginSDK.authenticate(this@SocialLoginActivity, oAuthLoginCallback)
                 viewModel.isNaverSignUpSuccess.observe(this@SocialLoginActivity) {
-                    Log.i(TAG, "isNaversignupsuccess 참 됨")
-                    viewModel.login(viewModel.getCustomNaverId(naverAccount))
+                    viewModel.socialLogin(viewModel.getCustomNaverId(naverAccount))
                 }
             }
 
@@ -141,24 +135,19 @@ class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
                 val signInIntent: Intent = googleSignInClient.signInIntent
                 activityResultLauncher.launch(signInIntent)
 
-//                viewModel.onGoogleButtonClick()
-
                 viewModel.isGoogleSignUpSuccess.observe(this@SocialLoginActivity) {
-                    Log.d(TAG, "isSignupSuccess 참")
-                    viewModel.login(googleAccount)
+                    viewModel.socialLogin(googleAccount)
                 }
             }
         }
         viewModel.loginState.observe(this@SocialLoginActivity) {
             if (it != null) {
                 if (it.isSuccess) {
-                    Log.i(TAG, "소셜 로그인 성공")
                     goToMainActivity()
 
                 } else {
                     if (it.erroMessage.isNotEmpty()) {
                         showToast(it.erroMessage)
-                        Log.i(TAG, "loginstate observe 함수 내부 : ${it.erroMessage}")
                     }
                 }
             }
@@ -190,7 +179,6 @@ class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
                         googleTokenId = account.idToken
                         if (googleTokenId != null && googleTokenId != "") {
                             Log.d(TAG, googleTokenId.toString())
-                            showToast(googleTokenId.toString())
                             val authCredential: AuthCredential =
                                 GoogleAuthProvider.getCredential(account.idToken, null)
                             firebaseAuthWithGoogle(authCredential, account)
@@ -210,36 +198,15 @@ class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
         firebaseAuth.signInWithCredential(authCredential)
             .addOnCompleteListener(this) {
                 if (it.isSuccessful) {
-                    Log.d(TAG, "signInWithCredential success!!")
                     val firebaseUser: FirebaseUser = firebaseAuth.currentUser!!
                     googleUserEmail = firebaseUser.email.toString()
                     showToast(firebaseUser.providerId)
                     Log.d(TAG, "providerId : ${firebaseUser.providerId}")
                     Log.d(TAG, googleTokenId.toString())
-                    lifecycleScope.launch {
-                        isGoogleLoginExist()
-                    }
                 } else {
                     Log.w(TAG, "signInWithCredential:failure", it.exception)
                 }
             }
-    }
-
-    private suspend fun isGoogleLoginExist() {
-        withContext(Dispatchers.IO) {
-            if (viewModel.checkSocialIdExist(viewModel.getCustomGoogleId(googleAccount))) {
-                runOnUiThread { showToast("아이디가 존재해요") }
-                Log.i(TAG, "아이디 존재")
-                viewModel.login(viewModel.getCustomGoogleId(googleAccount))
-            } else {
-                // token 으로 회원가입에 필요한 정보 요청 후 회원가입
-                runOnUiThread { showToast("회원가입 요청할래") }
-                Log.i(TAG, "회원가입 요청")
-                viewModel.socialKakaoSignUp(viewModel.getCustomGoogleId(googleAccount),
-                    "example@gmail.com",
-                    "nickname")
-            }
-        }
     }
 
     private fun goToMainActivity() {
@@ -250,38 +217,16 @@ class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     }
 
-    private fun checkKakaoSocialLogin(onSuccess:()->Unit) {
+    private fun checkKakaoSocialLogin(onSuccess: () -> Unit) {
         UserApiClient.instance.me { user, error ->
             if (error != null) {
                 Log.e(TAG, "사용자 정보 요청 실패", error)
             } else if (user != null) {
-                Log.i(TAG, "사용자 정보 요청 성공" +
-                        "\n회원번호: ${user.id}" +
-                        "\n이메일: ${user.kakaoAccount?.email}" +
-                        "\n닉네임: ${user.kakaoAccount?.profile?.nickname}")
                 kakaoEmail = user.kakaoAccount?.email.toString()
                 kakaoAccount = user.id.toString()
                 kakaoNickname = user.kakaoAccount?.profile?.nickname.toString()
                 onSuccess()
             }
         }
-    }
-
-    private fun startNaverDeleteToken() {
-        NidOAuthLogin().callDeleteTokenApi(this, object : OAuthLoginCallback {
-            override fun onSuccess() {
-                Toast.makeText(this@SocialLoginActivity, "네이버 아이디 토큰삭제 성공!", Toast.LENGTH_SHORT)
-                    .show()
-            }
-
-            override fun onFailure(httpStatus: Int, message: String) {
-                Log.d("naver", "errorCode: ${NaverIdLoginSDK.getLastErrorCode().code}")
-                Log.d("naver", "errorDesc: ${NaverIdLoginSDK.getLastErrorDescription()}")
-            }
-
-            override fun onError(errorCode: Int, message: String) {
-                onFailure(errorCode, message)
-            }
-        })
     }
 }
