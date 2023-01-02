@@ -11,10 +11,6 @@
     <string name="social_login_title">소셜 계정으로 로그인</string>
     <string name="google_login">구글 로그인</string>
     <string name="naver_login">네이버 로그인</string>
-    <string name="kakao_sign_up_id">kakao</string>
-    <string name="google_sign_up_id">google</string>
-    <string name="naver_sign_up_id">naver</string>
-    <string name="social_kakao_signup_email">kakaosignup@naver.com</string>
 
     <string name="terms_agreement">약관 동의</string>
     <string name="privacy_term_title">개인정보 이용약관(필수)</string>

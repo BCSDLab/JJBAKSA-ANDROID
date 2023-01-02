@@ -99,7 +99,7 @@ class SocialLoginViewModel @Inject constructor(
         }
     }
 
-    fun getCustomKakaoSignUpEmail(value: String): String{
+    fun getCustomKakaoSignUpEmail(value: String): String {
         val kakaoCustomEmail = getCustomKakaoId(value) + "@kakao.com"
         return kakaoCustomEmail
     }
