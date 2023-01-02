@@ -8,7 +8,6 @@ import com.jjbaksa.domain.repository.UserRepository
 import com.jjbaksa.domain.resp.user.LoginResult
 import com.jjbaksa.domain.resp.user.SignUpReq
 import com.jjbaksa.jjbaksa.BuildConfig
-import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseViewModel
 import com.jjbaksa.jjbaksa.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -78,8 +77,8 @@ class SocialLoginViewModel @Inject constructor(
             } else {
                 kakaoSignUp(
                     getCustomKakaoId(kakaoAccount),
-                    R.string.social_kakao_signup_email.toString(),
-                    R.string.social_kakao_signup_nickname.toString()
+                    getCustomKakaoSignUpEmail(kakaoAccount),
+                    getCustomKakaoId(kakaoAccount)
                 )
             }
         }
@@ -98,6 +97,11 @@ class SocialLoginViewModel @Inject constructor(
                 Log.i(TAG, "test naver postSignUp 실패")
             }
         }
+    }
+
+    fun getCustomKakaoSignUpEmail(value: String): String{
+        val kakaoCustomEmail = getCustomKakaoId(value) + "@kakao.com"
+        return kakaoCustomEmail
     }
 
     fun getCustomKakaoId(account: String): String {
