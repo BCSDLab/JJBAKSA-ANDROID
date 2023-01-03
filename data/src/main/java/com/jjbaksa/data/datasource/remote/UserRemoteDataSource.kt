@@ -1,6 +1,5 @@
 package com.jjbaksa.data.datasource.remote
 
-import android.util.Log
 import com.jjbaksa.data.api.AuthApi
 import com.jjbaksa.data.api.NoAuthApi
 import com.jjbaksa.data.datasource.UserDataSource
