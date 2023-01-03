@@ -45,7 +45,7 @@ class SignUpFragment : Fragment() {
             DataBindingUtil.inflate(layoutInflater, R.layout.fragment_sign_up, container, false)
 
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 signUpViewModel.uiState.collect {
                     binding.jjEditTextSignUpId.isButtonEnabled = !it.isIdChecked
                     setAlert(it.alertType)
@@ -61,16 +61,6 @@ class SignUpFragment : Fragment() {
             signUpViewModel.checkAccountAvailable(
                 binding.jjEditTextSignUpId.editTextText
             )
-
-            signUpViewModel.isIdAvailable.observe(viewLifecycleOwner) {
-                if (it) {
-                    signUpViewModel.updateIdCheckedState(true)
-                    signUpViewModel.updateAlertState(false)
-                } else {
-                    signUpViewModel.updateAlertType(ID_EXIST)
-                    signUpViewModel.updateAlertState(true)
-                }
-            }
         }
 
         binding.jjEditTextSignUpId.addTextChangedListener {

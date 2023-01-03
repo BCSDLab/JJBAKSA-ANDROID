@@ -25,10 +25,6 @@ class SignUpViewModel @Inject constructor(
 ) :
     ViewModel() {
 
-    private val _isIdAvailable = MutableLiveData<Boolean>()
-    val isIdAvailable: LiveData<Boolean>
-        get() = _isIdAvailable
-
     private val _isSignUpSuccess = MutableLiveData<Boolean>()
     val isSignUpSuccess: LiveData<Boolean>
         get() = _isSignUpSuccess
@@ -55,6 +51,8 @@ class SignUpViewModel @Inject constructor(
                     }
                     is RespResult.Success -> {
                         availableId = id
+                        updateIdCheckedState(true)
+                        updateAlertState(false)
                     }
                 }
             }.onFailure {
