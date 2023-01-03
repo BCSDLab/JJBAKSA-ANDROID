@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.jjbaksa.domain.base.RespResult
 import com.jjbaksa.domain.enums.SignUpAlertEnum
 import com.jjbaksa.domain.resp.user.SignUpReq
 import com.jjbaksa.domain.usecase.CheckAccountAvailableUseCase
@@ -46,13 +47,15 @@ class SignUpViewModel @Inject constructor(
         viewModelScope.launch {
             runCatching {
                 checkAccountAvailableUseCase(account)
-            }.onSuccess { result ->
-                _isIdAvailable.value = result
-                if (!result) {
-                    updateAlertType(SignUpAlertEnum.ID_EXIST)
-                    updateAlertState(true)
-                } else {
-                    availableId = id
+            }.onSuccess {
+                when (it) {
+                    is RespResult.Error -> {
+                        updateAlertType(SignUpAlertEnum.ID_EXIST)
+                        updateAlertState(true)
+                    }
+                    is RespResult.Success -> {
+                        availableId = id
+                    }
                 }
             }.onFailure {
                 // Handle error here
