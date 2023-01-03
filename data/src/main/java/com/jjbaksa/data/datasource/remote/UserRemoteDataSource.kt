@@ -1,5 +1,6 @@
 package com.jjbaksa.data.datasource.remote
 
+import android.util.Log
 import com.jjbaksa.data.api.AuthApi
 import com.jjbaksa.data.api.NoAuthApi
 import com.jjbaksa.data.datasource.UserDataSource
@@ -19,7 +20,7 @@ class UserRemoteDataSource @Inject constructor(
         return noAuthApi.signUp(signUpReq)
     }
 
-    override suspend fun checkAccountAvailable(account: String): Response<String> {
+    override suspend fun checkAccountAvailable(account: String): Response<Unit> {
         return noAuthApi.checkIdAvailable(account)
     }
 
