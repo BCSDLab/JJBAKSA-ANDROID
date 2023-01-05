@@ -3,12 +3,13 @@ package com.jjbaksa.data.repository
 import com.jjbaksa.data.SUCCESS
 import com.jjbaksa.data.datasource.local.UserLocalDataSource
 import com.jjbaksa.data.datasource.remote.UserRemoteDataSource
-import com.jjbaksa.data.mapper.CheckAccountAvailableMapper
 import com.jjbaksa.data.mapper.RespMapper
-import com.jjbaksa.domain.resp.user.SignUpReq
+import com.jjbaksa.domain.base.ErrorType
+import com.jjbaksa.domain.base.RespResult
 import com.jjbaksa.domain.repository.UserRepository
 import com.jjbaksa.domain.resp.user.LoginReq
 import com.jjbaksa.domain.resp.user.LoginResult
+import com.jjbaksa.domain.resp.user.SignUpReq
 import com.jjbaksa.domain.resp.user.SignUpResp
 import javax.inject.Inject
 
@@ -21,9 +22,15 @@ class UserRepositoryImpl @Inject constructor(
         return resp.body()
     }
 
-    override suspend fun checkAccountAvailable(account: String): Boolean {
+    override suspend fun checkAccountAvailable(account: String): RespResult<Boolean> {
         val result = userRemoteDataSource.checkAccountAvailable(account)
-        return CheckAccountAvailableMapper.mapToBoolean(result.code())
+        return if (result.isSuccessful) {
+            RespResult.Success(result.isSuccessful)
+        } else {
+            val errorBodyJson = result.errorBody()!!.string()
+            val errorBody = RespMapper.errorMapper(errorBodyJson)
+            RespResult.Error(ErrorType(errorBody.errorMessage, errorBody.code))
+        }
     }
 
     override suspend fun postLogin(
@@ -55,6 +62,7 @@ class UserRepositoryImpl @Inject constructor(
             }
         }
     }
+
     override suspend fun me() {
     }
 
