@@ -104,7 +104,6 @@ class SocialLoginViewModel @Inject constructor(
         UserApiClient.instance.me { user, error ->
             when {
                 error != null -> {
-
                 }
                 user != null -> {
                     kakaoEmail = user.kakaoAccount?.email.toString()
@@ -118,24 +117,24 @@ class SocialLoginViewModel @Inject constructor(
 
     fun checkNaverSocialLogin(onSuccess: () -> Unit) {
         NidOAuthLogin().callProfileApi(object :
-            NidProfileCallback<NidProfileResponse> {
-            override fun onSuccess(result: NidProfileResponse) {
-                naverAccount = result.profile?.id.toString()
-                naverEmail = result.profile?.email.toString()
-                naverNickname = result.profile?.nickname.toString()
-                naverAccount = RegexUtil.matchNaverAccount(naverAccount)
-                onSuccess()
-            }
+                NidProfileCallback<NidProfileResponse> {
+                override fun onSuccess(result: NidProfileResponse) {
+                    naverAccount = result.profile?.id.toString()
+                    naverEmail = result.profile?.email.toString()
+                    naverNickname = result.profile?.nickname.toString()
+                    naverAccount = RegexUtil.matchNaverAccount(naverAccount)
+                    onSuccess()
+                }
 
-            override fun onFailure(httpStatus: Int, message: String) {
-                val errorCode = NaverIdLoginSDK.getLastErrorCode().code
-                val errorDescription = NaverIdLoginSDK.getLastErrorDescription()
-            }
+                override fun onFailure(httpStatus: Int, message: String) {
+                    val errorCode = NaverIdLoginSDK.getLastErrorCode().code
+                    val errorDescription = NaverIdLoginSDK.getLastErrorDescription()
+                }
 
-            override fun onError(errorCode: Int, message: String) {
-                onFailure(errorCode, message)
-            }
-        })
+                override fun onError(errorCode: Int, message: String) {
+                    onFailure(errorCode, message)
+                }
+            })
     }
 
     fun getCustomKakaoId(): String {
@@ -148,18 +147,6 @@ class SocialLoginViewModel @Inject constructor(
 
     fun getCustomNaverId(): String {
         return naverSignUpId + naverAccount.substring(0 until 8)
-    }
-
-    fun naverSignUp(account: String, email: String, nickname: String) {
-        val signUpReq = SignUpReq(account, email, nickname, BuildConfig.social_login_password)
-        viewModelScope.launch {
-            runCatching {
-                repository.postSignUp(signUpReq)
-            }.onSuccess {
-                socialLogin(account)
-            }.onFailure {
-            }
-        }
     }
 
     fun naverLogin(context: Context) {
