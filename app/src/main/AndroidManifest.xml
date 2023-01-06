@@ -4,6 +4,8 @@
     package="com.jjbaksa.jjbaksa">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
     <application
         android:name=".JjbaksaApp"
@@ -19,6 +21,10 @@
         <activity
             android:name=".ui.mainpage.MainPageActivity"
             android:exported="false" />
+        <activity
+            android:name=".ui.search.SearchActivity"
+            android:exported="false"
+            android:label="@string/search_activity_title" />
         <activity
             android:name=".ui.signup.SignUpActivity"
             android:exported="false" />

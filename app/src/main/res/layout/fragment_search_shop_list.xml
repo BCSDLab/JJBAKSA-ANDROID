@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.search.SearchShopListFragment">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.jjbaksa.jjbaksa.ui.search.viewmodel.SearchShopListViewModel" />
+
+        <import type="android.view.View" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="16dp"
+        android:layout_height="match_parent">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_view_search_shop_list_friends_1"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:adjustViewBounds="true"
+            app:cardCornerRadius="32dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="4dp"
+                android:src="@mipmap/ic_shop_list_friends" />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_view_search_shop_list_friends_2"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="-12dp"
+            android:adjustViewBounds="true"
+            app:cardCornerRadius="32dp"
+            app:layout_constraintStart_toEndOf="@id/card_view_search_shop_list_friends_1"
+            app:layout_constraintTop_toTopOf="@id/card_view_search_shop_list_friends_1">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="4dp"
+                android:src="@mipmap/ic_shop_list_friends" />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_view_search_shop_list_friends_3"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="-12dp"
+            android:adjustViewBounds="true"
+            app:cardCornerRadius="32dp"
+            app:layout_constraintStart_toEndOf="@id/card_view_search_shop_list_friends_2"
+            app:layout_constraintTop_toTopOf="@id/card_view_search_shop_list_friends_1">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="4dp"
+                android:src="@mipmap/ic_shop_list_friends" />
+
+        </androidx.cardview.widget.CardView>
+
+        <CheckBox
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/sel_search_shop_list_check_box"
+            android:button="@null"
+            app:layout_constraintBottom_toBottomOf="@id/card_view_search_shop_list_friends_1"
+            app:layout_constraintStart_toEndOf="@id/card_view_search_shop_list_friends_3"
+            app:layout_constraintTop_toTopOf="@id/card_view_search_shop_list_friends_1" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_search_shop_list_shop_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/constraint_layout_search_shop_list_map_chooser"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/card_view_search_shop_list_friends_1" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraint_layout_search_shop_list_map_chooser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:background="@color/color_ffffff"
+            android:paddingVertical="16dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_search_shop_list_naver_map"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:background="@drawable/shape_rect_03c754_solid_radius_30_naver_map_button"
+                android:text="@string/search_shop_item_open_in_naver_map"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_search_shop_list_kakao_map"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/shape_rect_fee500_solid_radius_30_kakao_map_button"
+                android:text="@string/search_shop_item_open_in_kakao_map"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/button_search_shop_list_naver_map" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_search_shop_list_close_map_chooser"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/shape_rect_eeeeee_solid_radius_30_map_chooser_close_button"
+                android:text="@string/search_shop_item_close_map_chooser"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/button_search_shop_list_kakao_map" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

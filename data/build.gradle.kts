@@ -28,6 +28,7 @@ android {
 
 dependencies {
     implementation(project(":domain"))
+    implementation("com.google.android.gms:play-services-location:21.0.1")
     KotlinDependencies.run {
         implementation(kotlin)
     }

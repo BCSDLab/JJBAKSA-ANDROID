@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.jjbaksa.domain.resp.shop.ShopsResultContent" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_layout_search_restaurant_root"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp">
+
+        <ImageView
+            android:id="@+id/image_view_search_restaurant_image"
+            android:layout_width="117dp"
+            android:layout_height="117dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_view_search_restaurant_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@{item.placeName}"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/image_view_search_restaurant_image"
+            app:layout_constraintTop_toTopOf="@id/image_view_search_restaurant_image" />
+
+        <TextView
+            android:id="@+id/text_view_search_restaurant_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:text="@{item.address}"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@id/text_view_search_restaurant_name"
+            app:layout_constraintTop_toBottomOf="@id/text_view_search_restaurant_name" />
+
+        <TextView
+            android:id="@+id/text_view_search_restaurant_business_hour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@id/text_view_search_restaurant_distance"
+            app:layout_constraintStart_toStartOf="@id/text_view_search_restaurant_distance" />
+
+        <TextView
+            android:id="@+id/text_view_search_restaurant_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/image_view_search_restaurant_image"
+            app:layout_constraintStart_toEndOf="@id/image_view_search_restaurant_image" />
+
+        <ImageButton
+            android:id="@+id/image_button_search_restaurant_map"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-6dp"
+            android:background="@drawable/sel_search_shop_list_map"
+            android:padding="8dp"
+            android:src="@drawable/ic_shop_map"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/text_view_search_restaurant_distance" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
