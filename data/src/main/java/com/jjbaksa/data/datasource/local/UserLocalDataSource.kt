@@ -25,7 +25,7 @@ class UserLocalDataSource @Inject constructor(
         return null
     }
 
-    override suspend fun checkAccountAvailable(account: String): Response<String> {
+    override suspend fun checkAccountAvailable(account: String): Response<Unit> {
         TODO("Not yet implemented")
     }
 

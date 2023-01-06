@@ -19,7 +19,7 @@ interface NoAuthApi {
     @GET("user/exists")
     suspend fun checkIdAvailable(
         @Query("account") page: String
-    ): Response<String>
+    ): Response<Unit>
 
     @POST("user/login")
     suspend fun login(

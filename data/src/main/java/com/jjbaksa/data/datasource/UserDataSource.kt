@@ -8,7 +8,7 @@ import retrofit2.Response
 
 interface UserDataSource {
     suspend fun postSignUp(signUpReq: SignUpReq): Response<SignUpResp>?
-    suspend fun checkAccountAvailable(account: String): Response<String>
+    suspend fun checkAccountAvailable(account: String): Response<Unit>
     suspend fun postLogin(loginReq: LoginReq): Response<LoginResp>?
     suspend fun saveAccessToken(accessToken: String)
     suspend fun saveAccount(account: String)
