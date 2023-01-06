@@ -36,12 +36,6 @@ import kotlinx.coroutines.launch
 class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
     private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
     private lateinit var firebaseAuth: FirebaseAuth
-
-    private var naverAccount: String = ""
-    private var naverEmail: String = ""
-    private var naverNickname: String = ""
-    private var naverAccessToken: String = ""
-
     private var googleUserEmail: String = ""
     private var googleAccount: String = ""
     private var googleTokenId: String? = ""
@@ -57,12 +51,6 @@ class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
     }
 
     override fun subscribe() {
-        viewModel.isKakaoSignUpSuccess.observe(this@SocialLoginActivity) {
-            viewModel.socialLogin(viewModel.getCustomKakaoId())
-        }
-        viewModel.isNaverSignUpSuccess.observe(this@SocialLoginActivity) {
-            viewModel.socialLogin(viewModel.getCustomNaverId(naverAccount))
-        }
         viewModel.loginState.observe(this@SocialLoginActivity) {
             if (it != null) {
                 if (it.isSuccess) {
@@ -82,43 +70,7 @@ class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
                 viewModel.kakaoLogin(this@SocialLoginActivity)
             }
             buttonNaverLogin.setOnClickListener {
-                val oAuthLoginCallback = object : OAuthLoginCallback {
-                    override fun onSuccess() {
-                        naverAccessToken = NaverIdLoginSDK.getAccessToken().toString()
-                        NidOAuthLogin().callProfileApi(object :
-                                NidProfileCallback<NidProfileResponse> {
-                                override fun onSuccess(result: NidProfileResponse) {
-                                    naverAccount = result.profile?.id.toString()
-                                    naverEmail = result.profile?.email.toString()
-                                    naverNickname = result.profile?.nickname.toString()
-                                    naverAccount = RegexUtil.matchNaverAccount(naverAccount)
-                                    viewModel.naverSignUp(
-                                        viewModel.getCustomNaverId(naverAccount),
-                                        naverEmail,
-                                        naverNickname
-                                    )
-                                }
-
-                                override fun onFailure(httpStatus: Int, message: String) {
-                                    val errorCode = NaverIdLoginSDK.getLastErrorCode().code
-                                    val errorDescription = NaverIdLoginSDK.getLastErrorDescription()
-                                    showToast("네이버 인증 실패")
-                                }
-
-                                override fun onError(errorCode: Int, message: String) {
-                                    onFailure(errorCode, message)
-                                }
-                            })
-                    }
-
-                    override fun onError(errorCode: Int, message: String) {
-                        showToast("네이버 로그인 에러")
-                    }
-
-                    override fun onFailure(httpStatus: Int, message: String) {
-                    }
-                }
-                NaverIdLoginSDK.authenticate(this@SocialLoginActivity, oAuthLoginCallback)
+                viewModel.naverLogin(this@SocialLoginActivity)
             }
 
             buttonGoogleLogin.setOnClickListener {
@@ -133,10 +85,6 @@ class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
 
                 val signInIntent: Intent = googleSignInClient.signInIntent
                 activityResultLauncher.launch(signInIntent)
-
-                viewModel.isGoogleSignUpSuccess.observe(this@SocialLoginActivity) {
-                    viewModel.socialLogin(googleAccount)
-                }
             }
         }
     }
