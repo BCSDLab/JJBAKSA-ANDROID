@@ -36,9 +36,6 @@ import kotlinx.coroutines.launch
 class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
     private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
     private lateinit var firebaseAuth: FirebaseAuth
-    private var kakaoEmail: String = ""
-    private var kakaoAccount: String = ""
-    private var kakaoNickname: String = ""
 
     private var naverAccount: String = ""
     private var naverEmail: String = ""
@@ -50,10 +47,6 @@ class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
     private var googleTokenId: String? = ""
     val viewModel: SocialLoginViewModel by viewModels()
 
-    companion object {
-        const val TAG = "SocialLogin"
-    }
-
     override val layoutId: Int
         get() = R.layout.activity_social_login
 
@@ -64,21 +57,29 @@ class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
     }
 
     override fun subscribe() {
+        viewModel.isKakaoSignUpSuccess.observe(this@SocialLoginActivity) {
+            viewModel.socialLogin(viewModel.getCustomKakaoId())
+        }
+        viewModel.isNaverSignUpSuccess.observe(this@SocialLoginActivity) {
+            viewModel.socialLogin(viewModel.getCustomNaverId(naverAccount))
+        }
+        viewModel.loginState.observe(this@SocialLoginActivity) {
+            if (it != null) {
+                if (it.isSuccess) {
+                    goToMainActivity()
+                } else {
+                    if (it.erroMessage.isNotEmpty()) {
+                        showToast(it.erroMessage)
+                    }
+                }
+            }
+        }
     }
 
     override fun initEvent() {
         with(binding) {
             buttonKakaoLogin.setOnClickListener {
-                CoroutineScope(Dispatchers.IO).launch {
-                    val oAuthToken = UserApiClient.loginWithKakao(this@SocialLoginActivity)
-                    checkKakaoSocialLogin() {
-                        viewModel.isKakaoSocialIdExist(kakaoAccount)
-                    }
-                }
-
-                viewModel.isKakaoSignUpSuccess.observe(this@SocialLoginActivity) {
-                    viewModel.socialLogin(viewModel.getCustomKakaoId(kakaoAccount))
-                }
+                viewModel.kakaoLogin(this@SocialLoginActivity)
             }
             buttonNaverLogin.setOnClickListener {
                 val oAuthLoginCallback = object : OAuthLoginCallback {
@@ -101,8 +102,7 @@ class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
                                 override fun onFailure(httpStatus: Int, message: String) {
                                     val errorCode = NaverIdLoginSDK.getLastErrorCode().code
                                     val errorDescription = NaverIdLoginSDK.getLastErrorDescription()
-                                    Log.d(TAG, "authenticate onFailure()")
-                                    Log.d(TAG, "errorCode : $errorCode / errorDesc : $errorDescription")
+                                    showToast("네이버 인증 실패")
                                 }
 
                                 override fun onError(errorCode: Int, message: String) {
@@ -112,16 +112,13 @@ class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
                     }
 
                     override fun onError(errorCode: Int, message: String) {
-                        Log.e(TAG, "onError in naver login")
+                        showToast("네이버 로그인 에러")
                     }
 
                     override fun onFailure(httpStatus: Int, message: String) {
                     }
                 }
                 NaverIdLoginSDK.authenticate(this@SocialLoginActivity, oAuthLoginCallback)
-                viewModel.isNaverSignUpSuccess.observe(this@SocialLoginActivity) {
-                    viewModel.socialLogin(viewModel.getCustomNaverId(naverAccount))
-                }
             }
 
             buttonGoogleLogin.setOnClickListener {
@@ -139,17 +136,6 @@ class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
 
                 viewModel.isGoogleSignUpSuccess.observe(this@SocialLoginActivity) {
                     viewModel.socialLogin(googleAccount)
-                }
-            }
-        }
-        viewModel.loginState.observe(this@SocialLoginActivity) {
-            if (it != null) {
-                if (it.isSuccess) {
-                    goToMainActivity()
-                } else {
-                    if (it.erroMessage.isNotEmpty()) {
-                        showToast(it.erroMessage)
-                    }
                 }
             }
         }
@@ -204,7 +190,7 @@ class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
                     Log.d(TAG, "providerId : ${firebaseUser.providerId}")
                     Log.d(TAG, googleTokenId.toString())
                 } else {
-                    Log.w(TAG, "signInWithCredential:failure", it.exception)
+                    showToast("signInWithCredential:failure")
                 }
             }
     }
@@ -217,16 +203,7 @@ class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     }
 
-    private fun checkKakaoSocialLogin(onSuccess: () -> Unit) {
-        UserApiClient.instance.me { user, error ->
-            if (error != null) {
-                Log.e(TAG, "사용자 정보 요청 실패", error)
-            } else if (user != null) {
-                kakaoEmail = user.kakaoAccount?.email.toString()
-                kakaoAccount = user.id.toString()
-                kakaoNickname = user.kakaoAccount?.profile?.nickname.toString()
-                onSuccess()
-            }
-        }
+    companion object {
+        const val TAG = "SocialLogin"
     }
 }

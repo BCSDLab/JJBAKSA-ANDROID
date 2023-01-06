@@ -1,16 +1,20 @@
 package com.jjbaksa.jjbaksa.ui.social
 
-import android.util.Log
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.jjbaksa.domain.base.RespResult
 import com.jjbaksa.domain.repository.UserRepository
 import com.jjbaksa.domain.resp.user.LoginResult
 import com.jjbaksa.domain.resp.user.SignUpReq
 import com.jjbaksa.jjbaksa.BuildConfig
 import com.jjbaksa.jjbaksa.base.BaseViewModel
 import com.jjbaksa.jjbaksa.util.SingleLiveEvent
+import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -35,15 +39,15 @@ class SocialLoginViewModel @Inject constructor(
     val password = MutableLiveData<String>("")
     val isAutoLogin = MutableLiveData<Boolean>(false)
 
+    private var kakaoEmail: String = ""
+    private var kakaoAccount: String = ""
+    private var kakaoNickname: String = ""
+
     val kakaoSignUpId = "kakao"
     val googleSignUpId = "google"
     val naverSignUpId = "naver"
 
-    companion object {
-        const val TAG = "SocialLogin"
-    }
-
-    suspend fun checkSocialIdExist(account: String): Boolean {
+    suspend fun checkSocialIdExist(account: String): RespResult<Boolean> {
         return repository.checkAccountAvailable(account)
     }
 
@@ -65,23 +69,62 @@ class SocialLoginViewModel @Inject constructor(
                     _isKakaoSignUpSuccess.value = true
                 } else socialLogin(id)
             }.onFailure {
-                Log.i(TAG, "kakao postSignUp 실패")
             }
         }
     }
 
-    fun isKakaoSocialIdExist(kakaoAccount: String) {
+    fun isKakaoSocialIdExist() {
         viewModelScope.launch {
-            if (checkSocialIdExist(getCustomKakaoId(kakaoAccount))) {
-                socialLogin(getCustomKakaoId(kakaoAccount))
+            if (checkSocialIdExist(getCustomKakaoId()) == RespResult.Success(true)) {
+                socialLogin(getCustomKakaoId())
             } else {
                 kakaoSignUp(
-                    getCustomKakaoId(kakaoAccount),
-                    getCustomKakaoSignUpEmail(kakaoAccount),
-                    getCustomKakaoId(kakaoAccount)
+                    getCustomKakaoId(),
+                    getCustomKakaoSignUpEmail(),
+                    getCustomKakaoId()
                 )
             }
         }
+    }
+
+    fun getCustomKakaoSignUpEmail(): String {
+        val kakaoCustomEmail = getCustomKakaoId() + "@kakao.com"
+        return kakaoCustomEmail
+    }
+
+    fun kakaoLogin(context: Context) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val oAuthToken = UserApiClient.loginWithKakao(context)
+            checkKakaoSocialLogin() {
+                isKakaoSocialIdExist()
+            }
+        }
+
+    }
+
+    fun checkKakaoSocialLogin(onSuccess: () -> Unit) {
+        UserApiClient.instance.me { user, error ->
+            if (error != null) {
+
+            } else if (user != null) {
+                kakaoEmail = user.kakaoAccount?.email.toString()
+                kakaoAccount = user.id.toString()
+                kakaoNickname = user.kakaoAccount?.profile?.nickname.toString()
+                onSuccess()
+            }
+        }
+    }
+
+    fun getCustomKakaoId(): String {
+        return kakaoSignUpId + kakaoAccount
+    }
+
+    fun getCustomGoogleId(account: String): String {
+        return googleSignUpId + account
+    }
+
+    fun getCustomNaverId(account: String): String {
+        return naverSignUpId + account.substring(0 until 8)
     }
 
     fun naverSignUp(account: String, email: String, nickname: String) {
@@ -94,26 +137,8 @@ class SocialLoginViewModel @Inject constructor(
                     _isNaverSignUpSuccess.value = true
                 } else socialLogin(account)
             }.onFailure {
-                Log.i(TAG, "test naver postSignUp 실패")
             }
         }
-    }
-
-    fun getCustomKakaoSignUpEmail(value: String): String {
-        val kakaoCustomEmail = getCustomKakaoId(value) + "@kakao.com"
-        return kakaoCustomEmail
-    }
-
-    fun getCustomKakaoId(account: String): String {
-        return kakaoSignUpId + account
-    }
-
-    fun getCustomGoogleId(account: String): String {
-        return googleSignUpId + account
-    }
-
-    fun getCustomNaverId(account: String): String {
-        return naverSignUpId + account.substring(0 until 8)
     }
 
     fun getAutoLoginFlag() {
@@ -124,5 +149,9 @@ class SocialLoginViewModel @Inject constructor(
                 password.value = repository.getPasswrod()
             }
         }
+    }
+
+    companion object {
+        const val TAG = "SocialLogin"
     }
 }
