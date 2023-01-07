@@ -59,7 +59,7 @@ class UserRepositoryImpl @Inject constructor(
             } else {
                 var errorBodyJson = "${response.errorBody()!!.string()}"
                 val errorBody = RespMapper.errorMapper(errorBodyJson)
-                when(errorBody.code) {
+                when (errorBody.code) {
                     NOID -> {
                         onResult(LoginResult(erroMessage = errorBody.code.toString()))
                     }
