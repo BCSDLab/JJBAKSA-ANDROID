@@ -64,8 +64,8 @@ class SocialLoginViewModel @Inject constructor(
     val oAuthLoginCallback = object : OAuthLoginCallback {
         override fun onSuccess() {
             naverAccessToken = NaverIdLoginSDK.getAccessToken().toString()
-            checkNaverSocialLogin(){
-                socialLogin(naverAccount,2)
+            checkNaverSocialLogin() {
+                socialLogin(naverAccount, 2)
             }
         }
 
@@ -84,10 +84,12 @@ class SocialLoginViewModel @Inject constructor(
                     "3" -> {
                         when (socialNum) {
                             1 -> {
-                                socialSignUp(account,
+                                socialSignUp(
+                                    account,
                                     getCustomKakaoSignUpEmail(),
                                     getCustomKakaoId(),
-                                    socialNum)
+                                    socialNum
+                                )
                             }
                             2 -> {
                                 socialSignUp(
@@ -123,24 +125,24 @@ class SocialLoginViewModel @Inject constructor(
 
     fun checkNaverSocialLogin(onSuccess: () -> Unit) {
         NidOAuthLogin().callProfileApi(object :
-            NidProfileCallback<NidProfileResponse> {
-            override fun onSuccess(result: NidProfileResponse) {
-                naverAccount = result.profile?.id.toString()
-                naverEmail = result.profile?.email.toString()
-                naverNickname = result.profile?.nickname.toString()
-                naverAccount = RegexUtil.matchNaverAccount(naverAccount)
-                onSuccess()
-            }
+                NidProfileCallback<NidProfileResponse> {
+                override fun onSuccess(result: NidProfileResponse) {
+                    naverAccount = result.profile?.id.toString()
+                    naverEmail = result.profile?.email.toString()
+                    naverNickname = result.profile?.nickname.toString()
+                    naverAccount = RegexUtil.matchNaverAccount(naverAccount)
+                    onSuccess()
+                }
 
-            override fun onFailure(httpStatus: Int, message: String) {
-                val errorCode = NaverIdLoginSDK.getLastErrorCode().code
-                val errorDescription = NaverIdLoginSDK.getLastErrorDescription()
-            }
+                override fun onFailure(httpStatus: Int, message: String) {
+                    val errorCode = NaverIdLoginSDK.getLastErrorCode().code
+                    val errorDescription = NaverIdLoginSDK.getLastErrorDescription()
+                }
 
-            override fun onError(errorCode: Int, message: String) {
-                onFailure(errorCode, message)
-            }
-        })
+                override fun onError(errorCode: Int, message: String) {
+                    onFailure(errorCode, message)
+                }
+            })
     }
 
     fun getCustomKakaoId(): String {
