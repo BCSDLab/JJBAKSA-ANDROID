@@ -2,7 +2,6 @@ package com.jjbaksa.jjbaksa.ui.social
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.jjbaksa.domain.base.RespResult
 import com.jjbaksa.domain.repository.UserRepository
 import com.jjbaksa.domain.resp.user.LoginResult
 import com.jjbaksa.domain.resp.user.SignUpReq
@@ -56,7 +55,7 @@ class SocialLoginViewModel @Inject constructor(
                     kakaoAccount = user.id.toString()
                     kakaoNickname = user.kakaoAccount?.profile?.nickname.toString()
                     val newKakaoId = kakaoSignUpId + kakaoAccount
-                    socialLogin(newKakaoId)
+                    socialLogin(newKakaoId, 1)
                 }
             }
         }
@@ -65,8 +64,8 @@ class SocialLoginViewModel @Inject constructor(
     val oAuthLoginCallback = object : OAuthLoginCallback {
         override fun onSuccess() {
             naverAccessToken = NaverIdLoginSDK.getAccessToken().toString()
-            checkNaverSocialLogin {
-                isNaverSocialIdExist()
+            checkNaverSocialLogin(){
+                socialLogin(naverAccount,2)
             }
         }
 
@@ -77,40 +76,42 @@ class SocialLoginViewModel @Inject constructor(
         }
     }
 
-    suspend fun checkSocialIdExist(account: String): RespResult<Boolean> {
-        return repository.checkAccountAvailable(account)
-    }
-
-    fun socialLogin(account: String) {
+    fun socialLogin(account: String, socialNum: Int) {
         viewModelScope.launch(ceh) {
             repository.postLogin(account, BuildConfig.social_login_password, isAutoLogin.value!!) {
                 _loginState.value = it
+                when (it.erroMessage) {
+                    "3" -> {
+                        when (socialNum) {
+                            1 -> {
+                                socialSignUp(account,
+                                    getCustomKakaoSignUpEmail(),
+                                    getCustomKakaoId(),
+                                    socialNum)
+                            }
+                            2 -> {
+                                socialSignUp(
+                                    getCustomNaverId(),
+                                    naverEmail,
+                                    naverNickname,
+                                    socialNum
+                                )
+                            }
+                        }
+                    }
+                }
             }
         }
     }
 
-    fun socialSignUp(id: String, email: String, nickname: String) {
+    fun socialSignUp(id: String, email: String, nickname: String, socialNum: Int) {
         val signUpReq = SignUpReq(id, email, nickname, BuildConfig.social_login_password)
         viewModelScope.launch {
             runCatching {
                 repository.postSignUp(signUpReq)
             }.onSuccess {
-                socialLogin(id)
+                socialLogin(id, socialNum)
             }.onFailure {
-            }
-        }
-    }
-
-    fun isKakaoSocialIdExist() {
-        viewModelScope.launch {
-            if (checkSocialIdExist(getCustomKakaoId()) == RespResult.Success(true)) {
-                socialLogin(getCustomKakaoId())
-            } else {
-                socialSignUp(
-                    getCustomKakaoId(),
-                    getCustomKakaoSignUpEmail(),
-                    getCustomKakaoId()
-                )
             }
         }
     }
@@ -120,41 +121,26 @@ class SocialLoginViewModel @Inject constructor(
         return kakaoCustomEmail
     }
 
-    fun checkKakaoSocialLogin(onSuccess: () -> Unit) {
-        UserApiClient.instance.me { user, error ->
-            when {
-                error != null -> {
-                }
-                user != null -> {
-                    kakaoEmail = user.kakaoAccount?.email.toString()
-                    kakaoAccount = user.id.toString()
-                    kakaoNickname = user.kakaoAccount?.profile?.nickname.toString()
-                    onSuccess()
-                }
-            }
-        }
-    }
-
     fun checkNaverSocialLogin(onSuccess: () -> Unit) {
         NidOAuthLogin().callProfileApi(object :
-                NidProfileCallback<NidProfileResponse> {
-                override fun onSuccess(result: NidProfileResponse) {
-                    naverAccount = result.profile?.id.toString()
-                    naverEmail = result.profile?.email.toString()
-                    naverNickname = result.profile?.nickname.toString()
-                    naverAccount = RegexUtil.matchNaverAccount(naverAccount)
-                    onSuccess()
-                }
+            NidProfileCallback<NidProfileResponse> {
+            override fun onSuccess(result: NidProfileResponse) {
+                naverAccount = result.profile?.id.toString()
+                naverEmail = result.profile?.email.toString()
+                naverNickname = result.profile?.nickname.toString()
+                naverAccount = RegexUtil.matchNaverAccount(naverAccount)
+                onSuccess()
+            }
 
-                override fun onFailure(httpStatus: Int, message: String) {
-                    val errorCode = NaverIdLoginSDK.getLastErrorCode().code
-                    val errorDescription = NaverIdLoginSDK.getLastErrorDescription()
-                }
+            override fun onFailure(httpStatus: Int, message: String) {
+                val errorCode = NaverIdLoginSDK.getLastErrorCode().code
+                val errorDescription = NaverIdLoginSDK.getLastErrorDescription()
+            }
 
-                override fun onError(errorCode: Int, message: String) {
-                    onFailure(errorCode, message)
-                }
-            })
+            override fun onError(errorCode: Int, message: String) {
+                onFailure(errorCode, message)
+            }
+        })
     }
 
     fun getCustomKakaoId(): String {
@@ -167,20 +153,6 @@ class SocialLoginViewModel @Inject constructor(
 
     fun getCustomNaverId(): String {
         return naverSignUpId + naverAccount.substring(0 until 8)
-    }
-
-    fun isNaverSocialIdExist() {
-        viewModelScope.launch {
-            if (checkSocialIdExist(getCustomNaverId()) == RespResult.Success(true)) {
-                socialLogin(getCustomNaverId())
-            } else {
-                socialSignUp(
-                    getCustomNaverId(),
-                    naverEmail,
-                    naverNickname
-                )
-            }
-        }
     }
 
     fun getAutoLoginFlag() {

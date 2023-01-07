@@ -1,5 +1,6 @@
 package com.jjbaksa.data.repository
 
+import com.jjbaksa.data.NOID
 import com.jjbaksa.data.SUCCESS
 import com.jjbaksa.data.datasource.local.UserLocalDataSource
 import com.jjbaksa.data.datasource.remote.UserRemoteDataSource
@@ -58,6 +59,11 @@ class UserRepositoryImpl @Inject constructor(
             } else {
                 var errorBodyJson = "${response.errorBody()!!.string()}"
                 val errorBody = RespMapper.errorMapper(errorBodyJson)
+                when(errorBody.code) {
+                    NOID -> {
+                        onResult(LoginResult(erroMessage = errorBody.code.toString()))
+                    }
+                }
                 onResult(LoginResult(erroMessage = errorBody.errorMessage))
             }
         }
