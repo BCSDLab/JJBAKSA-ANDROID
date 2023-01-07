@@ -20,6 +20,7 @@ import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseActivity
 import com.jjbaksa.jjbaksa.databinding.ActivitySocialLoginBinding
 import com.jjbaksa.jjbaksa.ui.mainpage.MainPageActivity
+import com.kakao.sdk.user.UserApiClient
 import com.navercorp.nid.NaverIdLoginSDK
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -58,10 +59,14 @@ class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
     override fun initEvent() {
         with(binding) {
             buttonKakaoLogin.setOnClickListener {
-                viewModel.kakaoLogin(this@SocialLoginActivity)
+                if (UserApiClient.instance.isKakaoTalkLoginAvailable(this@SocialLoginActivity)) {
+                    UserApiClient.instance.loginWithKakaoTalk(this@SocialLoginActivity, callback = viewModel.kakaoLoginCallback)
+                } else {
+                    UserApiClient.instance.loginWithKakaoAccount(this@SocialLoginActivity, callback = viewModel.kakaoLoginCallback)
+                }
             }
             buttonNaverLogin.setOnClickListener {
-                viewModel.naverLogin(this@SocialLoginActivity)
+                NaverIdLoginSDK.authenticate(this@SocialLoginActivity,viewModel.oAuthLoginCallback)
             }
 
             buttonGoogleLogin.setOnClickListener {

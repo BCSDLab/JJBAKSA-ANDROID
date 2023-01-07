@@ -11,6 +11,7 @@ import com.jjbaksa.jjbaksa.BuildConfig
 import com.jjbaksa.jjbaksa.base.BaseViewModel
 import com.jjbaksa.jjbaksa.util.RegexUtil
 import com.jjbaksa.jjbaksa.util.SingleLiveEvent
+import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
 import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.oauth.NidOAuthLogin
@@ -47,6 +48,37 @@ class SocialLoginViewModel @Inject constructor(
     private var naverEmail: String = ""
     private var naverNickname: String = ""
     private var naverAccessToken: String = ""
+
+    val kakaoLoginCallback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
+        if (error != null) {
+        } else if (token != null) {
+            UserApiClient.instance.me { user, meError ->
+                if (error != null) {
+                } else if (user != null) {
+                    kakaoEmail = user.kakaoAccount?.email.toString()
+                    kakaoAccount = user.id.toString()
+                    kakaoNickname = user.kakaoAccount?.profile?.nickname.toString()
+                    val newKakaoId = kakaoSignUpId + kakaoAccount
+                    socialLogin(newKakaoId)
+                }
+            }
+        }
+    }
+
+    val oAuthLoginCallback = object : OAuthLoginCallback {
+        override fun onSuccess() {
+            naverAccessToken = NaverIdLoginSDK.getAccessToken().toString()
+            checkNaverSocialLogin {
+                isNaverSocialIdExist()
+            }
+        }
+
+        override fun onError(errorCode: Int, message: String) {
+        }
+
+        override fun onFailure(httpStatus: Int, message: String) {
+        }
+    }
 
     suspend fun checkSocialIdExist(account: String): RespResult<Boolean> {
         return repository.checkAccountAvailable(account)
@@ -89,15 +121,6 @@ class SocialLoginViewModel @Inject constructor(
     fun getCustomKakaoSignUpEmail(): String {
         val kakaoCustomEmail = getCustomKakaoId() + "@kakao.com"
         return kakaoCustomEmail
-    }
-
-    fun kakaoLogin(context: Context) {
-        CoroutineScope(Dispatchers.IO).launch {
-            val oAuthToken = UserApiClient.loginWithKakao(context)
-            checkKakaoSocialLogin() {
-                isKakaoSocialIdExist()
-            }
-        }
     }
 
     fun checkKakaoSocialLogin(onSuccess: () -> Unit) {
@@ -147,24 +170,6 @@ class SocialLoginViewModel @Inject constructor(
 
     fun getCustomNaverId(): String {
         return naverSignUpId + naverAccount.substring(0 until 8)
-    }
-
-    fun naverLogin(context: Context) {
-        val oAuthLoginCallback = object : OAuthLoginCallback {
-            override fun onSuccess() {
-                naverAccessToken = NaverIdLoginSDK.getAccessToken().toString()
-                checkNaverSocialLogin {
-                    isNaverSocialIdExist()
-                }
-            }
-
-            override fun onError(errorCode: Int, message: String) {
-            }
-
-            override fun onFailure(httpStatus: Int, message: String) {
-            }
-        }
-        NaverIdLoginSDK.authenticate(context, oAuthLoginCallback)
     }
 
     fun isNaverSocialIdExist() {
