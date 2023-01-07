@@ -66,7 +66,7 @@ class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
                 }
             }
             buttonNaverLogin.setOnClickListener {
-                NaverIdLoginSDK.authenticate(this@SocialLoginActivity,viewModel.oAuthLoginCallback)
+                NaverIdLoginSDK.authenticate(this@SocialLoginActivity, viewModel.oAuthLoginCallback)
             }
 
             buttonGoogleLogin.setOnClickListener {
