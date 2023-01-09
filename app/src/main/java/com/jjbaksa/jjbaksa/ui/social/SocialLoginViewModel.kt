@@ -2,6 +2,7 @@ package com.jjbaksa.jjbaksa.ui.social
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.jjbaksa.data.NEED_EMAIL_AUTH
 import com.jjbaksa.data.NEED_SIGN_UP
 import com.jjbaksa.domain.repository.UserRepository
 import com.jjbaksa.domain.resp.user.LoginResult
@@ -105,6 +106,16 @@ class SocialLoginViewModel @Inject constructor(
                             }
                         }
                     }
+                    NEED_EMAIL_AUTH.toString() -> {
+                        when (socialNum) {
+                            KAKAO -> {
+                                emailAuth(getCustomKakaoSignUpEmail())
+                            }
+                            NAVER -> {
+                                emailAuth(naverEmail)
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -168,6 +179,12 @@ class SocialLoginViewModel @Inject constructor(
                 account.value = repository.getAccount()
                 password.value = repository.getPasswrod()
             }
+        }
+    }
+
+    fun emailAuth(email: String) {
+        viewModelScope.launch {
+            val response = repository.emailAuthenticate(email)
         }
     }
 

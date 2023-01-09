@@ -1,17 +1,16 @@
 package com.jjbaksa.data.repository
 
-import com.jjbaksa.data.NOID
+import com.jjbaksa.data.NEED_EMAIL_AUTH
+import com.jjbaksa.data.NEED_SIGN_UP
 import com.jjbaksa.data.SUCCESS
 import com.jjbaksa.data.datasource.local.UserLocalDataSource
 import com.jjbaksa.data.datasource.remote.UserRemoteDataSource
+import com.jjbaksa.data.mapper.EmailRespMapper
 import com.jjbaksa.data.mapper.RespMapper
 import com.jjbaksa.domain.base.ErrorType
 import com.jjbaksa.domain.base.RespResult
 import com.jjbaksa.domain.repository.UserRepository
-import com.jjbaksa.domain.resp.user.LoginReq
-import com.jjbaksa.domain.resp.user.LoginResult
-import com.jjbaksa.domain.resp.user.SignUpReq
-import com.jjbaksa.domain.resp.user.SignUpResp
+import com.jjbaksa.domain.resp.user.*
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
@@ -60,13 +59,21 @@ class UserRepositoryImpl @Inject constructor(
                 var errorBodyJson = "${response.errorBody()!!.string()}"
                 val errorBody = RespMapper.errorMapper(errorBodyJson)
                 when (errorBody.code) {
-                    NOID -> {
+                    NEED_SIGN_UP -> {
+                        onResult(LoginResult(erroMessage = errorBody.code.toString()))
+                    }
+                    NEED_EMAIL_AUTH -> {
                         onResult(LoginResult(erroMessage = errorBody.code.toString()))
                     }
                 }
                 onResult(LoginResult(erroMessage = errorBody.errorMessage))
             }
         }
+    }
+
+    override suspend fun emailAuthenticate(email: String): Boolean {
+        val result = userRemoteDataSource.emailAuthenticate(email)
+        return EmailRespMapper.mapToBoolean(result.code())
     }
 
     override suspend fun me() {

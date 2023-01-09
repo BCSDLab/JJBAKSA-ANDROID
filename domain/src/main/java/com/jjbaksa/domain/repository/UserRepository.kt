@@ -14,6 +14,7 @@ interface UserRepository {
         isAutoLogin: Boolean,
         onResult: (LoginResult) -> Unit
     )
+    suspend fun emailAuthenticate(email: String): Boolean
     suspend fun me()
     fun getAutoLoginFlag(): Boolean
     fun getAccount(): String

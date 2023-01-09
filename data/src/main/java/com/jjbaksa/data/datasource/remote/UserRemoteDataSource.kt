@@ -27,6 +27,10 @@ class UserRemoteDataSource @Inject constructor(
         return noAuthApi.login(loginReq)
     }
 
+    override suspend fun emailAuthenticate(email: String): Response<String> {
+        return noAuthApi.emailAuthenticate(email)
+    }
+
     override suspend fun saveAccessToken(accessToken: String) {
     }
 

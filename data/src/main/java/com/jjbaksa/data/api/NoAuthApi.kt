@@ -25,4 +25,9 @@ interface NoAuthApi {
     suspend fun login(
         @Body loginReq: LoginReq
     ): Response<LoginResp>
+
+    @POST("user/authenticate")
+    suspend fun emailAuthenticate(
+        @Query("email") email: String
+    ): Response<String>
 }

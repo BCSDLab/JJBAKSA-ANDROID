@@ -10,6 +10,7 @@ interface UserDataSource {
     suspend fun postSignUp(signUpReq: SignUpReq): Response<SignUpResp>?
     suspend fun checkAccountAvailable(account: String): Response<Unit>
     suspend fun postLogin(loginReq: LoginReq): Response<LoginResp>?
+    suspend fun emailAuthenticate(email: String): Response<String>
     suspend fun saveAccessToken(accessToken: String)
     suspend fun saveAccount(account: String)
     suspend fun savePassword(password: String)
