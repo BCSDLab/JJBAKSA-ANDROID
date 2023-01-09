@@ -2,6 +2,7 @@ package com.jjbaksa.jjbaksa.ui.social
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.jjbaksa.data.NEED_SIGN_UP
 import com.jjbaksa.domain.repository.UserRepository
 import com.jjbaksa.domain.resp.user.LoginResult
 import com.jjbaksa.domain.resp.user.SignUpReq
@@ -45,6 +46,9 @@ class SocialLoginViewModel @Inject constructor(
     private var naverNickname: String = ""
     private var naverAccessToken: String = ""
 
+    private val KAKAO = 1
+    private val NAVER = 2
+
     val kakaoLoginCallback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
         if (error != null) {
         } else if (token != null) {
@@ -65,7 +69,7 @@ class SocialLoginViewModel @Inject constructor(
         override fun onSuccess() {
             naverAccessToken = NaverIdLoginSDK.getAccessToken().toString()
             checkNaverSocialLogin() {
-                socialLogin(naverAccount, 2)
+                socialLogin(getCustomNaverId(), 2)
             }
         }
 
@@ -81,9 +85,9 @@ class SocialLoginViewModel @Inject constructor(
             repository.postLogin(account, BuildConfig.social_login_password, isAutoLogin.value!!) {
                 _loginState.value = it
                 when (it.erroMessage) {
-                    "3" -> {
+                    NEED_SIGN_UP.toString() -> {
                         when (socialNum) {
-                            1 -> {
+                            KAKAO -> {
                                 socialSignUp(
                                     account,
                                     getCustomKakaoSignUpEmail(),
@@ -91,7 +95,7 @@ class SocialLoginViewModel @Inject constructor(
                                     socialNum
                                 )
                             }
-                            2 -> {
+                            NAVER -> {
                                 socialSignUp(
                                     getCustomNaverId(),
                                     naverEmail,
