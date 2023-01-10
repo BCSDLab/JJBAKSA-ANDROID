@@ -91,7 +91,7 @@ class SocialLoginViewModel @Inject constructor(
                             KAKAO -> {
                                 socialSignUp(
                                     account,
-                                    getCustomKakaoSignUpEmail(),
+                                    kakaoEmail,
                                     getCustomKakaoId(),
                                     socialNum
                                 )
@@ -109,7 +109,7 @@ class SocialLoginViewModel @Inject constructor(
                     NEED_EMAIL_AUTH.toString() -> {
                         when (socialNum) {
                             KAKAO -> {
-                                emailAuth(getCustomKakaoSignUpEmail())
+                                emailAuth(kakaoEmail)
                             }
                             NAVER -> {
                                 emailAuth(naverEmail)
@@ -131,11 +131,6 @@ class SocialLoginViewModel @Inject constructor(
             }.onFailure {
             }
         }
-    }
-
-    fun getCustomKakaoSignUpEmail(): String {
-        val kakaoCustomEmail = getCustomKakaoId() + "@kakao.com"
-        return kakaoCustomEmail
     }
 
     fun checkNaverSocialLogin(onSuccess: () -> Unit) {
