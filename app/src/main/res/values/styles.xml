@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="FindIdNumberCodeBox">
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">58dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:maxLength">1</item>
+        <item name="android:textColor">@color/color_000000</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:background">@drawable/shape_rect_eeeeee_solid_radius_8</item>
+        <item name="android:inputType">number</item>
+    </style>
+</resources>
