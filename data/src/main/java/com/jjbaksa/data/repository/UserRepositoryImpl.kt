@@ -10,7 +10,10 @@ import com.jjbaksa.data.mapper.RespMapper
 import com.jjbaksa.domain.base.ErrorType
 import com.jjbaksa.domain.base.RespResult
 import com.jjbaksa.domain.repository.UserRepository
-import com.jjbaksa.domain.resp.user.*
+import com.jjbaksa.domain.resp.user.LoginReq
+import com.jjbaksa.domain.resp.user.LoginResult
+import com.jjbaksa.domain.resp.user.SignUpReq
+import com.jjbaksa.domain.resp.user.SignUpResp
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
