@@ -1,14 +1,15 @@
-package com.jjbaksa.jjbaksa.viewmodel
+package com.jjbaksa.jjbaksa.ui.signup.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.jjbaksa.domain.base.RespResult
 import com.jjbaksa.domain.enums.SignUpAlertEnum
 import com.jjbaksa.domain.resp.user.SignUpReq
 import com.jjbaksa.domain.usecase.CheckAccountAvailableUseCase
 import com.jjbaksa.domain.usecase.SignUpUseCase
-import com.jjbaksa.jjbaksa.viewmodel.state.SignUpUIState
+import com.jjbaksa.jjbaksa.ui.signup.viewmodel.state.SignUpUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -23,10 +24,6 @@ class SignUpViewModel @Inject constructor(
     private val signUpUseCase: SignUpUseCase
 ) :
     ViewModel() {
-
-    private val _isIdAvailable = MutableLiveData<Boolean>()
-    val isIdAvailable: LiveData<Boolean>
-        get() = _isIdAvailable
 
     private val _isSignUpSuccess = MutableLiveData<Boolean>()
     val isSignUpSuccess: LiveData<Boolean>
@@ -46,13 +43,17 @@ class SignUpViewModel @Inject constructor(
         viewModelScope.launch {
             runCatching {
                 checkAccountAvailableUseCase(account)
-            }.onSuccess { result ->
-                _isIdAvailable.value = result
-                if (!result) {
-                    updateAlertType(SignUpAlertEnum.ID_EXIST)
-                    updateAlertState(true)
-                } else {
-                    availableId = id
+            }.onSuccess {
+                when (it) {
+                    is RespResult.Error -> {
+                        updateAlertType(SignUpAlertEnum.ID_EXIST)
+                        updateAlertState(true)
+                    }
+                    is RespResult.Success -> {
+                        availableId = id
+                        updateIdCheckedState(true)
+                        updateAlertState(false)
+                    }
                 }
             }.onFailure {
                 // Handle error here

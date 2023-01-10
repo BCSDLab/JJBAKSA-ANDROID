@@ -1,10 +1,8 @@
 package com.jjbaksa.jjbaksa.ui.findid
 
-import androidx.activity.viewModels
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseActivity
 import com.jjbaksa.jjbaksa.databinding.ActivityFindIdBinding
-import com.jjbaksa.jjbaksa.viewmodel.FindIdViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

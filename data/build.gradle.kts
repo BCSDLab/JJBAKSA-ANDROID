@@ -61,6 +61,7 @@ dependencies {
         implementation(roomKtx)
         annotationProcessor(roomCompiler)
         kapt(roomKapComplier)
+        implementation(datastore)
     }
 }
 

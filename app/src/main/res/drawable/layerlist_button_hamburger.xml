@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:width="10.67dp"
+        android:height="8dp"
+        android:drawable="@drawable/ic_hamburger_menu" />
+</layer-list>

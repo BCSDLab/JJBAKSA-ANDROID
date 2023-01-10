@@ -1,5 +1,7 @@
 package com.jjbaksa.data.api
 
+import com.jjbaksa.domain.resp.user.LoginReq
+import com.jjbaksa.data.model.user.LoginResp
 import com.jjbaksa.domain.resp.user.SignUpReq
 import com.jjbaksa.domain.resp.user.SignUpResp
 import retrofit2.Response
@@ -17,5 +19,10 @@ interface NoAuthApi {
     @GET("user/exists")
     suspend fun checkIdAvailable(
         @Query("account") page: String
-    ): Response<String>
+    ): Response<Unit>
+
+    @POST("user/login")
+    suspend fun login(
+        @Body loginReq: LoginReq
+    ): Response<LoginResp>
 }

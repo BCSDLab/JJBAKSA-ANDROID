@@ -107,6 +107,7 @@ dependencies {
         implementation(roomKtx)
         annotationProcessor(roomCompiler)
         kapt(roomKapComplier)
+        implementation(datastore)
     }
     FirebaseDependencies.run {
         implementation(platform(FirebaseDependencies.firebaseBom))

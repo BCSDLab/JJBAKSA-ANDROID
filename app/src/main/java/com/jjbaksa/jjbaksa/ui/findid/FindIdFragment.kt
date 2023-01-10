@@ -11,7 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.databinding.FragmentFindIdBinding
-import com.jjbaksa.jjbaksa.viewmodel.FindIdViewModel
+import com.jjbaksa.jjbaksa.ui.findid.viewmodel.FindIdViewModel
 
 
 class FindIdFragment : Fragment() {

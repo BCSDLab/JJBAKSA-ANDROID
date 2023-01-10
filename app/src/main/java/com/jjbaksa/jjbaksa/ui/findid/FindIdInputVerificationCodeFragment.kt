@@ -12,7 +12,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.databinding.FragmentFindIdInputVerificationCodeBinding
-import com.jjbaksa.jjbaksa.viewmodel.FindIdViewModel
+import com.jjbaksa.jjbaksa.ui.findid.viewmodel.FindIdViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

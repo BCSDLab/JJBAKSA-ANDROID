@@ -1,19 +1,15 @@
-package com.jjbaksa.jjbaksa.viewmodel
+package com.jjbaksa.jjbaksa.ui.findid.viewmodel
 
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.core.view.isVisible
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
-import androidx.navigation.fragment.findNavController
-import com.jjbaksa.data.api.RetrofitBuilder
 import com.jjbaksa.domain.resp.findid.FindIdResp
-import com.jjbaksa.jjbaksa.R
+import com.jjbaksa.jjbaksa.di.NetworkModule
 import com.jjbaksa.jjbaksa.ui.findid.FindIdCustomDialog
 import dagger.hilt.android.lifecycle.HiltViewModel
 import retrofit2.Call
@@ -62,7 +58,7 @@ class FindIdViewModel @Inject constructor(
     }
 
     fun getFindIdNumberCode(email: String, nav: NavController?, layout: Int?) {
-        RetrofitBuilder.provideAuthApiService(RetrofitBuilder.provideRetrofit(RetrofitBuilder.provideOkHttpClient()))
+        NetworkModule.provideAuthApi(NetworkModule.provideNoAuthRetrofit(NetworkModule.provideNoAuthOkHttpClient()))
             .getFindIdCodeNumber(email)
             .enqueue(object : Callback<Unit> {
                 override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
@@ -88,7 +84,7 @@ class FindIdViewModel @Inject constructor(
         emailFormatIsNot: TextView,
         isOkButton: Button
     ) {
-        RetrofitBuilder.provideAuthApiService(RetrofitBuilder.provideRetrofit(RetrofitBuilder.provideOkHttpClient()))
+        NetworkModule.provideAuthApi(NetworkModule.provideNoAuthRetrofit(NetworkModule.provideNoAuthOkHttpClient()))
             .findAccount(
                 userEmail.value.toString(),
                 number1 + number2 + number3 + number4

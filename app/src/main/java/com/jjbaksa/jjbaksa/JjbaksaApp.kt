@@ -16,6 +16,7 @@ class JjbaksaApp : Application() {
     override fun onCreate() {
         super.onCreate()
         KakaoSdk.init(this, BuildConfig.kakao_native_app_key)
+        instance = this
     }
 
     /**
