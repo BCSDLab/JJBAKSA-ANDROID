@@ -23,5 +23,3 @@ interface AuthApi {
         @Query("code") codeNumber: String
     ): Call<FindIdResp>
 }
-
-

@@ -54,6 +54,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
             }
             textViewFindId.setOnClickListener {
                 goToFindIdActivity()
+            }
             buttonLogin.setOnClickListener {
                 viewModel.login()
             }
@@ -76,6 +77,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     }
     fun goToFindIdActivity() {
         Intent(this, FindIdActivity::class.java).also { startActivity(it) }
+    }
     fun goToMainActivity() {
         Intent(this, MainPageActivity::class.java).also { startActivity(it) }
     }

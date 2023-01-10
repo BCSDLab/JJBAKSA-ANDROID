@@ -1,6 +1,6 @@
 package com.jjbaksa.domain.resp.findid
 
-data class FindIdResp (
+data class FindIdResp(
     val account: String,
     val email: String,
     val id: Int,
