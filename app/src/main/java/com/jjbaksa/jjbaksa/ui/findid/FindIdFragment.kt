@@ -13,7 +13,6 @@ import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.databinding.FragmentFindIdBinding
 import com.jjbaksa.jjbaksa.ui.findid.viewmodel.FindIdViewModel
 
-
 class FindIdFragment : Fragment() {
     private lateinit var binding: FragmentFindIdBinding
 
@@ -39,7 +38,6 @@ class FindIdFragment : Fragment() {
                     findNavController(),
                     R.id.action_find_id_to_input_id_verification_code
                 )
-
             } else {
                 // Email format is Fail
                 binding.textViewFindIdNotCorrectEmailFormat.visibility = View.VISIBLE
@@ -57,6 +55,4 @@ class FindIdFragment : Fragment() {
             editTextFindIdToEmail.setText(null)
         }
     }
-
 }
-

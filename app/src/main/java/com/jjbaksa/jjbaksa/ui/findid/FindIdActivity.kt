@@ -10,7 +10,6 @@ class FindIdActivity : BaseActivity<ActivityFindIdBinding>() {
     override val layoutId: Int
         get() = R.layout.activity_find_id
 
-
     override fun initView() {
         binding.lifecycleOwner = this
     }

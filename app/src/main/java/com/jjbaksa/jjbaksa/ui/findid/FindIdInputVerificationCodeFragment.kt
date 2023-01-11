@@ -16,11 +16,11 @@ import com.jjbaksa.jjbaksa.ui.findid.viewmodel.FindIdViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FindIdInputVerificationCodeFragment: Fragment() {
+class FindIdInputVerificationCodeFragment : Fragment() {
     private lateinit var binding: FragmentFindIdInputVerificationCodeBinding
 
     private val findIdViewModel: FindIdViewModel by activityViewModels()
-    var numberBoxState = mutableListOf<Boolean>(false,false,false,false)
+    var numberBoxState = mutableListOf<Boolean>(false, false, false, false)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,7 +29,7 @@ class FindIdInputVerificationCodeFragment: Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_find_id_input_verification_code, container, false)
 
-        numberBoxState = mutableListOf(false,false,false,false)
+        numberBoxState = mutableListOf(false, false, false, false)
 
         nextToVerificationCodeBox()
         observeData()
@@ -58,10 +58,9 @@ class FindIdInputVerificationCodeFragment: Fragment() {
         return binding.root
     }
 
-
-    private fun nextToVerificationCodeBox(){
-        with(binding){
-            editTextFindIdVerificationCodeOne.addTextChangedListener{
+    private fun nextToVerificationCodeBox() {
+        with(binding) {
+            editTextFindIdVerificationCodeOne.addTextChangedListener {
                 findIdViewModel.checkNumberInCodeBox(it?.length!!, numberBoxState, 0, editTextFindIdVerificationCodeTwo)
             }
             editTextFindIdVerificationCodeTwo.addTextChangedListener {
@@ -76,18 +75,20 @@ class FindIdInputVerificationCodeFragment: Fragment() {
         }
     }
 
-    private fun onActiveButton(value: Boolean){
+    private fun onActiveButton(value: Boolean) {
         binding.buttonFindIdVerificationCode.isEnabled = value
     }
 
-    private fun observeData(){
-        findIdViewModel.numberBoxUiState.observe(viewLifecycleOwner, Observer<MutableList<Boolean>>{
-            var checkNumber = 0
-            it.forEach { boolData ->
-                if (!boolData) onActiveButton(boolData) else checkNumber ++
+    private fun observeData() {
+        findIdViewModel.numberBoxUiState.observe(
+            viewLifecycleOwner,
+            Observer<MutableList<Boolean>> {
+                var checkNumber = 0
+                it.forEach { boolData ->
+                    if (!boolData) onActiveButton(boolData) else checkNumber ++
+                }
+                if (checkNumber == 4) onActiveButton(true)
             }
-            if (checkNumber == 4) onActiveButton(true)
-        })
+        )
     }
-
 }

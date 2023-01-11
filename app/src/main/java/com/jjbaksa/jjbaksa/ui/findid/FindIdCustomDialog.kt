@@ -11,13 +11,13 @@ import com.jjbaksa.jjbaksa.R
 
 class FindIdCustomDialog(context: Context) {
     private val dialog = Dialog(context)
-    private lateinit var onClickListener : OnDialogClickListener
+    private lateinit var onClickListener: OnDialogClickListener
 
-    fun setOnClickListener(listener: OnDialogClickListener){
+    fun setOnClickListener(listener: OnDialogClickListener) {
         onClickListener = listener
     }
 
-    fun showDialog(email:String, id: String){
+    fun showDialog(email: String, id: String) {
         dialog.setContentView(R.layout.alert_dialog_find_id)
         dialog.window!!.setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT)
 
@@ -35,7 +35,6 @@ class FindIdCustomDialog(context: Context) {
             dialog.dismiss()
         }
     }
-
 
     interface OnDialogClickListener {
         fun onClicked(name: String)

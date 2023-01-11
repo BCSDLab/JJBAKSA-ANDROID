@@ -19,9 +19,7 @@ import java.util.regex.Pattern
 import javax.inject.Inject
 
 @HiltViewModel
-class FindIdViewModel @Inject constructor(
-
-) : ViewModel() {
+class FindIdViewModel @Inject constructor() : ViewModel() {
     val numberBoxUiState: MutableLiveData<MutableList<Boolean>> by lazy {
         MutableLiveData<MutableList<Boolean>>()
     }
@@ -33,12 +31,11 @@ class FindIdViewModel @Inject constructor(
         userEmail.value = _userEmail
     }
 
-    fun stateButton(emailLength: Int): Boolean{
+    fun stateButton(emailLength: Int): Boolean {
         return emailLength > 0
     }
 
-
-    fun checkEmailFormat(userEmail: String): Boolean{
+    fun checkEmailFormat(userEmail: String): Boolean {
         val emailValidation =
             "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
 
@@ -46,9 +43,14 @@ class FindIdViewModel @Inject constructor(
         return Pattern.matches(emailValidation, email)
     }
 
-    fun checkNumberInCodeBox(numberLength:Int, boxState:MutableList<Boolean>, pos:Int, boxNumber: EditText?){
-        if (numberLength == 1){
-            if (pos != 3){
+    fun checkNumberInCodeBox(
+        numberLength: Int,
+        boxState: MutableList<Boolean>,
+        pos: Int,
+        boxNumber: EditText?
+    ) {
+        if (numberLength == 1) {
+            if (pos != 3) {
                 boxNumber?.requestFocus()
             }
             boxState[pos] = true
@@ -102,12 +104,10 @@ class FindIdViewModel @Inject constructor(
 
                         )
                         emailFormatIsNot.isVisible = false
-
                     } else {
                         // fail
                         isOkButton.isEnabled = false
                         emailFormatIsNot.isVisible = true
-
                     }
                 }
 
@@ -116,6 +116,4 @@ class FindIdViewModel @Inject constructor(
                 }
             })
     }
-
-
 }
