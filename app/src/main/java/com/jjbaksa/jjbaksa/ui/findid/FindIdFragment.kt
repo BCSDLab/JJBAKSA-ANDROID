@@ -26,8 +26,15 @@ class FindIdFragment : Fragment() {
         binding =
             DataBindingUtil.inflate(layoutInflater, R.layout.fragment_find_id, container, false)
 
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         binding.editTextFindIdToEmail.addTextChangedListener {
-            binding.buttonFindIdSendToVerificationCode.isEnabled = findIdViewModel.stateButton(it?.length!!)
+            binding.buttonFindIdSendToVerificationCode.isEnabled =
+                findIdViewModel.stateButton(it?.length!!)
         }
 
         binding.buttonFindIdSendToVerificationCode.setOnClickListener {
@@ -44,7 +51,6 @@ class FindIdFragment : Fragment() {
                 binding.buttonFindIdSendToVerificationCode.isEnabled = false
             }
         }
-        return binding.root
     }
 
     override fun onStart() {

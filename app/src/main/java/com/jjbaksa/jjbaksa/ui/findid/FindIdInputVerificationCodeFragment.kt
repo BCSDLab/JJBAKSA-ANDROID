@@ -27,9 +27,19 @@ class FindIdInputVerificationCodeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_find_id_input_verification_code, container, false)
-
+        binding = DataBindingUtil.inflate(
+            layoutInflater,
+            R.layout.fragment_find_id_input_verification_code,
+            container,
+            false
+        )
         numberBoxState = mutableListOf(false, false, false, false)
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         nextToVerificationCodeBox()
         observeData()
@@ -54,20 +64,33 @@ class FindIdInputVerificationCodeFragment : Fragment() {
                 binding.buttonFindIdVerificationCode,
             )
         }
-
-        return binding.root
     }
 
     private fun nextToVerificationCodeBox() {
         with(binding) {
             editTextFindIdVerificationCodeOne.addTextChangedListener {
-                findIdViewModel.checkNumberInCodeBox(it?.length!!, numberBoxState, 0, editTextFindIdVerificationCodeTwo)
+                findIdViewModel.checkNumberInCodeBox(
+                    it?.length!!,
+                    numberBoxState,
+                    0,
+                    editTextFindIdVerificationCodeTwo
+                )
             }
             editTextFindIdVerificationCodeTwo.addTextChangedListener {
-                findIdViewModel.checkNumberInCodeBox(it?.length!!, numberBoxState, 1, editTextFindIdVerificationCodeThree)
+                findIdViewModel.checkNumberInCodeBox(
+                    it?.length!!,
+                    numberBoxState,
+                    1,
+                    editTextFindIdVerificationCodeThree
+                )
             }
             editTextFindIdVerificationCodeThree.addTextChangedListener {
-                findIdViewModel.checkNumberInCodeBox(it?.length!!, numberBoxState, 2, editTextFindIdVerificationCodeFour)
+                findIdViewModel.checkNumberInCodeBox(
+                    it?.length!!,
+                    numberBoxState,
+                    2,
+                    editTextFindIdVerificationCodeFour
+                )
             }
             editTextFindIdVerificationCodeFour.addTextChangedListener {
                 findIdViewModel.checkNumberInCodeBox(it?.length!!, numberBoxState, 3, null)
@@ -85,7 +108,7 @@ class FindIdInputVerificationCodeFragment : Fragment() {
             Observer<MutableList<Boolean>> {
                 var checkNumber = 0
                 it.forEach { boolData ->
-                    if (!boolData) onActiveButton(boolData) else checkNumber ++
+                    if (!boolData) onActiveButton(boolData) else checkNumber++
                 }
                 if (checkNumber == 4) onActiveButton(true)
             }
