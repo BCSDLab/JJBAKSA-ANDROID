@@ -1,16 +1,9 @@
 package com.jjbaksa.jjbaksa.ui.findid
 
-import android.app.Dialog
-import android.content.Context
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
-import android.widget.Button
-import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
@@ -41,12 +34,12 @@ class FindIdCustomDialog() : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.textViewGetId.text = "${findIdViewModel.userEmail.value}으로 가입된 아이디는 ${findIdViewModel.userAccount.value}입니다."
+        binding.textViewGetId.text =
+            "${findIdViewModel.userEmail.value}으로 가입된 아이디는 ${findIdViewModel.userAccount.value}입니다."
 
         binding.buttonGetIdOk.setOnClickListener {
             dismiss()
             activity?.finish()
         }
     }
-
 }

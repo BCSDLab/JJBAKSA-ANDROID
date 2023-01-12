@@ -38,7 +38,7 @@ class FindIdViewModel @Inject constructor() : ViewModel() {
     fun setUserEmail(_userEmail: String) {
         userEmail.value = _userEmail
     }
-    fun setUserAccount(account: String){
+    fun setUserAccount(account: String) {
         userAccount.value = account
     }
 
