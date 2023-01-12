@@ -4,39 +4,49 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.TextView
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.activityViewModels
 import com.jjbaksa.jjbaksa.R
+import com.jjbaksa.jjbaksa.databinding.AlertDialogFindIdBinding
+import com.jjbaksa.jjbaksa.ui.findid.viewmodel.FindIdViewModel
 
-class FindIdCustomDialog(context: Context) {
-    private val dialog = Dialog(context)
-    private lateinit var onClickListener: OnDialogClickListener
+class FindIdCustomDialog() : DialogFragment() {
+    private lateinit var binding: AlertDialogFindIdBinding
+    private val findIdViewModel: FindIdViewModel by activityViewModels()
 
-    fun setOnClickListener(listener: OnDialogClickListener) {
-        onClickListener = listener
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(STYLE_NO_TITLE, R.style.FindIdCustomDialogStyle)
+        isCancelable = true
     }
 
-    fun showDialog(email: String, id: String) {
-        dialog.setContentView(R.layout.alert_dialog_find_id)
-        dialog.window!!.setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding =
+            DataBindingUtil.inflate(layoutInflater, R.layout.alert_dialog_find_id, container, false)
+        return binding.root
+    }
 
-        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.setCanceledOnTouchOutside(true)
-        dialog.setCancelable(true)
-        dialog.show()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        val getIdText = dialog.findViewById<TextView>(R.id.text_view_get_id)
-        val getIdOkButton = dialog.findViewById<Button>(R.id.button_get_id_ok)
+        binding.textViewGetId.text = "${findIdViewModel.userEmail.value}으로 가입된 아이디는 ${findIdViewModel.userAccount.value}입니다."
 
-        getIdText.text = "${email}으로 가입된 아이디는 ${id}입니다."
-
-        getIdOkButton.setOnClickListener {
-            dialog.dismiss()
+        binding.buttonGetIdOk.setOnClickListener {
+            dismiss()
+            activity?.finish()
         }
     }
 
-    interface OnDialogClickListener {
-        fun onClicked(name: String)
-    }
 }

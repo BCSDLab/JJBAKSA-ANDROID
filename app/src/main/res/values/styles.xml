@@ -11,4 +11,11 @@
         <item name="android:background">@drawable/shape_rect_eeeeee_solid_radius_8</item>
         <item name="android:inputType">number</item>
     </style>
+    <style name="FindIdCustomDialogStyle">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.5</item>
+    </style>
 </resources>

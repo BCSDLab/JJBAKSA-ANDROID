@@ -5,6 +5,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.core.view.isVisible
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
@@ -26,9 +27,19 @@ class FindIdViewModel @Inject constructor() : ViewModel() {
     val userEmail: MutableLiveData<String> by lazy {
         MutableLiveData<String>()
     }
+    val userAccount: MutableLiveData<String> by lazy {
+        MutableLiveData<String>()
+    }
+
+    private val findIdCustomDialog by lazy {
+        FindIdCustomDialog()
+    }
 
     fun setUserEmail(_userEmail: String) {
         userEmail.value = _userEmail
+    }
+    fun setUserAccount(account: String){
+        userAccount.value = account
     }
 
     fun stateButton(emailLength: Int): Boolean {
@@ -82,7 +93,7 @@ class FindIdViewModel @Inject constructor() : ViewModel() {
         number2: String,
         number3: String,
         number4: String,
-        customDialog: FindIdCustomDialog,
+        fragmentManager: FragmentManager,
         emailFormatIsNot: TextView,
         isOkButton: Button
     ) {
@@ -98,11 +109,13 @@ class FindIdViewModel @Inject constructor() : ViewModel() {
                 ) {
                     if (response.code() == 200) {
                         // ok
-                        customDialog.showDialog(
-                            userEmail.value.toString(),
-                            response.body()?.account.toString(),
+                        setUserAccount(response.body()?.account.toString())
+                        val ft = fragmentManager.beginTransaction()
+                        val prev = fragmentManager.findFragmentByTag("find_id_custom_dialog")
+                        if (prev != null) ft.remove(prev)
+                        ft.addToBackStack(null)
 
-                        )
+                        findIdCustomDialog.show(fragmentManager, "find_id_custom_dialog")
                         emailFormatIsNot.isVisible = false
                     } else {
                         // fail

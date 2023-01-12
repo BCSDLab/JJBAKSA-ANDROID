@@ -49,7 +49,7 @@ class FindIdInputVerificationCodeFragment : Fragment() {
                 binding.editTextFindIdVerificationCodeTwo.text.toString(),
                 binding.editTextFindIdVerificationCodeThree.text.toString(),
                 binding.editTextFindIdVerificationCodeFour.text.toString(),
-                FindIdCustomDialog(requireContext()),
+                parentFragmentManager,
                 binding.textViewFindIdNotCorrectEmailFormat,
                 binding.buttonFindIdVerificationCode,
             )
