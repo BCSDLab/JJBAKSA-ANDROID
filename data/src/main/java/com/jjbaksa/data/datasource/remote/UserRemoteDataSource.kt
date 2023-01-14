@@ -31,6 +31,10 @@ class UserRemoteDataSource @Inject constructor(
         return noAuthApi.emailAuthenticate(email)
     }
 
+    override suspend fun kakaoLogin(): Response<String> {
+        return noAuthApi.kakaoLogin()
+    }
+
     override suspend fun saveAccessToken(accessToken: String) {
     }
 

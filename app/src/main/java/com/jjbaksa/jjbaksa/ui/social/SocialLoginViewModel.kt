@@ -1,5 +1,6 @@
 package com.jjbaksa.jjbaksa.ui.social
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.jjbaksa.data.NEED_EMAIL_AUTH
@@ -9,6 +10,7 @@ import com.jjbaksa.domain.resp.user.LoginResult
 import com.jjbaksa.domain.resp.user.SignUpReq
 import com.jjbaksa.jjbaksa.BuildConfig
 import com.jjbaksa.jjbaksa.base.BaseViewModel
+import com.jjbaksa.jjbaksa.util.Event
 import com.jjbaksa.jjbaksa.util.RegexUtil
 import com.jjbaksa.jjbaksa.util.SingleLiveEvent
 import com.kakao.sdk.auth.model.OAuthToken
@@ -29,6 +31,10 @@ class SocialLoginViewModel @Inject constructor(
 
     private val _loginState = SingleLiveEvent<LoginResult>()
     val loginState: SingleLiveEvent<LoginResult> get() = _loginState
+
+    private val _urlEvent = MutableLiveData<Event<String>>()
+    val urlEvent: LiveData<Event<String>>
+        get() = _urlEvent
 
     val account = MutableLiveData<String>("")
     val password = MutableLiveData<String>("")
@@ -180,6 +186,13 @@ class SocialLoginViewModel @Inject constructor(
     fun emailAuth(email: String) {
         viewModelScope.launch {
             val response = repository.emailAuthenticate(email)
+        }
+    }
+
+    fun kakaoLogin() {
+        viewModelScope.launch {
+            val response = repository.kakaoLogin()
+            _urlEvent.value = Event(response)
         }
     }
 

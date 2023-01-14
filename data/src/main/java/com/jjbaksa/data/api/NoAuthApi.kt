@@ -30,4 +30,7 @@ interface NoAuthApi {
     suspend fun emailAuthenticate(
         @Query("email") email: String
     ): Response<String>
+
+    @POST("snslogin/kakao")
+    suspend fun kakaoLogin(): Response<String>
 }

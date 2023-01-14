@@ -1,6 +1,7 @@
 package com.jjbaksa.jjbaksa.ui.social
 
 import android.content.Intent
+import android.net.Uri
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
@@ -20,7 +21,6 @@ import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseActivity
 import com.jjbaksa.jjbaksa.databinding.ActivitySocialLoginBinding
 import com.jjbaksa.jjbaksa.ui.mainpage.MainPageActivity
-import com.kakao.sdk.user.UserApiClient
 import com.navercorp.nid.NaverIdLoginSDK
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -54,16 +54,17 @@ class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
                 }
             }
         }
+        viewModel.urlEvent.observe(this) {
+            it.getContentIfNotHandled()?.let { event ->
+                goToKakaoLoginPage(event)
+            }
+        }
     }
 
     override fun initEvent() {
         with(binding) {
             buttonKakaoLogin.setOnClickListener {
-                if (UserApiClient.instance.isKakaoTalkLoginAvailable(this@SocialLoginActivity)) {
-                    UserApiClient.instance.loginWithKakaoTalk(this@SocialLoginActivity, callback = viewModel.kakaoLoginCallback)
-                } else {
-                    UserApiClient.instance.loginWithKakaoAccount(this@SocialLoginActivity, callback = viewModel.kakaoLoginCallback)
-                }
+                viewModel.kakaoLogin()
             }
             buttonNaverLogin.setOnClickListener {
                 NaverIdLoginSDK.authenticate(this@SocialLoginActivity, viewModel.oAuthLoginCallback)
@@ -145,6 +146,10 @@ class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
 
     fun showToast(msg: String) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun goToKakaoLoginPage(url: String) {
+        Intent(Intent.ACTION_VIEW, Uri.parse(url)).also { startActivity(it) }
     }
 
     companion object {

@@ -7,6 +7,7 @@ import com.jjbaksa.data.datasource.local.UserLocalDataSource
 import com.jjbaksa.data.datasource.remote.UserRemoteDataSource
 import com.jjbaksa.data.mapper.EmailRespMapper
 import com.jjbaksa.data.mapper.RespMapper
+import com.jjbaksa.data.mapper.SocialLoginUrlMapper
 import com.jjbaksa.domain.base.ErrorType
 import com.jjbaksa.domain.base.RespResult
 import com.jjbaksa.domain.repository.UserRepository
@@ -77,6 +78,12 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun emailAuthenticate(email: String): Boolean {
         val result = userRemoteDataSource.emailAuthenticate(email)
         return EmailRespMapper.mapToBoolean(result.code())
+    }
+
+    override suspend fun kakaoLogin(): String {
+        val result = userRemoteDataSource.kakaoLogin()
+        val url = SocialLoginUrlMapper.urlMapper(result.toString())
+        return url
     }
 
     override suspend fun me() {

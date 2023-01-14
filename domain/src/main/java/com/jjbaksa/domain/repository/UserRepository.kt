@@ -15,6 +15,7 @@ interface UserRepository {
         onResult: (LoginResult) -> Unit
     )
     suspend fun emailAuthenticate(email: String): Boolean
+    suspend fun kakaoLogin(): String
     suspend fun me()
     fun getAutoLoginFlag(): Boolean
     fun getAccount(): String
