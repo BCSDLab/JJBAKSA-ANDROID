@@ -16,7 +16,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.regex.Pattern
 import javax.inject.Inject
 
 @HiltViewModel
@@ -44,14 +43,6 @@ class FindIdViewModel @Inject constructor() : ViewModel() {
 
     fun stateButton(emailLength: Int): Boolean {
         return emailLength > 0
-    }
-
-    fun checkEmailFormat(userEmail: String): Boolean {
-        val emailValidation =
-            "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
-
-        var email = userEmail.trim()
-        return Pattern.matches(emailValidation, email)
     }
 
     fun checkNumberInCodeBox(

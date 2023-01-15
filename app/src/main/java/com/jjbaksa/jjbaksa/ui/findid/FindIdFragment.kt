@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.databinding.FragmentFindIdBinding
 import com.jjbaksa.jjbaksa.ui.findid.viewmodel.FindIdViewModel
+import com.jjbaksa.jjbaksa.util.RegexUtil
 
 class FindIdFragment : Fragment() {
     private lateinit var binding: FragmentFindIdBinding
@@ -38,7 +39,7 @@ class FindIdFragment : Fragment() {
         }
 
         binding.buttonFindIdSendToVerificationCode.setOnClickListener {
-            if (findIdViewModel.checkEmailFormat(binding.editTextFindIdToEmail.text.toString())) {
+            if (RegexUtil.checkEmailFormat(binding.editTextFindIdToEmail.text.toString())) {
                 // Email format is OK
                 findIdViewModel.getFindIdNumberCode(
                     binding.editTextFindIdToEmail.text.toString(),
