@@ -24,6 +24,7 @@ android {
         buildConfigField("String", "naver_client_id", getPropertyKey("naver_client_id"))
         buildConfigField("String", "naver_client_secret", getPropertyKey("naver_client_secret"))
         buildConfigField("String", "naver_client_name", getPropertyKey("naver_client_name"))
+        buildConfigField("String", "social_login_password", getPropertyKey("social_login_password"))
         resValue("string", "kakao_oauth_host", getPropertyKey("kakao_oauth_host"))
     }
 
@@ -61,6 +62,7 @@ dependencies {
     implementation("com.kakao.sdk:v2-user:2.11.0")
     implementation("com.google.android.gms:play-services-auth:20.3.0")
     implementation("com.navercorp.nid:oauth:5.1.1")
+    implementation("com.squareup.retrofit2:converter-scalars:2.5.0")
     KotlinDependencies.run {
         implementation(kotlin)
         implementation(coroutine)

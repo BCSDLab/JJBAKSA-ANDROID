@@ -2,6 +2,7 @@ package com.jjbaksa.jjbaksa.di
 
 import android.content.Context
 import androidx.datastore.preferences.core.stringPreferencesKey
+import com.google.gson.GsonBuilder
 import com.jjbaksa.data.BASE_URL
 import com.jjbaksa.data.api.AuthApi
 import com.jjbaksa.data.api.NoAuthApi
@@ -20,6 +21,7 @@ import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Qualifier
 import javax.inject.Singleton
@@ -35,6 +37,7 @@ annotation class NOAUTH
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
+    private val gson = GsonBuilder().setLenient().create()
     private val httpLoggingInterceptor = HttpLoggingInterceptor().apply {
         level = if (JjbaksaApp.instance.isDebug) {
             HttpLoggingInterceptor.Level.BODY
@@ -133,7 +136,8 @@ fun provideRefreshInterceptor(): Interceptor {
         return Retrofit.Builder()
             .client(okHttpClient)
             .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(ScalarsConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
     }
 
@@ -144,7 +148,7 @@ fun provideRefreshInterceptor(): Interceptor {
         return Retrofit.Builder()
             .client(okHttpClient)
             .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
     }
 

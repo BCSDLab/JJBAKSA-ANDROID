@@ -51,4 +51,7 @@ class MainPageActivity : BaseActivity<ActivityMainPageBinding>() {
             .replace(R.id.fragment_container_view, fragment)
             .commit()
     }
+
+    override fun onBackPressed() {
+    }
 }

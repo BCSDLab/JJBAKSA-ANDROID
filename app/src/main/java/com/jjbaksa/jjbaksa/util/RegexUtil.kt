@@ -37,4 +37,8 @@ object RegexUtil {
     fun generateSHA256(message: String): String {
         return RegexUtil.hashString(message, "SHA-256")
     }
+    fun matchNaverAccount(value: String): String {
+        var result = value.replace("[^a-zA-Z0-9]{1,10}".toRegex(), "")
+        return result
+    }
 }
