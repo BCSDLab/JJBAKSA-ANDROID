@@ -1,5 +1,6 @@
 package com.jjbaksa.jjbaksa.ui.mainpage
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.databinding.FragmentNaviHomeBinding
+import com.jjbaksa.jjbaksa.ui.search.TrendInfoActivity
 
 class NaviHomeFragment : Fragment() {
     lateinit var binding: FragmentNaviHomeBinding
@@ -31,6 +33,9 @@ class NaviHomeFragment : Fragment() {
             if (isFloatingMenuButtonClicked) {
                 setFloatingMenuInvisible()
             } else setFloatingMenuVisible()
+        }
+        binding.constraintLayoutSearchBar.setOnClickListener {
+            Intent(requireContext(), TrendInfoActivity::class.java).also { startActivity(it) }
         }
     }
 

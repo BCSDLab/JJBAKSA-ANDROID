@@ -5,6 +5,7 @@ import com.jjbaksa.data.api.AuthApi
 import com.jjbaksa.data.api.NoAuthApi
 import com.jjbaksa.data.database.UserDao
 import com.jjbaksa.data.datasource.local.UserLocalDataSource
+import com.jjbaksa.data.datasource.remote.ShopRemoteDataSource
 import com.jjbaksa.data.datasource.remote.UserRemoteDataSource
 import dagger.Module
 import dagger.Provides
@@ -25,5 +26,11 @@ object DataSourceModule {
     @Singleton
     fun provideLocalDataSource(@ApplicationContext context: Context, userDao: UserDao): UserLocalDataSource {
         return UserLocalDataSource(context, userDao)
+    }
+
+    @Provides
+    @Singleton
+    fun provideShopRemoteDataSource(authApi: AuthApi): ShopRemoteDataSource {
+        return ShopRemoteDataSource(authApi)
     }
 }

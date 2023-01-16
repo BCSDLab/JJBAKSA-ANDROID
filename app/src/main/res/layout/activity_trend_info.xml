@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.search.TrendInfoActivity">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/trend_actionbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/activity_trend_back_bt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingStart="30dp"
+                    android:paddingEnd="16dp"
+                    android:src="@drawable/ic_left_arrow_c4c4c4"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/search"
+                    android:textColor="@color/color_222222"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/activity_trend_back_bt" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/trend_title_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:layout_marginHorizontal="30dp"
+                android:textSize="32sp"
+                android:textColor="@color/color_222222"
+                android:text="@string/trend_title"
+                app:layout_constraintTop_toBottomOf="@+id/trend_actionbar"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textStyle="bold"
+                android:layout_marginTop="60dp"/>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/trend_search_cl"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@drawable/shape_rect_eeeeee_solid_radius_100"
+                app:layout_constraintTop_toBottomOf="@+id/trend_title_tv"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="32dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/please_input_keyword"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:textSize="12sp"
+                    android:textColor="@color/color_c4c4c4"
+                    android:layout_marginStart="14dp"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="14dp"
+                    android:src="@drawable/ic_search_000000"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/trend_list_title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="@color/color_ff7f23"
+                android:text="@string/en_trending"
+                app:layout_constraintTop_toBottomOf="@+id/trend_search_cl"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="27dp"
+                app:layout_constraintStart_toStartOf="parent"/>
+            <TextView
+                android:id="@+id/trend_list_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/trend_search_cl"
+                android:layout_marginTop="8dp"
+                android:textStyle="bold"
+                android:layout_marginEnd="27dp"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:textSize="12sp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toEndOf="@+id/trend_list_title_tv"
+                tools:text="asdfasdfasdfasdf"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</layout>

@@ -41,4 +41,10 @@
     <string name="floating_action_button_text_bookmark">북마크 음식점</string>
     <string name="floating_action_button_text_find_friend_store">친구 음식점 찾기</string>
     <string name="floating_action_button_text_find_near_store">가까운 음식점 찾기</string>
+
+    <!--검색-->
+    <string name="search">검색</string>
+    <string name="trend_title">오늘은 어떤 음식이 땡기나요?.</string>
+    <string name="please_input_keyword">검색어를 입력해주세요.</string>
+    <string name="en_trending">TRENDING</string>
 </resources>

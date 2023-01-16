@@ -1,6 +1,7 @@
 package com.jjbaksa.jjbaksa.base
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -28,5 +29,11 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
         initView()
         initEvent()
         subscribe()
+    }
+    fun shortToast(msg: String) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT)
+    }
+    fun longToast(msg: String) {
+        Toast.makeText(this, msg, Toast.LENGTH_LONG)
     }
 }

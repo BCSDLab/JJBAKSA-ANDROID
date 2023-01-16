@@ -17,6 +17,20 @@
         android:theme="@style/Theme.JJBAKSAAOS"
         tools:targetApi="31">
         <activity
+            android:name=".ui.search.SearchActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ui.search.TrendInfoActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".ui.mainpage.MainPageActivity"
             android:exported="false" />
         <activity
