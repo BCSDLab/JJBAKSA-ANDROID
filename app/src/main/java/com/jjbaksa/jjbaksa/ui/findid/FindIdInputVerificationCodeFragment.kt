@@ -10,6 +10,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
+import com.jjbaksa.domain.base.RespResult
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.databinding.FragmentFindIdInputVerificationCodeBinding
 import com.jjbaksa.jjbaksa.ui.findid.viewmodel.FindIdViewModel
@@ -42,27 +44,23 @@ class FindIdInputVerificationCodeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         nextToVerificationCodeBox()
-        observeData()
+//        observeData()
 
         binding.textViewFindIdResendVerificationCode.setOnClickListener {
             Toast.makeText(requireContext(), "인증번호가 재발송 되었습니다.", Toast.LENGTH_SHORT).show()
-            findIdViewModel.getFindIdNumberCode(
-                findIdViewModel.userEmail.value.toString(),
-                null,
-                null
-            )
+            findIdViewModel.getAuthEmail(findIdViewModel.userEmail.value.toString())
         }
 
         binding.buttonFindIdVerificationCode.setOnClickListener {
-            findIdViewModel.getFindId(
-                binding.editTextFindIdVerificationCodeOne.text.toString(),
-                binding.editTextFindIdVerificationCodeTwo.text.toString(),
-                binding.editTextFindIdVerificationCodeThree.text.toString(),
-                binding.editTextFindIdVerificationCodeFour.text.toString(),
-                parentFragmentManager,
-                binding.textViewFindIdNotCorrectEmailFormat,
-                binding.buttonFindIdVerificationCode,
-            )
+//            findIdViewModel.getFindId(
+//                binding.editTextFindIdVerificationCodeOne.text.toString(),
+//                binding.editTextFindIdVerificationCodeTwo.text.toString(),
+//                binding.editTextFindIdVerificationCodeThree.text.toString(),
+//                binding.editTextFindIdVerificationCodeFour.text.toString(),
+//                parentFragmentManager,
+//                binding.textViewFindIdNotCorrectEmailFormat,
+//                binding.buttonFindIdVerificationCode,
+//            )
         }
     }
 
@@ -102,16 +100,16 @@ class FindIdInputVerificationCodeFragment : Fragment() {
         binding.buttonFindIdVerificationCode.isEnabled = value
     }
 
-    private fun observeData() {
-        findIdViewModel.numberBoxUiState.observe(
-            viewLifecycleOwner,
-            Observer<MutableList<Boolean>> {
-                var checkNumber = 0
-                it.forEach { boolData ->
-                    if (!boolData) onActiveButton(boolData) else checkNumber++
-                }
-                if (checkNumber == 4) onActiveButton(true)
-            }
-        )
-    }
+//    private fun observeData() {
+//        findIdViewModel.numberBoxUiState.observe(
+//            viewLifecycleOwner,
+//            Observer<MutableList<Boolean>> {
+//                var checkNumber = 0
+//                it.forEach { boolData ->
+//                    if (!boolData) onActiveButton(boolData) else checkNumber++
+//                }
+//                if (checkNumber == 4) onActiveButton(true)
+//            }
+//        )
+//    }
 }

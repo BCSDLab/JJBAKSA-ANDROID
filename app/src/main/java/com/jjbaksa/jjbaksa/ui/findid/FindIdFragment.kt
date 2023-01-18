@@ -8,7 +8,9 @@ import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.jjbaksa.domain.base.RespResult
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.databinding.FragmentFindIdBinding
 import com.jjbaksa.jjbaksa.ui.findid.viewmodel.FindIdViewModel
@@ -32,6 +34,7 @@ class FindIdFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        observeData()
 
         binding.editTextFindIdToEmail.addTextChangedListener {
             binding.buttonFindIdSendToVerificationCode.isEnabled =
@@ -41,11 +44,7 @@ class FindIdFragment : Fragment() {
         binding.buttonFindIdSendToVerificationCode.setOnClickListener {
             if (RegexUtil.checkEmailFormat(binding.editTextFindIdToEmail.text.toString())) {
                 // Email format is OK
-                findIdViewModel.getFindIdNumberCode(
-                    binding.editTextFindIdToEmail.text.toString(),
-                    findNavController(),
-                    R.id.action_find_id_to_input_id_verification_code
-                )
+                findIdViewModel.getAuthEmail(binding.editTextFindIdToEmail.text.toString())
             } else {
                 // Email format is Fail
                 binding.textViewFindIdNotCorrectEmailFormat.visibility = View.VISIBLE
@@ -61,5 +60,19 @@ class FindIdFragment : Fragment() {
             buttonFindIdSendToVerificationCode.isEnabled = false
             editTextFindIdToEmail.setText(null)
         }
+    }
+
+    private fun observeData() {
+        findIdViewModel.authEmailState.observe(
+            viewLifecycleOwner,
+            Observer<RespResult<Boolean>> {
+                if (it == RespResult.Success(true)) {
+                    findNavController().navigate(R.id.action_find_id_to_input_id_verification_code)
+                } else {
+                    binding.textViewFindIdNotCorrectEmailFormat.visibility = View.VISIBLE
+                    binding.buttonFindIdSendToVerificationCode.isEnabled = false
+                }
+            }
+        )
     }
 }

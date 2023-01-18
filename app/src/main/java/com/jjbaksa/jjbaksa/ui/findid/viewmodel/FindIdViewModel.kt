@@ -1,28 +1,27 @@
 package com.jjbaksa.jjbaksa.ui.findid.viewmodel
 
 import android.util.Log
-import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
-import androidx.core.view.isVisible
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.navigation.NavController
-import com.jjbaksa.domain.resp.findid.FindIdResp
-import com.jjbaksa.jjbaksa.di.NetworkModule
+import androidx.lifecycle.viewModelScope
+import com.jjbaksa.domain.base.RespResult
+import com.jjbaksa.domain.repository.FindIdRepository
+import com.jjbaksa.jjbaksa.base.BaseViewModel
 import com.jjbaksa.jjbaksa.ui.findid.FindIdCustomDialog
+import com.jjbaksa.jjbaksa.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class FindIdViewModel @Inject constructor() : ViewModel() {
-    val numberBoxUiState: MutableLiveData<MutableList<Boolean>> by lazy {
-        MutableLiveData<MutableList<Boolean>>()
-    }
+class FindIdViewModel @Inject constructor(
+    private val repository: FindIdRepository
+) : BaseViewModel() {
+    //    private val _numberBoxUiState: SingleLiveEvent<FindIdResult>()
+//    val numberBoxUiState: SingleLiveEvent<FindIdResult> get() = _numberBoxUiState
+    private val _authEmailState = SingleLiveEvent<RespResult<Boolean>>()
+    val authEmailState: SingleLiveEvent<RespResult<Boolean>> get() = _authEmailState
+
     val userEmail: MutableLiveData<String> by lazy {
         MutableLiveData<String>()
     }
@@ -37,6 +36,7 @@ class FindIdViewModel @Inject constructor() : ViewModel() {
     fun setUserEmail(_userEmail: String) {
         userEmail.value = _userEmail
     }
+
     fun setUserAccount(account: String) {
         userAccount.value = account
     }
@@ -58,66 +58,58 @@ class FindIdViewModel @Inject constructor() : ViewModel() {
             boxState[pos] = true
         } else boxState[pos] = false
 
-        numberBoxUiState.value = boxState
+//        numberBoxUiState.value = boxState
     }
 
-    fun getFindIdNumberCode(email: String, nav: NavController?, layout: Int?) {
-        NetworkModule.provideAuthApi(NetworkModule.provideNoAuthRetrofit(NetworkModule.provideNoAuthOkHttpClient()))
-            .getFindIdCodeNumber(email)
-            .enqueue(object : Callback<Unit> {
-                override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
-                    if (response.code() == 200) {
-                        setUserEmail(email)
-                        if (nav != null) {
-                            nav?.navigate(layout!!)
-                        }
-                    }
-                }
-
-                override fun onFailure(call: Call<Unit>, t: Throwable) {
-                }
-            })
-    }
-
-    fun getFindId(
-        number1: String,
-        number2: String,
-        number3: String,
-        number4: String,
-        fragmentManager: FragmentManager,
-        emailFormatIsNot: TextView,
-        isOkButton: Button
-    ) {
-        NetworkModule.provideAuthApi(NetworkModule.provideNoAuthRetrofit(NetworkModule.provideNoAuthOkHttpClient()))
-            .findAccount(
-                userEmail.value.toString(),
-                number1 + number2 + number3 + number4
-            )
-            .enqueue(object : Callback<FindIdResp> {
-                override fun onResponse(
-                    call: Call<FindIdResp>,
-                    response: Response<FindIdResp>
-                ) {
-                    if (response.code() == 200) {
-                        // ok
-                        setUserAccount(response.body()?.account.toString())
-                        val ft = fragmentManager.beginTransaction()
-                        val prev = fragmentManager.findFragmentByTag("find_id_custom_dialog")
-                        if (prev != null) ft.remove(prev)
-                        ft.addToBackStack(null)
-
-                        findIdCustomDialog.show(fragmentManager, "find_id_custom_dialog")
-                        emailFormatIsNot.isVisible = false
-                    } else {
-                        // fail
-                        isOkButton.isEnabled = false
-                        emailFormatIsNot.isVisible = true
-                    }
-                }
-
-                override fun onFailure(call: Call<FindIdResp>, t: Throwable) {
-                    Log.d("레트로핏", "onFailure - ${t.message}")
-                }
-            })
+    fun getAuthEmail(email: String) {
+        viewModelScope.launch(ceh) {
+            repository.checkAuthEmail(email).let {
+                authEmailState.value = it
+                Log.d("Jo", "checkAuthEmail $it")
+            }
+        }
     }
 }
+
+//    fun getFindId(
+//        number1: String,
+//        number2: String,
+//        number3: String,
+//        number4: String,
+//        fragmentManager: FragmentManager,
+//        emailFormatIsNot: TextView,
+//        isOkButton: Button
+//    ) {
+//        NetworkModule.provideAuthApi(NetworkModule.provideNoAuthRetrofit(NetworkModule.provideNoAuthOkHttpClient()))
+//            .findAccount(
+//                userEmail.value.toString(),
+//                number1 + number2 + number3 + number4
+//            )
+//            .enqueue(object : Callback<FindIdResp> {
+//                override fun onResponse(
+//                    call: Call<FindIdResp>,
+//                    response: Response<FindIdResp>
+//                ) {
+//                    if (response.code() == 200) {
+//                        // ok
+//                        setUserAccount(response.body()?.account.toString())
+//                        val ft = fragmentManager.beginTransaction()
+//                        val prev = fragmentManager.findFragmentByTag("find_id_custom_dialog")
+//                        if (prev != null) ft.remove(prev)
+//                        ft.addToBackStack(null)
+//
+//                        findIdCustomDialog.show(fragmentManager, "find_id_custom_dialog")
+//                        emailFormatIsNot.isVisible = false
+//                    } else {
+//                        // fail
+//                        isOkButton.isEnabled = false
+//                        emailFormatIsNot.isVisible = true
+//                    }
+//                }
+//
+//                override fun onFailure(call: Call<FindIdResp>, t: Throwable) {
+//                    Log.d("레트로핏", "onFailure - ${t.message}")
+//                }
+//            })
+//    }
+// }
