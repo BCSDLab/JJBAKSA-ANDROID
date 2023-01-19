@@ -22,4 +22,9 @@ class FindIdRepositoryImpl @Inject constructor(
             RespResult.Error(ErrorType(errorBody.errorMessage, errorBody.code))
         }
     }
+
+    override suspend fun findAccount(email: String, code: String): String {
+        val response = findIdRemoteDataSource.findAccount(email, code)
+        return if (response.isSuccessful && response.code() == 200) response.body()?.account!!.toString() else ""
+    }
 }

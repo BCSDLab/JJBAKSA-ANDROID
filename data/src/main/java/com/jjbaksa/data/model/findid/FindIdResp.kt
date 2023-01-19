@@ -1,4 +1,4 @@
-package com.jjbaksa.domain.resp.findid
+package com.jjbaksa.data.model.findid
 
 data class FindIdResp(
     val account: String,
