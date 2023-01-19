@@ -35,7 +35,6 @@ class FindIdFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeData()
-
         binding.editTextFindIdToEmail.addTextChangedListener {
             binding.buttonFindIdSendToVerificationCode.isEnabled =
                 findIdViewModel.stateButton(it?.length!!)
@@ -55,11 +54,7 @@ class FindIdFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        with(binding) {
-            textViewFindIdNotCorrectEmailFormat.visibility = View.INVISIBLE
-            buttonFindIdSendToVerificationCode.isEnabled = false
-            editTextFindIdToEmail.setText(null)
-        }
+        binding.editTextFindIdToEmail.setText(null)
     }
 
     private fun observeData() {
