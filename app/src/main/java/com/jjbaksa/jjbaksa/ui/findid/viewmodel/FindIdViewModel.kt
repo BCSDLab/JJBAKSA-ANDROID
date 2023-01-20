@@ -3,7 +3,7 @@ package com.jjbaksa.jjbaksa.ui.findid.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.jjbaksa.domain.base.RespResult
-import com.jjbaksa.domain.repository.FindIdRepository
+import com.jjbaksa.domain.repository.UserRepository
 import com.jjbaksa.jjbaksa.base.BaseViewModel
 import com.jjbaksa.jjbaksa.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FindIdViewModel @Inject constructor(
-    private val repository: FindIdRepository
+    private val repository: UserRepository
 ) : BaseViewModel() {
     val userEmail = MutableLiveData<String>("")
     val userAccount = MutableLiveData<String>("")

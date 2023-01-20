@@ -6,6 +6,7 @@ import com.jjbaksa.data.database.PreferenceKeys
 import com.jjbaksa.data.database.UserDao
 import com.jjbaksa.data.database.userDataStore
 import com.jjbaksa.data.datasource.UserDataSource
+import com.jjbaksa.data.model.findid.FindIdResp
 import com.jjbaksa.data.model.user.LoginResp
 import com.jjbaksa.domain.resp.user.LoginReq
 import com.jjbaksa.domain.resp.user.SignUpReq
@@ -31,6 +32,14 @@ class UserLocalDataSource @Inject constructor(
 
     override suspend fun postLogin(loginReq: LoginReq): Response<LoginResp>? {
         return null
+    }
+
+    override suspend fun checkAuthEmail(email: String): Response<Unit> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun findAccount(email: String, code: String): Response<FindIdResp> {
+        TODO("Not yet implemented")
     }
 
     override suspend fun saveAccessToken(accessToken: String) {
