@@ -17,33 +17,37 @@
             app:layout_constraintVertical_bias="0.35">
 
             <TextView
+                android:id="@+id/text_view_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:gravity="center"
+                android:text="@string/success_find_account"
+                android:textColor="@color/color_222222"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
                 android:id="@+id/text_view_get_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="20dp"
+                android:layout_marginBottom="16dp"
                 android:gravity="center"
                 android:textColor="@color/color_222222"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:textSize="14sp" />
 
             <Button
                 android:id="@+id/button_get_id_ok"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="227dp"
+                android:layout_height="40dp"
                 android:layout_gravity="center"
-                android:layout_margin="10dp"
                 android:background="@drawable/sel_sign_up_button"
                 android:text="@string/confirm"
                 android:textColor="@color/color_ffffff"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                android:textSize="16sp"/>
 
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
