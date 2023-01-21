@@ -63,6 +63,22 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun checkAuthEmail(email: String): RespResult<Boolean> {
+        val result = userRemoteDataSource.checkAuthEmail(email)
+        return if (result.isSuccessful) {
+            RespResult.Success(result.isSuccessful)
+        } else {
+            val errorBodyJson = result.errorBody()!!.string()
+            val errorBody = RespMapper.errorMapper(errorBodyJson)
+            RespResult.Error(ErrorType(errorBody.errorMessage, errorBody.code))
+        }
+    }
+
+    override suspend fun findAccount(email: String, code: String): String {
+        val response = userRemoteDataSource.findAccount(email, code)
+        return if (response.isSuccessful && response.code() == 200) response.body()?.account!!.toString() else ""
+    }
+
     override suspend fun me() {
     }
 

@@ -7,6 +7,7 @@ import androidx.core.widget.addTextChangedListener
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseActivity
 import com.jjbaksa.jjbaksa.databinding.ActivityLoginBinding
+import com.jjbaksa.jjbaksa.ui.findid.FindIdActivity
 import com.jjbaksa.jjbaksa.ui.mainpage.MainPageActivity
 import com.jjbaksa.jjbaksa.ui.signup.SignUpActivity
 import com.jjbaksa.jjbaksa.ui.social.SocialLoginActivity
@@ -51,6 +52,9 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
             textViewSignUp.setOnClickListener {
                 goToSignUpActivity()
             }
+            textViewFindId.setOnClickListener {
+                goToFindIdActivity()
+            }
             buttonLogin.setOnClickListener {
                 viewModel.login()
             }
@@ -71,7 +75,9 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     fun goToSignUpActivity() {
         Intent(this, SignUpActivity::class.java).also { startActivity(it) }
     }
-
+    fun goToFindIdActivity() {
+        Intent(this, FindIdActivity::class.java).also { startActivity(it) }
+    }
     fun goToMainActivity() {
         Intent(this, MainPageActivity::class.java).also { startActivity(it) }
     }

@@ -1,5 +1,6 @@
 package com.jjbaksa.data.api
 
+import com.jjbaksa.data.model.findid.FindIdResp
 import com.jjbaksa.domain.resp.user.LoginReq
 import com.jjbaksa.data.model.user.LoginResp
 import com.jjbaksa.domain.resp.user.SignUpReq
@@ -25,4 +26,15 @@ interface NoAuthApi {
     suspend fun login(
         @Body loginReq: LoginReq
     ): Response<LoginResp>
+
+    @POST("user/email")
+    suspend fun getFindIdCodeNumber(
+        @Query("email") userEmail: String
+    ): Response<Unit>
+
+    @GET("user/account")
+    suspend fun findId(
+        @Query("email") userEmail: String,
+        @Query("code") codeNumber: String
+    ): Response<FindIdResp>
 }
