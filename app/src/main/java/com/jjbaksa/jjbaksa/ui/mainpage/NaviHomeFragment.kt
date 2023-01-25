@@ -25,7 +25,6 @@ class NaviHomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
     }
 
-
     companion object {
         fun newInstance(): NaviHomeFragment {
             val args = Bundle().apply {
