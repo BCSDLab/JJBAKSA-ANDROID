@@ -15,7 +15,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.JJBAKSAAOS"
-        tools:targetApi="31">
+        tools:targetApi="31"
+        tools:replace="android:appComponentFactory"
+        android:appComponentFactory="whateverString">
         <activity
             android:name=".ui.findid.FindIdActivity"
             android:exported="false"/>
@@ -54,6 +56,9 @@
                     android:scheme="@string/kakao_oauth_host" />
             </intent-filter>
         </activity>
+        <meta-data
+            android:name="com.naver.maps.map.CLIENT_ID"
+            android:value="@string/naver_maps_client_id"/>
     </application>
 
 </manifest>

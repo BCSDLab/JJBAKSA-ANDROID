@@ -3,7 +3,6 @@ buildscript {
     repositories {
         google()
         mavenCentral()
-        maven("https://naver.jfrog.io/artifactory/maven/")
     }
     dependencies {
         classpath("com.android.tools.build:gradle:${Versions.gradleVersion}")
