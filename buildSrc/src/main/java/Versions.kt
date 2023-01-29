@@ -32,6 +32,8 @@ object Versions {
 
     const val firebaseBomVersion = "30.2.0"
 
+    const val naverMapsVersion = "3.16.1"
+
     const val roomVersion = "2.4.1"
 
     const val datastoreVersion = "1.0.0"

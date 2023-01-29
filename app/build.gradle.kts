@@ -114,6 +114,9 @@ dependencies {
         implementation(FirebaseDependencies.firebaseAnalytics)
         implementation(FirebaseDependencies.firebaseAuth)
     }
+    NaverDependencies.run {
+        implementation(naverMaps)
+    }
 }
 
 ktlint {
