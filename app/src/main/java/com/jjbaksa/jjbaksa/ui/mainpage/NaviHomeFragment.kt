@@ -1,6 +1,7 @@
 package com.jjbaksa.jjbaksa.ui.mainpage
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,12 +28,15 @@ class NaviHomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        loadNaverMap()
+    }
+
+    private fun loadNaverMap(){
         val naverMapFragment = NaverMapFragment()
         childFragmentManager
             .beginTransaction()
             .add(R.id.frame_layout_naver_maps, naverMapFragment)
             .commit()
-
     }
 
     companion object {

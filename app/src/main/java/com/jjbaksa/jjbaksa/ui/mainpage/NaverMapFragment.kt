@@ -1,5 +1,6 @@
 package com.jjbaksa.jjbaksa.ui.mainpage
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,9 @@ import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.databinding.FragmentNaverMapBinding
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
+import com.naver.maps.map.overlay.Align
+import com.naver.maps.map.overlay.OverlayImage
+import com.naver.maps.map.util.MarkerIcons
 
 class NaverMapFragment(): Fragment(), OnMapReadyCallback {
     private lateinit var mapView: MapView
@@ -41,6 +45,18 @@ class NaverMapFragment(): Fragment(), OnMapReadyCallback {
         val marker = com.naver.maps.map.overlay.Marker() // 마커 찍기
         marker.position = LatLng(37.566, 126.978)
         marker.map = naverMap
+
+        marker.captionText = "2"
+        marker.setCaptionAligns(Align.Top)
+        marker.captionColor = resources.getColor(R.color.color_ffffff)
+        marker.captionTextSize = 13f
+        marker.captionOffset = -60
+
+        marker.width = 105
+        marker.height = 100
+
+        marker.icon = OverlayImage.fromResource(R.drawable.map_marker_icon)
+        marker.iconTintColor = resources.getColor(R.color.color_ff7f23)
     }
 
     override fun onStart() {
