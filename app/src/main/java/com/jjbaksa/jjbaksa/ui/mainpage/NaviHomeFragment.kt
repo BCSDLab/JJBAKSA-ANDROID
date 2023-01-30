@@ -8,6 +8,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.databinding.FragmentNaviHomeBinding
+import com.naver.maps.map.MapFragment
+import com.naver.maps.map.NaverMap
+import com.naver.maps.map.OnMapReadyCallback
 
 class NaviHomeFragment : Fragment() {
     private lateinit var binding: FragmentNaviHomeBinding
@@ -23,6 +26,13 @@ class NaviHomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val naverMapFragment = NaverMapFragment()
+        childFragmentManager
+            .beginTransaction()
+            .add(R.id.frame_layout_naver_maps, naverMapFragment)
+            .commit()
+
     }
 
     companion object {

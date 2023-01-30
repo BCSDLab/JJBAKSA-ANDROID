@@ -9,6 +9,12 @@
         android:layout_height="match_parent"
         android:background="@color/color_eeeeee">
 
+        <FrameLayout
+            android:id="@+id/frame_layout_naver_maps"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
         <EditText
             android:id="@+id/edit_text_main_page"
             android:layout_width="match_parent"
