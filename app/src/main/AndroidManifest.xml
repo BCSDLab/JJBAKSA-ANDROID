@@ -17,8 +17,11 @@
         android:theme="@style/Theme.JJBAKSAAOS"
         tools:targetApi="31">
         <activity
+            android:name=".ui.gallery.GalleryActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.findid.FindIdActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".ui.mainpage.MainPageActivity"
             android:exported="false" />
