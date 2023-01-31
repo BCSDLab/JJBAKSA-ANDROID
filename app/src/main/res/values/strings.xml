@@ -54,4 +54,5 @@
     <string name="bookmark_restaurant">북마크 음식점</string>
     <string name="friend_restaurant">친구 음식점</string>
     <string name="nearby_restaurant">가까운 음식점</string>
+    <string name="check_the_real_location">현 위치에서 검색</string>
 </resources>

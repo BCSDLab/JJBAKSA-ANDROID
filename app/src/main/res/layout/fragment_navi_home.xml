@@ -9,11 +9,11 @@
         android:layout_height="match_parent"
         android:background="@color/color_eeeeee">
 
-        <FrameLayout
-            android:id="@+id/frame_layout_naver_maps"
+        <fragment
+            android:id="@+id/map"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
+            android:layout_height="match_parent"
+            android:name="com.naver.maps.map.MapFragment"/>
 
         <EditText
             android:id="@+id/edit_text_main_page"
@@ -138,8 +138,8 @@
             android:id="@+id/button_check_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
             android:backgroundTint="@color/color_ffffff"
             app:borderWidth="0dp"
             app:fabCustomSize="48dp"
@@ -148,6 +148,25 @@
             app:maxImageSize="32dp"
             app:srcCompat="@drawable/ic_baseline_location_searching_24"
             app:tint="@color/color_ff7f23" />
+
+        <Button
+            android:id="@+id/button_check_the_real_location"
+            style="@style/Widget.App.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:alpha="80"
+            android:backgroundTint="@color/color_fbfbfa"
+            android:padding="10dp"
+            android:text="@string/check_the_real_location"
+            android:textColor="@color/color_ff7f23"
+            android:textSize="12sp"
+            app:icon="@drawable/ic_baseline_refresh_24"
+            app:iconSize="20dp"
+            app:iconTint="@color/color_ff7f23"
+            app:layout_constraintBottom_toBottomOf="@id/button_check_location"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/button_check_location" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

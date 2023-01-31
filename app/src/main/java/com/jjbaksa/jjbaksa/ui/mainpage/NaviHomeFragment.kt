@@ -1,5 +1,7 @@
 package com.jjbaksa.jjbaksa.ui.mainpage
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,11 +11,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.databinding.FragmentNaviHomeBinding
-import com.naver.maps.map.MapFragment
-import com.naver.maps.map.NaverMap
-import com.naver.maps.map.OnMapReadyCallback
+import com.naver.maps.geometry.LatLng
+import com.naver.maps.map.*
+import com.naver.maps.map.overlay.Align
+import com.naver.maps.map.overlay.Marker
+import com.naver.maps.map.overlay.OverlayImage
 
-class NaviHomeFragment : Fragment() {
+class NaviHomeFragment : Fragment(), OnMapReadyCallback {
     private lateinit var binding: FragmentNaviHomeBinding
 
     override fun onCreateView(
@@ -28,16 +32,59 @@ class NaviHomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        loadNaverMap()
+        val fm = childFragmentManager
+        val mapFragment = fm.findFragmentById(R.id.map) as MapFragment?
+            ?: MapFragment.newInstance().also {
+                fm.beginTransaction().add(R.id.map, it).commit()
+            }
+
+        mapFragment.getMapAsync(this)
+
+        with(binding.buttonCheckLocation){
+            setOnClickListener {
+                imageTintList = ColorStateList.valueOf(Color.rgb(196,196,196))
+            }
+        }
+
+        with(binding.buttonNearbyRestaurant){
+            setOnClickListener {
+            }
+        }
+        with(binding.buttonFriendRestaurant){
+            setOnClickListener {
+            }
+        }
+        with(binding.buttonBookmarkRestaurant){
+            setOnClickListener {
+            }
+        }
     }
 
-    private fun loadNaverMap(){
-        val naverMapFragment = NaverMapFragment()
-        childFragmentManager
-            .beginTransaction()
-            .add(R.id.frame_layout_naver_maps, naverMapFragment)
-            .commit()
+    override fun onMapReady(naverMap: NaverMap) {
+        val options = NaverMapOptions()
+            .camera(CameraPosition(LatLng(37.566, 126.978),  10.0))  // 카메라 위치 (위도,경도,줌)
+            .mapType(NaverMap.MapType.Basic)    //지도 유형
+            .enabledLayerGroups(NaverMap.LAYER_GROUP_BUILDING)  //빌딩 표시
+
+        MapFragment.newInstance(options)
+
+        val marker = Marker()
+        marker.position = LatLng(37.566, 126.978)
+        marker.map = naverMap
+
+        marker.captionText = "2"
+        marker.setCaptionAligns(Align.Top)
+        marker.captionColor = resources.getColor(R.color.color_ffffff)
+        marker.captionTextSize = 13f
+        marker.captionOffset = -60
+
+        marker.width = 105
+        marker.height = 100
+
+        marker.icon = OverlayImage.fromResource(R.drawable.map_marker_icon)
+        marker.iconTintColor = resources.getColor(R.color.color_ff7f23)
     }
+
 
     companion object {
         fun newInstance(): NaviHomeFragment {
