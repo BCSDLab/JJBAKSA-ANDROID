@@ -15,7 +15,8 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>() {
     private var imageUriList = arrayListOf<Image>()
 
     private val requestGalleryLauncher: ActivityResultLauncher<Intent> = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()) {
+        ActivityResultContracts.StartActivityForResult()
+    ) {
         if (it.resultCode == RESULT_OK) {
             if (it.data!!.clipData != null) {
                 val count = it.data!!.clipData!!.itemCount
@@ -33,7 +34,7 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>() {
 
     fun sendImageData(imageUriList: ArrayList<Image>) {
         val intent = Intent()
-        intent.putParcelableArrayListExtra("imageUriList",imageUriList)
+        intent.putParcelableArrayListExtra("imageUriList", imageUriList)
         setResult(RESULT_OK, intent)
         finish()
     }
@@ -46,10 +47,8 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>() {
     }
 
     override fun subscribe() {
-
     }
 
     override fun initEvent() {
-
     }
 }
