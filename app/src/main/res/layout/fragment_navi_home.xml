@@ -11,9 +11,16 @@
 
         <fragment
             android:id="@+id/map"
+            android:name="com.naver.maps.map.MapFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:name="com.naver.maps.map.MapFragment"/>
+            android:layout_height="match_parent" />
+
+        <com.naver.maps.map.widget.CompassView
+            android:id="@+id/naver_map_compass_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/edit_text_main_page"
+            app:layout_constraintTop_toBottomOf="@+id/button_nearby_restaurant"/>
 
         <EditText
             android:id="@+id/edit_text_main_page"
@@ -155,6 +162,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
+            android:layout_marginBottom="16dp"
             android:alpha="80"
             android:backgroundTint="@color/color_fbfbfa"
             android:padding="10dp"
@@ -162,7 +170,7 @@
             android:textColor="@color/color_ff7f23"
             android:textSize="12sp"
             app:icon="@drawable/ic_baseline_refresh_24"
-            app:iconSize="20dp"
+            app:iconSize="18dp"
             app:iconTint="@color/color_ff7f23"
             app:layout_constraintBottom_toBottomOf="@id/button_check_location"
             app:layout_constraintStart_toStartOf="parent"

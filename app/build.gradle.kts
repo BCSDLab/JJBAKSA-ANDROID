@@ -120,6 +120,9 @@ dependencies {
     NaverDependencies.run {
         implementation(naverMaps)
     }
+    GooglePlayServiceDependencies.run {
+        implementation(googlePlayServiceLocation)
+    }
 }
 
 ktlint {

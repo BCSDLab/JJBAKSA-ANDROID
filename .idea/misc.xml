@@ -83,13 +83,16 @@
         <entry key="..\:/Users/seong/StudioProjects/JJBAKSA-ANDROID/app/src/main/res/menu/menu_bottom_navigation_view.xml" value="0.4" />
         <entry key="..\:/Users/user/Android/BCSD/JJBAKSA-ANDROID/app/src/main/res/drawable-v24/ic_button_search_666666_stroke.xml" value="0.2015" />
         <entry key="..\:/Users/user/Android/BCSD/JJBAKSA-ANDROID/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2265" />
+        <entry key="..\:/Users/user/Android/BCSD/JJBAKSA-ANDROID/app/src/main/res/drawable-v24/shape_circ_3d93f8_stroke_ffffff.xml" value="0.203" />
         <entry key="..\:/Users/user/Android/BCSD/JJBAKSA-ANDROID/app/src/main/res/drawable-v24/shape_circ_ffffff_solid.xml" value="0.2015" />
+        <entry key="..\:/Users/user/Android/BCSD/JJBAKSA-ANDROID/app/src/main/res/drawable-v24/shape_circ_test.xml" value="0.203" />
         <entry key="..\:/Users/user/Android/BCSD/JJBAKSA-ANDROID/app/src/main/res/drawable-v24/shape_rect_ccffffff_solid_radius_100.xml" value="0.2265" />
         <entry key="..\:/Users/user/Android/BCSD/JJBAKSA-ANDROID/app/src/main/res/drawable-v24/shape_rect_eeeeee_solid_radius_8.xml" value="0.1165" />
         <entry key="..\:/Users/user/Android/BCSD/JJBAKSA-ANDROID/app/src/main/res/drawable-v24/shape_rect_ffffff_solid_radius_100.xml" value="0.2265" />
         <entry key="..\:/Users/user/Android/BCSD/JJBAKSA-ANDROID/app/src/main/res/drawable/ic_baseline_add_16.xml" value="0.2015" />
         <entry key="..\:/Users/user/Android/BCSD/JJBAKSA-ANDROID/app/src/main/res/drawable/ic_baseline_bookmark_24.xml" value="0.2015" />
         <entry key="..\:/Users/user/Android/BCSD/JJBAKSA-ANDROID/app/src/main/res/drawable/ic_baseline_people_alt_24.xml" value="0.2015" />
+        <entry key="..\:/Users/user/Android/BCSD/JJBAKSA-ANDROID/app/src/main/res/drawable/ic_baseline_refresh_24.xml" value="0.255" />
         <entry key="..\:/Users/user/Android/BCSD/JJBAKSA-ANDROID/app/src/main/res/drawable/ic_baseline_remove_16.xml" value="0.2015" />
         <entry key="..\:/Users/user/Android/BCSD/JJBAKSA-ANDROID/app/src/main/res/drawable/ic_baseline_storefront_18.xml" value="0.255" />
         <entry key="..\:/Users/user/Android/BCSD/JJBAKSA-ANDROID/app/src/main/res/drawable/ic_baseline_storefront_24.xml" value="0.2015" />
@@ -118,6 +121,7 @@
         <entry key="..\:/Users/user/Android/BCSD/JJBAKSA-ANDROID/app/src/main/res/drawable/sel_main_page_bottom_navigation_icon.xml" value="0.255" />
         <entry key="..\:/Users/user/Android/BCSD/JJBAKSA-ANDROID/app/src/main/res/drawable/sel_sign_up_button.xml" value="0.2465" />
         <entry key="..\:/Users/user/Android/BCSD/JJBAKSA-ANDROID/app/src/main/res/drawable/shape_circ_222222_solid.xml" value="0.2015" />
+        <entry key="..\:/Users/user/Android/BCSD/JJBAKSA-ANDROID/app/src/main/res/drawable/shape_circ_f6bf54_solid.xml" value="0.203" />
         <entry key="..\:/Users/user/Android/BCSD/JJBAKSA-ANDROID/app/src/main/res/drawable/shape_circ_ffffff_solid_thumb.xml" value="0.1495" />
         <entry key="..\:/Users/user/Android/BCSD/JJBAKSA-ANDROID/app/src/main/res/drawable/shape_rect_03c75a_solid_radius_24_naver_login_box.xml" value="0.1485" />
         <entry key="..\:/Users/user/Android/BCSD/JJBAKSA-ANDROID/app/src/main/res/drawable/shape_rect_c4c4c4_solid_fbfbfa_stroke_radius_37.xml" value="0.2015" />
@@ -142,11 +146,12 @@
         <entry key="..\:/Users/user/Android/BCSD/JJBAKSA-ANDROID/app/src/main/res/layout/fragment_find_id_input_verification_code.xml" value="0.264" />
         <entry key="..\:/Users/user/Android/BCSD/JJBAKSA-ANDROID/app/src/main/res/layout/fragment_input_id_certification_number.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/user/Android/BCSD/JJBAKSA-ANDROID/app/src/main/res/layout/fragment_naver_map.xml" value="0.2484375" />
-        <entry key="..\:/Users/user/Android/BCSD/JJBAKSA-ANDROID/app/src/main/res/layout/fragment_navi_home.xml" value="0.264" />
+        <entry key="..\:/Users/user/Android/BCSD/JJBAKSA-ANDROID/app/src/main/res/layout/fragment_navi_home.xml" value="0.176" />
         <entry key="..\:/Users/user/Android/BCSD/JJBAKSA-ANDROID/app/src/main/res/layout/fragment_sign_up.xml" value="0.3465991316931983" />
         <entry key="..\:/Users/user/Android/BCSD/JJBAKSA-ANDROID/app/src/main/res/layout/fragment_terms.xml" value="0.2" />
         <entry key="..\:/Users/user/Android/BCSD/JJBAKSA-ANDROID/app/src/main/res/layout/fragment_welcome.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/user/Android/BCSD/JJBAKSA-ANDROID/app/src/main/res/layout/header_sign_up.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/user/Android/BCSD/JJBAKSA-ANDROID/app/src/main/res/layout/home_location_image.xml" value="1.0" />
         <entry key="..\:/Users/user/Android/BCSD/JJBAKSA-ANDROID/app/src/main/res/layout/jj_check_box.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/user/Android/BCSD/JJBAKSA-ANDROID/app/src/main/res/layout/jj_edit_text.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/user/Android/BCSD/JJBAKSA-ANDROID/app/src/main/res/menu/menu_bottom_navigation_view.xml" value="0.24947916666666667" />
