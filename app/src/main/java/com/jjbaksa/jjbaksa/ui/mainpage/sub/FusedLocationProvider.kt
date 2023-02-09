@@ -69,7 +69,7 @@ class FusedLocationProvider(
             return
         }
         val locationRequest = LocationRequest.create().apply {
-            interval = 1000
+            interval = 5000
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         }
         fusedLocationProviderClient.requestLocationUpdates(

@@ -1,26 +1,16 @@
 package com.jjbaksa.jjbaksa.ui.mainpage
 
-import android.Manifest
-import android.annotation.TargetApi
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
-import android.util.Log
 import android.view.*
 import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import com.google.android.gms.location.LocationServices
 import com.jjbaksa.domain.model.mainpage.UserLocation
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.databinding.FragmentNaviHomeBinding
@@ -30,7 +20,6 @@ import com.jjbaksa.jjbaksa.ui.mainpage.viewmodel.HomeViewModel
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
 import com.naver.maps.map.overlay.LocationOverlay
-import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
 
 class NaviHomeFragment : Fragment(), OnMapReadyCallback {
@@ -44,6 +33,7 @@ class NaviHomeFragment : Fragment(), OnMapReadyCallback {
     private var currentNaverMap: NaverMap? = null
     private var currentLocationOverlay: LocationOverlay? = null
 
+    var changedButtonList = mutableListOf<Boolean>(false, false, false)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -89,24 +79,38 @@ class NaviHomeFragment : Fragment(), OnMapReadyCallback {
 
         with(binding.buttonNearbyRestaurant) {
             setOnClickListener {
-                this.setTextColor(resources.getColor(R.color.color_ff7f23))
-                this.compoundDrawableTintList =  ColorStateList.valueOf(Color.rgb(255, 127, 35))
+                if (changedButtonList[0]) onChangeButton(0, this) else onChangeButton(0, this)
             }
         }
         with(binding.buttonFriendRestaurant) {
             setOnClickListener {
-                this.setTextColor(resources.getColor(R.color.color_ff7f23))
-                this.compoundDrawableTintList =  ColorStateList.valueOf(Color.rgb(255, 127, 35))
+                if (changedButtonList[1]) onChangeButton(1, this) else onChangeButton(1, this)
             }
         }
         with(binding.buttonBookmarkRestaurant) {
             setOnClickListener {
-                this.setTextColor(resources.getColor(R.color.color_ff7f23))
-                this.compoundDrawableTintList =  ColorStateList.valueOf(Color.rgb(255, 127, 35))
+                if (changedButtonList[2]) onChangeButton(2, this) else onChangeButton(2, this)
             }
         }
     }
 
+    private fun onChangeButton(pos: Int, button: Button) {
+        if (changedButtonList[pos]) {
+            with(button) {
+                changedButtonList[pos] = false
+                setBackgroundResource(R.drawable.shape_rect_fbfbfa_stroke_c4c4c4_radius_37)
+                compoundDrawableTintList = Color666666
+                setTextColor(resources.getColor(R.color.color_c4c4c4))
+            }
+        } else {
+            with(button) {
+                changedButtonList[pos] = true
+                setBackgroundResource(R.drawable.shape_rect_fbfbfa_stroke_ff7f23_radius_37)
+                compoundDrawableTintList = ColorFF7F23
+                setTextColor(resources.getColor(R.color.color_ff7f23))
+            }
+        }
+    }
 
     override fun onMapReady(naverMap: NaverMap) {
         currentNaverMap = naverMap
@@ -119,7 +123,6 @@ class NaviHomeFragment : Fragment(), OnMapReadyCallback {
 
         val uiSettings = currentNaverMap?.uiSettings
         uiSettings?.isCompassEnabled = false
-        uiSettings?.logoGravity = Gravity.CENTER
 
         binding.naverMapCompassView.map = currentNaverMap
 
@@ -177,5 +180,8 @@ class NaviHomeFragment : Fragment(), OnMapReadyCallback {
             fragment.arguments = args
             return fragment
         }
+
+        val ColorFF7F23 = ColorStateList.valueOf(Color.rgb(255, 127, 35))
+        val Color666666 = ColorStateList.valueOf(Color.rgb(102, 102, 102))
     }
 }

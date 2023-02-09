@@ -22,7 +22,7 @@ class HomeViewModel @Inject constructor(
     private val _userLocation = SingleLiveEvent<UserLocation>()
     val userLocation: SingleLiveEvent<UserLocation> get() = _userLocation
 
-    fun getLocation(latitude:Double?, longitude:Double?){
+    fun getLocation(latitude: Double?, longitude: Double?) {
         _userLocation.value = UserLocation(latitude, longitude)
     }
 }
