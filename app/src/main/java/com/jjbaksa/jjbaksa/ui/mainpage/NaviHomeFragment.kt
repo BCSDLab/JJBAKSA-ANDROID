@@ -1,17 +1,17 @@
 package com.jjbaksa.jjbaksa.ui.mainpage
 
 import android.Manifest
+import android.annotation.TargetApi
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.activity.result.contract.ActivityResultContracts
@@ -89,17 +89,24 @@ class NaviHomeFragment : Fragment(), OnMapReadyCallback {
 
         with(binding.buttonNearbyRestaurant) {
             setOnClickListener {
+                this.setTextColor(resources.getColor(R.color.color_ff7f23))
+                this.compoundDrawableTintList =  ColorStateList.valueOf(Color.rgb(255, 127, 35))
             }
         }
         with(binding.buttonFriendRestaurant) {
             setOnClickListener {
+                this.setTextColor(resources.getColor(R.color.color_ff7f23))
+                this.compoundDrawableTintList =  ColorStateList.valueOf(Color.rgb(255, 127, 35))
             }
         }
         with(binding.buttonBookmarkRestaurant) {
             setOnClickListener {
+                this.setTextColor(resources.getColor(R.color.color_ff7f23))
+                this.compoundDrawableTintList =  ColorStateList.valueOf(Color.rgb(255, 127, 35))
             }
         }
     }
+
 
     override fun onMapReady(naverMap: NaverMap) {
         currentNaverMap = naverMap
