@@ -52,9 +52,8 @@ class NaviHomeFragment : Fragment(), OnMapReadyCallback {
             ?: MapFragment.newInstance().also {
                 fm.beginTransaction().add(R.id.map, it).commit()
             }
-
         mapFragment.getMapAsync(this)
-        observeData()
+
         with(binding.buttonCheckLocation) {
             setOnClickListener {
                 if (ActivityCompat.checkSelfPermission(
@@ -74,6 +73,24 @@ class NaviHomeFragment : Fragment(), OnMapReadyCallback {
             }
         }
 
+        setButtonZoomControl()
+        setRestaurantButtonControl()
+
+        observeData()
+    }
+
+    private fun setButtonZoomControl(){
+        binding.buttonZoomIn.setOnClickListener {
+            val cameraUpdate = CameraUpdate.zoomIn()
+            currentNaverMap?.moveCamera(cameraUpdate)
+        }
+        binding.buttonZoomOut.setOnClickListener {
+            val cameraUpdate = CameraUpdate.zoomOut()
+            currentNaverMap?.moveCamera(cameraUpdate)
+        }
+    }
+
+    private fun setRestaurantButtonControl() {
         with(binding.buttonNearbyRestaurant) {
             setOnClickListener {
                 if (changedButtonList[0]) onChangeButton(0, this) else onChangeButton(0, this)
@@ -119,6 +136,7 @@ class NaviHomeFragment : Fragment(), OnMapReadyCallback {
 
         val uiSettings = currentNaverMap?.uiSettings
         uiSettings?.isCompassEnabled = false
+        uiSettings?.isZoomControlEnabled = false
 
         binding.naverMapCompassView.map = currentNaverMap
 

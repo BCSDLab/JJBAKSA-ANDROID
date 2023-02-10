@@ -17,6 +17,7 @@
 
         <com.naver.maps.map.widget.CompassView
             android:id="@+id/naver_map_compass_view"
+            android:layout_marginTop="4dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="@+id/edit_text_main_page"
