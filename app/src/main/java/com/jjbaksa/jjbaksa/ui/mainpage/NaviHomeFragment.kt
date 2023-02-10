@@ -4,6 +4,7 @@ import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Button
 import androidx.core.app.ActivityCompat
@@ -27,7 +28,6 @@ class NaviHomeFragment : Fragment(), OnMapReadyCallback {
 
     private val homeViewModel: HomeViewModel by activityViewModels()
     private lateinit var homeAlertDialog: HomeAlertDialog
-    private lateinit var fusedLocationProvider: FusedLocationProvider
 
     private var naverMapOptions: NaverMapOptions? = null
     private var currentNaverMap: NaverMap? = null
@@ -46,8 +46,6 @@ class NaviHomeFragment : Fragment(), OnMapReadyCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        fusedLocationProvider = FusedLocationProvider(requireContext(), homeViewModel)
 
         val fm = childFragmentManager
         val mapFragment = fm.findFragmentById(R.id.map) as MapFragment?
@@ -69,8 +67,7 @@ class NaviHomeFragment : Fragment(), OnMapReadyCallback {
                     ) == PackageManager.PERMISSION_GRANTED
                 ) {
                     imageTintList = ColorStateList.valueOf(Color.rgb(196, 196, 196))
-                    fusedLocationProvider.requestLastLocation()
-                    fusedLocationProvider.startLocationUpdates()
+                    homeViewModel.fusedLocationProvider.requestLastLocation()
                 } else {
                     showPermissionInfoDialog()
                 }
@@ -119,7 +116,6 @@ class NaviHomeFragment : Fragment(), OnMapReadyCallback {
             .enabledLayerGroups(NaverMap.LAYER_GROUP_BUILDING)
 
         MapFragment.newInstance(naverMapOptions)
-        fusedLocationProvider.requestLastLocation()
 
         val uiSettings = currentNaverMap?.uiSettings
         uiSettings?.isCompassEnabled = false
@@ -146,10 +142,11 @@ class NaviHomeFragment : Fragment(), OnMapReadyCallback {
             viewLifecycleOwner,
             Observer<UserLocation> {
                 if (it.currentLatitude != null) {
-                    val cameraUpdate =
-                        CameraUpdate.scrollTo(LatLng(it.currentLatitude!!, it.currentLongitude!!))
-                    currentNaverMap?.moveCamera(cameraUpdate)
-
+                    if (it.updateCamera){
+                        val cameraUpdate =
+                            CameraUpdate.scrollTo(LatLng(it.currentLatitude!!, it.currentLongitude!!))
+                        currentNaverMap?.moveCamera(cameraUpdate)
+                    }
                     currentLocationOverlay = currentNaverMap?.locationOverlay
                     currentLocationOverlay?.icon =
                         OverlayImage.fromResource(R.drawable.shape_circ_3d93f8_stroke_ffffff)
@@ -169,7 +166,6 @@ class NaviHomeFragment : Fragment(), OnMapReadyCallback {
         naverMapOptions = null
         currentNaverMap = null
         currentLocationOverlay = null
-        fusedLocationProvider.stopLocationUpdates()
     }
 
     companion object {

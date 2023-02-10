@@ -50,8 +50,8 @@ class FusedLocationProvider(
             override fun onLocationResult(locationResult: LocationResult) {
                 super.onLocationResult(locationResult)
                 locationResult.locations.forEach { location ->
-                    // location call back
-                    viewModel.getLocation(location.latitude, location.longitude)
+                    // update location call back
+                    viewModel.getLocation(location.latitude, location.longitude, false)
                 }
             }
         }
@@ -93,7 +93,7 @@ class FusedLocationProvider(
         fusedLocationProviderClient.lastLocation
             .addOnSuccessListener { location: Location? ->
                 // response location
-                viewModel.getLocation(location?.latitude, location?.longitude)
+                viewModel.getLocation(location?.latitude, location?.longitude, true)
             }
     }
 

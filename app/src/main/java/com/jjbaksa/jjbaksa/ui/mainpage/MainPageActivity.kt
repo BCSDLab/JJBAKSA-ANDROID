@@ -27,19 +27,18 @@ class MainPageActivity : BaseActivity<ActivityMainPageBinding>() {
 
     private val homeViewModel: HomeViewModel by viewModels()
     private lateinit var homeAlertDialog: HomeAlertDialog
-    private lateinit var fusedLocationProvider: FusedLocationProvider
 
     private val requestLocationPermissions = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { isGranted ->
         when {
             isGranted.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
-                fusedLocationProvider.requestLastLocation()
-                fusedLocationProvider.startLocationUpdates()
+                homeViewModel.fusedLocationProvider.requestLastLocation()
+                homeViewModel.fusedLocationProvider.startLocationUpdates()
             }
             isGranted.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
-                fusedLocationProvider.requestLastLocation()
-                fusedLocationProvider.startLocationUpdates()
+                homeViewModel.fusedLocationProvider.requestLastLocation()
+                homeViewModel.fusedLocationProvider.startLocationUpdates()
             }
             else -> {
                 if (isShouldShowRequestPermissionRationale(locationPermissions[0]) && isShouldShowRequestPermissionRationale(
@@ -54,7 +53,7 @@ class MainPageActivity : BaseActivity<ActivityMainPageBinding>() {
 
     override fun initView() {
         binding.lifecycleOwner = this
-        fusedLocationProvider = FusedLocationProvider(this, homeViewModel)
+        homeViewModel.fusedLocationProvider = FusedLocationProvider(this, homeViewModel)
     }
 
     override fun subscribe() {
@@ -94,8 +93,8 @@ class MainPageActivity : BaseActivity<ActivityMainPageBinding>() {
 
     private fun checkLocationPermissions() {
         if (isPermissionGranted(locationPermissions[0]) && isPermissionGranted(locationPermissions[1])) {
-            fusedLocationProvider.requestLastLocation()
-            fusedLocationProvider.startLocationUpdates()
+            homeViewModel.fusedLocationProvider.requestLastLocation()
+            homeViewModel.fusedLocationProvider.startLocationUpdates()
         } else {
             requestLocationPermissions.launch(locationPermissions)
         }
@@ -108,7 +107,7 @@ class MainPageActivity : BaseActivity<ActivityMainPageBinding>() {
 
     override fun onDestroy() {
         super.onDestroy()
-        fusedLocationProvider.stopLocationUpdates()
+        homeViewModel.fusedLocationProvider.stopLocationUpdates()
     }
 }
 
