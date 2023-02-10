@@ -1,4 +1,3 @@
 package com.jjbaksa.data.datasource
 
-interface HomeDataSource {
-}
+interface HomeDataSource

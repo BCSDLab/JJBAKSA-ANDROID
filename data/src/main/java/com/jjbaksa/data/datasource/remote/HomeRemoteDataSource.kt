@@ -8,5 +8,4 @@ import javax.inject.Inject
 class HomeRemoteDataSource @Inject constructor(
     private val authApi: AuthApi,
     private val noAuthApi: NoAuthApi
-): HomeDataSource{
-}
+) : HomeDataSource

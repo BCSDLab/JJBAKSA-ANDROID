@@ -10,7 +10,7 @@ import androidx.fragment.app.activityViewModels
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.ui.mainpage.viewmodel.HomeViewModel
 
-class HomeAlertDialog(): DialogFragment(){
+class HomeAlertDialog() : DialogFragment() {
     private val homeViewModel: HomeViewModel by activityViewModels()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -19,7 +19,7 @@ class HomeAlertDialog(): DialogFragment(){
             setNegativeButton(R.string.cancel, null)
             setPositiveButton(R.string.move_setting) { _, _ ->
                 val intent = Intent(Settings.ACTION_SETTINGS)
-                if (intent.resolveActivity(requireContext().packageManager) != null){
+                if (intent.resolveActivity(requireContext().packageManager) != null) {
                     startActivity(intent)
                 }
             }

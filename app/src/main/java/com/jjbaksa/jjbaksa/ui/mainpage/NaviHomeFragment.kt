@@ -4,8 +4,9 @@ import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
@@ -15,11 +16,14 @@ import androidx.lifecycle.Observer
 import com.jjbaksa.domain.model.mainpage.UserLocation
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.databinding.FragmentNaviHomeBinding
-import com.jjbaksa.jjbaksa.ui.mainpage.sub.FusedLocationProvider
 import com.jjbaksa.jjbaksa.ui.mainpage.sub.HomeAlertDialog
 import com.jjbaksa.jjbaksa.ui.mainpage.viewmodel.HomeViewModel
 import com.naver.maps.geometry.LatLng
-import com.naver.maps.map.*
+import com.naver.maps.map.CameraUpdate
+import com.naver.maps.map.MapFragment
+import com.naver.maps.map.NaverMap
+import com.naver.maps.map.NaverMapOptions
+import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.overlay.LocationOverlay
 import com.naver.maps.map.overlay.OverlayImage
 
@@ -59,11 +63,11 @@ class NaviHomeFragment : Fragment(), OnMapReadyCallback {
                 if (ActivityCompat.checkSelfPermission(
                         context,
                         homeViewModel.locationPermissions[0]
-                    ) == PackageManager.PERMISSION_GRANTED
-                    || ActivityCompat.checkSelfPermission(
-                        context,
-                        homeViewModel.locationPermissions[1]
-                    ) == PackageManager.PERMISSION_GRANTED
+                    ) == PackageManager.PERMISSION_GRANTED ||
+                    ActivityCompat.checkSelfPermission(
+                            context,
+                            homeViewModel.locationPermissions[1]
+                        ) == PackageManager.PERMISSION_GRANTED
                 ) {
                     imageTintList = ColorStateList.valueOf(Color.rgb(196, 196, 196))
                     homeViewModel.fusedLocationProvider.requestLastLocation()
@@ -79,7 +83,7 @@ class NaviHomeFragment : Fragment(), OnMapReadyCallback {
         observeData()
     }
 
-    private fun setButtonZoomControl(){
+    private fun setButtonZoomControl() {
         binding.buttonZoomIn.setOnClickListener {
             val cameraUpdate = CameraUpdate.zoomIn()
             currentNaverMap?.moveCamera(cameraUpdate)
@@ -160,9 +164,14 @@ class NaviHomeFragment : Fragment(), OnMapReadyCallback {
             viewLifecycleOwner,
             Observer<UserLocation> {
                 if (it.currentLatitude != null) {
-                    if (it.updateCamera){
+                    if (it.updateCamera) {
                         val cameraUpdate =
-                            CameraUpdate.scrollTo(LatLng(it.currentLatitude!!, it.currentLongitude!!))
+                            CameraUpdate.scrollTo(
+                                LatLng(
+                                    it.currentLatitude!!,
+                                    it.currentLongitude!!
+                                )
+                            )
                         currentNaverMap?.moveCamera(cameraUpdate)
                     }
                     currentLocationOverlay = currentNaverMap?.locationOverlay

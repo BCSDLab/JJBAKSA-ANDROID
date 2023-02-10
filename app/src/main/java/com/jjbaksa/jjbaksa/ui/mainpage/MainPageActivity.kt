@@ -1,12 +1,8 @@
 package com.jjbaksa.jjbaksa.ui.mainpage
 
 import android.Manifest
-import android.content.Context
-import android.util.Log
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseActivity
@@ -15,7 +11,6 @@ import com.jjbaksa.jjbaksa.ui.mainpage.sub.FusedLocationProvider
 import com.jjbaksa.jjbaksa.ui.mainpage.sub.HomeAlertDialog
 import com.jjbaksa.jjbaksa.ui.mainpage.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.math.log
 
 @AndroidEntryPoint
 class MainPageActivity : BaseActivity<ActivityMainPageBinding>() {
@@ -110,4 +105,3 @@ class MainPageActivity : BaseActivity<ActivityMainPageBinding>() {
         homeViewModel.fusedLocationProvider.stopLocationUpdates()
     }
 }
-

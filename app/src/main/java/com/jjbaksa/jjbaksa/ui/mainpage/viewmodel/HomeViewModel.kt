@@ -1,8 +1,6 @@
 package com.jjbaksa.jjbaksa.ui.mainpage.viewmodel
 
 import android.Manifest
-import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
-import androidx.lifecycle.MutableLiveData
 import com.jjbaksa.domain.model.mainpage.UserLocation
 import com.jjbaksa.domain.repository.HomeRepository
 import com.jjbaksa.jjbaksa.base.BaseViewModel
@@ -28,5 +26,4 @@ class HomeViewModel @Inject constructor(
     fun getLocation(latitude: Double?, longitude: Double?, isCameraUpdate: Boolean) {
         _userLocation.value = UserLocation(latitude, longitude, isCameraUpdate)
     }
-
 }

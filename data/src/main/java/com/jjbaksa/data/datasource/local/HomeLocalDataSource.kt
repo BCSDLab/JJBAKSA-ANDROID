@@ -9,5 +9,4 @@ import javax.inject.Inject
 class HomeLocalDataSource @Inject constructor(
     @ApplicationContext context: Context,
     private val userDao: UserDao
-): HomeDataSource {
-}
+) : HomeDataSource

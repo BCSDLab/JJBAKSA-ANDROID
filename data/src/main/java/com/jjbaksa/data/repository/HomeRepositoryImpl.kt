@@ -8,5 +8,4 @@ import javax.inject.Inject
 class HomeRepositoryImpl @Inject constructor(
     private val homeRemoteDataSource: HomeRemoteDataSource,
     private val homeLocalDataSource: HomeLocalDataSource
-): HomeRepository {
-}
+) : HomeRepository

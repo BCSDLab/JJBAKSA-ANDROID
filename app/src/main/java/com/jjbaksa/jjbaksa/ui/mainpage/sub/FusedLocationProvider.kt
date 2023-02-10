@@ -5,11 +5,8 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Looper
-import android.util.Log
-import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.*
-import com.jjbaksa.domain.model.mainpage.UserLocation
 import com.jjbaksa.jjbaksa.ui.mainpage.viewmodel.HomeViewModel
 
 class FusedLocationProvider(
