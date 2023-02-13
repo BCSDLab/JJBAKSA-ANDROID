@@ -28,12 +28,10 @@ class MainPageActivity : BaseActivity<ActivityMainPageBinding>() {
     ) { isGranted ->
         when {
             isGranted.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
-                homeViewModel.fusedLocationProvider.requestLastLocation()
-                homeViewModel.fusedLocationProvider.startLocationUpdates()
+                homeViewModel.requestLocation()
             }
             isGranted.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
-                homeViewModel.fusedLocationProvider.requestLastLocation()
-                homeViewModel.fusedLocationProvider.startLocationUpdates()
+                homeViewModel.requestLocation()
             }
             else -> {
                 if (isShouldShowRequestPermissionRationale(locationPermissions[0]) && isShouldShowRequestPermissionRationale(
@@ -88,8 +86,7 @@ class MainPageActivity : BaseActivity<ActivityMainPageBinding>() {
 
     private fun checkLocationPermissions() {
         if (isPermissionGranted(locationPermissions[0]) && isPermissionGranted(locationPermissions[1])) {
-            homeViewModel.fusedLocationProvider.requestLastLocation()
-            homeViewModel.fusedLocationProvider.startLocationUpdates()
+            homeViewModel.requestLocation()
         } else {
             requestLocationPermissions.launch(locationPermissions)
         }
