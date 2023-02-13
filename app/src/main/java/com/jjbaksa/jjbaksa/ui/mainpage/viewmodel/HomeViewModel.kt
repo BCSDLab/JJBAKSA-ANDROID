@@ -27,7 +27,7 @@ class HomeViewModel @Inject constructor(
         _userLocation.value = UserLocation(latitude, longitude, isCameraUpdate)
     }
 
-    fun requestLocation(){
+    fun requestLocation() {
         fusedLocationProvider.requestLastLocation()
         fusedLocationProvider.startLocationUpdates()
     }
