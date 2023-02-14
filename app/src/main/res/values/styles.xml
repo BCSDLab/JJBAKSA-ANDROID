@@ -11,6 +11,7 @@
         <item name="android:background">@drawable/shape_rect_eeeeee_solid_radius_8</item>
         <item name="android:inputType">number</item>
     </style>
+
     <style name="FindIdCustomDialogStyle">
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowFullscreen">false</item>
@@ -18,4 +19,14 @@
         <item name="android:backgroundDimEnabled">true</item>
         <item name="android:backgroundDimAmount">0.5</item>
     </style>
+
+    <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">37dp</item>
+    </style>
+    <style name="Widget.App.Button" parent="Widget.MaterialComponents.Button">
+        <item name="shapeAppearance">@style/ShapeAppearance.App.SmallComponent</item>
+    </style>
+
+
 </resources>

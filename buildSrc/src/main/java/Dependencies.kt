@@ -59,6 +59,14 @@ object FirebaseDependencies {
     const val firebaseAuth = "com.google.firebase:firebase-auth-ktx"
 }
 
+object NaverDependencies{
+    const val naverMaps = "com.naver.maps:map-sdk:${Versions.naverMapsVersion}"
+}
+
+object GooglePlayServiceDependencies {
+    const val googlePlayServiceLocation = "com.google.android.gms:play-services-location:${Versions.googlePlayServiceLocationVersion}"
+}
+
 object ClassPathPlugins {
     const val hilt = "com.google.dagger:hilt-android-gradle-plugin:${Versions.hiltVersion}"
 }

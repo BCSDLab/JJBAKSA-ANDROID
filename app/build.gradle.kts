@@ -24,7 +24,9 @@ android {
         buildConfigField("String", "naver_client_id", getPropertyKey("naver_client_id"))
         buildConfigField("String", "naver_client_secret", getPropertyKey("naver_client_secret"))
         buildConfigField("String", "naver_client_name", getPropertyKey("naver_client_name"))
+        buildConfigField("String", "naver_maps_client_id", getPropertyKey("naver_maps_client_id"))
         resValue("string", "kakao_oauth_host", getPropertyKey("kakao_oauth_host"))
+        resValue("string", "naver_maps_client_id", getPropertyKey("naver_maps_client_id"))
     }
 
     buildTypes {
@@ -61,6 +63,7 @@ dependencies {
     implementation("com.kakao.sdk:v2-user:2.11.0")
     implementation("com.google.android.gms:play-services-auth:20.3.0")
     implementation("com.navercorp.nid:oauth:5.1.1")
+
     KotlinDependencies.run {
         implementation(kotlin)
         implementation(coroutine)
@@ -113,6 +116,12 @@ dependencies {
         implementation(platform(FirebaseDependencies.firebaseBom))
         implementation(FirebaseDependencies.firebaseAnalytics)
         implementation(FirebaseDependencies.firebaseAuth)
+    }
+    NaverDependencies.run {
+        implementation(naverMaps)
+    }
+    GooglePlayServiceDependencies.run {
+        implementation(googlePlayServiceLocation)
     }
 }
 

@@ -42,6 +42,7 @@
     <string name="next">다음</string>
     <string name="complete">완료</string>
     <string name="confirm">확인</string>
+    <string name="cancel">취소</string>
 
     <string name="id_check">중복확인</string>
     <string name="email">이메일</string>
@@ -51,7 +52,11 @@
     <string name="menu_title_home">홈</string>
     <string name="menu_title_write">글쓰기</string>
     <string name="menu_title_my_page">마이페이지</string>
-    <string name="floating_action_button_text_bookmark">북마크 음식점</string>
-    <string name="floating_action_button_text_find_friend_store">친구 음식점 찾기</string>
-    <string name="floating_action_button_text_find_near_store">가까운 음식점 찾기</string>
+    <string name="bookmark_restaurant">북마크 음식점</string>
+    <string name="friend_restaurant">친구 음식점</string>
+    <string name="nearby_restaurant">가까운 음식점</string>
+    <string name="check_the_real_location">현 위치에서 검색</string>
+
+    <string name="move_setting">설정으로 이동</string>
+    <string name="location_service_term_text">위치 서비스를 사용할 수 없습니다. 기기의 \'설정\'에서 위치 서비스를 켜주세요.(필수권한)</string>
 </resources>
