@@ -16,6 +16,7 @@ class FindPasswordViewModel @Inject constructor(
     private val repository: UserRepository
 ) : BaseViewModel() {
     val userEmail = MutableLiveData<String>("")
+    val codeBoxState = MutableLiveData(mutableListOf(false, false, false, false))
 
     private val _authEmailState = SingleLiveEvent<RespResult<Boolean>>()
     val authEmailState: SingleLiveEvent<RespResult<Boolean>> get() = _authEmailState

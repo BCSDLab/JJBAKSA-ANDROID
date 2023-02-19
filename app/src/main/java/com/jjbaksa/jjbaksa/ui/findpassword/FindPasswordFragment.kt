@@ -21,7 +21,7 @@ class FindPasswordFragment():BaseFragment<FragmentFindPasswordBinding>() {
     override fun initView() {}
 
     override fun initEvent() {
-        onObserveData()
+        observeData()
 
         with(binding.editTextFindPasswordToEmail){
             addTextChangedListener {
@@ -47,7 +47,7 @@ class FindPasswordFragment():BaseFragment<FragmentFindPasswordBinding>() {
         binding.editTextFindPasswordToEmail.setText(null)
     }
 
-    private fun onObserveData(){
+    private fun observeData(){
         findPasswordViewModel.authEmailState.observe(
             viewLifecycleOwner,
             Observer<RespResult<Boolean>>{
