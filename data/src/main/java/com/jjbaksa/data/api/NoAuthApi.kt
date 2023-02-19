@@ -3,6 +3,7 @@ package com.jjbaksa.data.api
 import com.jjbaksa.data.model.findid.FindIdResp
 import com.jjbaksa.domain.resp.user.LoginReq
 import com.jjbaksa.data.model.user.LoginResp
+import com.jjbaksa.domain.resp.user.FindPasswordReq
 import com.jjbaksa.domain.resp.user.SignUpReq
 import com.jjbaksa.domain.resp.user.SignUpResp
 import retrofit2.Response
@@ -37,4 +38,9 @@ interface NoAuthApi {
         @Query("email") userEmail: String,
         @Query("code") codeNumber: String
     ): Response<FindIdResp>
+
+    @POST("user/password")
+    suspend fun findPassword(
+        @Body findPasswordReq: FindPasswordReq
+    ): Response<Unit>
 }

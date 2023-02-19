@@ -9,14 +9,11 @@ class FindPasswordResetFragment: BaseFragment<FragmentFindPasswordResetBinding>(
         get() = R.layout.fragment_find_password_reset
 
     override fun initView() {
-        TODO("Not yet implemented")
     }
 
     override fun initEvent() {
-        TODO("Not yet implemented")
     }
 
     override fun subscribe() {
-        TODO("Not yet implemented")
     }
 }

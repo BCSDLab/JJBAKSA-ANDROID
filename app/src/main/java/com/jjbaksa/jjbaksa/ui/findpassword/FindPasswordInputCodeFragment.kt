@@ -2,17 +2,19 @@ package com.jjbaksa.jjbaksa.ui.findpassword
 
 import android.content.Context
 import android.util.Log
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseFragment
 import com.jjbaksa.jjbaksa.databinding.FragmentFindPasswordInputCodeBinding
 import com.jjbaksa.jjbaksa.ui.findpassword.viewmodel.FindPasswordViewModel
-import dagger.hilt.android.AndroidEntryPoint
+import java.lang.StringBuilder
 
 class FindPasswordInputCodeFragment : BaseFragment<FragmentFindPasswordInputCodeBinding>() {
     override val layoutId: Int
@@ -31,6 +33,19 @@ class FindPasswordInputCodeFragment : BaseFragment<FragmentFindPasswordInputCode
         nextToCodeBox()
         onClickCodeBoxLayout()
         observeData()
+        binding.buttonFindPasswordInputCode.setOnClickListener {
+            findPasswordViewModel.getCodeNumber(
+                binding.editTextFindPasswordInputCodeOne.text.toString(),
+                binding.editTextFindPasswordInputCodeTwo.text.toString(),
+                binding.editTextFindPasswordInputCodeThree.text.toString(),
+                binding.editTextFindPasswordInputCodeFour.text.toString()
+            )
+            findPasswordViewModel.findPassword(
+                "jonotch1",
+                findPasswordViewModel.userEmail.value.toString(),
+                findPasswordViewModel.codeNumber.value.toString()
+            )
+        }
     }
 
     override fun subscribe() {}
@@ -104,6 +119,17 @@ class FindPasswordInputCodeFragment : BaseFragment<FragmentFindPasswordInputCode
             viewLifecycleOwner,
             Observer<MutableList<Boolean>> {
                 binding.buttonFindPasswordInputCode.isEnabled = !it.contains(false)
+            }
+        )
+        findPasswordViewModel.isSuccessCode.observe(
+            viewLifecycleOwner,
+            Observer<Boolean>{
+                if (it) {
+                    findNavController().navigate(R.id.action_nav_find_password_input_code_to_nav_find_password_reset)
+                } else {
+                    binding.buttonFindPasswordInputCode.isEnabled = false
+                    binding.layerFindPasswordWarningContentInInputCode.visibility = View.VISIBLE
+                }
             }
         )
     }

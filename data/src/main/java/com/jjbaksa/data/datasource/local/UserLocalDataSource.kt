@@ -8,6 +8,7 @@ import com.jjbaksa.data.database.userDataStore
 import com.jjbaksa.data.datasource.UserDataSource
 import com.jjbaksa.data.model.findid.FindIdResp
 import com.jjbaksa.data.model.user.LoginResp
+import com.jjbaksa.domain.resp.user.FindPasswordReq
 import com.jjbaksa.domain.resp.user.LoginReq
 import com.jjbaksa.domain.resp.user.SignUpReq
 import com.jjbaksa.domain.resp.user.SignUpResp
@@ -39,6 +40,10 @@ class UserLocalDataSource @Inject constructor(
     }
 
     override suspend fun findAccount(email: String, code: String): Response<FindIdResp> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun findPassword(findPasswordReq: FindPasswordReq): Response<Unit> {
         TODO("Not yet implemented")
     }
 

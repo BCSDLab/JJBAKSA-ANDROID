@@ -8,10 +8,7 @@ import com.jjbaksa.data.mapper.RespMapper
 import com.jjbaksa.domain.base.ErrorType
 import com.jjbaksa.domain.base.RespResult
 import com.jjbaksa.domain.repository.UserRepository
-import com.jjbaksa.domain.resp.user.LoginReq
-import com.jjbaksa.domain.resp.user.LoginResult
-import com.jjbaksa.domain.resp.user.SignUpReq
-import com.jjbaksa.domain.resp.user.SignUpResp
+import com.jjbaksa.domain.resp.user.*
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
@@ -78,6 +75,12 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun findAccount(email: String, code: String): String {
         val response = userRemoteDataSource.findAccount(email, code)
         return if (response.isSuccessful && response.code() == 200) response.body()?.account!!.toString() else ""
+    }
+
+    override suspend fun findPassword(account: String, email: String, code: String): Boolean {
+        val findPasswordReq = FindPasswordReq(account, email, code)
+        val result = userRemoteDataSource.findPassword(findPasswordReq)
+        return result.isSuccessful && result.code() == 200
     }
 
     override suspend fun me() {

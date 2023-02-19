@@ -9,6 +9,7 @@ import com.jjbaksa.jjbaksa.base.BaseViewModel
 import com.jjbaksa.jjbaksa.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.lang.StringBuilder
 import javax.inject.Inject
 
 @HiltViewModel
@@ -21,11 +22,29 @@ class FindPasswordViewModel @Inject constructor(
     private val _authEmailState = SingleLiveEvent<RespResult<Boolean>>()
     val authEmailState: SingleLiveEvent<RespResult<Boolean>> get() = _authEmailState
 
+    private val _codeNumber = MutableLiveData<StringBuilder>()
+    val codeNumber: MutableLiveData<StringBuilder> get() = _codeNumber
+
+    private val _isSuccessCode = MutableLiveData<Boolean>()
+    val isSuccessCode: MutableLiveData<Boolean> get() = _isSuccessCode
+
+    fun getCodeNumber(one:String, two:String, three:String, four:String) {
+        _codeNumber.value = StringBuilder(one + two + three + four)
+    }
+
     fun getAuthEmail(email: String) {
         userEmail.value = email
         viewModelScope.launch(ceh) {
             repository.checkAuthEmail(email).let {
                 authEmailState.value = it
+            }
+        }
+    }
+
+    fun findPassword(account:String, email:String, code:String){
+        viewModelScope.launch(ceh) {
+            repository.findPassword(account, email, code).let {
+                _isSuccessCode.value = it
             }
         }
     }

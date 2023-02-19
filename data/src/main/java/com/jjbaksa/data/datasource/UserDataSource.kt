@@ -2,6 +2,7 @@ package com.jjbaksa.data.datasource
 
 import com.jjbaksa.data.model.findid.FindIdResp
 import com.jjbaksa.data.model.user.LoginResp
+import com.jjbaksa.domain.resp.user.FindPasswordReq
 import com.jjbaksa.domain.resp.user.LoginReq
 import com.jjbaksa.domain.resp.user.SignUpReq
 import com.jjbaksa.domain.resp.user.SignUpResp
@@ -13,6 +14,7 @@ interface UserDataSource {
     suspend fun postLogin(loginReq: LoginReq): Response<LoginResp>?
     suspend fun checkAuthEmail(email: String): Response<Unit>
     suspend fun findAccount(email: String, code: String): Response<FindIdResp>
+    suspend fun findPassword(findPasswordReq: FindPasswordReq): Response<Unit>
     suspend fun saveAccessToken(accessToken: String)
     suspend fun saveAccount(account: String)
     suspend fun savePassword(password: String)

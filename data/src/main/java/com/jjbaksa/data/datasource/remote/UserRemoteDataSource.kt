@@ -6,6 +6,7 @@ import com.jjbaksa.data.datasource.UserDataSource
 import com.jjbaksa.data.model.findid.FindIdResp
 import com.jjbaksa.data.model.user.LoginResp
 import com.jjbaksa.data.model.user.UserResp
+import com.jjbaksa.domain.resp.user.FindPasswordReq
 import com.jjbaksa.domain.resp.user.LoginReq
 import com.jjbaksa.domain.resp.user.SignUpReq
 import com.jjbaksa.domain.resp.user.SignUpResp
@@ -34,6 +35,10 @@ class UserRemoteDataSource @Inject constructor(
 
     override suspend fun findAccount(email: String, code: String): Response<FindIdResp> {
         return noAuthApi.findId(email, code)
+    }
+
+    override suspend fun findPassword(findPasswordReq: FindPasswordReq): Response<Unit> {
+        return noAuthApi.findPassword(findPasswordReq)
     }
 
     override suspend fun saveAccessToken(accessToken: String) {
