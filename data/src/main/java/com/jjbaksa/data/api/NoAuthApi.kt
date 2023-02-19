@@ -28,7 +28,7 @@ interface NoAuthApi {
     ): Response<LoginResp>
 
     @POST("user/email")
-    suspend fun getFindIdCodeNumber(
+    suspend fun getEmailCodeNumber(
         @Query("email") userEmail: String
     ): Response<Unit>
 

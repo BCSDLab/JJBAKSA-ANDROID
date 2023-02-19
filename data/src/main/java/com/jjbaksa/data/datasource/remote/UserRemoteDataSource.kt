@@ -29,7 +29,7 @@ class UserRemoteDataSource @Inject constructor(
     }
 
     override suspend fun checkAuthEmail(email: String): Response<Unit> {
-        return noAuthApi.getFindIdCodeNumber(email)
+        return noAuthApi.getEmailCodeNumber(email)
     }
 
     override suspend fun findAccount(email: String, code: String): Response<FindIdResp> {
