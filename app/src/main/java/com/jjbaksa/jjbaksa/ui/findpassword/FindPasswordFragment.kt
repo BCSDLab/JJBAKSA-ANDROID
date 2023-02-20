@@ -63,5 +63,6 @@ class FindPasswordFragment():BaseFragment<FragmentFindPasswordBinding>() {
     private fun failEmailCheck(){
         binding.layerFindPasswordWarningContent.visibility = View.VISIBLE
         binding.buttonFindPasswordSendToInputCode.isEnabled = false
+        binding.editTextFindPasswordToEmail.setBackgroundResource(R.drawable.shape_rect_eeeeee_solid_radius_100_stroke_ff7f23)
     }
 }
