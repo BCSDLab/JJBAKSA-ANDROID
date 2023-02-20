@@ -24,8 +24,10 @@
     <string name="new_password">새 비밀번호</string>
     <string name="check_password">비밀번호 확인</string>
     <string name="success_find_account">아이디 찾기 완료</string>
+    <string name="success_find_password">비밀번호 찾기 완료</string>
     <string name="input_email_when_find_id_text">아이디를 찾을 때\n사용할 이메일을 입력해 주세요.</string>
     <string name="input_email_when_find_password">비밀번호를 찾을 때\n사용할 이메일을 입력해 주세요.</string>
+    <string name="re_login_with_new_password">재설정된 비밀번호로 다시 로그인 해주세요.</string>
     <string name="input_email">이메일을 입력하세요.</string>
     <string name="input_password">비밀번호를 입력하세요.</string>
     <string name="set_new_password">새 비밀번호를 설정해 주세요.</string>

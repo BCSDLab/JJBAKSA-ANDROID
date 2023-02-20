@@ -28,8 +28,15 @@ class FindPasswordViewModel @Inject constructor(
     private val _isSuccessCode = MutableLiveData<Boolean>()
     val isSuccessCode: MutableLiveData<Boolean> get() = _isSuccessCode
 
+    private val _buttonEnabled = MutableLiveData<MutableList<Boolean>>()
+    val buttonEnabled: MutableLiveData<MutableList<Boolean>> get() = _buttonEnabled
+
     fun getCodeNumber(one:String, two:String, three:String, four:String) {
         _codeNumber.value = StringBuilder(one + two + three + four)
+    }
+
+    fun getButtonEnabled(state:MutableList<Boolean>){
+        _buttonEnabled.value = state
     }
 
     fun getAuthEmail(email: String) {
