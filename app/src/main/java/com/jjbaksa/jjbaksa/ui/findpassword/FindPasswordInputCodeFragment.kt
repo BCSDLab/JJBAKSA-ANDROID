@@ -14,6 +14,7 @@ import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseFragment
 import com.jjbaksa.jjbaksa.databinding.FragmentFindPasswordInputCodeBinding
 import com.jjbaksa.jjbaksa.ui.findpassword.viewmodel.FindPasswordViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import java.lang.StringBuilder
 
 class FindPasswordInputCodeFragment : BaseFragment<FragmentFindPasswordInputCodeBinding>() {
@@ -33,19 +34,7 @@ class FindPasswordInputCodeFragment : BaseFragment<FragmentFindPasswordInputCode
         nextToCodeBox()
         onClickCodeBoxLayout()
         observeData()
-        binding.buttonFindPasswordInputCode.setOnClickListener {
-            findPasswordViewModel.getCodeNumber(
-                binding.editTextFindPasswordInputCodeOne.text.toString(),
-                binding.editTextFindPasswordInputCodeTwo.text.toString(),
-                binding.editTextFindPasswordInputCodeThree.text.toString(),
-                binding.editTextFindPasswordInputCodeFour.text.toString()
-            )
-            findPasswordViewModel.findPassword(
-                "jonotch1",
-                findPasswordViewModel.userEmail.value.toString(),
-                findPasswordViewModel.codeNumber.value.toString()
-            )
-        }
+        onClickSuccessButton()
     }
 
     override fun subscribe() {}
@@ -111,6 +100,22 @@ class FindPasswordInputCodeFragment : BaseFragment<FragmentFindPasswordInputCode
                 editTextFindPasswordInputCodeOne.requestFocus()
                 imm.showSoftInput(editTextFindPasswordInputCodeOne, InputMethodManager.SHOW_FORCED)
             }
+        }
+    }
+
+    private fun onClickSuccessButton(){
+        binding.buttonFindPasswordInputCode.setOnClickListener {
+            findPasswordViewModel.getCodeNumber(
+                binding.editTextFindPasswordInputCodeOne.text.toString(),
+                binding.editTextFindPasswordInputCodeTwo.text.toString(),
+                binding.editTextFindPasswordInputCodeThree.text.toString(),
+                binding.editTextFindPasswordInputCodeFour.text.toString()
+            )
+            findPasswordViewModel.findPassword(
+                "jonotch1",
+                findPasswordViewModel.userEmail.value.toString(),
+                findPasswordViewModel.codeNumber.value.toString()
+            )
         }
     }
 
