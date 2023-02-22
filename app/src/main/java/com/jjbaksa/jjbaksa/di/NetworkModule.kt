@@ -20,6 +20,7 @@ import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Qualifier
 import javax.inject.Singleton
@@ -58,7 +59,8 @@ object NetworkModule {
          */
 
             runBlocking {
-                val key = stringPreferencesKey("ACEESS_TOKEN")
+//                val key = stringPreferencesKey("ACEESS_TOKEN")
+                val key = stringPreferencesKey("AUTH_PASSWORD_TOKEN")
                 val accessToken: String = context.userDataStore.data.first()[key] ?: ""
                 val newRequest: Request = chain.request().newBuilder()
                     .addHeader("Authorization", "Bearer $accessToken")
@@ -133,6 +135,7 @@ fun provideRefreshInterceptor(): Interceptor {
         return Retrofit.Builder()
             .client(okHttpClient)
             .baseUrl(BASE_URL)
+            .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }

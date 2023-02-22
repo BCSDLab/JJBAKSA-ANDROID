@@ -7,7 +7,9 @@ import com.jjbaksa.data.database.UserDao
 import com.jjbaksa.data.database.userDataStore
 import com.jjbaksa.data.datasource.UserDataSource
 import com.jjbaksa.data.model.findid.FindIdResp
+import com.jjbaksa.data.model.findpassword.FindPasswordResp
 import com.jjbaksa.data.model.user.LoginResp
+import com.jjbaksa.data.model.user.UserResp
 import com.jjbaksa.domain.resp.user.FindPasswordReq
 import com.jjbaksa.domain.resp.user.LoginReq
 import com.jjbaksa.domain.resp.user.SignUpReq
@@ -43,7 +45,11 @@ class UserLocalDataSource @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun findPassword(findPasswordReq: FindPasswordReq): Response<Unit> {
+    override suspend fun findPassword(findPasswordReq: FindPasswordReq): Response<String> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun changeUserPassword(password: String): Response<UserResp> {
         TODO("Not yet implemented")
     }
 
@@ -74,6 +80,12 @@ class UserLocalDataSource @Inject constructor(
     override suspend fun saveAutoLogin(isAutoLogin: Boolean) {
         dataStore.edit {
             it[PreferenceKeys.AUTO_LOGIN] = isAutoLogin
+        }
+    }
+
+    override suspend fun saveAuthPasswordToken(passwordToken: String) {
+        dataStore.edit {
+            it[PreferenceKeys.AUTH_PASSWORD_TOKEN] = passwordToken
         }
     }
 

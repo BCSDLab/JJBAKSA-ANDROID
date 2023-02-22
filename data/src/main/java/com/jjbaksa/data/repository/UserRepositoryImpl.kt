@@ -9,6 +9,8 @@ import com.jjbaksa.domain.base.ErrorType
 import com.jjbaksa.domain.base.RespResult
 import com.jjbaksa.domain.repository.UserRepository
 import com.jjbaksa.domain.resp.user.*
+import okhttp3.ResponseBody
+import retrofit2.Response
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
@@ -39,6 +41,7 @@ class UserRepositoryImpl @Inject constructor(
     ) {
 
         val response = userRemoteDataSource.postLogin(LoginReq(account, password))
+
         if (response != null) {
             if (response.isSuccessful) {
                 if (response.body()?.code == SUCCESS) {
@@ -77,9 +80,20 @@ class UserRepositoryImpl @Inject constructor(
         return if (response.isSuccessful && response.code() == 200) response.body()?.account!!.toString() else ""
     }
 
-    override suspend fun findPassword(account: String, email: String, code: String): Boolean {
-        val findPasswordReq = FindPasswordReq(account, email, code)
-        val result = userRemoteDataSource.findPassword(findPasswordReq)
+    override suspend fun findPassword(account: String, email: String, code: String): String? {
+        val response = userRemoteDataSource.findPassword(FindPasswordReq(account, email, code))
+
+        return if (response.isSuccessful && response.body() != null) {
+            userLocalDataSource.saveAuthPasswordToken(response.body().toString())
+            response.body().toString()
+        }
+        else {
+            response.body()
+        }
+    }
+
+    override suspend fun changeUserPassword(password: String): Boolean {
+        val result = userRemoteDataSource.changeUserPassword(password)
         return result.isSuccessful && result.code() == 200
     }
 

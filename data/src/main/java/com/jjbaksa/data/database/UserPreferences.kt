@@ -14,4 +14,5 @@ object PreferenceKeys {
     val ACCOUNT = stringPreferencesKey("ACCOUNT")
     val PASSWORD = stringPreferencesKey("PASSWORD")
     var AUTO_LOGIN = booleanPreferencesKey("AUTO_LOGIN")
+    val AUTH_PASSWORD_TOKEN = stringPreferencesKey("AUTH_PASSWORD_TOKEN")
 }

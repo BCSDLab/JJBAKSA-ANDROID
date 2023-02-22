@@ -37,6 +37,8 @@ class FindPasswordResetFragment : BaseFragment<FragmentFindPasswordResetBinding>
         val prev = parentFragmentManager.findFragmentByTag("find_password_custom_dialog")
         if (prev != null) ft.remove(prev)
         ft.addToBackStack(null)
+
+        Log.d("로그", "token ${findPasswordViewModel.userToken.value}")
     }
 
     override fun initEvent() {
@@ -97,7 +99,7 @@ class FindPasswordResetFragment : BaseFragment<FragmentFindPasswordResetBinding>
                 binding.editTextCheckPassword.setBackgroundResource(R.drawable.shape_rect_eeeeee_solid_radius_100_stroke_ff7f23)
             } else {
                 // success change password
-                findPasswordCustomDialog.show(parentFragmentManager, "find_password_custom_dialog")
+                findPasswordViewModel.setNewPassword(binding.editTextNewPassword.text.toString())
             }
         }
     }
@@ -107,6 +109,14 @@ class FindPasswordResetFragment : BaseFragment<FragmentFindPasswordResetBinding>
             viewLifecycleOwner,
             Observer<MutableList<Boolean>> {
                 binding.buttonResetPassword.isEnabled = !it.contains(false)
+            }
+        )
+        findPasswordViewModel.isChangePassword.observe(
+            viewLifecycleOwner,
+            Observer<Boolean>{
+                if (it){
+                    findPasswordCustomDialog.show(parentFragmentManager, "find_password_custom_dialog")
+                }
             }
         )
     }

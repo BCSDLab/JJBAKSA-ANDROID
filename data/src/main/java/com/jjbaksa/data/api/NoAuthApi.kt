@@ -1,6 +1,7 @@
 package com.jjbaksa.data.api
 
 import com.jjbaksa.data.model.findid.FindIdResp
+import com.jjbaksa.data.model.findpassword.FindPasswordResp
 import com.jjbaksa.domain.resp.user.LoginReq
 import com.jjbaksa.data.model.user.LoginResp
 import com.jjbaksa.domain.resp.user.FindPasswordReq
@@ -42,5 +43,5 @@ interface NoAuthApi {
     @POST("user/password")
     suspend fun findPassword(
         @Body findPasswordReq: FindPasswordReq
-    ): Response<Unit>
+    ): Response<String>
 }

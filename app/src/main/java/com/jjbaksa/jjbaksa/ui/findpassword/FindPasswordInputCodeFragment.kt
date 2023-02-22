@@ -10,6 +10,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.jjbaksa.domain.base.RespResult
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseFragment
 import com.jjbaksa.jjbaksa.databinding.FragmentFindPasswordInputCodeBinding
@@ -112,8 +113,8 @@ class FindPasswordInputCodeFragment : BaseFragment<FragmentFindPasswordInputCode
                 binding.editTextFindPasswordInputCodeFour.text.toString()
             )
             findPasswordViewModel.findPassword(
-                "jonotch1",
-                findPasswordViewModel.userEmail.value.toString(),
+                findPasswordViewModel.userAccount.value.toString(),
+                "jonotch1@naver.com",
                 findPasswordViewModel.codeNumber.value.toString()
             )
         }
@@ -126,10 +127,10 @@ class FindPasswordInputCodeFragment : BaseFragment<FragmentFindPasswordInputCode
                 binding.buttonFindPasswordInputCode.isEnabled = !it.contains(false)
             }
         )
-        findPasswordViewModel.isSuccessCode.observe(
+        findPasswordViewModel.userToken.observe(
             viewLifecycleOwner,
-            Observer<Boolean>{
-                if (it) {
+            Observer<String?>{
+                if (it != null){
                     findNavController().navigate(R.id.action_nav_find_password_input_code_to_nav_find_password_reset)
                 } else {
                     binding.buttonFindPasswordInputCode.isEnabled = false
