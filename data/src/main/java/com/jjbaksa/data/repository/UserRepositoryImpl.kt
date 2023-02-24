@@ -1,6 +1,5 @@
 package com.jjbaksa.data.repository
 
-import android.util.Log
 import com.jjbaksa.data.SUCCESS
 import com.jjbaksa.data.datasource.local.UserLocalDataSource
 import com.jjbaksa.data.datasource.remote.UserRemoteDataSource
@@ -8,9 +7,11 @@ import com.jjbaksa.data.mapper.RespMapper
 import com.jjbaksa.domain.base.ErrorType
 import com.jjbaksa.domain.base.RespResult
 import com.jjbaksa.domain.repository.UserRepository
-import com.jjbaksa.domain.resp.user.*
-import okhttp3.ResponseBody
-import retrofit2.Response
+import com.jjbaksa.domain.resp.user.LoginReq
+import com.jjbaksa.domain.resp.user.LoginResult
+import com.jjbaksa.domain.resp.user.SignUpReq
+import com.jjbaksa.domain.resp.user.SignUpResp
+import com.jjbaksa.domain.resp.user.FindPasswordReq
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
@@ -86,8 +87,7 @@ class UserRepositoryImpl @Inject constructor(
         return if (response.isSuccessful && response.body() != null) {
             userLocalDataSource.saveAuthPasswordToken(response.body().toString())
             response.body().toString()
-        }
-        else {
+        } else {
             var errorBodyJson = "${response.errorBody()!!.string()}"
             val errorBody = RespMapper.errorMapper(errorBodyJson)
             errorBody.errorMessage
