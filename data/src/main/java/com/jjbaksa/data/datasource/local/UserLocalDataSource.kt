@@ -7,7 +7,6 @@ import com.jjbaksa.data.database.UserDao
 import com.jjbaksa.data.database.userDataStore
 import com.jjbaksa.data.datasource.UserDataSource
 import com.jjbaksa.data.model.findid.FindIdResp
-import com.jjbaksa.data.model.findpassword.FindPasswordResp
 import com.jjbaksa.data.model.user.LoginResp
 import com.jjbaksa.data.model.user.UserResp
 import com.jjbaksa.domain.resp.user.FindPasswordReq

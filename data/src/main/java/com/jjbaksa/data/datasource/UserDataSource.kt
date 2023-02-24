@@ -1,7 +1,6 @@
 package com.jjbaksa.data.datasource
 
 import com.jjbaksa.data.model.findid.FindIdResp
-import com.jjbaksa.data.model.findpassword.FindPasswordResp
 import com.jjbaksa.data.model.user.LoginResp
 import com.jjbaksa.data.model.user.UserResp
 import com.jjbaksa.domain.resp.user.FindPasswordReq
@@ -23,7 +22,7 @@ interface UserDataSource {
     suspend fun savePassword(password: String)
     suspend fun saveRefreshToken(refreshToken: String)
     suspend fun saveAutoLogin(isAutoLogin: Boolean)
-    suspend fun saveAuthPasswordToken(passwordToken:String)
+    suspend fun saveAuthPasswordToken(passwordToken: String)
     fun getAutoLoginFlag(): Boolean
     fun getAcount(): String
     fun getPassword(): String

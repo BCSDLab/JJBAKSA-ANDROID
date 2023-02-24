@@ -1,6 +1,5 @@
 package com.jjbaksa.jjbaksa.ui.findpassword
 
-import android.util.Log
 import android.view.View
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
@@ -12,9 +11,8 @@ import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseFragment
 import com.jjbaksa.jjbaksa.databinding.FragmentFindPasswordBinding
 import com.jjbaksa.jjbaksa.ui.findpassword.viewmodel.FindPasswordViewModel
-import com.jjbaksa.jjbaksa.util.RegexUtil
 
-class FindPasswordFragment():BaseFragment<FragmentFindPasswordBinding>() {
+class FindPasswordFragment() : BaseFragment<FragmentFindPasswordBinding>() {
     override val layoutId: Int
         get() = R.layout.fragment_find_password
 
@@ -35,25 +33,25 @@ class FindPasswordFragment():BaseFragment<FragmentFindPasswordBinding>() {
         binding.editTextFindPasswordToAccount.setText(null)
     }
 
-    private fun onEnabledButton(){
-        with(binding.editTextFindPasswordToAccount){
+    private fun onEnabledButton() {
+        with(binding.editTextFindPasswordToAccount) {
             addTextChangedListener {
                 binding.buttonFindPasswordSendToInputCode.isEnabled = this.text.isNotEmpty()
             }
         }
     }
 
-    private fun onClickButton(){
+    private fun onClickButton() {
         binding.buttonFindPasswordSendToInputCode.setOnClickListener {
             findPasswordViewModel.isExistAccount(binding.editTextFindPasswordToAccount.text.toString())
         }
     }
 
-    private fun observeData(){
+    private fun observeData() {
         findPasswordViewModel.existAccount.observe(
             viewLifecycleOwner,
-            Observer<RespResult<Boolean>>{
-                if (it == RespResult.Error<ErrorType>(ErrorType(ERROR_MESSAGE, CODE))){
+            Observer<RespResult<Boolean>> {
+                if (it == RespResult.Error<ErrorType>(ErrorType(ERROR_MESSAGE, CODE))) {
                     findPasswordViewModel.userAccount.value = binding.editTextFindPasswordToAccount.text.toString()
                     findNavController().navigate(R.id.action_nav_find_password_to_nav_find_password_input_code)
                 } else {

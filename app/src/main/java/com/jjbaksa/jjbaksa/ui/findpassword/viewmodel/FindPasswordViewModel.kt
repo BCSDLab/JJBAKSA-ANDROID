@@ -1,16 +1,13 @@
 package com.jjbaksa.jjbaksa.ui.findpassword.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.jjbaksa.domain.base.ErrorType
 import com.jjbaksa.domain.base.RespResult
 import com.jjbaksa.domain.repository.UserRepository
 import com.jjbaksa.jjbaksa.base.BaseViewModel
 import com.jjbaksa.jjbaksa.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.lang.StringBuilder
 import javax.inject.Inject
 
 @HiltViewModel

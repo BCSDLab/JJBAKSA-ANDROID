@@ -16,7 +16,7 @@ interface UserRepository {
     )
     suspend fun checkAuthEmail(email: String): RespResult<Boolean>
     suspend fun findAccount(email: String, code: String): String
-    suspend fun findPassword(account:String, email:String, code:String): String?
+    suspend fun findPassword(account: String, email: String, code: String): String?
     suspend fun changeUserPassword(password: String): Boolean
     suspend fun me()
     fun getAutoLoginFlag(): Boolean

@@ -1,23 +1,17 @@
 package com.jjbaksa.jjbaksa.ui.findpassword
 
 import android.text.InputType
-import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
-import androidx.activity.addCallback
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseFragment
 import com.jjbaksa.jjbaksa.databinding.FragmentFindPasswordResetBinding
 import com.jjbaksa.jjbaksa.ui.findpassword.viewmodel.FindPasswordViewModel
-import com.jjbaksa.jjbaksa.util.EMAIL_REGEX
 import com.jjbaksa.jjbaksa.util.RegexUtil.isPasswordRuleMatch
-import dagger.hilt.android.AndroidEntryPoint
-import java.util.regex.Pattern
 
 class FindPasswordResetFragment : BaseFragment<FragmentFindPasswordResetBinding>() {
     override val layoutId: Int
@@ -77,10 +71,10 @@ class FindPasswordResetFragment : BaseFragment<FragmentFindPasswordResetBinding>
         }
     }
 
-    private fun onClickButton(){
+    private fun onClickButton() {
         binding.buttonResetPassword.setOnClickListener {
             if (!binding.editTextNewPassword.text.toString()
-                    .isPasswordRuleMatch() || !binding.editTextCheckPassword.text.toString()
+                .isPasswordRuleMatch() || !binding.editTextCheckPassword.text.toString()
                     .isPasswordRuleMatch()
             ) {
                 binding.textViewResetPasswordNotCorrectPassword.text =
@@ -88,8 +82,7 @@ class FindPasswordResetFragment : BaseFragment<FragmentFindPasswordResetBinding>
                 binding.layerResetPasswordWarningContent.visibility = View.VISIBLE
                 binding.editTextNewPassword.setBackgroundResource(R.drawable.shape_rect_eeeeee_solid_radius_100_stroke_ff7f23)
                 binding.editTextCheckPassword.setBackgroundResource(R.drawable.shape_rect_eeeeee_solid_radius_100_stroke_ff7f23)
-            }
-            else if (binding.editTextNewPassword.text.toString() != binding.editTextCheckPassword.text.toString()) {
+            } else if (binding.editTextNewPassword.text.toString() != binding.editTextCheckPassword.text.toString()) {
                 binding.textViewResetPasswordNotCorrectPassword.text =
                     getString(R.string.not_correct_password)
                 binding.layerResetPasswordWarningContent.visibility = View.VISIBLE
@@ -111,8 +104,8 @@ class FindPasswordResetFragment : BaseFragment<FragmentFindPasswordResetBinding>
         )
         findPasswordViewModel.isChangePassword.observe(
             viewLifecycleOwner,
-            Observer<Boolean>{
-                if (it){
+            Observer<Boolean> {
+                if (it) {
                     findPasswordCustomDialog.show(parentFragmentManager, "find_password_custom_dialog")
                 }
             }

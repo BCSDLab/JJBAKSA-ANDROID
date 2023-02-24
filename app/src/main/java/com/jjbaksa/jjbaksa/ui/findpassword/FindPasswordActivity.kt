@@ -1,7 +1,5 @@
 package com.jjbaksa.jjbaksa.ui.findpassword
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseActivity
 import com.jjbaksa.jjbaksa.databinding.ActivityFindPasswordBinding

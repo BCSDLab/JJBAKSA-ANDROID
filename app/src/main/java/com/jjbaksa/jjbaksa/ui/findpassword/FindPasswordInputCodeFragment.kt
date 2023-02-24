@@ -1,7 +1,6 @@
 package com.jjbaksa.jjbaksa.ui.findpassword
 
 import android.content.Context
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
@@ -18,8 +17,6 @@ import com.jjbaksa.jjbaksa.base.BaseFragment
 import com.jjbaksa.jjbaksa.databinding.FragmentFindPasswordInputCodeBinding
 import com.jjbaksa.jjbaksa.ui.findpassword.viewmodel.FindPasswordViewModel
 import com.jjbaksa.jjbaksa.util.RegexUtil
-import dagger.hilt.android.AndroidEntryPoint
-import java.lang.StringBuilder
 
 class FindPasswordInputCodeFragment : BaseFragment<FragmentFindPasswordInputCodeBinding>() {
     override val layoutId: Int
@@ -44,7 +41,7 @@ class FindPasswordInputCodeFragment : BaseFragment<FragmentFindPasswordInputCode
 
     override fun onStart() {
         super.onStart()
-        with(binding){
+        with(binding) {
             editTextFindPasswordInputEmail.setText(null)
             editTextFindPasswordInputVerificationCode.setText(null)
         }
@@ -173,7 +170,6 @@ class FindPasswordInputCodeFragment : BaseFragment<FragmentFindPasswordInputCode
             }
         )
     }
-
 
     companion object {
         const val ERROR_MSG_EMAIL = "계정이 존재하지 않거나 이메일 형식이 올바르지 않습니다."
