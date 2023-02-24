@@ -37,8 +37,6 @@ class FindPasswordResetFragment : BaseFragment<FragmentFindPasswordResetBinding>
         val prev = parentFragmentManager.findFragmentByTag("find_password_custom_dialog")
         if (prev != null) ft.remove(prev)
         ft.addToBackStack(null)
-
-        Log.d("로그", "token ${findPasswordViewModel.userToken.value}")
     }
 
     override fun initEvent() {

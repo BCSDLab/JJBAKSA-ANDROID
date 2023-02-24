@@ -88,7 +88,9 @@ class UserRepositoryImpl @Inject constructor(
             response.body().toString()
         }
         else {
-            response.body()
+            var errorBodyJson = "${response.errorBody()!!.string()}"
+            val errorBody = RespMapper.errorMapper(errorBodyJson)
+            errorBody.errorMessage
         }
     }
 

@@ -4,17 +4,20 @@ import android.content.Context
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.jjbaksa.domain.base.ErrorType
 import com.jjbaksa.domain.base.RespResult
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseFragment
 import com.jjbaksa.jjbaksa.databinding.FragmentFindPasswordInputCodeBinding
 import com.jjbaksa.jjbaksa.ui.findpassword.viewmodel.FindPasswordViewModel
+import com.jjbaksa.jjbaksa.util.RegexUtil
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.StringBuilder
 
@@ -23,120 +26,159 @@ class FindPasswordInputCodeFragment : BaseFragment<FragmentFindPasswordInputCode
         get() = R.layout.fragment_find_password_input_code
 
     private val findPasswordViewModel: FindPasswordViewModel by activityViewModels()
-    private var codeBoxState = mutableListOf<Boolean>(false, false, false, false)
     private lateinit var imm: InputMethodManager
+
+    private var isSendVerificationCode = false
 
     override fun initView() {
         imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     }
 
     override fun initEvent() {
-        reSendCode()
-        nextToCodeBox()
-        onClickCodeBoxLayout()
         observeData()
-        onClickSuccessButton()
+        onClickButton()
+        onEnabledButtonState()
     }
 
     override fun subscribe() {}
 
-    private fun reSendCode() {
-        binding.textViewFindPasswordResendInputCode.setOnClickListener {
-            Toast.makeText(requireContext(), "인증번호가 재발송 되었습니다.", Toast.LENGTH_SHORT).show()
-            findPasswordViewModel.getAuthEmail(findPasswordViewModel.userEmail.value.toString())
+    override fun onStart() {
+        super.onStart()
+        with(binding){
+            editTextFindPasswordInputEmail.setText(null)
+            editTextFindPasswordInputVerificationCode.setText(null)
         }
     }
 
-    private fun nextToCodeBox() {
-        with(binding) {
-            editTextFindPasswordInputCodeOne.addTextChangedListener {
-                onChangedCodeBoxState(editTextFindPasswordInputCodeOne, 0)
-            }
-            editTextFindPasswordInputCodeTwo.addTextChangedListener {
-                onChangedCodeBoxState(editTextFindPasswordInputCodeTwo, 1)
-            }
-            editTextFindPasswordInputCodeThree.addTextChangedListener {
-                onChangedCodeBoxState(editTextFindPasswordInputCodeThree, 2)
-            }
-            editTextFindPasswordInputCodeFour.addTextChangedListener {
-                onChangedCodeBoxState(editTextFindPasswordInputCodeFour, 3)
-            }
+    private fun onEnabledButtonState() {
+        binding.editTextFindPasswordInputEmail.addTextChangedListener {
+            binding.buttonSendVerificationCode.isEnabled = it?.length!! > 0
+        }
+        binding.editTextFindPasswordInputVerificationCode.addTextChangedListener {
+            binding.buttonFindPasswordInputCode.isEnabled =
+                it?.length!! > 0 && isSendVerificationCode
         }
     }
 
-    private fun onChangedCodeBoxState(box: EditText, pos: Int) {
-        when (pos) {
-            0 -> {
-                if (box.text.length == 1) {
-                    binding.editTextFindPasswordInputCodeTwo.requestFocus()
-                    codeBoxState[pos] = true
-                } else codeBoxState[pos] = false
-            }
-            1 -> {
-                if (box.text.length == 1) {
-                    binding.editTextFindPasswordInputCodeThree.requestFocus()
-                    codeBoxState[pos] = true
-                } else codeBoxState[pos] = false
-            }
-            2 -> {
-                if (box.text.length == 1) {
-                    binding.editTextFindPasswordInputCodeFour.requestFocus()
-                    codeBoxState[pos] = true
-                } else codeBoxState[pos] = false
-            }
-            3 -> codeBoxState[pos] = box.text.length == 1
-        }
-        findPasswordViewModel.codeBoxState.value = codeBoxState
-    }
-
-    private fun onClickCodeBoxLayout() {
-        binding.linearLayoutFindPasswordInputCodeLayout.setOnClickListener {
-            with(binding) {
-                editTextFindPasswordInputCodeOne.setText(null)
-                editTextFindPasswordInputCodeTwo.setText(null)
-                editTextFindPasswordInputCodeThree.setText(null)
-                editTextFindPasswordInputCodeFour.setText(null)
-                codeBoxState = mutableListOf(false, false, false, false)
-                findPasswordViewModel.codeBoxState.value = codeBoxState
-                editTextFindPasswordInputCodeOne.requestFocus()
-                imm.showSoftInput(editTextFindPasswordInputCodeOne, InputMethodManager.SHOW_FORCED)
+    private fun onClickButton() {
+        binding.buttonSendVerificationCode.setOnClickListener {
+            if (isSendVerificationCode) {
+                findPasswordViewModel.getAuthEmail(binding.editTextFindPasswordInputEmail.text.toString())
+            } else {
+                with(binding.editTextFindPasswordInputEmail.text.toString()) {
+                    if (RegexUtil.checkEmailFormat(this)) {
+                        findPasswordViewModel.getAuthEmail(this)
+                    } else {
+                        failEmailCheck(
+                            getString(R.string.not_correct_email_format_and_not_exist_account),
+                            binding.buttonSendVerificationCode,
+                            binding.editTextFindPasswordInputEmail
+                        )
+                    }
+                }
             }
         }
-    }
-
-    private fun onClickSuccessButton(){
         binding.buttonFindPasswordInputCode.setOnClickListener {
-            findPasswordViewModel.getCodeNumber(
-                binding.editTextFindPasswordInputCodeOne.text.toString(),
-                binding.editTextFindPasswordInputCodeTwo.text.toString(),
-                binding.editTextFindPasswordInputCodeThree.text.toString(),
-                binding.editTextFindPasswordInputCodeFour.text.toString()
-            )
             findPasswordViewModel.findPassword(
                 findPasswordViewModel.userAccount.value.toString(),
-                "jonotch1@naver.com",
-                findPasswordViewModel.codeNumber.value.toString()
+                binding.editTextFindPasswordInputEmail.text.toString(),
+                binding.editTextFindPasswordInputVerificationCode.text.toString()
             )
+        }
+    }
+
+    private fun failEmailCheck(msg: String, button: Button, editText: EditText) {
+        binding.textViewFindPasswordNotCorrectEmailFormatAndVerificationCode.text = msg
+        binding.layerFindPasswordWarningContentInInputCode.visibility = View.VISIBLE
+        button.isEnabled = false
+        editText.setBackgroundResource(R.drawable.shape_rect_eeeeee_solid_radius_100_stroke_ff7f23)
+    }
+
+    private fun successEmailCheck() {
+        binding.layerFindPasswordWarningContentInInputCode.visibility = View.INVISIBLE
+        binding.editTextFindPasswordInputEmail.setBackgroundResource(R.drawable.shape_rect_eeeeee_solid_radius_100_padding_7_11_11_8)
+        binding.editTextFindPasswordInputVerificationCode.requestFocus()
+        binding.buttonSendVerificationCode.text = getString(R.string.resend_verification_code)
+    }
+
+    private fun onToastReSendVerificationCode() {
+        if (isSendVerificationCode) {
+            binding.buttonSendVerificationCode.isEnabled = false
+            binding.editTextFindPasswordInputVerificationCode.setBackgroundResource(R.drawable.shape_rect_eeeeee_solid_radius_100_padding_7_11_11_8)
+            Toast.makeText(
+                context,
+                getString(R.string.resend_verification_code),
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
     private fun observeData() {
-        findPasswordViewModel.codeBoxState.observe(
-            viewLifecycleOwner,
-            Observer<MutableList<Boolean>> {
-                binding.buttonFindPasswordInputCode.isEnabled = !it.contains(false)
-            }
-        )
         findPasswordViewModel.userToken.observe(
             viewLifecycleOwner,
-            Observer<String?>{
-                if (it != null){
-                    findNavController().navigate(R.id.action_nav_find_password_input_code_to_nav_find_password_reset)
+            Observer<String?> {
+                if (it != null) {
+                    when (it) {
+                        ERROR_MSG_EMAIL -> {
+                            failEmailCheck(
+                                getString(R.string.not_correct_email_format_and_not_exist_account),
+                                binding.buttonSendVerificationCode,
+                                binding.editTextFindPasswordInputEmail
+                            )
+                            binding.editTextFindPasswordInputVerificationCode.setBackgroundResource(R.drawable.shape_rect_eeeeee_solid_radius_100_padding_7_11_11_8)
+                            binding.editTextFindPasswordInputVerificationCode.requestFocus()
+                        }
+                        ERROR_MSG_VERIFICATION_CODE -> {
+                            failEmailCheck(
+                                getString(R.string.not_correct_verification_code),
+                                binding.buttonFindPasswordInputCode,
+                                binding.editTextFindPasswordInputVerificationCode
+                            )
+                            binding.editTextFindPasswordInputEmail.setBackgroundResource(R.drawable.shape_rect_eeeeee_solid_radius_100_padding_7_11_11_8)
+                            binding.editTextFindPasswordInputEmail.requestFocus()
+                        }
+                        else -> {
+                            findNavController().navigate(R.id.action_nav_find_password_input_code_to_nav_find_password_reset)
+                        }
+                    }
                 } else {
-                    binding.buttonFindPasswordInputCode.isEnabled = false
-                    binding.layerFindPasswordWarningContentInInputCode.visibility = View.VISIBLE
+                    failEmailCheck(
+                        getString(R.string.not_correct_verification_code),
+                        binding.buttonFindPasswordInputCode,
+                        binding.editTextFindPasswordInputVerificationCode
+                    )
                 }
             }
         )
+        findPasswordViewModel.authEmailState.observe(
+            viewLifecycleOwner,
+            Observer<RespResult<Boolean>> {
+                if (it == RespResult.Success(true)) {
+                    onToastReSendVerificationCode()
+                    isSendVerificationCode = true
+                    successEmailCheck()
+                } else {
+                    if (it == RespResult.Error<ErrorType>(ErrorType(ERROR_MSG_38, CODE_38))) {
+                        binding.textViewFindPasswordNotCorrectEmailFormatAndVerificationCode.text =
+                            "잠시 후 시도해주세요."
+                        binding.layerFindPasswordWarningContentInInputCode.visibility = View.VISIBLE
+                    } else {
+                        failEmailCheck(
+                            getString(R.string.not_correct_email_format_and_not_exist_account),
+                            binding.buttonSendVerificationCode,
+                            binding.editTextFindPasswordInputEmail
+                        )
+                    }
+                }
+            }
+        )
+    }
+
+
+    companion object {
+        const val ERROR_MSG_EMAIL = "계정이 존재하지 않거나 이메일 형식이 올바르지 않습니다."
+        const val ERROR_MSG_VERIFICATION_CODE = "인증 번호가 올바르지 않습니다."
+        const val ERROR_MSG_38 = "이메일 전송 횟수가 초과되었습니다."
+        const val CODE_38 = 38
     }
 }
