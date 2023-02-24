@@ -24,24 +24,8 @@ class FindPasswordFragment():BaseFragment<FragmentFindPasswordBinding>() {
 
     override fun initEvent() {
         observeData()
-
-        with(binding.editTextFindPasswordToAccount){
-            addTextChangedListener {
-                binding.buttonFindPasswordSendToInputCode.isEnabled = this.text.isNotEmpty()
-            }
-        }
-
-        binding.buttonFindPasswordSendToInputCode.setOnClickListener {
-            findPasswordViewModel.isExistAccount(binding.editTextFindPasswordToAccount.text.toString())
-//            with(binding.editTextFindPasswordToAccount.text.toString()){
-//                if (RegexUtil.checkEmailFormat(this)){
-//                    findPasswordViewModel.getAuthEmail(this)
-//                } else {
-//                    failEmailCheck()
-//                }
-//            }
-
-        }
+        onEnabledButton()
+        onClickButton()
     }
 
     override fun subscribe() {}
@@ -51,35 +35,32 @@ class FindPasswordFragment():BaseFragment<FragmentFindPasswordBinding>() {
         binding.editTextFindPasswordToAccount.setText(null)
     }
 
+    private fun onEnabledButton(){
+        with(binding.editTextFindPasswordToAccount){
+            addTextChangedListener {
+                binding.buttonFindPasswordSendToInputCode.isEnabled = this.text.isNotEmpty()
+            }
+        }
+    }
+
+    private fun onClickButton(){
+        binding.buttonFindPasswordSendToInputCode.setOnClickListener {
+            findPasswordViewModel.isExistAccount(binding.editTextFindPasswordToAccount.text.toString())
+        }
+    }
+
     private fun observeData(){
         findPasswordViewModel.existAccount.observe(
             viewLifecycleOwner,
             Observer<RespResult<Boolean>>{
-                if (it == RespResult.Success(true)){
-                    binding.layerFindPasswordWarningContent.visibility = View.VISIBLE
-                }
-                else if (it == RespResult.Error<ErrorType>(ErrorType(ERROR_MESSAGE, CODE))){
+                if (it == RespResult.Error<ErrorType>(ErrorType(ERROR_MESSAGE, CODE))){
+                    findPasswordViewModel.userAccount.value = binding.editTextFindPasswordToAccount.text.toString()
                     findNavController().navigate(R.id.action_nav_find_password_to_nav_find_password_input_code)
+                } else {
+                    binding.layerFindPasswordWarningContent.visibility = View.VISIBLE
                 }
             }
         )
-    }
-//        findPasswordViewModel.authEmailState.observe(
-//            viewLifecycleOwner,
-//            Observer<RespResult<Boolean>>{
-//                if (it == RespResult.Success(true)){
-//                    findNavController().navigate(R.id.action_nav_find_password_to_nav_find_password_input_code)
-//                } else {
-//                    failEmailCheck()
-//                }
-//            }
-//        )
-//    }
-
-    private fun failEmailCheck(){
-        binding.layerFindPasswordWarningContent.visibility = View.VISIBLE
-        binding.buttonFindPasswordSendToInputCode.isEnabled = false
-        binding.editTextFindPasswordToAccount.setBackgroundResource(R.drawable.shape_rect_eeeeee_solid_radius_100_stroke_ff7f23)
     }
 
     companion object {
