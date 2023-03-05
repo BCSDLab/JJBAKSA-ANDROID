@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="selectedImage"
+            type="com.jjbaksa.jjbaksa.ui.gallery.Image" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        tools:ignore="ExtraText">
+
+        <ImageView
+            android:id="@+id/gallery_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@{selectedImage.isSelected ? @color/color_ff7f23 : @color/color_ffffff}"
+            android:paddingStart="3dp"
+            android:paddingTop="3dp"
+            android:paddingEnd="3dp"
+            android:paddingBottom="3dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/item_count_text_view"
+            select="@{selectedImage.index > 0}"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="14dp"
+            android:background="@drawable/shape_circ_stroke_ffffff"
+            android:text="@{selectedImage.index.toString()}"
+            android:textAlignment="center"
+            android:textColor="@color/color_ffffff"
+            android:textSize="11sp"
+            app:layout_constraintEnd_toEndOf="@id/gallery_view"
+            app:layout_constraintTop_toTopOf="@id/gallery_view" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
