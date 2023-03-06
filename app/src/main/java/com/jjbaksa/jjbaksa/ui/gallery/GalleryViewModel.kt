@@ -4,44 +4,43 @@ import android.view.View
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.jjbaksa.domain.model.Image
+import com.jjbaksa.domain.repository.ImageRepository
 import com.jjbaksa.jjbaksa.base.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class GalleryViewModel() : BaseViewModel() {
-
-    val selectedImage = ArrayList<Image>()
-
-    val selectedImageUri = ArrayList<String>()
-
+@HiltViewModel
+class GalleryViewModel @Inject constructor(
+    private val repository: ImageRepository,
+) : BaseViewModel() {
     val currentValue: LiveData<Int>
         get() = _currentValue
     private val _currentValue = MutableLiveData<Int>()
 
+    fun getAllPhotos() {
+        repository.getAllPhotos()
+    }
+
     fun selectImage(imageUri: String) {
-        if (!selectedImageUri.contains(imageUri)) {
-            selectedImageUri.add(imageUri)
-        } else {
-            selectedImageUri.remove(imageUri)
-        }
+        repository.selectImage(imageUri)
         refreshSelectList()
     }
 
     private fun refreshSelectList() {
-        for (data in selectedImage) {
-            data.index.value = 0
-            data.isSelected = false
-        }
+        _currentValue.value = repository.getSelectedImageUri().size
+    }
 
-        for (i in 0 until selectedImageUri.size) {
-            val path = selectedImageUri[i]
-            for (data in selectedImage) {
-                if (data.uri.value.equals(path)) {
-                    data.index.postValue(i + 1)
-                    data.isSelected = true
-                    continue
-                }
-            }
-        }
-        _currentValue.value = selectedImageUri.size
+    fun getSelectedImageUri(): ArrayList<String> {
+        return repository.getSelectedImageUri()
+    }
+
+    fun getUriArr(): ArrayList<String> {
+        return repository.getUriArr()
+    }
+
+    fun getSelectedImageList(): ArrayList<Image> {
+        return repository.getSelectedImageList()
     }
 }
 

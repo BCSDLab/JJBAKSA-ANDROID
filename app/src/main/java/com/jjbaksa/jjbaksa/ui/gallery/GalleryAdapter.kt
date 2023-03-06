@@ -8,28 +8,23 @@ import android.widget.LinearLayout
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.jjbaksa.domain.model.Image
 import com.jjbaksa.jjbaksa.databinding.ItemLayoutBinding
 
 class GalleryAdapter() : RecyclerView.Adapter<GalleryAdapter.ViewHolder>() {
     lateinit var imageList: ArrayList<Image>
     lateinit var uriArr: ArrayList<String>
     lateinit var context: Context
-    lateinit var galleryViewModel: GalleryViewModel
-    lateinit var lifecycleOwner: LifecycleOwner
     var itemClick: ItemClick? = null
 
     constructor(
         context: Context,
         imageList: ArrayList<Image>,
         uriArr: ArrayList<String>,
-        galleryViewModel: GalleryViewModel,
-        lifecycleOwner: LifecycleOwner,
     ) : this() {
         this.imageList = imageList
         this.uriArr = uriArr
         this.context = context
-        this.galleryViewModel = galleryViewModel
-        this.lifecycleOwner = lifecycleOwner
     }
 
     class ViewHolder(

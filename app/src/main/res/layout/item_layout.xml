@@ -6,7 +6,7 @@
     <data>
         <variable
             name="selectedImage"
-            type="com.jjbaksa.jjbaksa.ui.gallery.Image" />
+            type="com.jjbaksa.domain.model.Image" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -39,7 +39,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="14dp"
             android:background="@drawable/shape_circ_stroke_ffffff"
-            android:text="@{selectedImage.index.toString()}"
+            android:text="@{String.valueOf(selectedImage.index)}"
             android:textAlignment="center"
             android:textColor="@color/color_ffffff"
             android:textSize="11sp"
