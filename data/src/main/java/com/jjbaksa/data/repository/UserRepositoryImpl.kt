@@ -95,7 +95,10 @@ class UserRepositoryImpl @Inject constructor(
     }
 
     override suspend fun changeUserPassword(password: String): Boolean {
-        val result = userRemoteDataSource.changeUserPassword(password)
+        val result = userRemoteDataSource.changeUserPassword(
+            "Bearer " + userLocalDataSource.getAuthPasswordToken(),
+            password
+        )
         return result.isSuccessful && result.code() == 200
     }
 

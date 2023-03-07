@@ -48,7 +48,7 @@ class UserLocalDataSource @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun changeUserPassword(password: String): Response<UserResp> {
+    override suspend fun changeUserPassword(token:String, password: String): Response<UserResp> {
         TODO("Not yet implemented")
     }
 
@@ -109,6 +109,12 @@ class UserLocalDataSource @Inject constructor(
     override fun getAccessToken(): String {
         return runBlocking {
             dataStore.data.first()[PreferenceKeys.ACCESS_TOKEN] ?: ""
+        }
+    }
+
+    override fun getAuthPasswordToken(): String {
+        return runBlocking {
+            dataStore.data.first()[PreferenceKeys.AUTH_PASSWORD_TOKEN] ?: ""
         }
     }
 }

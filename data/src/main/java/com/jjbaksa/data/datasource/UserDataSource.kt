@@ -16,7 +16,7 @@ interface UserDataSource {
     suspend fun checkAuthEmail(email: String): Response<Unit>
     suspend fun findAccount(email: String, code: String): Response<FindIdResp>
     suspend fun findPassword(findPasswordReq: FindPasswordReq): Response<String>
-    suspend fun changeUserPassword(password: String): Response<UserResp>
+    suspend fun changeUserPassword(token:String, password: String): Response<UserResp>
     suspend fun saveAccessToken(accessToken: String)
     suspend fun saveAccount(account: String)
     suspend fun savePassword(password: String)
@@ -27,4 +27,5 @@ interface UserDataSource {
     fun getAcount(): String
     fun getPassword(): String
     fun getAccessToken(): String
+    fun getAuthPasswordToken(): String
 }

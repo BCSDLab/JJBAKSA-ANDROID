@@ -59,8 +59,7 @@ object NetworkModule {
          */
 
             runBlocking {
-//                val key = stringPreferencesKey("ACEESS_TOKEN")
-                val key = stringPreferencesKey("AUTH_PASSWORD_TOKEN")
+                val key = stringPreferencesKey("ACEESS_TOKEN")
                 val accessToken: String = context.userDataStore.data.first()[key] ?: ""
                 val newRequest: Request = chain.request().newBuilder()
                     .addHeader("Authorization", "Bearer $accessToken")
