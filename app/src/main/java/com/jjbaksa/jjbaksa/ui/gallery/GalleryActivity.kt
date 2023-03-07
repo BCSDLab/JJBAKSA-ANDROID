@@ -6,7 +6,6 @@ import android.os.Build
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.GridLayoutManager
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseActivity
@@ -64,24 +63,6 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>() {
             viewModel.selectImage(uriArr[it])
             galleryAdapter.notifyDataSetChanged()
         }
-    }
-
-    private fun permissionDialog(isDeniedOnce: Boolean) {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("권한이 필요합니다.")
-            .setMessage("ok 버튼을 눌러주세요.")
-            .setPositiveButton("ok") { _, _ ->
-                if (isDeniedOnce) {
-                    checkPermission()
-                } else {
-                    checkPermission()
-                }
-            }
-            .setNegativeButton("cancel") { dialog, _ ->
-                dialog.dismiss()
-                finish()
-            }
-        builder.show()
     }
 
     private fun checkPermission() {
