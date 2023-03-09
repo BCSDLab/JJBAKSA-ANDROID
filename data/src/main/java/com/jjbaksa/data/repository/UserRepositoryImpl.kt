@@ -11,6 +11,7 @@ import com.jjbaksa.domain.resp.user.LoginReq
 import com.jjbaksa.domain.resp.user.LoginResult
 import com.jjbaksa.domain.resp.user.SignUpReq
 import com.jjbaksa.domain.resp.user.SignUpResp
+import com.jjbaksa.domain.resp.user.FindPasswordReq
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
@@ -41,6 +42,7 @@ class UserRepositoryImpl @Inject constructor(
     ) {
 
         val response = userRemoteDataSource.postLogin(LoginReq(account, password))
+
         if (response != null) {
             if (response.isSuccessful) {
                 if (response.body()?.code == SUCCESS) {
@@ -77,6 +79,27 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun findAccount(email: String, code: String): String {
         val response = userRemoteDataSource.findAccount(email, code)
         return if (response.isSuccessful && response.code() == 200) response.body()?.account!!.toString() else ""
+    }
+
+    override suspend fun findPassword(account: String, email: String, code: String): String? {
+        val response = userRemoteDataSource.findPassword(FindPasswordReq(account, email, code))
+
+        return if (response.isSuccessful && response.body() != null) {
+            userLocalDataSource.saveAuthPasswordToken(response.body().toString())
+            response.body().toString()
+        } else {
+            var errorBodyJson = "${response.errorBody()!!.string()}"
+            val errorBody = RespMapper.errorMapper(errorBodyJson)
+            errorBody.errorMessage
+        }
+    }
+
+    override suspend fun changeUserPassword(password: String): Boolean {
+        val result = userRemoteDataSource.changeUserPassword(
+            "Bearer " + userLocalDataSource.getAuthPasswordToken(),
+            password
+        )
+        return result.isSuccessful && result.code() == 200
     }
 
     override suspend fun me() {

@@ -106,6 +106,7 @@ dependencies {
         implementation(gson)
         implementation(retrofit2)
         implementation(retrofit2Converter)
+        implementation(retrofit2ScalarConverter)
         implementation(roomRuntime)
         implementation(roomKtx)
         annotationProcessor(roomCompiler)

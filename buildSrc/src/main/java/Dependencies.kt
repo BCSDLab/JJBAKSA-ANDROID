@@ -46,6 +46,8 @@ object ThirdPartyDependencies {
     const val retrofit2 = "com.squareup.retrofit2:retrofit:${Versions.retrofit2Version}"
     const val retrofit2Converter =
         "com.squareup.retrofit2:converter-gson:${Versions.retrofit2Version}"
+    const val retrofit2ScalarConverter =
+        "com.squareup.retrofit2:converter-scalars:${Versions.retrofit2Version}"
     const val timber = "com.jakewharton.timber:timber:${Versions.timberVersion}"
     const val roomRuntime =  "androidx.room:room-runtime:${Versions.roomVersion}"
     const val roomKtx = "androidx.room:room-ktx:${Versions.roomVersion}"

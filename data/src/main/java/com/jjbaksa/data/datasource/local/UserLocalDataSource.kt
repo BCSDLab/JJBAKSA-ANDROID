@@ -8,6 +8,8 @@ import com.jjbaksa.data.database.userDataStore
 import com.jjbaksa.data.datasource.UserDataSource
 import com.jjbaksa.data.model.findid.FindIdResp
 import com.jjbaksa.data.model.user.LoginResp
+import com.jjbaksa.data.model.user.UserResp
+import com.jjbaksa.domain.resp.user.FindPasswordReq
 import com.jjbaksa.domain.resp.user.LoginReq
 import com.jjbaksa.domain.resp.user.SignUpReq
 import com.jjbaksa.domain.resp.user.SignUpResp
@@ -42,6 +44,14 @@ class UserLocalDataSource @Inject constructor(
         TODO("Not yet implemented")
     }
 
+    override suspend fun findPassword(findPasswordReq: FindPasswordReq): Response<String> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun changeUserPassword(token: String, password: String): Response<UserResp> {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun saveAccessToken(accessToken: String) {
         dataStore.edit {
             it[PreferenceKeys.ACCESS_TOKEN] = accessToken
@@ -72,6 +82,12 @@ class UserLocalDataSource @Inject constructor(
         }
     }
 
+    override suspend fun saveAuthPasswordToken(passwordToken: String) {
+        dataStore.edit {
+            it[PreferenceKeys.AUTH_PASSWORD_TOKEN] = passwordToken
+        }
+    }
+
     override fun getAutoLoginFlag(): Boolean {
         return runBlocking {
             dataStore.data.first()[PreferenceKeys.AUTO_LOGIN] ?: false
@@ -93,6 +109,12 @@ class UserLocalDataSource @Inject constructor(
     override fun getAccessToken(): String {
         return runBlocking {
             dataStore.data.first()[PreferenceKeys.ACCESS_TOKEN] ?: ""
+        }
+    }
+
+    override fun getAuthPasswordToken(): String {
+        return runBlocking {
+            dataStore.data.first()[PreferenceKeys.AUTH_PASSWORD_TOKEN] ?: ""
         }
     }
 }
