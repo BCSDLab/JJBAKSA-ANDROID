@@ -2,6 +2,7 @@ package com.jjbaksa.jjbaksa.ui.gallery
 
 import android.Manifest
 import android.content.Intent
+import android.graphics.Color
 import android.os.Build
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -58,7 +59,6 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>() {
             recyclerView.layoutManager = GridLayoutManager(this@GalleryActivity, 3)
             recyclerView.adapter = galleryAdapter
         }
-
         galleryAdapter.setOnClickListener {
             viewModel.selectImage(uriArr[it])
             galleryAdapter.notifyDataSetChanged()
@@ -83,6 +83,13 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>() {
     }
 
     override fun subscribe() {
+        viewModel.currentValue.observe(this) {
+            if (it >= 10) {
+                binding.textViewSelectedPictureCount.setTextColor(Color.parseColor("#c4c4c4"))
+            } else {
+                binding.textViewSelectedPictureCount.setTextColor(Color.parseColor("#ff7f23"))
+            }
+        }
     }
 
     override fun initEvent() {

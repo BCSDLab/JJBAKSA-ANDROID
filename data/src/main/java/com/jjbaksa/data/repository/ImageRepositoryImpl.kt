@@ -9,7 +9,7 @@ import com.jjbaksa.domain.repository.ImageRepository
 import javax.inject.Inject
 
 class ImageRepositoryImpl @Inject constructor(
-    private val contentResolver: ContentResolver
+    private val contentResolver: ContentResolver,
 ) : ImageRepository {
 
     private val selectedImage = ArrayList<Image>()
@@ -37,14 +37,16 @@ class ImageRepositoryImpl @Inject constructor(
             cursor.close()
         }
         for (uri in uriArr) {
-            selectedImage.add(Image(uri,0,false))
-            imageList.add(Image(uri,0,false))
+            selectedImage.add(Image(uri, 0, false))
+            imageList.add(Image(uri, 0, false))
         }
     }
 
     override fun selectImage(imageUri: String) {
         if (!selectedImageUri.contains(imageUri)) {
-            selectedImageUri.add(imageUri)
+            if (getSelectedImageUri().size + 1 <= 10) {
+                selectedImageUri.add(imageUri)
+            }
         } else {
             selectedImageUri.remove(imageUri)
         }
@@ -59,11 +61,13 @@ class ImageRepositoryImpl @Inject constructor(
 
         for (i in 0 until selectedImageUri.size) {
             val path = selectedImageUri[i]
-            for (data in selectedImage) {
-                if (data.uri.equals(path)) {
-                    data.index = i + 1
-                    data.isSelected = true
-                    continue
+            if (getSelectedImageUri().size <= 10) {
+                for (data in selectedImage) {
+                    if (data.uri.equals(path)) {
+                        data.index = i + 1
+                        data.isSelected = true
+                        continue
+                    }
                 }
             }
         }
