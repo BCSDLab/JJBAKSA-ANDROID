@@ -22,11 +22,13 @@ class ImageRepositoryImpl @Inject constructor(
     private val uriArr = ArrayList<String>()
 
     override fun getAllPhotos() {
-        val cursor = contentResolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+        val cursor = contentResolver.query(
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
             null,
             null,
             null,
-            MediaStore.Images.ImageColumns.DATE_TAKEN + " DESC")
+            MediaStore.Images.ImageColumns.DATE_TAKEN + " DESC"
+        )
         val imageList = ArrayList<Image>()
         if (cursor != null) {
             while (cursor.moveToNext()) {
