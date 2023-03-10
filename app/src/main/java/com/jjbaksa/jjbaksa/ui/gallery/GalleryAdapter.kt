@@ -36,7 +36,6 @@ class GalleryAdapter() : RecyclerView.Adapter<GalleryAdapter.ViewHolder>() {
         fun bind(image: Image) {
             binding.selectedImage = image
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -53,11 +52,9 @@ class GalleryAdapter() : RecyclerView.Adapter<GalleryAdapter.ViewHolder>() {
             .load(uriArr[position])
             .into(holder.galleryView)
 
-
         holder.galleryView.setOnClickListener {
             itemClick?.onClick(it, position)
         }
-
 
         holder.bind(imageList[position])
     }
@@ -77,6 +74,4 @@ class GalleryAdapter() : RecyclerView.Adapter<GalleryAdapter.ViewHolder>() {
             }
         }
     }
-
-
 }
