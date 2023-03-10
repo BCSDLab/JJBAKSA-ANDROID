@@ -44,8 +44,8 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>() {
 
     private fun sendImageData() {
         val intent = Intent()
-        intent.putStringArrayListExtra("images",viewModel.getSelectedImageUri())
-        setResult(RESULT_OK,intent)
+        intent.putStringArrayListExtra("images", viewModel.getSelectedImageUri())
+        setResult(RESULT_OK, intent)
         finish()
     }
 
@@ -54,7 +54,7 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>() {
 
         val uriArr = viewModel.getUriArr()
         val selectedImage = viewModel.getSelectedImageList()
-        val galleryAdapter = GalleryAdapter(this,selectedImage,uriArr)
+        val galleryAdapter = GalleryAdapter(this, selectedImage, uriArr)
         with(binding) {
             recyclerView.layoutManager = GridLayoutManager(this@GalleryActivity, 3)
             recyclerView.adapter = galleryAdapter
@@ -68,7 +68,8 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>() {
     private fun checkPermission() {
         val permissionList = arrayOf(
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.READ_EXTERNAL_STORAGE)
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        )
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             requestPermission.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
         } else {
@@ -97,7 +98,7 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>() {
             textViewSendSelectedImage.setOnClickListener {
                 sendImageData()
             }
-            imageButtonPreviousArrow.setOnClickListener{
+            imageButtonPreviousArrow.setOnClickListener {
                 finish()
             }
         }
