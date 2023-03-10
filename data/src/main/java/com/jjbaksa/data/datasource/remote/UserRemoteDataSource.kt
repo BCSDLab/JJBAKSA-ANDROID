@@ -6,6 +6,7 @@ import com.jjbaksa.data.datasource.UserDataSource
 import com.jjbaksa.data.model.findid.FindIdResp
 import com.jjbaksa.data.model.user.LoginResp
 import com.jjbaksa.data.model.user.UserResp
+import com.jjbaksa.domain.resp.user.FindPasswordReq
 import com.jjbaksa.domain.resp.user.LoginReq
 import com.jjbaksa.domain.resp.user.SignUpReq
 import com.jjbaksa.domain.resp.user.SignUpResp
@@ -29,11 +30,19 @@ class UserRemoteDataSource @Inject constructor(
     }
 
     override suspend fun checkAuthEmail(email: String): Response<Unit> {
-        return noAuthApi.getFindIdCodeNumber(email)
+        return noAuthApi.getEmailCodeNumber(email)
     }
 
     override suspend fun findAccount(email: String, code: String): Response<FindIdResp> {
         return noAuthApi.findId(email, code)
+    }
+
+    override suspend fun findPassword(findPasswordReq: FindPasswordReq): Response<String> {
+        return noAuthApi.findPassword(findPasswordReq)
+    }
+
+    override suspend fun changeUserPassword(token: String, password: String): Response<UserResp> {
+        return noAuthApi.changePassword(token, password)
     }
 
     override suspend fun saveAccessToken(accessToken: String) {
@@ -49,6 +58,9 @@ class UserRemoteDataSource @Inject constructor(
     }
 
     override suspend fun saveAutoLogin(isAutoLogin: Boolean) {
+    }
+
+    override suspend fun saveAuthPasswordToken(passwordToken: String) {
     }
 
     suspend fun me(): Response<UserResp> {
@@ -68,6 +80,9 @@ class UserRemoteDataSource @Inject constructor(
     }
 
     override fun getAccessToken(): String {
+        return ""
+    }
+    override fun getAuthPasswordToken(): String {
         return ""
     }
 }
