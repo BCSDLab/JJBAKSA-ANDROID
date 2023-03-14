@@ -15,15 +15,18 @@ class GalleryAdapter() : RecyclerView.Adapter<GalleryAdapter.ViewHolder>() {
     lateinit var uriArr: ArrayList<String>
     lateinit var context: Context
     var itemClick: ItemClick? = null
+    var maxNum: Int = 10
 
     constructor(
         context: Context,
         imageList: ArrayList<Image>,
         uriArr: ArrayList<String>,
+        maxNum: Int
     ) : this() {
         this.imageList = imageList
         this.uriArr = uriArr
         this.context = context
+        this.maxNum = maxNum
     }
 
     class ViewHolder(
@@ -68,9 +71,27 @@ class GalleryAdapter() : RecyclerView.Adapter<GalleryAdapter.ViewHolder>() {
     }
 
     inline fun setOnClickListener(crossinline galleryView: (Int) -> Unit) {
+        var count = 0
+        val arrayList = ArrayList<Int>()
         this.itemClick = object : ItemClick {
             override fun onClick(view: View, position: Int) {
-                galleryView(position)
+                if (count < maxNum) {
+                    if(!arrayList.contains(position)) {
+                        arrayList.add(position)
+                        count++
+                        galleryView(position)
+                    } else {
+                        arrayList.remove(position)
+                        count--
+                        galleryView(position)
+                    }
+                } else {
+                    if (arrayList.contains(position)) {
+                        arrayList.remove(position)
+                        count--
+                        galleryView(position)
+                    }
+                }
             }
         }
     }

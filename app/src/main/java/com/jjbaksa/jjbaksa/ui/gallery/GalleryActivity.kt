@@ -18,6 +18,7 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>() {
     override val layoutId: Int
         get() = R.layout.activity_gallery
     val viewModel: GalleryViewModel by viewModels()
+    var maxNum = 10
     private val requestPermission =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             when (isGranted) {
@@ -54,7 +55,7 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>() {
 
         val uriArr = viewModel.getUriArr()
         val selectedImage = viewModel.getSelectedImageList()
-        val galleryAdapter = GalleryAdapter(this, selectedImage, uriArr)
+        val galleryAdapter = GalleryAdapter(this, selectedImage, uriArr,maxNum)
         with(binding) {
             recyclerView.layoutManager = GridLayoutManager(this@GalleryActivity, 3)
             recyclerView.adapter = galleryAdapter
@@ -81,11 +82,12 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>() {
         checkPermission()
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
+        getIntentData()
     }
 
     override fun subscribe() {
         viewModel.currentValue.observe(this) {
-            if (it >= 10) {
+            if (it >= maxNum) {
                 binding.textViewSelectedPictureCount.setTextColor(Color.parseColor("#c4c4c4"))
             } else {
                 binding.textViewSelectedPictureCount.setTextColor(Color.parseColor("#ff7f23"))
@@ -101,6 +103,12 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>() {
             imageButtonPreviousArrow.setOnClickListener {
                 finish()
             }
+        }
+    }
+
+    fun getIntentData() {
+        if (intent.hasExtra("limit")) {
+            maxNum = intent.getIntExtra("limit", 10)
         }
     }
 }
