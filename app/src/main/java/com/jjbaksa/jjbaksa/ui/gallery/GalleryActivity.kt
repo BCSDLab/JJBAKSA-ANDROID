@@ -55,7 +55,7 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>() {
 
         val uriArr = viewModel.getUriArr()
         val selectedImage = viewModel.getSelectedImageList()
-        val galleryAdapter = GalleryAdapter(this, selectedImage, uriArr,maxNum)
+        val galleryAdapter = GalleryAdapter(this, selectedImage, uriArr, maxNum)
         with(binding) {
             recyclerView.layoutManager = GridLayoutManager(this@GalleryActivity, 3)
             recyclerView.adapter = galleryAdapter

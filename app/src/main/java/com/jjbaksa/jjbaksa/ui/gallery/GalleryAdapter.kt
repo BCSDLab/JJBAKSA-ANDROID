@@ -76,7 +76,7 @@ class GalleryAdapter() : RecyclerView.Adapter<GalleryAdapter.ViewHolder>() {
         this.itemClick = object : ItemClick {
             override fun onClick(view: View, position: Int) {
                 if (count < maxNum) {
-                    if(!arrayList.contains(position)) {
+                    if (!arrayList.contains(position)) {
                         arrayList.add(position)
                         count++
                         galleryView(position)
