@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="61dp"
+            android:layout_marginTop="36dp"
             android:background="@drawable/ic_button_arrow"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="111dp"
-            android:layout_marginTop="58dp"
+            android:layout_marginTop="33dp"
             android:text="@string/recent_item_gallery"
             app:layout_constraintStart_toEndOf="@+id/image_button_previous_arrow"
             app:layout_constraintTop_toTopOf="parent" />
@@ -41,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="7dp"
-            android:layout_marginTop="65dp"
+            android:layout_marginTop="40dp"
             android:background="@drawable/ic_button_bottom_arrow"
             app:layout_constraintStart_toEndOf="@+id/text_view_recent_item"
             app:layout_constraintTop_toTopOf="parent" />
@@ -51,7 +51,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginStart="80dp"
-            android:layout_marginTop="56dp"
+            android:layout_marginTop="31dp"
             android:gravity="center|right"
             android:text="@{String.valueOf(viewmodel.currentValue)}"
             android:textColor="@color/color_ff7f23"
@@ -65,17 +65,16 @@
             android:layout_width="28dp"
             android:layout_height="20dp"
             android:layout_marginStart="6dp"
-            android:layout_marginTop="58dp"
+            android:layout_marginTop="33dp"
             android:text="@string/gallery_complete"
             app:layout_constraintStart_toEndOf="@+id/text_view_selected_picture_count"
             app:layout_constraintTop_toTopOf="parent" />
-
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="117dp"
+            android:layout_marginTop="92dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
