@@ -2,8 +2,6 @@ package com.jjbaksa.data.repository
 
 import android.content.ContentResolver
 import android.provider.MediaStore
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.jjbaksa.domain.model.Image
 import com.jjbaksa.domain.repository.ImageRepository
 import javax.inject.Inject
@@ -14,11 +12,6 @@ class ImageRepositoryImpl @Inject constructor(
 
     private val selectedImage = ArrayList<Image>()
     private val selectedImageUri = ArrayList<String>()
-
-    val currentValue: LiveData<Int>
-        get() = _currentValue
-    private val _currentValue = MutableLiveData<Int>()
-
     private val uriArr = ArrayList<String>()
 
     override fun getAllPhotos() {
@@ -46,9 +39,7 @@ class ImageRepositoryImpl @Inject constructor(
 
     override fun selectImage(imageUri: String) {
         if (!selectedImageUri.contains(imageUri)) {
-            if (getSelectedImageUri().size + 1 <= 10) {
-                selectedImageUri.add(imageUri)
-            }
+            selectedImageUri.add(imageUri)
         } else {
             selectedImageUri.remove(imageUri)
         }
@@ -63,17 +54,14 @@ class ImageRepositoryImpl @Inject constructor(
 
         for (i in 0 until selectedImageUri.size) {
             val path = selectedImageUri[i]
-            if (getSelectedImageUri().size <= 10) {
-                for (data in selectedImage) {
-                    if (data.uri.equals(path)) {
-                        data.index = i + 1
-                        data.isSelected = true
-                        continue
-                    }
+            for (data in selectedImage) {
+                if (data.uri.equals(path)) {
+                    data.index = i + 1
+                    data.isSelected = true
+                    continue
                 }
             }
         }
-        _currentValue.value = selectedImageUri.size
     }
 
     override fun getSelectedImageUri(): ArrayList<String> {
