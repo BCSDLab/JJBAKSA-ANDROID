@@ -7,7 +7,7 @@
 
         <variable
             name="viewmodel"
-            type="com.jjbaksa.jjbaksa.ui.gallery.GalleryViewModel" />
+            type="com.example.imageselector.gallery.GalleryViewModel" />
 
     </data>
 

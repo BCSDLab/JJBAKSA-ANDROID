@@ -22,3 +22,4 @@ rootProject.name = "JJBAKSA"
 include(":app")
 include(":data")
 include(":domain")
+include(":imageselector")

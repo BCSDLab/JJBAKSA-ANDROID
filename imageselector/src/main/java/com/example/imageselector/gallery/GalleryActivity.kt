@@ -1,4 +1,4 @@
-package com.jjbaksa.jjbaksa.ui.gallery
+package com.example.imageselector.gallery
 
 import android.Manifest
 import android.content.Intent
@@ -8,9 +8,9 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
-import com.jjbaksa.jjbaksa.R
-import com.jjbaksa.jjbaksa.base.BaseActivity
-import com.jjbaksa.jjbaksa.databinding.ActivityGalleryBinding
+import com.example.imageselector.R
+import com.example.imageselector.base.BaseActivity
+import com.example.imageselector.databinding.ActivityGalleryBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

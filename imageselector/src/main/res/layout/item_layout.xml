@@ -6,7 +6,7 @@
     <data>
         <variable
             name="selectedImage"
-            type="com.jjbaksa.domain.model.Image" />
+            type="com.example.imageselector.model.Image" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

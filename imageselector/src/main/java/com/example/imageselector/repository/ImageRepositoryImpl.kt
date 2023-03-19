@@ -1,9 +1,8 @@
-package com.jjbaksa.data.repository
+package com.example.imageselector.repository
 
 import android.content.ContentResolver
 import android.provider.MediaStore
-import com.jjbaksa.domain.model.Image
-import com.jjbaksa.domain.repository.ImageRepository
+import com.example.imageselector.model.Image
 import javax.inject.Inject
 
 class ImageRepositoryImpl @Inject constructor(

@@ -6,11 +6,11 @@ import com.jjbaksa.data.datasource.local.HomeLocalDataSource
 import com.jjbaksa.data.datasource.local.UserLocalDataSource
 import com.jjbaksa.data.datasource.remote.HomeRemoteDataSource
 import com.jjbaksa.data.datasource.remote.UserRemoteDataSource
-import com.jjbaksa.data.repository.ImageRepositoryImpl
+import com.example.imageselector.repository.ImageRepositoryImpl
 import com.jjbaksa.data.repository.HomeRepositoryImpl
 import com.jjbaksa.domain.repository.UserRepository
 import com.jjbaksa.data.repository.UserRepositoryImpl
-import com.jjbaksa.domain.repository.ImageRepository
+import com.example.imageselector.repository.ImageRepository
 import com.jjbaksa.domain.repository.HomeRepository
 import dagger.Module
 import dagger.Provides

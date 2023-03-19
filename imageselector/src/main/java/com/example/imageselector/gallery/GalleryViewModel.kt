@@ -1,19 +1,19 @@
-package com.jjbaksa.jjbaksa.ui.gallery
+package com.example.imageselector.gallery
 
 import android.view.View
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.jjbaksa.domain.model.Image
-import com.jjbaksa.domain.repository.ImageRepository
-import com.jjbaksa.jjbaksa.base.BaseViewModel
+import androidx.lifecycle.ViewModel
+import com.example.imageselector.model.Image
+import com.example.imageselector.repository.ImageRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class GalleryViewModel @Inject constructor(
     private val repository: ImageRepository,
-) : BaseViewModel() {
+) : ViewModel() {
     val currentValue: LiveData<Int>
         get() = _currentValue
     private val _currentValue = MutableLiveData<Int>()

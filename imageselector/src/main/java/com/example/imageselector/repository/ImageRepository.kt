@@ -1,6 +1,6 @@
-package com.jjbaksa.domain.repository
+package com.example.imageselector.repository
 
-import com.jjbaksa.domain.model.Image
+import com.example.imageselector.model.Image
 
 interface ImageRepository {
     fun getAllPhotos()

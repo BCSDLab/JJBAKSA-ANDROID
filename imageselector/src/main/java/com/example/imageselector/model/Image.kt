@@ -1,4 +1,4 @@
-package com.jjbaksa.domain.model
+package com.example.imageselector.model
 
 data class Image(
     val uri: String,

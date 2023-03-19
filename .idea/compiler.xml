@@ -11,6 +11,7 @@
       <module name="JJBAKSA-AOS.data" target="11" />
       <module name="JJBAKSA.app" target="11" />
       <module name="JJBAKSA.data" target="11" />
+      <module name="JJBAKSA.imageselector" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>

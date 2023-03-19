@@ -1,4 +1,4 @@
-package com.jjbaksa.jjbaksa.ui.gallery
+package com.example.imageselector.gallery
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.jjbaksa.domain.model.Image
-import com.jjbaksa.jjbaksa.databinding.ItemLayoutBinding
+import com.example.imageselector.model.Image
+import com.example.imageselector.databinding.ItemLayoutBinding
 
 class GalleryAdapter() : RecyclerView.Adapter<GalleryAdapter.ViewHolder>() {
     lateinit var imageList: ArrayList<Image>
