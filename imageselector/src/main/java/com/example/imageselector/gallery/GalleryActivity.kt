@@ -19,6 +19,12 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>() {
         get() = R.layout.activity_gallery
     val viewModel: GalleryViewModel by viewModels()
     var maxNum = 10
+    private val galleryAdapter: GalleryAdapter by lazy {
+        GalleryAdapter(this, viewModel.getSelectedImageList(), viewModel.getUriArr(), maxNum) {
+            viewModel.selectImage(viewModel.getUriArr()[it])
+            galleryAdapter.notifyDataSetChanged()
+        }
+    }
     private val requestPermission =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             when (isGranted) {
@@ -52,17 +58,9 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>() {
 
     private fun getAllPhotos() {
         viewModel.getAllPhotos()
-
-        val uriArr = viewModel.getUriArr()
-        val selectedImage = viewModel.getSelectedImageList()
-        val galleryAdapter = GalleryAdapter(this, selectedImage, uriArr, maxNum)
         with(binding) {
             recyclerView.layoutManager = GridLayoutManager(this@GalleryActivity, 3)
             recyclerView.adapter = galleryAdapter
-        }
-        galleryAdapter.setOnClickListener {
-            viewModel.selectImage(uriArr[it])
-            galleryAdapter.notifyDataSetChanged()
         }
     }
 
