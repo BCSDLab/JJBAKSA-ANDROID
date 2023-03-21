@@ -51,7 +51,9 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>() {
 
     private fun sendImageData() {
         val intent = Intent()
-        intent.putStringArrayListExtra("images", viewModel.getSelectedImageUri())
+        val list = ArrayList<String>()
+        list.addAll(viewModel.getSelectedImageUri())
+        intent.putStringArrayListExtra("images", list)
         setResult(RESULT_OK, intent)
         finish()
     }
