@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.example.imageselector.gallery.GalleryViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".util.GalleryActivity">
+
+        <ImageButton
+            android:id="@+id/image_button_previous_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="36dp"
+            android:background="@drawable/ic_button_arrow"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_view_recent_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="111dp"
+            android:layout_marginTop="33dp"
+            android:text="@string/recent_item_gallery"
+            app:layout_constraintStart_toEndOf="@+id/image_button_previous_arrow"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/image_button_sort_picture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="7dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/ic_button_bottom_arrow"
+            app:layout_constraintStart_toEndOf="@+id/text_view_recent_item"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_view_selected_picture_count"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="80dp"
+            android:layout_marginTop="31dp"
+            android:gravity="center|right"
+            android:text="@{String.valueOf(viewmodel.currentValue)}"
+            android:textColor="@color/color_ff7f23"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@+id/image_button_sort_picture"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="3" />
+
+        <TextView
+            android:id="@+id/text_view_send_selected_image"
+            android:layout_width="28dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="33dp"
+            android:text="@string/gallery_complete"
+            app:layout_constraintStart_toEndOf="@+id/text_view_selected_picture_count"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="92dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/item_layout" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

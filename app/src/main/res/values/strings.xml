@@ -68,6 +68,11 @@
     <string name="menu_title_home">홈</string>
     <string name="menu_title_write">글쓰기</string>
     <string name="menu_title_my_page">마이페이지</string>
+    <string name="floating_action_button_text_bookmark">북마크 음식점</string>
+    <string name="floating_action_button_text_find_friend_store">친구 음식점 찾기</string>
+    <string name="floating_action_button_text_find_near_store">가까운 음식점 찾기</string>
+    <string name="recent_item_gallery">최근 항목</string>
+    <string name="gallery_complete">완료</string>
     <string name="bookmark_restaurant">북마크 음식점</string>
     <string name="friend_restaurant">친구 음식점</string>
     <string name="nearby_restaurant">가까운 음식점</string>
