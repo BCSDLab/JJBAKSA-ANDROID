@@ -28,5 +28,10 @@
         <item name="shapeAppearance">@style/ShapeAppearance.App.SmallComponent</item>
     </style>
 
+    <style name="SocialLoginAppBarStyle">
+        <item name="android:background">@color/white</item>
+        <item name="titleTextColor">@color/black</item>
+        <item name="subtitleTextColor">@color/material_on_primary_emphasis_medium</item>
+    </style>
 
 </resources>

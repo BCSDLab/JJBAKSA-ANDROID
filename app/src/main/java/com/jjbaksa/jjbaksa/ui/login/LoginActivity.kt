@@ -1,6 +1,8 @@
 package com.jjbaksa.jjbaksa.ui.login
 
 import android.content.Intent
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
@@ -16,6 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class LoginActivity : BaseActivity<ActivityLoginBinding>() {
+    private var isVisiblePasswordIcon = true
     override val layoutId: Int
         get() = R.layout.activity_login
     val viewModel: LoginViewModel by viewModels()
@@ -34,6 +37,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                     } else {
                         if (it.erroMessage.isNotEmpty()) {
                             showToast(it.erroMessage)
+                            setEditTextErrorUI()
                         }
                     }
                 }
@@ -45,7 +49,17 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     }
 
+    private fun setEditTextErrorUI() {
+        with(binding) {
+            editTextId.background =
+                getDrawable(R.drawable.shape_rect_eeeeee_solid_radius_100_stroke_ff7f23)
+            editTextPassword.background =
+                getDrawable(R.drawable.shape_rect_eeeeee_solid_radius_100_stroke_ff7f23)
+        }
+    }
+
     override fun initEvent() {
+        setVisiblePassword()
         with(binding) {
             buttonSocialLogin.setOnClickListener {
                 goToSocialLoginActivity()
@@ -63,11 +77,37 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                 viewModel.login()
             }
             editTextId.addTextChangedListener {
+                editTextId.background = getDrawable(R.drawable.shape_rect_eeeeee_solid_radius_100)
                 buttonLogin.isSelected =
                     it.toString().isNotEmpty() && editTextPassword.text.toString().isNotEmpty()
             }
             editTextPassword.addTextChangedListener {
-                buttonLogin.isSelected = it.toString().isNotEmpty() && editTextId.text.toString().isNotEmpty()
+                editTextPassword.background =
+                    getDrawable(R.drawable.shape_rect_eeeeee_solid_radius_100)
+                buttonLogin.isSelected =
+                    it.toString().isNotEmpty() && editTextId.text.toString().isNotEmpty()
+            }
+        }
+    }
+
+    private fun setVisiblePassword() {
+        binding.imageViewVisiblePassword.setImageDrawable(getDrawable(R.drawable.sel_jj_edit_text_password_show_unchecked))
+        binding.imageViewVisiblePassword.apply {
+            setOnClickListener {
+                isVisiblePasswordIcon = !isVisiblePasswordIcon
+                if (isVisiblePasswordIcon) {
+                    setImageDrawable(getDrawable(R.drawable.sel_jj_edit_text_password_show_unchecked))
+                    binding.editTextPassword.apply {
+                        transformationMethod = PasswordTransformationMethod.getInstance()
+                        setSelection(this.length())
+                    }
+                } else {
+                    setImageDrawable(getDrawable(R.drawable.sel_jj_edit_text_password_show_checked))
+                    binding.editTextPassword.apply {
+                        transformationMethod = HideReturnsTransformationMethod.getInstance()
+                        setSelection(this.length())
+                    }
+                }
             }
         }
     }
@@ -79,12 +119,15 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     fun goToSignUpActivity() {
         Intent(this, SignUpActivity::class.java).also { startActivity(it) }
     }
+
     fun goToFindIdActivity() {
         Intent(this, FindIdActivity::class.java).also { startActivity(it) }
     }
+
     fun goToFindPasswordActivity() {
         Intent(this, FindPasswordActivity::class.java).also { startActivity(it) }
     }
+
     fun goToMainActivity() {
         Intent(this, MainPageActivity::class.java).also { startActivity(it) }
     }

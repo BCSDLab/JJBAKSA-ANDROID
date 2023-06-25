@@ -9,7 +9,11 @@
     <string name="sign_up">회원가입</string>
     <string name="find_id">아이디 찾기</string>
     <string name="find_password">비밀번호 찾기</string>
+    <string name="underline_sign_up"><u>회원가입</u></string>
+    <string name="underline_find_id"><u>아이디 찾기</u></string>
+    <string name="underline_find_password"><u>비밀번호 찾기</u></string>
     <string name="kakao_login">카카오 로그인</string>
+    <string name="social_login_app_bar_title">소셜 로그인</string>
     <string name="social_login_title">소셜 계정으로 로그인</string>
     <string name="google_login">구글 로그인</string>
     <string name="naver_login">네이버 로그인</string>

@@ -3,24 +3,43 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.social.SocialLoginActivity">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/text_view_social_login_app_name"
-            android:layout_width="219dp"
-            android:layout_height="25dp"
-            android:layout_marginTop="144dp"
-            android:text="@string/social_login_title"
-            android:textAlignment="center"
-            android:textColor="@color/color_000000"
-            android:textSize="18sp"
-            android:textStyle="bold"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/topAppBarLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:elevation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:liftOnScroll="true">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/topAppBar"
+                style="@style/SocialLoginAppBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:navigationIcon="@drawable/ic_back"
+                app:title="@string/social_login_app_bar_title"
+                app:titleTextColor="@color/black" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <ImageView
+            android:id="@+id/image_view_login_logo"
+            android:layout_width="133dp"
+            android:layout_height="31dp"
+            android:src="@drawable/jj_login_logo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/topAppBarLayout"
+            app:layout_constraintVertical_bias="0.05" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_google_login"
@@ -30,7 +49,6 @@
             android:background="@drawable/shape_rect_c4c4c4_solid_ffffff_stroke_radius_24_google_login_box"
             android:drawableLeft="@drawable/layerlist_logo_google"
             android:drawablePadding="47dp"
-            android:outlineProvider="none"
             android:paddingLeft="16dp"
             android:text="@string/google_login"
             android:textAlignment="textStart"
@@ -47,7 +65,6 @@
             android:background="@drawable/shape_rect_03c75a_solid_radius_24_naver_login_box"
             android:drawableLeft="@drawable/layerlist_logo_naver"
             android:drawablePadding="42.88dp"
-            android:outlineProvider="none"
             android:paddingLeft="18dp"
             android:text="@string/naver_login"
             android:textAlignment="textStart"
