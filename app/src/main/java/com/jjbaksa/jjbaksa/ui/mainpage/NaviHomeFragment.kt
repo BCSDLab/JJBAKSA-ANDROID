@@ -7,15 +7,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.jjbaksa.domain.model.mainpage.UserLocation
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.databinding.FragmentNaviHomeBinding
+import com.jjbaksa.jjbaksa.ui.mainpage.adapter.StoreCategoryAdapter
+import com.jjbaksa.jjbaksa.ui.mainpage.adapter.StoreCategoryItem
 import com.jjbaksa.jjbaksa.ui.mainpage.sub.HomeAlertDialog
 import com.jjbaksa.jjbaksa.ui.mainpage.viewmodel.HomeViewModel
 import com.naver.maps.geometry.LatLng
@@ -38,6 +40,8 @@ class NaviHomeFragment : Fragment(), OnMapReadyCallback {
     private var currentLocationOverlay: LocationOverlay? = null
 
     var changedButtonList = mutableListOf<Boolean>(false, false, false)
+
+    private var isVisibleCategoryRecyclerView = true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -77,10 +81,35 @@ class NaviHomeFragment : Fragment(), OnMapReadyCallback {
             }
         }
 
+        initCategoryRecyclerView()
         setButtonZoomControl()
-        setRestaurantButtonControl()
-
+        setMoreButton()
         observeData()
+    }
+
+    private fun initCategoryRecyclerView() {
+        val categoryList = mutableListOf<StoreCategoryItem>(
+            StoreCategoryItem(R.drawable.ic_friend, getString(R.string.friend_restaurant)),
+            StoreCategoryItem(R.drawable.ic_bookmark, getString(R.string.bookmark_restaurant))
+        )
+        val categoryAdapter = StoreCategoryAdapter(categoryList)
+        binding.recyclerViewStoreCategory.apply {
+            adapter = categoryAdapter
+            layoutManager = LinearLayoutManager(context)
+        }
+    }
+
+    private fun setMoreButton() {
+        binding.buttonSeeMore.setOnClickListener {
+            isVisibleCategoryRecyclerView = !isVisibleCategoryRecyclerView
+            if (isVisibleCategoryRecyclerView) {
+                binding.recyclerViewStoreCategory.visibility = View.INVISIBLE
+                binding.buttonSeeMore.imageTintList = HomeColor.Color666666
+            } else {
+                binding.recyclerViewStoreCategory.visibility = View.VISIBLE
+                binding.buttonSeeMore.imageTintList = HomeColor.ColorFF7F23
+            }
+        }
     }
 
     private fun setButtonZoomControl() {
@@ -91,42 +120,6 @@ class NaviHomeFragment : Fragment(), OnMapReadyCallback {
         binding.buttonZoomOut.setOnClickListener {
             val cameraUpdate = CameraUpdate.zoomOut()
             currentNaverMap?.moveCamera(cameraUpdate)
-        }
-    }
-
-    private fun setRestaurantButtonControl() {
-        with(binding.buttonNearbyRestaurant) {
-            setOnClickListener {
-                if (changedButtonList[0]) onChangeButton(0, this) else onChangeButton(0, this)
-            }
-        }
-        with(binding.buttonFriendRestaurant) {
-            setOnClickListener {
-                if (changedButtonList[1]) onChangeButton(1, this) else onChangeButton(1, this)
-            }
-        }
-        with(binding.buttonBookmarkRestaurant) {
-            setOnClickListener {
-                if (changedButtonList[2]) onChangeButton(2, this) else onChangeButton(2, this)
-            }
-        }
-    }
-
-    private fun onChangeButton(pos: Int, button: Button) {
-        if (changedButtonList[pos]) {
-            with(button) {
-                changedButtonList[pos] = false
-                setBackgroundResource(R.drawable.shape_rect_fbfbfa_stroke_c4c4c4_radius_37)
-                compoundDrawableTintList = Color666666
-                setTextColor(resources.getColor(R.color.color_c4c4c4))
-            }
-        } else {
-            with(button) {
-                changedButtonList[pos] = true
-                setBackgroundResource(R.drawable.shape_rect_fbfbfa_stroke_ff7f23_radius_37)
-                compoundDrawableTintList = ColorFF7F23
-                setTextColor(resources.getColor(R.color.color_ff7f23))
-            }
         }
     }
 
@@ -203,7 +196,8 @@ class NaviHomeFragment : Fragment(), OnMapReadyCallback {
             fragment.arguments = args
             return fragment
         }
-
+    }
+    object HomeColor {
         val ColorFF7F23 = ColorStateList.valueOf(Color.rgb(255, 127, 35))
         val Color666666 = ColorStateList.valueOf(Color.rgb(102, 102, 102))
     }
