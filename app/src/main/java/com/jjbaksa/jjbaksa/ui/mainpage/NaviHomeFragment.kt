@@ -2,7 +2,6 @@ package com.jjbaksa.jjbaksa.ui.mainpage
 
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +10,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -95,7 +93,7 @@ class NaviHomeFragment : Fragment(), OnMapReadyCallback {
     }
 
     fun checkLocation() {
-        if (setLocationPermission()){
+        if (setLocationPermission()) {
             homeViewModel.requestLocation()
             binding.buttonCheckLocation.imageTintList = ColorObject.Color666666
         } else {
@@ -151,7 +149,6 @@ class NaviHomeFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
-
     fun zoomIn() {
         cameraUpdate = CameraUpdate.zoomIn()
         currentMap?.moveCamera(cameraUpdate)
@@ -163,7 +160,7 @@ class NaviHomeFragment : Fragment(), OnMapReadyCallback {
     }
 
     fun searchCurrentLocation() {
-        if (setLocationPermission()){
+        if (setLocationPermission()) {
             homeViewModel.requestLocation()
             binding.buttonCheckTheRealLocation.isVisible = false
         } else {

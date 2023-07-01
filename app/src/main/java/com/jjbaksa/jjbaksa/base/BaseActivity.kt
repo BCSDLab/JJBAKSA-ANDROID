@@ -1,6 +1,5 @@
 package com.jjbaksa.jjbaksa.base
 
-import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

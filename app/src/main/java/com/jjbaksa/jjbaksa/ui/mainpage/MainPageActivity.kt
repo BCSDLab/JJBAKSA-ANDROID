@@ -1,13 +1,10 @@
 package com.jjbaksa.jjbaksa.ui.mainpage
 
 import android.Manifest
-import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseActivity
@@ -35,8 +32,9 @@ class MainPageActivity : BaseActivity<ActivityMainPageBinding>() {
                 homeViewModel.requestLocation()
             }
             else -> {
-                if (!shouldShowRequestPermissionRationale(homeViewModel.locationPermissions[0])
-                    && !shouldShowRequestPermissionRationale(homeViewModel.locationPermissions[1])) {
+                if (!shouldShowRequestPermissionRationale(homeViewModel.locationPermissions[0]) &&
+                    !shouldShowRequestPermissionRationale(homeViewModel.locationPermissions[1])
+                ) {
                     HomeAlertDialog().show(supportFragmentManager, DIALOG_TAG)
                 }
             }
