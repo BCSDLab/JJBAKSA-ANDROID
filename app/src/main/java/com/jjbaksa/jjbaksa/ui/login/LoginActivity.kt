@@ -3,9 +3,9 @@ package com.jjbaksa.jjbaksa.ui.login
 import android.content.Intent
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
+import com.google.android.material.snackbar.Snackbar
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseActivity
 import com.jjbaksa.jjbaksa.databinding.ActivityLoginBinding
@@ -36,7 +36,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                         goToMainActivity()
                     } else {
                         if (it.erroMessage.isNotEmpty()) {
-                            showToast(it.erroMessage)
+                            showSnackBar(it.erroMessage)
                             setEditTextErrorUI()
                         }
                     }
@@ -45,8 +45,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
         }
     }
 
-    fun showToast(msg: String) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+    fun showSnackBar(msg: String) {
+        Snackbar.make(binding.root, msg, Snackbar.LENGTH_SHORT).show()
     }
 
     private fun setEditTextErrorUI() {
