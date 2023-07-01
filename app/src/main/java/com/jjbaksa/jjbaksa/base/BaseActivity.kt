@@ -14,11 +14,6 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
     val binding: T
         get() = _binding
 
-    val locationPermissions = arrayOf(
-        Manifest.permission.ACCESS_COARSE_LOCATION,
-        Manifest.permission.ACCESS_FINE_LOCATION
-    )
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = DataBindingUtil.setContentView(this, layoutId)
@@ -41,9 +36,5 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
 
     fun isPermissionGranted(perm: String): Boolean {
         return ActivityCompat.checkSelfPermission(this, perm) == PackageManager.PERMISSION_GRANTED
-    }
-
-    fun isShouldShowRequestPermissionRationale(perm: String): Boolean {
-        return shouldShowRequestPermissionRationale(perm)
     }
 }

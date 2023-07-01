@@ -1,12 +1,15 @@
 package com.jjbaksa.jjbaksa.ui.mainpage.viewmodel
 
 import android.Manifest
+import android.util.Log
+import androidx.lifecycle.viewModelScope
 import com.jjbaksa.domain.model.mainpage.UserLocation
 import com.jjbaksa.domain.repository.HomeRepository
 import com.jjbaksa.jjbaksa.base.BaseViewModel
 import com.jjbaksa.jjbaksa.ui.mainpage.sub.FusedLocationProvider
 import com.jjbaksa.jjbaksa.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,7 +31,9 @@ class HomeViewModel @Inject constructor(
     }
 
     fun requestLocation() {
-        fusedLocationProvider.requestLastLocation()
-        fusedLocationProvider.startLocationUpdates()
+        viewModelScope.launch {
+            fusedLocationProvider.requestLastLocation()
+            fusedLocationProvider.startLocationUpdates()
+        }
     }
 }

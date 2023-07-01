@@ -23,7 +23,6 @@ class MainPageActivity : BaseActivity<ActivityMainPageBinding>() {
         get() = R.layout.activity_main_page
 
     private val homeViewModel: HomeViewModel by viewModels()
-    private lateinit var homeAlertDialog: HomeAlertDialog
 
     private val requestLocationPermissions = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
@@ -36,11 +35,9 @@ class MainPageActivity : BaseActivity<ActivityMainPageBinding>() {
                 homeViewModel.requestLocation()
             }
             else -> {
-                if (isShouldShowRequestPermissionRationale(locationPermissions[0]) && isShouldShowRequestPermissionRationale(
-                        locationPermissions[1]
-                    )
-                ) {
-                    showPermissionInfoDialog()
+                if (!shouldShowRequestPermissionRationale(homeViewModel.locationPermissions[0])
+                    && !shouldShowRequestPermissionRationale(homeViewModel.locationPermissions[1])) {
+                    HomeAlertDialog().show(supportFragmentManager, DIALOG_TAG)
                 }
             }
         }
@@ -66,20 +63,19 @@ class MainPageActivity : BaseActivity<ActivityMainPageBinding>() {
     }
 
     private fun checkLocationPermissions() {
-        if (isPermissionGranted(locationPermissions[0]) && isPermissionGranted(locationPermissions[1])) {
+        if (isPermissionGranted(homeViewModel.locationPermissions[0]) && isPermissionGranted(homeViewModel.locationPermissions[1])) {
             homeViewModel.requestLocation()
         } else {
-            requestLocationPermissions.launch(locationPermissions)
+            requestLocationPermissions.launch(homeViewModel.locationPermissions)
         }
-    }
-
-    private fun showPermissionInfoDialog() {
-        homeAlertDialog = HomeAlertDialog()
-        homeAlertDialog.show(supportFragmentManager, "")
     }
 
     override fun onDestroy() {
         super.onDestroy()
         homeViewModel.fusedLocationProvider.stopLocationUpdates()
+    }
+
+    companion object {
+        const val DIALOG_TAG = "Permission_denied_dialog"
     }
 }

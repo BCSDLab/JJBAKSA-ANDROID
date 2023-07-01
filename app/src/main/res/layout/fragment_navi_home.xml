@@ -172,6 +172,7 @@
             android:backgroundTint="@color/color_ffffff"
             app:borderWidth="0dp"
             app:fabCustomSize="48dp"
+            android:onClick="@{() -> view.checkLocation()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:maxImageSize="32dp"

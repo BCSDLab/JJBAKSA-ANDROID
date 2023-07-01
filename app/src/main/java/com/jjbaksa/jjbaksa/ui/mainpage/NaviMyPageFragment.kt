@@ -16,13 +16,4 @@ class NaviMyPageFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_navi_my_page, container, false)
     }
 
-    companion object {
-        fun newInstance(): NaviMyPageFragment {
-            val args = Bundle().apply {
-            }
-            val fragment = NaviMyPageFragment()
-            fragment.arguments = args
-            return fragment
-        }
-    }
 }

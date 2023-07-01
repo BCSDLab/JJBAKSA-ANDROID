@@ -35,7 +35,6 @@ class NaviHomeFragment : Fragment(), OnMapReadyCallback {
     private lateinit var binding: FragmentNaviHomeBinding
 
     private val homeViewModel: HomeViewModel by activityViewModels()
-    private lateinit var homeAlertDialog: HomeAlertDialog
 
     private lateinit var cameraUpdate: CameraUpdate
     private var mapOptions: NaverMapOptions? = null
@@ -68,24 +67,6 @@ class NaviHomeFragment : Fragment(), OnMapReadyCallback {
             }
         mapFragment.getMapAsync(this)
 
-        with(binding.buttonCheckLocation) {
-            setOnClickListener {
-                if (ActivityCompat.checkSelfPermission(
-                        context,
-                        homeViewModel.locationPermissions[0]
-                    ) == PackageManager.PERMISSION_GRANTED ||
-                    ActivityCompat.checkSelfPermission(
-                        context,
-                        homeViewModel.locationPermissions[1]
-                    ) == PackageManager.PERMISSION_GRANTED
-                ) {
-                    imageTintList = ColorStateList.valueOf(Color.rgb(196, 196, 196))
-                    homeViewModel.fusedLocationProvider.requestLastLocation()
-                } else {
-                    showPermissionInfoDialog()
-                }
-            }
-        }
         observeData()
     }
 
@@ -110,6 +91,15 @@ class NaviHomeFragment : Fragment(), OnMapReadyCallback {
                     binding.buttonCheckTheRealLocation.isVisible = true
                 }
             }
+        }
+    }
+
+    fun checkLocation() {
+        if (setLocationPermission()){
+            homeViewModel.requestLocation()
+            binding.buttonCheckLocation.imageTintList = ColorObject.Color666666
+        } else {
+            HomeAlertDialog().show(parentFragmentManager, DIALOG_TAG)
         }
     }
 
@@ -173,17 +163,24 @@ class NaviHomeFragment : Fragment(), OnMapReadyCallback {
     }
 
     fun searchCurrentLocation() {
-        binding.buttonCheckTheRealLocation.isVisible = false
+        if (setLocationPermission()){
+            homeViewModel.requestLocation()
+            binding.buttonCheckTheRealLocation.isVisible = false
+        } else {
+            HomeAlertDialog().show(parentFragmentManager, DIALOG_TAG)
+        }
     }
+
+    private fun setLocationPermission(): Boolean {
+        return checkPermission(homeViewModel.locationPermissions[0]) || checkPermission(homeViewModel.locationPermissions[1])
+    }
+
+    private fun checkPermission(perm: String): Boolean =
+        ActivityCompat.checkSelfPermission(requireContext(), perm) == PackageManager.PERMISSION_GRANTED
 
     private fun setIconColorAndTextColor(icon: ImageView, text: TextView, color: ColorStateList) {
         icon.imageTintList = color
         text.setTextColor(color)
-    }
-
-    private fun showPermissionInfoDialog() {
-        homeAlertDialog = HomeAlertDialog()
-        homeAlertDialog.show(childFragmentManager, "")
     }
 
     private fun observeData() {
@@ -223,12 +220,6 @@ class NaviHomeFragment : Fragment(), OnMapReadyCallback {
     }
 
     companion object {
-        fun newInstance(): NaviHomeFragment {
-            val args = Bundle().apply {
-            }
-            val fragment = NaviHomeFragment()
-            fragment.arguments = args
-            return fragment
-        }
+        const val DIALOG_TAG = "Permission_denied_dialog"
     }
 }
