@@ -1,6 +1,7 @@
 package com.jjbaksa.jjbaksa.ui.findid
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,6 +36,8 @@ class FindIdFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeData()
+        binding.jjAppBarContainer.setOnClickListener { requireActivity().finish() }
+
         binding.editTextFindIdToEmail.addTextChangedListener {
             binding.buttonFindIdSendToVerificationCode.isEnabled =
                 findIdViewModel.stateButton(it?.length!!)

@@ -33,7 +33,7 @@
     <string name="input_account_when_find_password">비밀번호를 찾을 때\n사용할 아이디를 입력해 주세요.</string>
     <string name="re_login_with_new_password">재설정된 비밀번호로 다시 로그인 해주세요.</string>
     <string name="input_account">아이디를 입력하세요.</string>
-    <string name="input_email">이메일을 입력하세요.</string>
+    <string name="input_email">이메일을 입력해 주세요.</string>
     <string name="short_input_email">이메일 입력</string>
     <string name="input_password">비밀번호를 입력하세요.</string>
     <string name="set_new_password">새 비밀번호를 설정해 주세요.</string>

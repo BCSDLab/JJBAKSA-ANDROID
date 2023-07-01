@@ -49,7 +49,7 @@ class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
     }
 
     override fun initEvent() {
-        binding.topAppBar.setNavigationOnClickListener { finish() }
+        binding.jjAppBarContainer.setOnClickListener { finish() }
         with(binding) {
             buttonKakaoLogin.setOnClickListener {
                 UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
