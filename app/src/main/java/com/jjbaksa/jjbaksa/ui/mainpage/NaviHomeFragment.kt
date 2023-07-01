@@ -20,6 +20,7 @@ import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.databinding.FragmentNaviHomeBinding
 import com.jjbaksa.jjbaksa.ui.mainpage.sub.HomeAlertDialog
 import com.jjbaksa.jjbaksa.ui.mainpage.viewmodel.HomeViewModel
+import com.jjbaksa.jjbaksa.util.ColorObject
 import com.jjbaksa.jjbaksa.util.WindowProvider
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
@@ -36,8 +37,9 @@ class NaviHomeFragment : Fragment(), OnMapReadyCallback {
     private val homeViewModel: HomeViewModel by activityViewModels()
     private lateinit var homeAlertDialog: HomeAlertDialog
 
-    private var naverMapOptions: NaverMapOptions? = null
-    private var currentNaverMap: NaverMap? = null
+    private lateinit var cameraUpdate: CameraUpdate
+    private var mapOptions: NaverMapOptions? = null
+    private var currentMap: NaverMap? = null
     private var currentLocationOverlay: LocationOverlay? = null
 
     private var isVisibleStoreCategory = false
@@ -49,7 +51,7 @@ class NaviHomeFragment : Fragment(), OnMapReadyCallback {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        binding = DataBindingUtil.inflate<FragmentNaviHomeBinding?>(inflater, R.layout.fragment_navi_home, container, false).also {
+        binding = FragmentNaviHomeBinding.inflate(layoutInflater).also {
             it.view = this
         }
         return binding.root
@@ -84,24 +86,46 @@ class NaviHomeFragment : Fragment(), OnMapReadyCallback {
                 }
             }
         }
-        setButtonZoomControl()
-        setStoreCategorySeeMore()
-        setCurrentLocationButton()
         observeData()
     }
+
+    override fun onMapReady(naverMap: NaverMap) {
+        currentMap = naverMap
+        mapOptions = NaverMapOptions()
+            .mapType(NaverMap.MapType.Basic)
+            .enabledLayerGroups(NaverMap.LAYER_GROUP_BUILDING)
+        MapFragment.newInstance(mapOptions)
+
+        currentMap?.setContentPadding(0, 0, 0, 0)
+
+        val uiSettings = currentMap?.uiSettings
+        uiSettings?.isCompassEnabled = false
+        uiSettings?.isZoomControlEnabled = false
+        binding.naverMapCompassView.map = currentMap
+
+        naverMap.addOnCameraChangeListener { reason, _ ->
+            when (reason) {
+                -1, -2 -> {
+                    binding.buttonCheckLocation.imageTintList = ColorObject.ColorFF7F23
+                    binding.buttonCheckTheRealLocation.isVisible = true
+                }
+            }
+        }
+    }
+
     fun onClickFriendStoreCategory() {
         if (!isStoreCategoryBookmark) {
             if (isStoreCategoryFriend) {
                 setIconColorAndTextColor(
                     binding.storeCategoryFriendImageView,
                     binding.storeCategoryFriendTextView,
-                    HomeColor.Color666666
+                    ColorObject.Color666666
                 )
             } else {
                 setIconColorAndTextColor(
                     binding.storeCategoryFriendImageView,
                     binding.storeCategoryFriendTextView,
-                    HomeColor.ColorFF7F23
+                    ColorObject.ColorFF7F23
                 )
             }
             isStoreCategoryFriend = !isStoreCategoryFriend
@@ -110,84 +134,51 @@ class NaviHomeFragment : Fragment(), OnMapReadyCallback {
 
     fun onClickBookmarkStoreCategory() {
         if (!isStoreCategoryFriend) {
-            if (isStoreCategoryBookmark){
+            if (isStoreCategoryBookmark) {
                 setIconColorAndTextColor(
                     binding.storeCategoryBookmarkImageView,
                     binding.storeCategoryBookmarkTextView,
-                    HomeColor.Color666666
+                    ColorObject.Color666666
                 )
             } else {
                 setIconColorAndTextColor(
                     binding.storeCategoryBookmarkImageView,
                     binding.storeCategoryBookmarkTextView,
-                    HomeColor.ColorFF7F23
+                    ColorObject.ColorFF7F23
                 )
             }
             isStoreCategoryBookmark = !isStoreCategoryBookmark
         }
     }
 
-    private fun setIconColorAndTextColor(icon: ImageView, text: TextView, color: ColorStateList){
+    fun seeMoreStoreCategory() {
+        isVisibleStoreCategory = !isVisibleStoreCategory
+        binding.storeCategoryContainer.isVisible = isVisibleStoreCategory
+        if (isVisibleStoreCategory) {
+            binding.buttonSeeMore.imageTintList = ColorObject.ColorFF7F23
+        } else {
+            binding.buttonSeeMore.imageTintList = ColorObject.Color666666
+        }
+    }
+
+
+    fun zoomIn() {
+        cameraUpdate = CameraUpdate.zoomIn()
+        currentMap?.moveCamera(cameraUpdate)
+    }
+
+    fun zoomOut() {
+        cameraUpdate = CameraUpdate.zoomOut()
+        currentMap?.moveCamera(cameraUpdate)
+    }
+
+    fun searchCurrentLocation() {
+        binding.buttonCheckTheRealLocation.isVisible = false
+    }
+
+    private fun setIconColorAndTextColor(icon: ImageView, text: TextView, color: ColorStateList) {
         icon.imageTintList = color
         text.setTextColor(color)
-    }
-
-    private fun setStoreCategorySeeMore() {
-        binding.buttonSeeMore.setOnClickListener {
-            isVisibleStoreCategory = !isVisibleStoreCategory
-            binding.storeCategoryContainer.isVisible = isVisibleStoreCategory
-            if (isVisibleStoreCategory) {
-                binding.buttonSeeMore.imageTintList = HomeColor.ColorFF7F23
-            } else {
-                binding.buttonSeeMore.imageTintList = HomeColor.Color666666
-            }
-        }
-    }
-
-    private fun setCurrentLocationButton() {
-        with(binding.buttonCheckTheRealLocation) {
-            setOnClickListener {
-                this.isVisible = false
-            }
-        }
-    }
-
-    private fun setButtonZoomControl() {
-        binding.buttonZoomIn.setOnClickListener {
-            val cameraUpdate = CameraUpdate.zoomIn()
-            currentNaverMap?.moveCamera(cameraUpdate)
-        }
-        binding.buttonZoomOut.setOnClickListener {
-            val cameraUpdate = CameraUpdate.zoomOut()
-            currentNaverMap?.moveCamera(cameraUpdate)
-        }
-    }
-
-    override fun onMapReady(naverMap: NaverMap) {
-        currentNaverMap = naverMap
-        naverMapOptions = NaverMapOptions()
-            .mapType(NaverMap.MapType.Basic)
-            .enabledLayerGroups(NaverMap.LAYER_GROUP_BUILDING)
-
-        MapFragment.newInstance(naverMapOptions)
-
-        currentNaverMap?.setContentPadding(0, 0, 0, 0)
-
-        val uiSettings = currentNaverMap?.uiSettings
-        uiSettings?.isCompassEnabled = false
-        uiSettings?.isZoomControlEnabled = false
-
-        binding.naverMapCompassView.map = currentNaverMap
-
-        naverMap.addOnCameraChangeListener { reason, _ ->
-            when (reason) {
-                -1, -2 -> {
-                    binding.buttonCheckLocation.imageTintList =
-                        ColorStateList.valueOf(Color.rgb(255, 127, 35))
-                    binding.buttonCheckTheRealLocation.isVisible = true
-                }
-            }
-        }
     }
 
     private fun showPermissionInfoDialog() {
@@ -208,9 +199,9 @@ class NaviHomeFragment : Fragment(), OnMapReadyCallback {
                                     it.currentLongitude!!
                                 )
                             )
-                        currentNaverMap?.moveCamera(cameraUpdate)
+                        currentMap?.moveCamera(cameraUpdate)
                     }
-                    currentLocationOverlay = currentNaverMap?.locationOverlay
+                    currentLocationOverlay = currentMap?.locationOverlay
                     currentLocationOverlay?.icon =
                         OverlayImage.fromResource(R.drawable.shape_circ_3d93f8_stroke_ffffff)
                     currentLocationOverlay?.circleRadius = 100
@@ -226,8 +217,8 @@ class NaviHomeFragment : Fragment(), OnMapReadyCallback {
 
     override fun onDestroy() {
         super.onDestroy()
-        naverMapOptions = null
-        currentNaverMap = null
+        mapOptions = null
+        currentMap = null
         currentLocationOverlay = null
     }
 
@@ -239,10 +230,5 @@ class NaviHomeFragment : Fragment(), OnMapReadyCallback {
             fragment.arguments = args
             return fragment
         }
-    }
-
-    object HomeColor {
-        val ColorFF7F23 = ColorStateList.valueOf(Color.rgb(255, 127, 35))
-        val Color666666 = ColorStateList.valueOf(Color.rgb(102, 102, 102))
     }
 }

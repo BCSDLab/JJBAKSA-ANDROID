@@ -2,12 +2,14 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <data>
 
         <variable
             name="view"
             type="com.jjbaksa.jjbaksa.ui.mainpage.NaviHomeFragment" />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraint_layout_main_page"
         android:layout_width="match_parent"
@@ -64,6 +66,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
             android:backgroundTint="@color/color_ffffff"
+            android:onClick="@{() -> view.seeMoreStoreCategory()}"
             app:borderWidth="0dp"
             app:fabCustomSize="48dp"
             app:layout_constraintBottom_toBottomOf="@+id/edit_text_main_page"
@@ -134,6 +137,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:backgroundTint="@color/color_ffffff"
+            android:onClick="@{() -> view.zoomIn()}"
             app:borderWidth="0dp"
             app:fabCustomSize="48dp"
             app:layout_constraintBottom_toTopOf="@id/button_zoom_out"
@@ -149,6 +153,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:backgroundTint="@color/color_ffffff"
+            android:onClick="@{() -> view.zoomOut()}"
             app:borderWidth="0dp"
             app:fabCustomSize="48dp"
             app:layout_constraintBottom_toTopOf="@+id/button_check_location"
@@ -184,6 +189,7 @@
             android:padding="10dp"
             android:text="@string/check_the_real_location"
             android:textColor="@color/color_ff7f23"
+            android:onClick="@{() -> view.searchCurrentLocation()}"
             android:textSize="12sp"
             android:visibility="gone"
             app:icon="@drawable/ic_baseline_refresh_24"
