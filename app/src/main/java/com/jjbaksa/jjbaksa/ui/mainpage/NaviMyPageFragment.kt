@@ -15,5 +15,4 @@ class NaviMyPageFragment : Fragment() {
     ): View? {
         return inflater.inflate(R.layout.fragment_navi_my_page, container, false)
     }
-
 }
