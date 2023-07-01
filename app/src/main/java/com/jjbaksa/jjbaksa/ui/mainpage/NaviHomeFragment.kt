@@ -81,22 +81,10 @@ class NaviHomeFragment : Fragment(), OnMapReadyCallback {
             }
         }
 
-        initCategoryRecyclerView()
         setButtonZoomControl()
         setMoreButton()
+        setCurrentLocationButton()
         observeData()
-    }
-
-    private fun initCategoryRecyclerView() {
-        val categoryList = mutableListOf<StoreCategoryItem>(
-            StoreCategoryItem(R.drawable.ic_friend, getString(R.string.friend_restaurant)),
-            StoreCategoryItem(R.drawable.ic_bookmark, getString(R.string.bookmark_restaurant))
-        )
-        val categoryAdapter = StoreCategoryAdapter(categoryList)
-        binding.recyclerViewStoreCategory.apply {
-            adapter = categoryAdapter
-            layoutManager = LinearLayoutManager(context)
-        }
     }
 
     private fun setMoreButton() {

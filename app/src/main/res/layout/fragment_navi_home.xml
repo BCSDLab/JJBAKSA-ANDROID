@@ -69,18 +69,6 @@
             app:srcCompat="@drawable/baseline_more_vert_24"
             app:tint="@color/color_666666" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_store_category"
-            android:layout_width="118dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/shape_rect_e6ffffff_stroke_eeeeee_radius_15"
-            android:paddingTop="15dp"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="@id/button_see_more"
-            app:layout_constraintTop_toBottomOf="@id/button_see_more"
-            tools:listitem="@layout/item_store_category" />
-
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/button_zoom_in"
             android:layout_width="wrap_content"
@@ -132,7 +120,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:layout_marginBottom="24dp"
+            android:visibility="gone"
             android:alpha="80"
             android:backgroundTint="@color/color_fbfbfa"
             android:padding="10dp"
