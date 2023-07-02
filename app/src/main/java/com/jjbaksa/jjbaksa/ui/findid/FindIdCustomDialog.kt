@@ -35,7 +35,7 @@ class FindIdCustomDialog() : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.textViewGetId.text =
-            "${findIdViewModel.userEmail.value}으로 가입된 아이디는 ${findIdViewModel.userAccount.value}입니다."
+            "${findIdViewModel.userEmail.value}으로\n가입된 아이디는 ${findIdViewModel.userIdInfo.value?.msg}입니다."
 
         binding.buttonGetIdOk.setOnClickListener {
             dismiss()

@@ -11,11 +11,11 @@ import androidx.databinding.DataBindingUtil
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.databinding.JjAppBarBinding
 
-open class JjAppbar @JvmOverloads constructor (
+open class JjAppbar @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-): ConstraintLayout(context, attrs, defStyleAttr) {
+) : ConstraintLayout(context, attrs, defStyleAttr) {
     private lateinit var binding: JjAppBarBinding
 
     lateinit var onBackPressedListener: OnBackPressedListener
@@ -43,11 +43,11 @@ open class JjAppbar @JvmOverloads constructor (
         try {
             setTitle()
         } finally {
-          typedArray.recycle()
+            typedArray.recycle()
         }
     }
 
-    private fun setTitle(){
+    private fun setTitle() {
         binding.titleTextView.text = title
         binding.titleTextView.setTextSize(
             TypedValue.COMPLEX_UNIT_PX,
@@ -68,8 +68,8 @@ open class JjAppbar @JvmOverloads constructor (
         fun onClick(view: View)
     }
 
-    inline fun setOnClickListener(crossinline  onBack: (View) -> Unit) {
-        this.onBackPressedListener = object: OnBackPressedListener {
+    inline fun setOnClickListener(crossinline onBack: (View) -> Unit) {
+        this.onBackPressedListener = object : OnBackPressedListener {
             override fun onClick(view: View) {
                 onBack(view)
             }

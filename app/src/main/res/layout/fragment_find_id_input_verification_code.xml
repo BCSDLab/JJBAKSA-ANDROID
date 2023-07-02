@@ -2,109 +2,108 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-    <androidx.core.widget.NestedScrollView
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <com.jjbaksa.jjbaksa.view.JjAppbar
+            android:id="@+id/jj_app_bar_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginHorizontal="72dp">
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:titleSize="18sp"
+            app:titleTextColor="@color/color_000000" />
 
-            <TextView
-                android:id="@+id/text_view_find_id_verification_code"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="64dp"
-                android:layout_marginTop="103dp"
-                android:layout_marginEnd="74dp"
-                android:text="@string/input_verification_code_from_email"
-                android:textColor="@color/color_222222"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/linear_layout_find_id_verification_code_layout"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            app:layout_constraintTop_toBottomOf="@+id/jj_app_bar_container"
+            app:layout_constraintBottom_toBottomOf="parent">
 
-            <TextView
-                android:id="@+id/text_view_find_id_not_correct_email_format"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="33dp"
-                android:text="@string/not_correct_verification_code"
-                android:textColor="@color/color_ff7f23"
-                android:textSize="11sp"
-                android:visibility="invisible"
-                app:layout_constraintEnd_toEndOf="@+id/text_view_find_id_verification_code"
-                app:layout_constraintStart_toStartOf="@+id/text_view_find_id_verification_code"
-                app:layout_constraintTop_toBottomOf="@+id/text_view_find_id_verification_code" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="72dp">
 
-            <LinearLayout
-                android:id="@+id/linear_layout_find_id_verification_code_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="92dp"
-                android:gravity="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_view_find_id_verification_code">
+                <TextView
+                    android:id="@+id/text_view_find_id_verification_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="54dp"
+                    android:text="@string/input_verification_code_from_email"
+                    android:textColor="@color/color_222222"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@+id/linear_layout_find_id_verification_code_layout"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <EditText
-                    android:id="@+id/edit_text_find_id_verification_code_one"
-                    style="@style/FindIdNumberCodeBox"
-                    android:layout_marginEnd="8dp" />
+                <LinearLayout
+                    android:id="@+id/linear_layout_find_id_verification_code_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="115dp"
+                    android:gravity="center"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_find_id_verification_code">
 
-                <EditText
-                    android:id="@+id/edit_text_find_id_verification_code_two"
-                    style="@style/FindIdNumberCodeBox"
-                    android:layout_marginEnd="8dp" />
+                    <EditText
+                        android:id="@+id/edit_text_find_id_verification_code_one"
+                        style="@style/FindIdNumberCodeBox"
+                        android:layout_marginEnd="8dp" />
 
-                <EditText
-                    android:id="@+id/edit_text_find_id_verification_code_three"
-                    style="@style/FindIdNumberCodeBox"
-                    android:layout_marginEnd="8dp" />
+                    <EditText
+                        android:id="@+id/edit_text_find_id_verification_code_two"
+                        style="@style/FindIdNumberCodeBox"
+                        android:layout_marginEnd="8dp" />
 
-                <EditText
-                    android:id="@+id/edit_text_find_id_verification_code_four"
-                    style="@style/FindIdNumberCodeBox"/>
+                    <EditText
+                        android:id="@+id/edit_text_find_id_verification_code_three"
+                        style="@style/FindIdNumberCodeBox"
+                        android:layout_marginEnd="8dp" />
 
-            </LinearLayout>
+                    <EditText
+                        android:id="@+id/edit_text_find_id_verification_code_four"
+                        style="@style/FindIdNumberCodeBox" />
 
-
-            <TextView
-                android:id="@+id/text_view_find_id_resend_verification_code"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="@string/resend_verification_code"
-                android:textColor="@color/color_ff7f23"
-                android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linear_layout_find_id_verification_code_layout" />
-
-            <Button
-                android:id="@+id/button_find_id_verification_code"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="228dp"
-                android:background="@drawable/sel_sign_up_button"
-                android:enabled="false"
-                android:text="@string/verification_completed"
-                android:textColor="@color/color_ffffff"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/linear_layout_find_id_verification_code_layout"
-                app:layout_constraintStart_toStartOf="@+id/linear_layout_find_id_verification_code_layout"
-                app:layout_constraintTop_toBottomOf="@+id/linear_layout_find_id_verification_code_layout" />
+                </LinearLayout>
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/text_view_find_id_resend_verification_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/resend_verification_code"
+                    android:textColor="@color/color_ff7f23"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linear_layout_find_id_verification_code_layout" />
 
-    </androidx.core.widget.NestedScrollView>
+                <Button
+                    android:id="@+id/button_find_id_verification_code"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="36dp"
+                    android:background="@drawable/sel_sign_up_button"
+                    android:enabled="false"
+                    android:text="@string/complete"
+                    android:textColor="@color/color_ffffff"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@+id/linear_layout_find_id_verification_code_layout"
+                    app:layout_constraintStart_toStartOf="@+id/linear_layout_find_id_verification_code_layout"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_find_id_resend_verification_code" />
 
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
