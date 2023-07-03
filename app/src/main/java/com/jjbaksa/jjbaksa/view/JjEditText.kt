@@ -1,9 +1,6 @@
 package com.jjbaksa.jjbaksa.view
 
 import android.content.Context
-import android.content.res.ColorStateList
-import android.content.res.TypedArray
-import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.text.Editable
 import android.text.InputType
@@ -169,12 +166,17 @@ open class JjEditText constructor(context: Context, attrs: AttributeSet?) :
                 showPasswordConfirm = !showPasswordConfirm
                 if (showPasswordConfirm) {
                     binding.imageButtonJjEditTextPasswordHide.setImageResource(R.drawable.sel_jj_edit_text_password_show_checked)
-                    binding.editTextJjEditTextInput.transformationMethod =
-                        HideReturnsTransformationMethod.getInstance()
+                    binding.editTextJjEditTextInput.let { editText ->
+                        editText.transformationMethod =
+                            HideReturnsTransformationMethod.getInstance()
+                        editText.setSelection(editText.length())
+                    }
                 } else {
                     binding.imageButtonJjEditTextPasswordHide.setImageResource(R.drawable.sel_jj_edit_text_password_show_unchecked)
-                    binding.editTextJjEditTextInput.transformationMethod =
-                        PasswordTransformationMethod.getInstance()
+                    binding.editTextJjEditTextInput.let { editText ->
+                        editText.transformationMethod = PasswordTransformationMethod.getInstance()
+                        editText.setSelection(editText.length())
+                    }
                 }
             }
         }
@@ -187,8 +189,6 @@ open class JjEditText constructor(context: Context, attrs: AttributeSet?) :
     fun setOnFocusChangeListener(focusChanged: FocusChanged) {
         this.focusChanged = focusChanged
     }
-
-    fun
 
     interface OnClickListener {
         fun onClick(view: View)

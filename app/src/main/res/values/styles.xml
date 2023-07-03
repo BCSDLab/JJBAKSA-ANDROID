@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="FindIdNumberCodeBox">
+    <style name="SmallEditText">
         <item name="android:layout_width">48dp</item>
         <item name="android:layout_height">58dp</item>
         <item name="android:gravity">center</item>

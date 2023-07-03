@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnClickListener
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
@@ -63,15 +62,18 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
 
     fun showSnackBar(context: Context, msg: String) {
         Snackbar.make(context, binding.root, msg, Snackbar.LENGTH_SHORT).also {
-            it.setAction(R.string.close, object: OnClickListener {
-                override fun onClick(v: View?) {
-                    it.dismiss()
+            it.setAction(
+                R.string.close,
+                object : OnClickListener {
+                    override fun onClick(v: View?) {
+                        it.dismiss()
+                    }
                 }
-            })
+            )
         }.show()
     }
 
-    fun backPressed(backBtn: JjAppbar, context:FragmentActivity, pop: Boolean){
+    fun backPressed(backBtn: JjAppbar, context: FragmentActivity, pop: Boolean) {
         if (pop) {
             backBtn.setOnClickListener { findNavController().popBackStack() }
         } else {

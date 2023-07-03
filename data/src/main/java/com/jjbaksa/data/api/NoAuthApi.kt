@@ -12,7 +12,6 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
-import retrofit2.http.PATCH
 import retrofit2.http.Header
 
 interface NoAuthApi {
@@ -52,8 +51,8 @@ interface NoAuthApi {
         @Body findPasswordReq: FindPasswordReq
     ): Response<String>
 
-    @PATCH("user/password")
-    suspend fun changePassword(
+    @POST("user/check-password")
+    suspend fun setNewPassword(
         @Header("Authorization") token: String,
         @Query("password") userPassword: String
     ): Response<UserResp>

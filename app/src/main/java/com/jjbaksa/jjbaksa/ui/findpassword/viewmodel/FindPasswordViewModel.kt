@@ -1,10 +1,12 @@
 package com.jjbaksa.jjbaksa.ui.findpassword.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.jjbaksa.domain.base.RespResult
 import com.jjbaksa.domain.repository.UserRepository
+import com.jjbaksa.domain.resp.user.FindPasswordReq
 import com.jjbaksa.domain.resp.user.FormatResp
+import com.jjbaksa.domain.resp.user.UserInfo
 import com.jjbaksa.jjbaksa.base.BaseViewModel
 import com.jjbaksa.jjbaksa.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,26 +17,23 @@ import javax.inject.Inject
 class FindPasswordViewModel @Inject constructor(
     private val repository: UserRepository
 ) : BaseViewModel() {
-    private val _userAccount = SingleLiveEvent<String>()
-    val userAccount: SingleLiveEvent<String> get() = _userAccount
-
-    private val _userToken = SingleLiveEvent<String?>()
-    val userToken: SingleLiveEvent<String?> get() = _userToken
-
-    private val _authEmailState = SingleLiveEvent<RespResult<Boolean>>()
-    val authEmailState: SingleLiveEvent<RespResult<Boolean>> get() = _authEmailState
-
+    private val _userInfo = MutableLiveData<UserInfo>()
+    val userInfo: LiveData<UserInfo> get() = _userInfo
     private val _isPasswordVerificationCode = SingleLiveEvent<FormatResp>()
     val isPasswordVerificationCode: SingleLiveEvent<FormatResp> get() = _isPasswordVerificationCode
+    private val _verificationCodeResult = SingleLiveEvent<FormatResp>()
+    val verificationCodeResult: SingleLiveEvent<FormatResp> get() = _verificationCodeResult
 
-    private val _existAccount = SingleLiveEvent<RespResult<Boolean>>()
-    val existAccount: SingleLiveEvent<RespResult<Boolean>> get() = _existAccount
+    private val _stateBox = SingleLiveEvent<MutableList<Boolean>>()
+    val stateBox: SingleLiveEvent<MutableList<Boolean>> get() = _stateBox
+    private val _stateBoxNumber = SingleLiveEvent<MutableList<Int?>>()
+    val stateBoxNumber: SingleLiveEvent<MutableList<Int?>> get() = _stateBoxNumber
+    private val _newPasswordResult = SingleLiveEvent<Boolean>()
+    val newPasswordResult: SingleLiveEvent<Boolean> get() = _newPasswordResult
 
-    private val _buttonEnabled = MutableLiveData<MutableList<Boolean>>()
-    val buttonEnabled: MutableLiveData<MutableList<Boolean>> get() = _buttonEnabled
-
-    private val _isChangePassword = SingleLiveEvent<Boolean>()
-    val isChangePassword: SingleLiveEvent<Boolean> get() = _isChangePassword
+    fun getUserInfo(id: String, email: String) {
+        _userInfo.value = UserInfo(id, email)
+    }
 
     fun getPasswordVerificationCode(id: String, email: String) {
         viewModelScope.launch(ceh) {
@@ -44,38 +43,32 @@ class FindPasswordViewModel @Inject constructor(
         }
     }
 
-    fun isExistAccount(account: String) {
-        viewModelScope.launch(ceh) {
-            repository.checkAccountAvailable(account).let {
-                _existAccount.value = it
-            }
-        }
+    fun setStateBox(box: MutableList<Boolean>) {
+        _stateBox.value = box
     }
 
-    fun getButtonEnabled(state: MutableList<Boolean>) {
-        _buttonEnabled.value = state
+    fun setStateBoxNumber(boxNumber: MutableList<Int?>) {
+        _stateBoxNumber.value = boxNumber
     }
 
-    fun getAuthEmail(email: String) {
+    fun findPassword(code: String) {
         viewModelScope.launch(ceh) {
-            repository.checkAuthEmail(email).let {
-                _authEmailState.value = it
-            }
-        }
-    }
-
-    fun findPassword(account: String, email: String, code: String) {
-        viewModelScope.launch(ceh) {
-            repository.findPassword(account, email, code).let { token ->
-                _userToken.value = token
+            repository.findPassword(
+                FindPasswordReq(
+                    userInfo.value?.id!!,
+                    userInfo.value?.email!!,
+                    code
+                )
+            ).let {
+                _verificationCodeResult.value = it
             }
         }
     }
 
     fun setNewPassword(newPassword: String) {
         viewModelScope.launch(ceh) {
-            repository.changeUserPassword(newPassword).let {
-                _isChangePassword.value = it
+            repository.setNewPassword(newPassword).let {
+                _newPasswordResult.value = it
             }
         }
     }

@@ -6,7 +6,6 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.marginStart
 import androidx.databinding.DataBindingUtil
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.databinding.JjAppBarBinding

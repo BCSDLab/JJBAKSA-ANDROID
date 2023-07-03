@@ -2,7 +2,6 @@ package com.jjbaksa.jjbaksa.ui.findid.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.jjbaksa.domain.base.RespResult
 import com.jjbaksa.domain.repository.UserRepository
 import com.jjbaksa.domain.resp.user.FormatResp
 import com.jjbaksa.jjbaksa.base.BaseViewModel
@@ -16,19 +15,24 @@ class FindIdViewModel @Inject constructor(
     private val repository: UserRepository
 ) : BaseViewModel() {
     val userEmail = MutableLiveData<String>("")
-    val userAccount = MutableLiveData<String>("")
 
-    private val _authEmailState = SingleLiveEvent<RespResult<Boolean>>()
-    val authEmailState: SingleLiveEvent<RespResult<Boolean>> get() = _authEmailState
+    private val _stateBox = SingleLiveEvent<MutableList<Boolean>>()
+    val stateBox: SingleLiveEvent<MutableList<Boolean>> get() = _stateBox
+    private val _stateBoxNumber = SingleLiveEvent<MutableList<Int?>>()
+    val stateBoxNumber: SingleLiveEvent<MutableList<Int?>> get() = _stateBoxNumber
+
+    private val _authEmailState = SingleLiveEvent<FormatResp>()
+    val authEmailState: SingleLiveEvent<FormatResp> get() = _authEmailState
 
     private val _userIdInfo = SingleLiveEvent<FormatResp>()
     val userIdInfo: SingleLiveEvent<FormatResp> get() = _userIdInfo
 
-    private val _numberBoxUiState = MutableLiveData<MutableList<Boolean>>()
-    val numberBoxUiState: MutableLiveData<MutableList<Boolean>> get() = _numberBoxUiState
+    fun setStateBox(box: MutableList<Boolean>) {
+        _stateBox.value = box
+    }
 
-    fun updateBoxUiState(boxUiState: MutableList<Boolean>) {
-        _numberBoxUiState.value = boxUiState
+    fun setStateBoxNumber(boxNumber: MutableList<Int?>) {
+        _stateBoxNumber.value = boxNumber
     }
 
     fun stateButton(emailLength: Int): Boolean {
@@ -39,7 +43,7 @@ class FindIdViewModel @Inject constructor(
         userEmail.value = email
         viewModelScope.launch(ceh) {
             repository.checkAuthEmail(email).let {
-                authEmailState.value = it
+                _authEmailState.value = it
             }
         }
     }

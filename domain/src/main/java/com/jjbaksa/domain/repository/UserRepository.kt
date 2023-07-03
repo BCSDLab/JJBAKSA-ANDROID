@@ -1,6 +1,7 @@
 package com.jjbaksa.domain.repository
 
 import com.jjbaksa.domain.base.RespResult
+import com.jjbaksa.domain.resp.user.FindPasswordReq
 import com.jjbaksa.domain.resp.user.FormatResp
 import com.jjbaksa.domain.resp.user.LoginResult
 import com.jjbaksa.domain.resp.user.SignUpReq
@@ -15,11 +16,11 @@ interface UserRepository {
         isAutoLogin: Boolean,
         onResult: (LoginResult) -> Unit
     )
-    suspend fun checkAuthEmail(email: String): RespResult<Boolean>
-    suspend fun getPasswordVerificationCode(id: String, email:String): FormatResp
+    suspend fun checkAuthEmail(email: String): FormatResp
+    suspend fun getPasswordVerificationCode(id: String, email: String): FormatResp
     suspend fun findAccount(email: String, code: String): FormatResp
-    suspend fun findPassword(account: String, email: String, code: String): String?
-    suspend fun changeUserPassword(password: String): Boolean
+    suspend fun findPassword(user: FindPasswordReq): FormatResp
+    suspend fun setNewPassword(password: String): Boolean
     suspend fun me()
     fun getAutoLoginFlag(): Boolean
     fun getAccount(): String

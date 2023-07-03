@@ -42,4 +42,7 @@
             <flag name="end" value="0x00800005" />
         </attr>
     </declare-styleable>
+
+    <declare-styleable name="JjSmallEditText">
+    </declare-styleable>
 </resources>

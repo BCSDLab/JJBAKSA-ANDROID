@@ -45,8 +45,8 @@ class UserRemoteDataSource @Inject constructor(
         return noAuthApi.getPasswordVerificationCode(id, email)
     }
 
-    override suspend fun changeUserPassword(token: String, password: String): Response<UserResp> {
-        return noAuthApi.changePassword(token, password)
+    override suspend fun setNewPassword(token: String, password: String): Response<UserResp> {
+        return noAuthApi.setNewPassword(token, password)
     }
 
     override suspend fun saveAccessToken(accessToken: String) {

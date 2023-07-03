@@ -67,14 +67,14 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun checkAuthEmail(email: String): RespResult<Boolean> {
+    override suspend fun checkAuthEmail(email: String): FormatResp {
         val result = userRemoteDataSource.checkAuthEmail(email)
         return if (result.isSuccessful) {
-            RespResult.Success(result.isSuccessful)
+            FormatResp(result.isSuccessful, null, result.code())
         } else {
             val errorBodyJson = result.errorBody()!!.string()
             val errorBody = RespMapper.errorMapper(errorBodyJson)
-            RespResult.Error(ErrorType(errorBody.errorMessage, errorBody.code))
+            FormatResp(result.isSuccessful, errorBody.errorMessage, result.code())
         }
     }
 
@@ -94,7 +94,6 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun findAccount(email: String, code: String): FormatResp {
         val response = userRemoteDataSource.findAccount(email, code)
-        Log.d("로그", "response : $response")
         return if (response.isSuccessful && response.code() == 200) {
             FormatResp(response.isSuccessful, response.body()?.account.toString(), response.code())
         } else {
@@ -102,27 +101,26 @@ class UserRepositoryImpl @Inject constructor(
             val errorBody = RespMapper.errorMapper(errorBodyJson)
             FormatResp(response.isSuccessful, errorBody.errorMessage, response.code())
         }
-//        return if (response.isSuccessful && response.code() == 200) response.body()?.account!!.toString() else ""
     }
 
-    override suspend fun findPassword(account: String, email: String, code: String): String? {
-        val response = userRemoteDataSource.findPassword(FindPasswordReq(account, email, code))
-
-        return if (response.isSuccessful && response.body() != null) {
+    override suspend fun findPassword(user: FindPasswordReq): FormatResp {
+        val response = userRemoteDataSource.findPassword(user)
+        return if (response.isSuccessful && response.code() == 200) {
             userLocalDataSource.saveAuthPasswordToken(response.body().toString())
-            response.body().toString()
+            FormatResp(response.isSuccessful, null, response.code())
         } else {
-            var errorBodyJson = "${response.errorBody()!!.string()}"
+            val errorBodyJson = response.errorBody()!!.string()
             val errorBody = RespMapper.errorMapper(errorBodyJson)
-            errorBody.errorMessage
+            FormatResp(response.isSuccessful, errorBody.errorMessage, response.code())
         }
     }
 
-    override suspend fun changeUserPassword(password: String): Boolean {
-        val result = userRemoteDataSource.changeUserPassword(
+    override suspend fun setNewPassword(password: String): Boolean {
+        val result = userRemoteDataSource.setNewPassword(
             "Bearer " + userLocalDataSource.getAuthPasswordToken(),
             password
         )
+        Log.d("로그", "setNewPassword() result : $result")
         return result.isSuccessful && result.code() == 200
     }
 
