@@ -31,9 +31,9 @@
     <string name="success_find_account">아이디 찾기 완료</string>
     <string name="success_find_password">비밀번호 찾기 완료</string>
     <string name="input_email_when_find_id_text">아이디를 찾을 때\n사용할 이메일을 입력해 주세요.</string>
-    <string name="input_account_when_find_password">비밀번호를 찾을 때\n사용할 아이디를 입력해 주세요.</string>
+    <string name="input_account_and_email_when_find_password">비밀번호를 찾을 때 사용할\n아이디와 이메일을 입력해 주세요.</string>
     <string name="re_login_with_new_password">재설정된 비밀번호로 다시 로그인 해주세요.</string>
-    <string name="input_account">아이디를 입력하세요.</string>
+    <string name="input_account">아이디를 입력해 주세요.</string>
     <string name="input_email">이메일을 입력해 주세요.</string>
     <string name="short_input_email">이메일 입력</string>
     <string name="input_password">비밀번호를 입력하세요.</string>
@@ -42,7 +42,7 @@
     <string name="verification_completed">인증 완료</string>
     <string name="input_verification_code_from_email">이메일로 발송된\n인증번호를 입력해 주세요.</string>
     <string name="input_email_and_verification_code_from_email">이메일과 이메일로 발송된\n인증번호를 입력해 주세요.</string>
-    <string name="send_verification_code">인증번호 발송</string>
+    <string name="send_verification_code">인증번호 보내기</string>
     <string name="resend_verification_code">인증번호 재발송</string>
     <string name="resend_verification_code_content">인증번호 재발송 되었습니다.</string>
     <string name="not_correct_email_format">이메일 형식이 올바르지 않습니다.</string>
@@ -54,6 +54,8 @@
     <string name="input_verification_code">인증번호 입력</string>
 
     <string name="id_already_exist">이미 존재하는 아이디입니다.</string>
+    <string name="fail_id">아이디가 올바르지 않습니다.</string>
+    <string name="fail_email">이메일이 올바르지 않습니다.</string>
     <string name="email_not_found">존재하지 않는 도메인입니다.</string>
     <string name="password_rule_not_match">비밀번호는 문자, 숫자, 특수문자를 포함한 8~16자리로 이루어져야합니다.</string>
     <string name="password_not_match">비밀번호가 일치하지 않습니다.</string>

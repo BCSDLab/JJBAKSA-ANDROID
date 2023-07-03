@@ -176,7 +176,7 @@ class FindIdInputVerificationCodeFragment : Fragment() {
             if (it.isSuccess) {
                 FindIdCustomDialog().show(parentFragmentManager, FIND_ID_DIALOG_TAG)
             } else {
-                showSnackBar(it.msg)
+                showSnackBar(it.msg.toString())
                 lifecycleScope.launch {
                     failVerify()
                 }

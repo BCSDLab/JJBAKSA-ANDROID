@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.jjbaksa.domain.base.RespResult
 import com.jjbaksa.domain.repository.UserRepository
+import com.jjbaksa.domain.resp.user.FormatResp
 import com.jjbaksa.jjbaksa.base.BaseViewModel
 import com.jjbaksa.jjbaksa.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,6 +24,9 @@ class FindPasswordViewModel @Inject constructor(
     private val _authEmailState = SingleLiveEvent<RespResult<Boolean>>()
     val authEmailState: SingleLiveEvent<RespResult<Boolean>> get() = _authEmailState
 
+    private val _isPasswordVerificationCode = SingleLiveEvent<FormatResp>()
+    val isPasswordVerificationCode: SingleLiveEvent<FormatResp> get() = _isPasswordVerificationCode
+
     private val _existAccount = SingleLiveEvent<RespResult<Boolean>>()
     val existAccount: SingleLiveEvent<RespResult<Boolean>> get() = _existAccount
 
@@ -31,6 +35,14 @@ class FindPasswordViewModel @Inject constructor(
 
     private val _isChangePassword = SingleLiveEvent<Boolean>()
     val isChangePassword: SingleLiveEvent<Boolean> get() = _isChangePassword
+
+    fun getPasswordVerificationCode(id: String, email: String) {
+        viewModelScope.launch(ceh) {
+            repository.getPasswordVerificationCode(id, email).let {
+                _isPasswordVerificationCode.value = it
+            }
+        }
+    }
 
     fun isExistAccount(account: String) {
         viewModelScope.launch(ceh) {

@@ -1,6 +1,10 @@
 package com.jjbaksa.jjbaksa.view
 
 import android.content.Context
+import android.content.res.ColorStateList
+import android.content.res.TypedArray
+import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.text.Editable
 import android.text.InputType
 import android.text.method.HideReturnsTransformationMethod
@@ -31,12 +35,15 @@ open class JjEditText constructor(context: Context, attrs: AttributeSet?) :
 
     private val typedArray = context.obtainStyledAttributes(attrs, R.styleable.JjEditText)
     private var editTextHint = typedArray.getString(R.styleable.JjEditText_hint)
+    private var editTextHintColor = typedArray.getColor(R.styleable.JjEditText_hintColor, 0)
+    private var editTextHintSize = typedArray.getDimensionPixelSize(
+        R.styleable.JjEditText_hintSize, 14
+    )
     private var isPassword = typedArray.getBoolean(R.styleable.JjEditText_is_password, false)
     private var isEmail = typedArray.getBoolean(R.styleable.JjEditText_is_email, false)
     private var hasTitle = typedArray.getBoolean(R.styleable.JjEditText_has_title, false)
     private var hasButton = typedArray.getBoolean(R.styleable.JjEditText_has_button, false)
     private var editTextGravity = typedArray.getInt(R.styleable.JjEditText_editText_gravity, 0x03)
-
     private var title = typedArray.getString(R.styleable.JjEditText_title)
     private var titleSize = typedArray.getDimensionPixelSize(
         R.styleable.JjEditText_titleSize, 14
@@ -62,6 +69,16 @@ open class JjEditText constructor(context: Context, attrs: AttributeSet?) :
             binding.editTextJjEditTextInput.setText(value)
         }
 
+    var editTextBackground: Drawable? = ContextCompat.getDrawable(
+        context,
+        R.drawable.shape_rect_eeeeee_solid_radius_100_padding_7_11_11_8
+    )
+        get() = binding.editTextJjEditTextInput.background
+        set(value) {
+            field = value
+            binding.editTextJjEditTextInput.background = value
+        }
+
     init {
         initView()
     }
@@ -74,12 +91,12 @@ open class JjEditText constructor(context: Context, attrs: AttributeSet?) :
             true
         )
 
-        binding.editTextJjEditTextInput.background =
-            ContextCompat.getDrawable(
-                context,
-                R.drawable.shape_rect_eeeeee_solid_radius_100_padding_7_11_11_8
-            )
+        binding.editTextJjEditTextInput.background = editTextBackground
         binding.editTextJjEditTextInput.hint = editTextHint
+        binding.editTextJjEditTextInput.setHintTextColor(editTextHintColor)
+        binding.editTextJjEditTextInput.setTextSize(
+            TypedValue.COMPLEX_UNIT_PX, editTextHintSize.toFloat()
+        )
         binding.editTextJjEditTextInput.setText(editTextText)
 
         isPasswordField()
@@ -170,6 +187,8 @@ open class JjEditText constructor(context: Context, attrs: AttributeSet?) :
     fun setOnFocusChangeListener(focusChanged: FocusChanged) {
         this.focusChanged = focusChanged
     }
+
+    fun
 
     interface OnClickListener {
         fun onClick(view: View)

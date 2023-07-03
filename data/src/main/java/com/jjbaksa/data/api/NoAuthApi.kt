@@ -35,6 +35,11 @@ interface NoAuthApi {
     suspend fun getEmailCodeNumber(
         @Query("email") userEmail: String
     ): Response<Unit>
+    @POST("user/email/password")
+    suspend fun getPasswordVerificationCode(
+        @Query("account") id: String,
+        @Query("email") email: String
+    ): Response<Unit>
 
     @GET("user/account")
     suspend fun findId(

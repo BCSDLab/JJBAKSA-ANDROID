@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.jjbaksa.domain.base.RespResult
 import com.jjbaksa.domain.repository.UserRepository
-import com.jjbaksa.domain.resp.user.FindIdResp
+import com.jjbaksa.domain.resp.user.FormatResp
 import com.jjbaksa.jjbaksa.base.BaseViewModel
 import com.jjbaksa.jjbaksa.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,8 +21,8 @@ class FindIdViewModel @Inject constructor(
     private val _authEmailState = SingleLiveEvent<RespResult<Boolean>>()
     val authEmailState: SingleLiveEvent<RespResult<Boolean>> get() = _authEmailState
 
-    private val _userIdInfo = SingleLiveEvent<FindIdResp>()
-    val userIdInfo: SingleLiveEvent<FindIdResp> get() = _userIdInfo
+    private val _userIdInfo = SingleLiveEvent<FormatResp>()
+    val userIdInfo: SingleLiveEvent<FormatResp> get() = _userIdInfo
 
     private val _numberBoxUiState = MutableLiveData<MutableList<Boolean>>()
     val numberBoxUiState: MutableLiveData<MutableList<Boolean>> get() = _numberBoxUiState

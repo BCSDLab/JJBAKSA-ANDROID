@@ -32,9 +32,11 @@ class FindPasswordInputCodeFragment : BaseFragment<FragmentFindPasswordInputCode
     }
 
     override fun initEvent() {
-        observeData()
-        onClickButton()
-        onEnabledButtonState()
+        backPressed(binding.jjAppBarContainer, requireActivity(), true)
+
+//        observeData()
+//        onClickButton()
+//        onEnabledButtonState()
     }
 
     override fun subscribe() {}
@@ -42,133 +44,133 @@ class FindPasswordInputCodeFragment : BaseFragment<FragmentFindPasswordInputCode
     override fun onStart() {
         super.onStart()
         with(binding) {
-            editTextFindPasswordInputEmail.setText(null)
-            editTextFindPasswordInputVerificationCode.setText(null)
+//            editTextFindPasswordInputEmail.setText(null)
+//            editTextFindPasswordInputVerificationCode.setText(null)
         }
     }
 
     private fun onEnabledButtonState() {
-        binding.editTextFindPasswordInputEmail.addTextChangedListener {
-            binding.buttonSendVerificationCode.isEnabled = it?.length!! > 0
-        }
-        binding.editTextFindPasswordInputVerificationCode.addTextChangedListener {
-            binding.buttonFindPasswordInputCode.isEnabled =
-                it?.length!! > 0 && isSendVerificationCode
-        }
+//        binding.editTextFindPasswordInputEmail.addTextChangedListener {
+//            binding.buttonSendVerificationCode.isEnabled = it?.length!! > 0
+//        }
+//        binding.editTextFindPasswordInputVerificationCode.addTextChangedListener {
+//            binding.buttonFindPasswordInputCode.isEnabled =
+//                it?.length!! > 0 && isSendVerificationCode
+//        }
     }
 
     private fun onClickButton() {
-        binding.buttonSendVerificationCode.setOnClickListener {
-            if (isSendVerificationCode) {
-                findPasswordViewModel.getAuthEmail(binding.editTextFindPasswordInputEmail.text.toString())
-            } else {
-                with(binding.editTextFindPasswordInputEmail.text.toString()) {
-                    if (RegexUtil.checkEmailFormat(this)) {
-                        findPasswordViewModel.getAuthEmail(this)
-                    } else {
-                        failEmailCheck(
-                            getString(R.string.not_correct_email_format_and_not_exist_account),
-                            binding.buttonSendVerificationCode,
-                            binding.editTextFindPasswordInputEmail
-                        )
-                    }
-                }
-            }
-        }
-        binding.buttonFindPasswordInputCode.setOnClickListener {
-            findPasswordViewModel.findPassword(
-                findPasswordViewModel.userAccount.value.toString(),
-                binding.editTextFindPasswordInputEmail.text.toString(),
-                binding.editTextFindPasswordInputVerificationCode.text.toString()
-            )
-        }
+//        binding.buttonSendVerificationCode.setOnClickListener {
+//            if (isSendVerificationCode) {
+//                findPasswordViewModel.getAuthEmail(binding.editTextFindPasswordInputEmail.text.toString())
+//            } else {
+//                with(binding.editTextFindPasswordInputEmail.text.toString()) {
+//                    if (RegexUtil.checkEmailFormat(this)) {
+//                        findPasswordViewModel.getAuthEmail(this)
+//                    } else {
+//                        failEmailCheck(
+//                            getString(R.string.not_correct_email_format_and_not_exist_account),
+//                            binding.buttonSendVerificationCode,
+//                            binding.editTextFindPasswordInputEmail
+//                        )
+//                    }
+//                }
+//            }
+//        }
+//        binding.buttonFindPasswordInputCode.setOnClickListener {
+//            findPasswordViewModel.findPassword(
+//                findPasswordViewModel.userAccount.value.toString(),
+//                binding.editTextFindPasswordInputEmail.text.toString(),
+//                binding.editTextFindPasswordInputVerificationCode.text.toString()
+//            )
+//        }
     }
 
     private fun failEmailCheck(msg: String, button: Button, editText: EditText) {
-        binding.textViewFindPasswordNotCorrectEmailFormatAndVerificationCode.text = msg
-        binding.layerFindPasswordWarningContentInInputCode.visibility = View.VISIBLE
-        button.isEnabled = false
-        editText.setBackgroundResource(R.drawable.shape_rect_eeeeee_solid_radius_100_stroke_ff7f23)
+//        binding.textViewFindPasswordNotCorrectEmailFormatAndVerificationCode.text = msg
+//        binding.layerFindPasswordWarningContentInInputCode.visibility = View.VISIBLE
+//        button.isEnabled = false
+//        editText.setBackgroundResource(R.drawable.shape_rect_eeeeee_solid_radius_100_stroke_ff7f23)
     }
 
     private fun successEmailCheck() {
-        binding.layerFindPasswordWarningContentInInputCode.visibility = View.INVISIBLE
-        binding.editTextFindPasswordInputEmail.setBackgroundResource(R.drawable.shape_rect_eeeeee_solid_radius_100_padding_7_11_11_8)
-        binding.editTextFindPasswordInputVerificationCode.requestFocus()
-        binding.buttonSendVerificationCode.text = getString(R.string.resend_verification_code)
+//        binding.layerFindPasswordWarningContentInInputCode.visibility = View.INVISIBLE
+//        binding.editTextFindPasswordInputEmail.setBackgroundResource(R.drawable.shape_rect_eeeeee_solid_radius_100_padding_7_11_11_8)
+//        binding.editTextFindPasswordInputVerificationCode.requestFocus()
+//        binding.buttonSendVerificationCode.text = getString(R.string.resend_verification_code)
     }
 
     private fun onToastReSendVerificationCode() {
-        if (isSendVerificationCode) {
-            binding.buttonSendVerificationCode.isEnabled = false
-            binding.editTextFindPasswordInputVerificationCode.setBackgroundResource(R.drawable.shape_rect_eeeeee_solid_radius_100_padding_7_11_11_8)
-            Toast.makeText(
-                context,
-                getString(R.string.resend_verification_code),
-                Toast.LENGTH_SHORT
-            ).show()
-        }
+//        if (isSendVerificationCode) {
+//            binding.buttonSendVerificationCode.isEnabled = false
+//            binding.editTextFindPasswordInputVerificationCode.setBackgroundResource(R.drawable.shape_rect_eeeeee_solid_radius_100_padding_7_11_11_8)
+//            Toast.makeText(
+//                context,
+//                getString(R.string.resend_verification_code),
+//                Toast.LENGTH_SHORT
+//            ).show()
+//        }
     }
 
     private fun observeData() {
-        findPasswordViewModel.userToken.observe(
-            viewLifecycleOwner,
-            Observer<String?> {
-                if (it != null) {
-                    when (it) {
-                        ERROR_MSG_EMAIL -> {
-                            failEmailCheck(
-                                getString(R.string.not_correct_email_format_and_not_exist_account),
-                                binding.buttonSendVerificationCode,
-                                binding.editTextFindPasswordInputEmail
-                            )
-                            binding.editTextFindPasswordInputVerificationCode.setBackgroundResource(R.drawable.shape_rect_eeeeee_solid_radius_100_padding_7_11_11_8)
-                            binding.editTextFindPasswordInputVerificationCode.requestFocus()
-                        }
-                        ERROR_MSG_VERIFICATION_CODE -> {
-                            failEmailCheck(
-                                getString(R.string.not_correct_verification_code),
-                                binding.buttonFindPasswordInputCode,
-                                binding.editTextFindPasswordInputVerificationCode
-                            )
-                            binding.editTextFindPasswordInputEmail.setBackgroundResource(R.drawable.shape_rect_eeeeee_solid_radius_100_padding_7_11_11_8)
-                            binding.editTextFindPasswordInputEmail.requestFocus()
-                        }
-                        else -> {
-                            findNavController().navigate(R.id.action_nav_find_password_input_code_to_nav_find_password_reset)
-                        }
-                    }
-                } else {
-                    failEmailCheck(
-                        getString(R.string.not_correct_verification_code),
-                        binding.buttonFindPasswordInputCode,
-                        binding.editTextFindPasswordInputVerificationCode
-                    )
-                }
-            }
-        )
-        findPasswordViewModel.authEmailState.observe(
-            viewLifecycleOwner,
-            Observer<RespResult<Boolean>> {
-                if (it == RespResult.Success(true)) {
-                    onToastReSendVerificationCode()
-                    isSendVerificationCode = true
-                    successEmailCheck()
-                } else {
-                    if (it == RespResult.Error<ErrorType>(ErrorType(ERROR_MSG_38, CODE_38))) {
-                        binding.textViewFindPasswordNotCorrectEmailFormatAndVerificationCode.text =
-                            "잠시 후 시도해주세요."
-                        binding.layerFindPasswordWarningContentInInputCode.visibility = View.VISIBLE
-                    } else {
-                        failEmailCheck(
-                            getString(R.string.not_correct_email_format_and_not_exist_account),
-                            binding.buttonSendVerificationCode,
-                            binding.editTextFindPasswordInputEmail
-                        )
-                    }
-                }
-            }
-        )
+//        findPasswordViewModel.userToken.observe(
+//            viewLifecycleOwner,
+//            Observer<String?> {
+//                if (it != null) {
+//                    when (it) {
+//                        ERROR_MSG_EMAIL -> {
+//                            failEmailCheck(
+//                                getString(R.string.not_correct_email_format_and_not_exist_account),
+//                                binding.buttonSendVerificationCode,
+//                                binding.editTextFindPasswordInputEmail
+//                            )
+//                            binding.editTextFindPasswordInputVerificationCode.setBackgroundResource(R.drawable.shape_rect_eeeeee_solid_radius_100_padding_7_11_11_8)
+//                            binding.editTextFindPasswordInputVerificationCode.requestFocus()
+//                        }
+//                        ERROR_MSG_VERIFICATION_CODE -> {
+//                            failEmailCheck(
+//                                getString(R.string.not_correct_verification_code),
+//                                binding.buttonFindPasswordInputCode,
+//                                binding.editTextFindPasswordInputVerificationCode
+//                            )
+//                            binding.editTextFindPasswordInputEmail.setBackgroundResource(R.drawable.shape_rect_eeeeee_solid_radius_100_padding_7_11_11_8)
+//                            binding.editTextFindPasswordInputEmail.requestFocus()
+//                        }
+//                        else -> {
+//                            findNavController().navigate(R.id.action_nav_find_password_input_code_to_nav_find_password_reset)
+//                        }
+//                    }
+//                } else {
+//                    failEmailCheck(
+//                        getString(R.string.not_correct_verification_code),
+//                        binding.buttonFindPasswordInputCode,
+//                        binding.editTextFindPasswordInputVerificationCode
+//                    )
+//                }
+//            }
+//        )
+//        findPasswordViewModel.authEmailState.observe(
+//            viewLifecycleOwner,
+//            Observer<RespResult<Boolean>> {
+//                if (it == RespResult.Success(true)) {
+//                    onToastReSendVerificationCode()
+//                    isSendVerificationCode = true
+//                    successEmailCheck()
+//                } else {
+//                    if (it == RespResult.Error<ErrorType>(ErrorType(ERROR_MSG_38, CODE_38))) {
+//                        binding.textViewFindPasswordNotCorrectEmailFormatAndVerificationCode.text =
+//                            "잠시 후 시도해주세요."
+//                        binding.layerFindPasswordWarningContentInInputCode.visibility = View.VISIBLE
+//                    } else {
+//                        failEmailCheck(
+//                            getString(R.string.not_correct_email_format_and_not_exist_account),
+//                            binding.buttonSendVerificationCode,
+//                            binding.editTextFindPasswordInputEmail
+//                        )
+//                    }
+//                }
+//            }
+//        )
     }
 
     companion object {

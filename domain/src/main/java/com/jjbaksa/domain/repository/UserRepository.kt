@@ -1,7 +1,7 @@
 package com.jjbaksa.domain.repository
 
 import com.jjbaksa.domain.base.RespResult
-import com.jjbaksa.domain.resp.user.FindIdResp
+import com.jjbaksa.domain.resp.user.FormatResp
 import com.jjbaksa.domain.resp.user.LoginResult
 import com.jjbaksa.domain.resp.user.SignUpReq
 import com.jjbaksa.domain.resp.user.SignUpResp
@@ -16,7 +16,8 @@ interface UserRepository {
         onResult: (LoginResult) -> Unit
     )
     suspend fun checkAuthEmail(email: String): RespResult<Boolean>
-    suspend fun findAccount(email: String, code: String): FindIdResp
+    suspend fun getPasswordVerificationCode(id: String, email:String): FormatResp
+    suspend fun findAccount(email: String, code: String): FormatResp
     suspend fun findPassword(account: String, email: String, code: String): String?
     suspend fun changeUserPassword(password: String): Boolean
     suspend fun me()

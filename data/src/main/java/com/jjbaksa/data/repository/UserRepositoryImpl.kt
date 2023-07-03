@@ -8,7 +8,7 @@ import com.jjbaksa.data.mapper.RespMapper
 import com.jjbaksa.domain.base.ErrorType
 import com.jjbaksa.domain.base.RespResult
 import com.jjbaksa.domain.repository.UserRepository
-import com.jjbaksa.domain.resp.user.FindIdResp
+import com.jjbaksa.domain.resp.user.FormatResp
 import com.jjbaksa.domain.resp.user.LoginReq
 import com.jjbaksa.domain.resp.user.LoginResult
 import com.jjbaksa.domain.resp.user.SignUpReq
@@ -78,15 +78,29 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun findAccount(email: String, code: String): FindIdResp {
-        val response = userRemoteDataSource.findAccount(email, code)
-        Log.d("로그", "response : $response")
+    override suspend fun getPasswordVerificationCode(
+        id: String,
+        email: String
+    ): FormatResp {
+        val response = userRemoteDataSource.getPasswordVerificationCode(id, email)
         return if (response.isSuccessful && response.code() == 200) {
-            FindIdResp(response.isSuccessful, response.body()?.account.toString(), response.code())
+            FormatResp(response.isSuccessful, null, response.code())
         } else {
             val errorBodyJson = response.errorBody()!!.string()
             val errorBody = RespMapper.errorMapper(errorBodyJson)
-            FindIdResp(response.isSuccessful, errorBody.errorMessage, response.code())
+            FormatResp(response.isSuccessful, errorBody.errorMessage, response.code())
+        }
+    }
+
+    override suspend fun findAccount(email: String, code: String): FormatResp {
+        val response = userRemoteDataSource.findAccount(email, code)
+        Log.d("로그", "response : $response")
+        return if (response.isSuccessful && response.code() == 200) {
+            FormatResp(response.isSuccessful, response.body()?.account.toString(), response.code())
+        } else {
+            val errorBodyJson = response.errorBody()!!.string()
+            val errorBody = RespMapper.errorMapper(errorBodyJson)
+            FormatResp(response.isSuccessful, errorBody.errorMessage, response.code())
         }
 //        return if (response.isSuccessful && response.code() == 200) response.body()?.account!!.toString() else ""
     }
