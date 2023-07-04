@@ -12,7 +12,10 @@ fun Context.hasPermission(permission: Array<String>): Boolean =
     }
 fun Context.hasPermission(permission: String): Boolean =
     ActivityCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
-fun Context.checkPermissionsAndRequest(permission: Array<String>, request: ActivityResultLauncher<Array<String>>): Boolean {
+fun Context.checkPermissionsAndRequest(
+    permission: Array<String>,
+    request: ActivityResultLauncher<Array<String>>
+): Boolean {
     val result = hasPermission(permission)
     if (!result) {
         request.launch(permission)

@@ -41,7 +41,6 @@ abstract class BaseBottomSheetDialogFragment<T : ViewDataBinding> : BottomSheetD
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initState(view)
-
     }
 
     open fun initState(view: View) {
@@ -50,7 +49,6 @@ abstract class BaseBottomSheetDialogFragment<T : ViewDataBinding> : BottomSheetD
         subscribe()
         initData()
     }
-
 
     override fun dismiss() {
         super.dismiss()

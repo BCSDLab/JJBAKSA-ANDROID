@@ -22,7 +22,7 @@ abstract class BaseDialogFragment<T : ViewDataBinding> : DialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = DataBindingUtil.inflate(inflater, layoutResId, container, false)
-        dialog?.window?.setBackgroundDrawableResource(android.R.color.transparent);
+        dialog?.window?.setBackgroundDrawableResource(android.R.color.transparent)
         return binding.root
     }
 
@@ -48,5 +48,4 @@ abstract class BaseDialogFragment<T : ViewDataBinding> : DialogFragment() {
     abstract fun initEvent()
     abstract fun subscribe()
     abstract fun initData()
-
 }

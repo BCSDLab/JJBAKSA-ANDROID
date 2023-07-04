@@ -4,10 +4,10 @@
     package="com.jjbaksa.jjbaksa">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="28"/>
+        android:maxSdkVersion="28" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
@@ -24,6 +24,9 @@
         android:theme="@style/Theme.JJBAKSAAOS"
         tools:replace="android:appComponentFactory"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.SampleActivity"
+            android:exported="false" />
         <activity
             android:name="com.example.imageselector.gallery.GalleryActivity"
             android:exported="false" />

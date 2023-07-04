@@ -12,7 +12,7 @@ class ConfirmDialog(
     val confirmText: String,
     val confirmClick: (Dialog) -> Unit,
     val isCancel: Boolean = true
-): BaseDialogFragment<DialogConfirmBinding>() {
+) : BaseDialogFragment<DialogConfirmBinding>() {
     override val layoutResId: Int
         get() = R.layout.dialog_confirm
 
@@ -27,7 +27,6 @@ class ConfirmDialog(
                 confirmDialogMsg.text = msg
             }
             confirmDialogButton.text = confirmText
-
         }
     }
 

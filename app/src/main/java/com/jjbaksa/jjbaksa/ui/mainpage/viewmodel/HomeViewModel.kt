@@ -1,6 +1,5 @@
 package com.jjbaksa.jjbaksa.ui.mainpage.viewmodel
 
-import android.Manifest
 import androidx.lifecycle.viewModelScope
 import com.jjbaksa.domain.model.mainpage.UserLocation
 import com.jjbaksa.domain.repository.HomeRepository

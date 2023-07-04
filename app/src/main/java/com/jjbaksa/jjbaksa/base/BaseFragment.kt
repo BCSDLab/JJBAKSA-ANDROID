@@ -71,5 +71,4 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
         loadingDialog?.dismiss()
         loadingDialog = null
     }
-
 }

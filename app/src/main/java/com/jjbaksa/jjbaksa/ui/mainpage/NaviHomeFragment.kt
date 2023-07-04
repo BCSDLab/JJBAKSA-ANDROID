@@ -1,16 +1,9 @@
 package com.jjbaksa.jjbaksa.ui.mainpage
 
-import android.content.pm.PackageManager
 import android.content.res.ColorStateList
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.jjbaksa.domain.model.mainpage.UserLocation
@@ -90,7 +83,6 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
     private var isVisibleStoreCategory = false
     private var isStoreCategoryFriend = false
     private var isStoreCategoryBookmark = false
-
 
     override fun onMapReady(naverMap: NaverMap) {
         currentMap = naverMap
@@ -199,7 +191,6 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
         icon.imageTintList = color
         text.setTextColor(color)
     }
-
 
     override fun onDestroy() {
         super.onDestroy()
