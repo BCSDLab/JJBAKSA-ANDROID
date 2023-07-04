@@ -83,25 +83,24 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
     fun dismissLoading() {
         loadingDialog?.dismiss()
         loadingDialog = null
-        fun showSnackBar(context: Context, msg: String) {
-            Snackbar.make(context, binding.root, msg, Snackbar.LENGTH_SHORT).also {
-                it.setAction(
-                    R.string.close,
-                    object : OnClickListener {
-                        override fun onClick(v: View?) {
-                            it.dismiss()
-                        }
+    }
+    fun showSnackBar(context: Context, msg: String) {
+        Snackbar.make(context, binding.root, msg, Snackbar.LENGTH_SHORT).also {
+            it.setAction(
+                R.string.close,
+                object : OnClickListener {
+                    override fun onClick(v: View?) {
+                        it.dismiss()
                     }
-                )
-            }.show()
-        }
-
-        fun backPressed(backBtn: JjAppbar, context: FragmentActivity, pop: Boolean) {
-            if (pop) {
-                backBtn.setOnClickListener { findNavController().popBackStack() }
-            } else {
-                backBtn.setOnClickListener { context.finish() }
-            }
+                }
+            )
+        }.show()
+    }
+    fun backPressed(backBtn: JjAppbar, context: FragmentActivity, pop: Boolean) {
+        if (pop) {
+            backBtn.setOnClickListener { findNavController().popBackStack() }
+        } else {
+            backBtn.setOnClickListener { context.finish() }
         }
     }
 }
