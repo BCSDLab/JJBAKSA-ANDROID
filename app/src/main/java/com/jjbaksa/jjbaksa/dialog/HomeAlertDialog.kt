@@ -1,4 +1,4 @@
-package com.jjbaksa.jjbaksa.ui.mainpage.sub
+package com.jjbaksa.jjbaksa.dialog
 
 import android.app.Dialog
 import android.content.Intent

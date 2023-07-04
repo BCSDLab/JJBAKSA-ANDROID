@@ -15,11 +15,13 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.jjbaksa.domain.model.mainpage.UserLocation
 import com.jjbaksa.jjbaksa.R
+import com.jjbaksa.jjbaksa.base.BaseFragment
 import com.jjbaksa.jjbaksa.databinding.FragmentNaviHomeBinding
-import com.jjbaksa.jjbaksa.ui.mainpage.sub.HomeAlertDialog
+import com.jjbaksa.jjbaksa.dialog.HomeAlertDialog
 import com.jjbaksa.jjbaksa.ui.mainpage.viewmodel.HomeViewModel
 import com.jjbaksa.jjbaksa.util.ColorObject
 import com.jjbaksa.jjbaksa.util.WindowProvider
+import com.jjbaksa.jjbaksa.util.hasPermission
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.MapFragment
@@ -28,9 +30,55 @@ import com.naver.maps.map.NaverMapOptions
 import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.overlay.LocationOverlay
 import com.naver.maps.map.overlay.OverlayImage
+import dagger.hilt.android.AndroidEntryPoint
 
-class NaviHomeFragment : Fragment(), OnMapReadyCallback {
-    private lateinit var binding: FragmentNaviHomeBinding
+@AndroidEntryPoint
+class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCallback {
+    override val layoutId: Int
+        get() = R.layout.fragment_navi_home
+
+    override fun initView() {
+        WindowProvider(requireActivity()).clearStatusBar(requireActivity().getColor(R.color.color_00000000))
+
+        val fm = childFragmentManager
+        val mapFragment = fm.findFragmentById(R.id.map) as MapFragment?
+            ?: MapFragment.newInstance().also {
+                fm.beginTransaction().add(R.id.map, it).commit()
+            }
+        mapFragment.getMapAsync(this)
+    }
+
+    override fun initEvent() {
+    }
+
+    override fun subscribe() {
+        homeViewModel.userLocation.observe(
+            viewLifecycleOwner,
+            Observer<UserLocation> {
+                if (it.currentLatitude != null) {
+                    if (it.updateCamera) {
+                        val cameraUpdate =
+                            CameraUpdate.scrollTo(
+                                LatLng(
+                                    it.currentLatitude!!,
+                                    it.currentLongitude!!
+                                )
+                            )
+                        currentMap?.moveCamera(cameraUpdate)
+                    }
+                    currentLocationOverlay = currentMap?.locationOverlay
+                    currentLocationOverlay?.icon =
+                        OverlayImage.fromResource(R.drawable.shape_circ_3d93f8_stroke_ffffff)
+                    currentLocationOverlay?.circleRadius = 100
+                    currentLocationOverlay?.position = LatLng(
+                        it.currentLatitude!!,
+                        it.currentLongitude!!
+                    )
+                    currentLocationOverlay?.isVisible = true
+                }
+            }
+        )
+    }
 
     private val homeViewModel: HomeViewModel by activityViewModels()
 
@@ -43,30 +91,6 @@ class NaviHomeFragment : Fragment(), OnMapReadyCallback {
     private var isStoreCategoryFriend = false
     private var isStoreCategoryBookmark = false
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View? {
-        binding = FragmentNaviHomeBinding.inflate(layoutInflater).also {
-            it.view = this
-        }
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        WindowProvider(requireActivity()).clearStatusBar(requireActivity().getColor(R.color.color_00000000))
-
-        val fm = childFragmentManager
-        val mapFragment = fm.findFragmentById(R.id.map) as MapFragment?
-            ?: MapFragment.newInstance().also {
-                fm.beginTransaction().add(R.id.map, it).commit()
-            }
-        mapFragment.getMapAsync(this)
-
-        observeData()
-    }
 
     override fun onMapReady(naverMap: NaverMap) {
         currentMap = naverMap
@@ -169,45 +193,13 @@ class NaviHomeFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun setLocationPermission(): Boolean {
-        return checkPermission(homeViewModel.locationPermissions[0]) || checkPermission(homeViewModel.locationPermissions[1])
+        return requireContext().hasPermission((requireActivity() as MainPageActivity).locationPermissions)
     }
-
-    private fun checkPermission(perm: String): Boolean =
-        ActivityCompat.checkSelfPermission(requireContext(), perm) == PackageManager.PERMISSION_GRANTED
-
     private fun setIconColorAndTextColor(icon: ImageView, text: TextView, color: ColorStateList) {
         icon.imageTintList = color
         text.setTextColor(color)
     }
 
-    private fun observeData() {
-        homeViewModel.userLocation.observe(
-            viewLifecycleOwner,
-            Observer<UserLocation> {
-                if (it.currentLatitude != null) {
-                    if (it.updateCamera) {
-                        val cameraUpdate =
-                            CameraUpdate.scrollTo(
-                                LatLng(
-                                    it.currentLatitude!!,
-                                    it.currentLongitude!!
-                                )
-                            )
-                        currentMap?.moveCamera(cameraUpdate)
-                    }
-                    currentLocationOverlay = currentMap?.locationOverlay
-                    currentLocationOverlay?.icon =
-                        OverlayImage.fromResource(R.drawable.shape_circ_3d93f8_stroke_ffffff)
-                    currentLocationOverlay?.circleRadius = 100
-                    currentLocationOverlay?.position = LatLng(
-                        it.currentLatitude!!,
-                        it.currentLongitude!!
-                    )
-                    currentLocationOverlay?.isVisible = true
-                }
-            }
-        )
-    }
 
     override fun onDestroy() {
         super.onDestroy()

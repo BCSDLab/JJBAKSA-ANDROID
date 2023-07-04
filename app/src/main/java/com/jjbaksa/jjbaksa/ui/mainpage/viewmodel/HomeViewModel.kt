@@ -16,10 +16,6 @@ class HomeViewModel @Inject constructor(
     private val repository: HomeRepository
 ) : BaseViewModel() {
 
-    val locationPermissions = arrayOf(
-        Manifest.permission.ACCESS_COARSE_LOCATION,
-        Manifest.permission.ACCESS_FINE_LOCATION
-    )
     lateinit var fusedLocationProvider: FusedLocationProvider
 
     private val _userLocation = SingleLiveEvent<UserLocation>()

@@ -10,8 +10,9 @@ import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseActivity
 import com.jjbaksa.jjbaksa.databinding.ActivityMainPageBinding
 import com.jjbaksa.jjbaksa.ui.mainpage.sub.FusedLocationProvider
-import com.jjbaksa.jjbaksa.ui.mainpage.sub.HomeAlertDialog
+import com.jjbaksa.jjbaksa.dialog.HomeAlertDialog
 import com.jjbaksa.jjbaksa.ui.mainpage.viewmodel.HomeViewModel
+import com.jjbaksa.jjbaksa.util.hasPermission
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -20,7 +21,10 @@ class MainPageActivity : BaseActivity<ActivityMainPageBinding>() {
         get() = R.layout.activity_main_page
 
     private val homeViewModel: HomeViewModel by viewModels()
-
+    val locationPermissions = arrayOf(
+        Manifest.permission.ACCESS_COARSE_LOCATION,
+        Manifest.permission.ACCESS_FINE_LOCATION
+    )
     private val requestLocationPermissions = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { isGranted ->
@@ -32,8 +36,8 @@ class MainPageActivity : BaseActivity<ActivityMainPageBinding>() {
                 homeViewModel.requestLocation()
             }
             else -> {
-                if (!shouldShowRequestPermissionRationale(homeViewModel.locationPermissions[0]) &&
-                    !shouldShowRequestPermissionRationale(homeViewModel.locationPermissions[1])
+                if (!shouldShowRequestPermissionRationale(locationPermissions[0]) &&
+                    !shouldShowRequestPermissionRationale(locationPermissions[1])
                 ) {
                     HomeAlertDialog().show(supportFragmentManager, DIALOG_TAG)
                 }
@@ -61,10 +65,10 @@ class MainPageActivity : BaseActivity<ActivityMainPageBinding>() {
     }
 
     private fun checkLocationPermissions() {
-        if (isPermissionGranted(homeViewModel.locationPermissions[0]) && isPermissionGranted(homeViewModel.locationPermissions[1])) {
+        if (hasPermission(locationPermissions)) {
             homeViewModel.requestLocation()
         } else {
-            requestLocationPermissions.launch(homeViewModel.locationPermissions)
+            requestLocationPermissions.launch(locationPermissions)
         }
     }
 
