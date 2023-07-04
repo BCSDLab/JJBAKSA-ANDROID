@@ -72,3 +72,7 @@ object GooglePlayServiceDependencies {
 object ClassPathPlugins {
     const val hilt = "com.google.dagger:hilt-android-gradle-plugin:${Versions.hiltVersion}"
 }
+
+object GlideDependencies {
+    const val glide = "com.github.bumptech.glide:glide:${Versions.glideVersion}"
+}

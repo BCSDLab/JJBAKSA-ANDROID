@@ -1,24 +1,19 @@
 package com.jjbaksa.jjbaksa.base
 
-import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import com.jjbaksa.jjbaksa.dialog.LoadingDialog
 
 abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
     abstract val layoutId: Int
     private lateinit var _binding: T
     val binding: T
         get() = _binding
-
-    val locationPermissions = arrayOf(
-        Manifest.permission.ACCESS_COARSE_LOCATION,
-        Manifest.permission.ACCESS_FINE_LOCATION
-    )
-
+    private var loadingDialog: LoadingDialog? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = DataBindingUtil.setContentView(this, layoutId)
@@ -42,8 +37,12 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
     fun isPermissionGranted(perm: String): Boolean {
         return ActivityCompat.checkSelfPermission(this, perm) == PackageManager.PERMISSION_GRANTED
     }
-
-    fun isShouldShowRequestPermissionRationale(perm: String): Boolean {
-        return shouldShowRequestPermissionRationale(perm)
+    fun showLoading() {
+        loadingDialog = LoadingDialog()
+        loadingDialog?.show(supportFragmentManager, LoadingDialog.TAG)
+    }
+    fun dismissLoading() {
+        loadingDialog?.dismiss()
+        loadingDialog = null
     }
 }

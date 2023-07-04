@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_rect_ffffff_solid_radius_20"
+        android:orientation="vertical"
+
+        android:paddingHorizontal="20dp"
+        android:paddingBottom="24dp">
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/confirm_dialog_title"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="24dp"
+            android:textColor="@color/black"
+            android:layout_marginHorizontal="20dp"
+            tools:text="로그인이"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/confirm_dialog_msg"
+            android:textSize="12sp"
+            android:textColor="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            tools:text="로그인이 실패되었습니다.로그인이 실패되었습니다.로그인이 실패되었습니다.로그인이 실패되었습니다."/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/confirm_dialog_button"
+            style="@style/OrangeButton"
+            android:layout_marginTop="28dp"
+            tools:text="확인"/>
+    </LinearLayout>
+
+</layout>

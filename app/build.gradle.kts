@@ -126,6 +126,9 @@ dependencies {
     GooglePlayServiceDependencies.run {
         implementation(googlePlayServiceLocation)
     }
+    GlideDependencies.run {
+        implementation(glide)
+    }
 }
 
 ktlint {

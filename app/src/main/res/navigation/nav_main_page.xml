@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_main_page"
+    app:startDestination="@id/home">
+    <fragment
+        android:id="@+id/home"
+        android:name="com.jjbaksa.jjbaksa.ui.mainpage.NaviHomeFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_navi_home">
+    </fragment>
+    <fragment
+        android:id="@+id/write"
+        android:name="com.jjbaksa.jjbaksa.ui.mainpage.NaviWriteFragment"
+        android:label="Write"
+        tools:layout="@layout/fragment_navi_write">
+    </fragment>
+    <fragment
+        android:id="@+id/mypage"
+        android:name="com.jjbaksa.jjbaksa.ui.mainpage.NaviMyPageFragment"
+        android:label="MyPage"
+        tools:layout="@layout/fragment_navi_my_page" />
+
+</navigation>
