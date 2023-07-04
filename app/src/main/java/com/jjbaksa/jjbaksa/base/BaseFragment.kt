@@ -1,8 +1,10 @@
 package com.jjbaksa.jjbaksa.base
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnClickListener
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.LayoutRes
@@ -10,6 +12,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import com.jjbaksa.jjbaksa.dialog.LoadingDialog
+import androidx.fragment.app.FragmentActivity
+import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
+import com.jjbaksa.jjbaksa.R
+import com.jjbaksa.jjbaksa.view.JjAppbar
 
 abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
     @get:LayoutRes
@@ -49,26 +56,52 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
         subscribe()
     }
 
+    abstract fun initView()
+    abstract fun initEvent()
+    abstract fun subscribe()
+
     override fun onDetach() {
         onBackPressedCallBack?.remove()
         onBackPressedCallBack = null
         super.onDetach()
     }
 
-    abstract fun initView()
-    abstract fun initEvent()
-    abstract fun subscribe()
     fun setOnBackPress() {
         if (onBackPressedCallBack == null)
             return
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, onBackPressedCallBack!!)
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            onBackPressedCallBack!!
+        )
     }
+
     fun showLoading() {
         loadingDialog = LoadingDialog()
         loadingDialog?.show(parentFragmentManager, LoadingDialog.TAG)
     }
+
     fun dismissLoading() {
         loadingDialog?.dismiss()
         loadingDialog = null
+        fun showSnackBar(context: Context, msg: String) {
+            Snackbar.make(context, binding.root, msg, Snackbar.LENGTH_SHORT).also {
+                it.setAction(
+                    R.string.close,
+                    object : OnClickListener {
+                        override fun onClick(v: View?) {
+                            it.dismiss()
+                        }
+                    }
+                )
+            }.show()
+        }
+
+        fun backPressed(backBtn: JjAppbar, context: FragmentActivity, pop: Boolean) {
+            if (pop) {
+                backBtn.setOnClickListener { findNavController().popBackStack() }
+            } else {
+                backBtn.setOnClickListener { context.finish() }
+            }
+        }
     }
 }
