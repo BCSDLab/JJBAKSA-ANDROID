@@ -4,9 +4,7 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.text.Editable
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
@@ -20,7 +18,7 @@ open class JjSmallEditText @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-): ConstraintLayout(context, attrs, defStyleAttr) {
+) : ConstraintLayout(context, attrs, defStyleAttr) {
     private lateinit var binding: JjSmallEditTextBinding
 
     private lateinit var textChanged: EditTextChanged
