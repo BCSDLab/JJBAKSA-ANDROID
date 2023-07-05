@@ -1,18 +1,11 @@
 package com.jjbaksa.jjbaksa.ui.findpassword
 
-import android.text.InputType
 import android.util.Log
-import android.view.View
-import android.widget.EditText
-import android.widget.ImageView
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseFragment
 import com.jjbaksa.jjbaksa.databinding.FragmentFindPasswordResetBinding
 import com.jjbaksa.jjbaksa.ui.findpassword.viewmodel.FindPasswordViewModel
-import com.jjbaksa.jjbaksa.util.RegexUtil.isPasswordRuleMatch
 
 class FindPasswordResetFragment : BaseFragment<FragmentFindPasswordResetBinding>() {
     override val layoutId: Int
@@ -41,14 +34,14 @@ class FindPasswordResetFragment : BaseFragment<FragmentFindPasswordResetBinding>
 
     private fun setNewPassword() {
         binding.inputNewPasswordEditText.also { newPasswordEditText ->
-            newPasswordEditText.setOnFocusChangeListener { _, _ ->  }
+            newPasswordEditText.setOnFocusChangeListener { _, _ -> }
             newPasswordEditText.addTextChangedListener { newPassword ->
                 binding.completeButton.also {
                     it.isSelected = isVisibleButton(
                         newPassword = newPassword.toString(),
                         checkPassword = binding.inputCheckPasswordEditText.editTextText
                     )
-                    it.isEnabled =  isVisibleButton(
+                    it.isEnabled = isVisibleButton(
                         newPassword = newPassword.toString(),
                         checkPassword = binding.inputCheckPasswordEditText.editTextText
                     )
@@ -58,14 +51,14 @@ class FindPasswordResetFragment : BaseFragment<FragmentFindPasswordResetBinding>
     }
     private fun setCheckPassword() {
         binding.inputCheckPasswordEditText.also { checkPasswordEditText ->
-            checkPasswordEditText.setOnFocusChangeListener { _, _ ->  }
+            checkPasswordEditText.setOnFocusChangeListener { _, _ -> }
             checkPasswordEditText.addTextChangedListener { checkPassword ->
                 binding.completeButton.also {
                     it.isSelected = isVisibleButton(
                         newPassword = binding.inputNewPasswordEditText.editTextText,
                         checkPassword = checkPassword.toString()
                     )
-                    it.isEnabled =  isVisibleButton(
+                    it.isEnabled = isVisibleButton(
                         newPassword = binding.inputNewPasswordEditText.editTextText,
                         checkPassword = checkPassword.toString()
                     )
@@ -88,7 +81,7 @@ class FindPasswordResetFragment : BaseFragment<FragmentFindPasswordResetBinding>
         viewModel.newPasswordResult.observe(
             viewLifecycleOwner
         ) {
-            Log.d("로그", "새로운 비번 결과 : ${it}")
+            Log.d("로그", "새로운 비번 결과 : $it")
         }
     }
 
