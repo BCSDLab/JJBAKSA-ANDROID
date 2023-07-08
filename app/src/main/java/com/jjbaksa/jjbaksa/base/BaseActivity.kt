@@ -9,7 +9,6 @@ import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.google.android.material.snackbar.Snackbar
-import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.dialog.LoadingDialog
 
 abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
