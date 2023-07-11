@@ -33,4 +33,5 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
     fun goToNotice() { }
     fun goToInquiry() { }
     fun logout() { }
+    fun withdraw() {}
 }

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+
     <data>
+
         <variable
             name="view"
             type="com.jjbaksa.jjbaksa.ui.setting.SettingActivity" />
@@ -47,50 +49,36 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/change_password_text_view"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="22dp"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginEnd="12dp"
+                    android:drawableEnd="@drawable/ic_right_arrow"
+                    android:padding="4dp"
                     android:text="@string/change_password"
                     android:textColor="@color/color_000000"
+                    android:onClick="@{() -> view.goToChangePassword()}"
                     android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/manage_account_text_view"
                     app:layout_constraintTop_toBottomOf="@id/manage_account_text_view" />
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/change_password_image_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
-                    android:padding="6dp"
-                    android:onClick="@{() -> view.goToChangePassword()}"
-                    app:layout_constraintBottom_toBottomOf="@id/change_password_text_view"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/change_password_text_view"
-                    app:srcCompat="@drawable/ic_right_arrow" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/privacy_policy_text_view"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="18dp"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginEnd="12dp"
+                    android:drawableEnd="@drawable/ic_external_link"
+                    android:padding="4dp"
                     android:text="@string/privacy_policy"
                     android:textColor="@color/color_000000"
+                    android:onClick="@{() -> view.goToPrivacyPolicy()}"
                     android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/change_password_text_view"
                     app:layout_constraintTop_toBottomOf="@id/change_password_text_view" />
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/privacy_policy_image_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
-                    android:padding="6dp"
-                    android:onClick="@{() -> view.goToPrivacyPolicy()}"
-                    app:layout_constraintBottom_toBottomOf="@id/privacy_policy_text_view"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/privacy_policy_text_view"
-                    app:srcCompat="@drawable/ic_external_link" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/service_text_view"
@@ -106,55 +94,43 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/notice_text_view"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="18dp"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginEnd="12dp"
+                    android:drawableEnd="@drawable/ic_external_link"
+                    android:padding="4dp"
                     android:text="@string/notice"
                     android:textColor="@color/color_000000"
                     android:textSize="16sp"
+                    android:onClick="@{() -> view.goToNotice()}"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/service_text_view"
                     app:layout_constraintTop_toBottomOf="@id/service_text_view" />
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/notice_image_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
-                    android:padding="6dp"
-                    android:onClick="@{() -> view.goToNotice()}"
-                    app:layout_constraintBottom_toBottomOf="@id/notice_text_view"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/notice_text_view"
-                    app:srcCompat="@drawable/ic_external_link" />
-
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/inquiry_text_view"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="18dp"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginEnd="12dp"
+                    android:drawableEnd="@drawable/ic_external_link"
+                    android:padding="4dp"
                     android:text="@string/inquiry"
                     android:textColor="@color/color_000000"
+                    android:onClick="@{() -> view.goToInquiry()}"
                     android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/service_text_view"
                     app:layout_constraintTop_toBottomOf="@id/notice_text_view" />
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/inquiry_image_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
-                    android:padding="6dp"
-                    android:onClick="@{() -> view.goToInquiry()}"
-                    app:layout_constraintBottom_toBottomOf="@id/inquiry_text_view"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/inquiry_text_view"
-                    app:srcCompat="@drawable/ic_external_link" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/app_version_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="18dp"
+                    android:layout_marginStart="4dp"
                     android:text="@string/app_version"
                     android:textColor="@color/color_000000"
                     android:textSize="16sp"
@@ -167,8 +143,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     app:layout_constraintBottom_toBottomOf="@id/app_version_text_view"
-                    app:layout_constraintTop_toTopOf="@id/app_version_text_view"
                     app:layout_constraintStart_toEndOf="@+id/app_version_text_view"
+                    app:layout_constraintTop_toTopOf="@id/app_version_text_view"
                     app:srcCompat="@drawable/ic_error" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -184,30 +160,32 @@
                     app:layout_constraintTop_toTopOf="@id/app_version_text_view" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/logout_title_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/logout"
-                    android:textColor="@color/color_000000"
-                    android:textSize="16sp"
-                    app:layout_constraintStart_toStartOf="@id/service_text_view"
-                    app:layout_constraintTop_toBottomOf="@id/app_version_text_view"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintVertical_bias="0.85"/>
-
-                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/logout_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:padding="6dp"
-                    android:layout_marginStart="12dp"
-                    android:text="@string/withdrawal"
+                    android:padding="4dp"
+                    android:text="@string/logout"
+                    android:textColor="@color/color_000000"
                     android:onClick="@{() -> view.logout()}"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/service_text_view"
+                    app:layout_constraintTop_toBottomOf="@id/app_version_text_view"
+                    app:layout_constraintVertical_bias="0.85" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/withdraw_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="4dp"
+                    android:onClick="@{() -> view.withdraw()}"
+                    android:padding="6dp"
+                    android:text="@string/withdrawal"
                     android:textColor="@color/color_666666"
                     android:textSize="14sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/logout_title_text_view"/>
+                    app:layout_constraintEnd_toEndOf="@id/logout_text_view"
+                    app:layout_constraintTop_toBottomOf="@id/logout_text_view" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
