@@ -21,7 +21,7 @@ interface UserRepository {
     suspend fun findAccount(email: String, code: String): FormatResp
     suspend fun findPassword(user: FindPasswordReq): FormatResp
     suspend fun setNewPassword(password: String): Boolean
-    suspend fun me()
+    suspend fun me(): RespResult<Boolean>
     fun getAutoLoginFlag(): Boolean
     fun getAccount(): String
     fun getPasswrod(): String

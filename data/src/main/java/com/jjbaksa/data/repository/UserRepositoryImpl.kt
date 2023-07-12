@@ -124,7 +124,20 @@ class UserRepositoryImpl @Inject constructor(
         return result.isSuccessful && result.code() == 200
     }
 
-    override suspend fun me() {
+    override suspend fun me() : RespResult<Boolean> {
+        val response = userRemoteDataSource.me()
+        if (response.isSuccessful) {
+            return RespResult.Success(response.isSuccessful)
+        }
+//        else if (response.code() == 401){
+//            // todo token 재발급
+//            return
+//        }
+        else {
+            val errorBodyJson = response.errorBody()!!.string()
+            val errorBody = RespMapper.errorMapper(errorBodyJson)
+            return RespResult.Error(ErrorType(errorBody.errorMessage, errorBody.code))
+        }
     }
 
     override fun getAutoLoginFlag(): Boolean {

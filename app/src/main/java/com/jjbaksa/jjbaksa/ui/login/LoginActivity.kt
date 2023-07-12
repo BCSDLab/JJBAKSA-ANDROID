@@ -24,7 +24,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     val viewModel: LoginViewModel by viewModels()
     override fun initView() {
         binding.vm = viewModel
-        viewModel.getAutoLoginFlag()
+//        viewModel.getAutoLoginFlag()
     }
 
     override fun subscribe() {
@@ -74,7 +74,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                 goToFindPasswordActivity()
             }
             buttonLogin.setOnClickListener {
-                viewModel.login()
+                viewModel.login(binding.switchAutoLogin.isChecked)
             }
             editTextId.addTextChangedListener {
                 editTextId.background = getDrawable(R.drawable.shape_rect_eeeeee_solid_radius_100)
