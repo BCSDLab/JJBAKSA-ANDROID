@@ -11,6 +11,7 @@ import com.jjbaksa.data.model.user.LoginResp
 import com.jjbaksa.data.model.user.UserResp
 import com.jjbaksa.domain.resp.user.FindPasswordReq
 import com.jjbaksa.domain.resp.user.LoginReq
+import com.jjbaksa.domain.resp.user.PasswordAndNicknameReq
 import com.jjbaksa.domain.resp.user.SignUpReq
 import com.jjbaksa.domain.resp.user.SignUpResp
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -52,7 +53,7 @@ class UserLocalDataSource @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun setNewPassword(token: String, password: String): Response<UserResp> {
+    override suspend fun setNewPassword(token: String, item: PasswordAndNicknameReq): Response<UserResp> {
         TODO("Not yet implemented")
     }
 

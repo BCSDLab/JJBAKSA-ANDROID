@@ -97,9 +97,9 @@ class FindIdInputVerificationCodeFragment : BaseFragment<FragmentFindIdInputVeri
             viewLifecycleOwner
         ) {
             if (it.isSuccess) {
-                showSnackBar(requireContext(), getString(R.string.resend_verification_code_content))
+                showSnackBar(getString(R.string.resend_verification_code_content))
             } else {
-                showSnackBar(requireContext(), it.msg.toString())
+                showSnackBar(it.msg.toString())
             }
         }
 
@@ -116,7 +116,7 @@ class FindIdInputVerificationCodeFragment : BaseFragment<FragmentFindIdInputVeri
                         R.drawable.shape_rect_eeeeee_solid_radius_8_stroke_ff7f23
                     )
                 )
-                showSnackBar(requireContext(), it.msg.toString())
+                showSnackBar(it.msg.toString())
             }
         }
     }

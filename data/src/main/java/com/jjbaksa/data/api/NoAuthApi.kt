@@ -5,14 +5,18 @@ import com.jjbaksa.domain.resp.user.LoginReq
 import com.jjbaksa.data.model.user.LoginResp
 import com.jjbaksa.data.model.user.UserResp
 import com.jjbaksa.domain.resp.user.FindPasswordReq
+import com.jjbaksa.domain.resp.user.PasswordAndNicknameReq
 import com.jjbaksa.domain.resp.user.SignUpReq
 import com.jjbaksa.domain.resp.user.SignUpResp
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.Field
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
 import retrofit2.http.Header
+import retrofit2.http.Headers
+import retrofit2.http.PATCH
 
 interface NoAuthApi {
     @POST("user")
@@ -51,9 +55,9 @@ interface NoAuthApi {
         @Body findPasswordReq: FindPasswordReq
     ): Response<String>
 
-    @POST("user/check-password")
+    @PATCH("user/me")
     suspend fun setNewPassword(
         @Header("Authorization") token: String,
-        @Query("password") userPassword: String
+        @Body passwordAndNicknameReq : PasswordAndNicknameReq
     ): Response<UserResp>
 }

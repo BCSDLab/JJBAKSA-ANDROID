@@ -96,9 +96,9 @@ class FindPasswordInputCodeFragment : BaseFragment<FragmentFindPasswordInputCode
             viewLifecycleOwner
         ) {
             if (it.isSuccess) {
-                showSnackBar(requireContext(), getString(R.string.resend_verification_code))
+                showSnackBar(getString(R.string.resend_verification_code))
             } else {
-                showSnackBar(requireContext(), it.msg.toString())
+                showSnackBar(it.msg.toString())
             }
         }
         viewModel.verificationCodeResult.observe(
@@ -114,7 +114,7 @@ class FindPasswordInputCodeFragment : BaseFragment<FragmentFindPasswordInputCode
                         R.drawable.shape_rect_eeeeee_solid_radius_8_stroke_ff7f23
                     )
                 )
-                showSnackBar(requireContext(), it.msg.toString())
+                showSnackBar(it.msg.toString())
             }
         }
     }

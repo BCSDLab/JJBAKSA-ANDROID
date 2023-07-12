@@ -5,6 +5,7 @@ import com.jjbaksa.data.model.user.LoginResp
 import com.jjbaksa.data.model.user.UserResp
 import com.jjbaksa.domain.resp.user.FindPasswordReq
 import com.jjbaksa.domain.resp.user.LoginReq
+import com.jjbaksa.domain.resp.user.PasswordAndNicknameReq
 import com.jjbaksa.domain.resp.user.SignUpReq
 import com.jjbaksa.domain.resp.user.SignUpResp
 import retrofit2.Response
@@ -17,7 +18,7 @@ interface UserDataSource {
     suspend fun getPasswordVerificationCode(id: String, email: String): Response<Unit>
     suspend fun findAccount(email: String, code: String): Response<FindIdResp>
     suspend fun findPassword(findPasswordReq: FindPasswordReq): Response<String>
-    suspend fun setNewPassword(token: String, password: String): Response<UserResp>
+    suspend fun setNewPassword(token: String, item: PasswordAndNicknameReq): Response<UserResp>
     suspend fun saveAccessToken(accessToken: String)
     suspend fun saveAccount(account: String)
     suspend fun savePassword(password: String)
