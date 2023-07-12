@@ -5,6 +5,7 @@ import androidx.fragment.app.activityViewModels
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseFragment
 import com.jjbaksa.jjbaksa.databinding.FragmentFindIdInputVerificationCodeBinding
+import com.jjbaksa.jjbaksa.dialog.ConfirmDialog
 import com.jjbaksa.jjbaksa.ui.findid.viewmodel.FindIdViewModel
 import com.jjbaksa.jjbaksa.util.KeyboardProvider
 import dagger.hilt.android.AndroidEntryPoint
@@ -107,7 +108,12 @@ class FindIdInputVerificationCodeFragment : BaseFragment<FragmentFindIdInputVeri
             viewLifecycleOwner
         ) {
             if (it.isSuccess) {
-                FindIdCustomDialog().show(parentFragmentManager, FIND_ID_DIALOG_TAG)
+                ConfirmDialog(
+                    getString(R.string.success_find_account),
+                    "${viewModel.userEmail.value}으로 가입된 아이디는 ${viewModel.userIdInfo.value?.msg}입니다.",
+                    getString(R.string.complete),
+                    { activity?.finish() }
+                ).show(parentFragmentManager, FIND_ID_DIALOG_TAG)
             } else {
                 outlineState = true
                 binding.editTextContainer.setOutlineEditText(

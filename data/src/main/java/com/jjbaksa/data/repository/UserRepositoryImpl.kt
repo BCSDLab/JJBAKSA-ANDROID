@@ -1,6 +1,5 @@
 package com.jjbaksa.data.repository
 
-import android.util.Log
 import com.jjbaksa.data.SUCCESS
 import com.jjbaksa.data.datasource.local.UserLocalDataSource
 import com.jjbaksa.data.datasource.remote.UserRemoteDataSource
@@ -122,7 +121,7 @@ class UserRepositoryImpl @Inject constructor(
             "Bearer " + userLocalDataSource.getAuthPasswordToken(),
             item
         )
-        return if (response.isSuccessful && response.code() == 200){
+        return if (response.isSuccessful && response.code() == 200) {
             FormatResp(response.isSuccessful, null, response.code())
         } else {
             val errorBodyJson = response.errorBody()!!.string()

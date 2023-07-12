@@ -1,6 +1,5 @@
 package com.jjbaksa.jjbaksa.ui.findpassword
 
-import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import com.jjbaksa.jjbaksa.R
@@ -18,10 +17,6 @@ class FindPasswordResetFragment : BaseFragment<FragmentFindPasswordResetBinding>
 
     private var isFailNewPassword = false
     private var isFailCheckPassword = false
-
-    private val findPasswordCustomDialog by lazy {
-        FindPasswordCustomDialog()
-    }
 
     override fun initView() {
         val ft = parentFragmentManager.beginTransaction()

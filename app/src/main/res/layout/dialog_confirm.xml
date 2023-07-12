@@ -29,6 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="20dp"
+            android:gravity="center"
             tools:text="로그인이 실패되었습니다.로그인이 실패되었습니다.로그인이 실패되었습니다.로그인이 실패되었습니다."/>
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/confirm_dialog_button"

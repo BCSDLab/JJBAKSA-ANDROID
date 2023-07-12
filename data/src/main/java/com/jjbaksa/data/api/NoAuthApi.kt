@@ -10,12 +10,10 @@ import com.jjbaksa.domain.resp.user.SignUpReq
 import com.jjbaksa.domain.resp.user.SignUpResp
 import retrofit2.Response
 import retrofit2.http.Body
-import retrofit2.http.Field
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
 import retrofit2.http.Header
-import retrofit2.http.Headers
 import retrofit2.http.PATCH
 
 interface NoAuthApi {
@@ -58,6 +56,6 @@ interface NoAuthApi {
     @PATCH("user/me")
     suspend fun setNewPassword(
         @Header("Authorization") token: String,
-        @Body passwordAndNicknameReq : PasswordAndNicknameReq
+        @Body passwordAndNicknameReq: PasswordAndNicknameReq
     ): Response<UserResp>
 }
