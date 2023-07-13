@@ -13,7 +13,6 @@ import com.jjbaksa.jjbaksa.databinding.FragmentNaviHomeBinding
 import com.jjbaksa.jjbaksa.dialog.HomeAlertDialog
 import com.jjbaksa.jjbaksa.ui.mainpage.viewmodel.HomeViewModel
 import com.jjbaksa.jjbaksa.util.ColorObject
-import com.jjbaksa.jjbaksa.util.WindowProvider
 import com.jjbaksa.jjbaksa.util.hasPermission
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
@@ -31,8 +30,6 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
         get() = R.layout.fragment_navi_home
 
     override fun initView() {
-        WindowProvider(requireActivity()).clearStatusBar(requireActivity().getColor(R.color.color_00000000))
-
         val fm = childFragmentManager
         val mapFragment = fm.findFragmentById(R.id.map) as MapFragment?
             ?: MapFragment.newInstance().also {
@@ -187,6 +184,7 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
     private fun setLocationPermission(): Boolean {
         return requireContext().hasPermission((requireActivity() as MainPageActivity).locationPermissions)
     }
+
     private fun setIconColorAndTextColor(icon: ImageView, text: TextView, color: ColorStateList) {
         icon.imageTintList = color
         text.setTextColor(color)

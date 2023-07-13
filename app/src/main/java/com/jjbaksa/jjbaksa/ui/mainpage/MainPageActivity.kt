@@ -13,6 +13,7 @@ import com.jjbaksa.jjbaksa.ui.mainpage.sub.FusedLocationProvider
 import com.jjbaksa.jjbaksa.dialog.HomeAlertDialog
 import com.jjbaksa.jjbaksa.ui.mainpage.viewmodel.HomeViewModel
 import com.jjbaksa.jjbaksa.util.hasPermission
+import com.jjbaksa.jjbaksa.util.setStatusBarTransparent
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,9 +33,11 @@ class MainPageActivity : BaseActivity<ActivityMainPageBinding>() {
             isGranted.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
                 homeViewModel.requestLocation()
             }
+
             isGranted.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
                 homeViewModel.requestLocation()
             }
+
             else -> {
                 if (!shouldShowRequestPermissionRationale(locationPermissions[0]) &&
                     !shouldShowRequestPermissionRationale(locationPermissions[1])
@@ -48,6 +51,7 @@ class MainPageActivity : BaseActivity<ActivityMainPageBinding>() {
     override fun initView() {
         binding.lifecycleOwner = this
         homeViewModel.fusedLocationProvider = FusedLocationProvider(this, homeViewModel)
+        this.setStatusBarTransparent()
     }
 
     override fun subscribe() {}
