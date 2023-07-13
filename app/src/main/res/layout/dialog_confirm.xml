@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_marginTop="24dp"
-            android:textColor="@color/black"
+            android:textColor="@color/color_ff7f23"
             android:layout_marginHorizontal="20dp"
             tools:text="로그인이"/>
         <androidx.appcompat.widget.AppCompatTextView
@@ -29,6 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="20dp"
+            android:gravity="center"
             tools:text="로그인이 실패되었습니다.로그인이 실패되었습니다.로그인이 실패되었습니다.로그인이 실패되었습니다."/>
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/confirm_dialog_button"

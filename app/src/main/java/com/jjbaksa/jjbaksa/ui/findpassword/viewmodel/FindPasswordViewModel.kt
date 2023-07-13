@@ -28,8 +28,8 @@ class FindPasswordViewModel @Inject constructor(
     val stateBox: SingleLiveEvent<MutableList<Boolean>> get() = _stateBox
     private val _stateBoxNumber = SingleLiveEvent<MutableList<Int?>>()
     val stateBoxNumber: SingleLiveEvent<MutableList<Int?>> get() = _stateBoxNumber
-    private val _newPasswordResult = SingleLiveEvent<Boolean>()
-    val newPasswordResult: SingleLiveEvent<Boolean> get() = _newPasswordResult
+    private val _newPasswordResult = SingleLiveEvent<FormatResp>()
+    val newPasswordResult: SingleLiveEvent<FormatResp> get() = _newPasswordResult
 
     fun getUserInfo(id: String, email: String) {
         _userInfo.value = UserInfo(id, email)

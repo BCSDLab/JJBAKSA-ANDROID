@@ -54,7 +54,7 @@ class FindIdFragment : BaseFragment<FragmentFindIdBinding>() {
             if (it.isSuccess) {
                 findNavController().navigate(R.id.action_find_id_to_input_id_verification_code)
             } else {
-                showSnackBar(requireContext(), it.msg.toString())
+                showSnackBar(it.msg.toString())
                 binding.buttonFindIdSendToVerificationCode.isEnabled = false
                 binding.editTextFindIdToEmail.background = ContextCompat.getDrawable(
                     requireContext(),

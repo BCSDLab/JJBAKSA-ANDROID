@@ -8,6 +8,7 @@ import com.jjbaksa.data.model.user.LoginResp
 import com.jjbaksa.data.model.user.UserResp
 import com.jjbaksa.domain.resp.user.FindPasswordReq
 import com.jjbaksa.domain.resp.user.LoginReq
+import com.jjbaksa.domain.resp.user.PasswordAndNicknameReq
 import com.jjbaksa.domain.resp.user.SignUpReq
 import com.jjbaksa.domain.resp.user.SignUpResp
 import retrofit2.Response
@@ -45,8 +46,8 @@ class UserRemoteDataSource @Inject constructor(
         return noAuthApi.getPasswordVerificationCode(id, email)
     }
 
-    override suspend fun setNewPassword(token: String, password: String): Response<UserResp> {
-        return noAuthApi.setNewPassword(token, password)
+    override suspend fun setNewPassword(token: String, item: PasswordAndNicknameReq): Response<UserResp> {
+        return noAuthApi.setNewPassword(token, item)
     }
 
     override suspend fun saveAccessToken(accessToken: String) {
