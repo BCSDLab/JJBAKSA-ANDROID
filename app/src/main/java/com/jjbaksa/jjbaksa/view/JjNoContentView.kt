@@ -38,13 +38,10 @@ open class JjNoContentView @JvmOverloads constructor(
         }
     }
 
-
     private fun setTitle() {
         binding.titleTextView.text = title
     }
     private fun setContent() {
         binding.contentTextView.text = content
     }
-
-
 }

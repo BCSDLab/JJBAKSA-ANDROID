@@ -20,6 +20,7 @@
             tools:text="총 120개 북마크" />
 
         <com.jjbaksa.jjbaksa.view.JjNoContentView
+            android:id="@+id/jj_no_content_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="149dp"
