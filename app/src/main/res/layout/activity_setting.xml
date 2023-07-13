@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="view"
+            type="com.jjbaksa.jjbaksa.ui.setting.SettingActivity" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.setting.SettingActivity">
+
+        <com.jjbaksa.jjbaksa.view.JjAppbar
+            android:id="@+id/jj_app_bar_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="@string/setting"
+            app:titleSize="18sp"
+            app:titleTextColor="@color/color_000000" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/jj_app_bar_container">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/manage_account_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="17dp"
+                    android:layout_marginTop="29dp"
+                    android:text="@string/manage_account"
+                    android:textColor="@color/color_ff7f23"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/change_password_text_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginEnd="12dp"
+                    android:drawableEnd="@drawable/ic_right_arrow"
+                    android:padding="4dp"
+                    android:text="@string/change_password"
+                    android:textColor="@color/color_000000"
+                    android:onClick="@{() -> view.goToChangePassword()}"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/manage_account_text_view"
+                    app:layout_constraintTop_toBottomOf="@id/manage_account_text_view" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/privacy_policy_text_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginEnd="12dp"
+                    android:drawableEnd="@drawable/ic_external_link"
+                    android:padding="4dp"
+                    android:text="@string/privacy_policy"
+                    android:textColor="@color/color_000000"
+                    android:onClick="@{() -> view.goToPrivacyPolicy()}"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/change_password_text_view"
+                    app:layout_constraintTop_toBottomOf="@id/change_password_text_view" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/service_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="17dp"
+                    android:layout_marginTop="48dp"
+                    android:text="@string/service"
+                    android:textColor="@color/color_ff7f23"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/privacy_policy_text_view" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/notice_text_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginEnd="12dp"
+                    android:drawableEnd="@drawable/ic_external_link"
+                    android:padding="4dp"
+                    android:text="@string/notice"
+                    android:textColor="@color/color_000000"
+                    android:textSize="16sp"
+                    android:onClick="@{() -> view.goToNotice()}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/service_text_view"
+                    app:layout_constraintTop_toBottomOf="@id/service_text_view" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/inquiry_text_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginEnd="12dp"
+                    android:drawableEnd="@drawable/ic_external_link"
+                    android:padding="4dp"
+                    android:text="@string/inquiry"
+                    android:textColor="@color/color_000000"
+                    android:onClick="@{() -> view.goToInquiry()}"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/service_text_view"
+                    app:layout_constraintTop_toBottomOf="@id/notice_text_view" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/app_version_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginStart="4dp"
+                    android:text="@string/app_version"
+                    android:textColor="@color/color_000000"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="@id/service_text_view"
+                    app:layout_constraintTop_toBottomOf="@id/inquiry_text_view" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/app_version_error_image_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    app:layout_constraintBottom_toBottomOf="@id/app_version_text_view"
+                    app:layout_constraintStart_toEndOf="@+id/app_version_text_view"
+                    app:layout_constraintTop_toTopOf="@id/app_version_text_view"
+                    app:srcCompat="@drawable/ic_error" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/app_version_content_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="18dp"
+                    android:text="@string/app_version"
+                    android:textColor="@color/color_ff7f23"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="@id/app_version_text_view"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/app_version_text_view" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/logout_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:text="@string/logout"
+                    android:textColor="@color/color_000000"
+                    android:onClick="@{() -> view.logout()}"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/service_text_view"
+                    app:layout_constraintTop_toBottomOf="@id/app_version_text_view"
+                    app:layout_constraintVertical_bias="0.85" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/withdraw_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="4dp"
+                    android:onClick="@{() -> view.withdraw()}"
+                    android:padding="6dp"
+                    android:text="@string/withdrawal"
+                    android:textColor="@color/color_666666"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="@id/logout_text_view"
+                    app:layout_constraintTop_toBottomOf="@id/logout_text_view" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
