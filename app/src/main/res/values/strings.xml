@@ -100,4 +100,11 @@
 
     <string name="move_setting">설정으로 이동</string>
     <string name="location_service_term_text">위치 서비스를 사용할 수 없습니다. 기기의 \'설정\'에서 위치 서비스를 켜주세요.(필수권한)</string>
+    
+    <string name="review">리뷰</string>
+    <string name="bookmark">북마크</string>
+    <string name="no_review_title">등록된 리뷰가 없어요.</string>
+    <string name="no_review_content">다녀온 음식점의 리뷰를 작성해 보세요!</string>
+    <string name="no_bookmark_title">등록된 북마크가 없어요.</string>
+    <string name="no_bookmark_content">새로운 음식점을 저장해 보세요!</string>
 </resources>
