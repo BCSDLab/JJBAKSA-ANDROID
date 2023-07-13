@@ -12,6 +12,7 @@
     <string name="find_id">아이디 찾기</string>
     <string name="find_password">비밀번호 찾기</string>
     <string name="complete_find_password">비밀번호 찾기 완료</string>
+    <string name="success_change_password">비밀번호 변경 완료</string>
     <string name="retry_password">재설정된 비밀번호로 다시 로그인해 주세요.</string>
     <string name="underline_sign_up"><u>회원가입</u></string>
     <string name="underline_find_id"><u>아이디 찾기</u></string>
@@ -42,6 +43,8 @@
     <string name="input_email">이메일을 입력해 주세요.</string>
     <string name="short_input_email">이메일 입력</string>
     <string name="input_password">비밀번호를 입력하세요.</string>
+    <string name="check_new_password">새 비밀번호 확인</string>
+    <string name="input_new_password">새 비밀번호를 입력하세요.</string>
     <string name="set_new_password">새 비밀번호를 설정해 주세요.</string>
     <string name="send_to_verification_number">인증번호 보내기</string>
     <string name="verification_completed">인증 완료</string>
@@ -81,7 +84,9 @@
 
     <string name="id_check">중복확인</string>
     <string name="email">이메일</string>
+    <string name="current_password">현재 비밀번호</string>
     <string name="password_confirm">비밀번호 확인</string>
+    <string name="change_password_content">비밀번호 변경하기</string>
     <string name="change_password">비밀번호 변경</string>
     <string name="type_nickname">닉네임을 입력해주세요.</string>
     <string name="main_page_search_edit_text_hint">검색어를 입력해주세요.</string>
@@ -100,7 +105,7 @@
 
     <string name="move_setting">설정으로 이동</string>
     <string name="location_service_term_text">위치 서비스를 사용할 수 없습니다. 기기의 \'설정\'에서 위치 서비스를 켜주세요.(필수권한)</string>
-    
+
     <string name="review">리뷰</string>
     <string name="bookmark">북마크</string>
     <string name="no_review_title">등록된 리뷰가 없어요.</string>
