@@ -26,6 +26,11 @@ interface NoAuthApi {
     suspend fun checkIdAvailable(
         @Query("account") page: String
     ): Response<Unit>
+    @POST("user/check-password")
+    suspend fun checkPassword(
+        @Header("Authorization") token: String,
+        @Query("password") password: String
+    ): Response<Unit>
 
     @POST("user/login")
     suspend fun login(

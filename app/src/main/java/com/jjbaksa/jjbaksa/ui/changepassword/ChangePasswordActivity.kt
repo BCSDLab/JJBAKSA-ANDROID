@@ -1,15 +1,18 @@
 package com.jjbaksa.jjbaksa.ui.changepassword
 
+import androidx.activity.viewModels
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseActivity
 import com.jjbaksa.jjbaksa.databinding.ActivityChangePasswordBinding
 import com.jjbaksa.jjbaksa.dialog.ConfirmDialog
+import com.jjbaksa.jjbaksa.ui.changepassword.viewmodel.ChangePasswordViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ChangePasswordActivity : BaseActivity<ActivityChangePasswordBinding>() {
     override val layoutId: Int
         get() = R.layout.activity_change_password
+    private val viewModel: ChangePasswordViewModel by viewModels()
 
     override fun initView() {
         binding.jjAppBarContainer.setOnClickListener { finish() }
