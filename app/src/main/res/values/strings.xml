@@ -46,6 +46,7 @@
     <string name="check_new_password">새 비밀번호 확인</string>
     <string name="input_new_password">새 비밀번호를 입력하세요.</string>
     <string name="set_new_password">새 비밀번호를 설정해 주세요.</string>
+    <string name="not_match_new_password">새 비밀번호가 일치하지 않습니다.</string>
     <string name="send_to_verification_number">인증번호 보내기</string>
     <string name="verification_completed">인증 완료</string>
     <string name="input_verification_code_from_email">이메일로 발송된\n인증번호를 입력해 주세요.</string>
