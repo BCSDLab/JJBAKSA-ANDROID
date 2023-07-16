@@ -41,6 +41,9 @@ class ChangePasswordActivity : BaseActivity<ActivityChangePasswordBinding>() {
                     binding.newPasswordEditText.editTextBackground = failButtonBackground()
                     binding.checkNewPasswordEditText.editTextBackground = failButtonBackground()
                     isFailedNewPassword = true
+                } else {
+                    viewModel.setNewPassword(binding.newPasswordEditText.editTextText)
+                }
             }
         }
         viewModel.isEnableButton.observe(this) {

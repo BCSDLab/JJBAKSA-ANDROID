@@ -84,7 +84,6 @@ class UserRepositoryImpl @Inject constructor(
             "Bearer " + userLocalDataSource.getAccessToken(),
             password
         )
-        Log.d("로그", "response : $response")
         return if (response.isSuccessful && response.code() == 200) {
             RespResult.Success(response.isSuccessful)
         } else {
@@ -133,8 +132,9 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun setNewPassword(password: String): FormatResp {
         val item = PasswordAndNicknameReq(password, null)
+        val token = userLocalDataSource.getAuthPasswordToken().ifEmpty { userLocalDataSource.getAccessToken() }
         val response = userRemoteDataSource.setNewPassword(
-            "Bearer " + userLocalDataSource.getAuthPasswordToken(),
+            "Bearer $token",
             item
         )
         return if (response.isSuccessful && response.code() == 200) {
