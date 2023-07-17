@@ -145,7 +145,16 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun me() {
+    override suspend fun me(): RespResult<Boolean> {
+        val response = userRemoteDataSource.me()
+
+        return if (response.isSuccessful) {
+            RespResult.Success(response.isSuccessful)
+        } else {
+            val errorBodyJson = response.errorBody()!!.string()
+            val errorBody = RespMapper.errorMapper(errorBodyJson)
+            RespResult.Error(ErrorType(errorBody.errorMessage, errorBody.code))
+        }
     }
 
     override fun getAutoLoginFlag(): Boolean {
