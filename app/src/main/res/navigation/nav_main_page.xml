@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/mypage"
-        android:name="com.jjbaksa.jjbaksa.ui.mainpage.NaviMyPageFragment"
+        android:name="com.jjbaksa.jjbaksa.ui.mainpage.mypage.NaviMyPageFragment"
         android:label="MyPage"
         tools:layout="@layout/fragment_navi_my_page" />
 

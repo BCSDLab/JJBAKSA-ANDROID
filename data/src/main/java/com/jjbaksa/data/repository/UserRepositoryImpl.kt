@@ -14,6 +14,7 @@ import com.jjbaksa.domain.resp.user.LoginResult
 import com.jjbaksa.domain.resp.user.SignUpReq
 import com.jjbaksa.domain.resp.user.SignUpResp
 import com.jjbaksa.domain.resp.user.FindPasswordReq
+import com.jjbaksa.domain.resp.user.PasswordAndNicknameReq
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
@@ -78,6 +79,21 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun checkPassword(password: String): RespResult<Boolean> {
+        val response = userRemoteDataSource.checkPassword(
+            "Bearer " + userLocalDataSource.getAccessToken(),
+            password
+        )
+        Log.d("로그", "response : $response")
+        return if (response.isSuccessful && response.code() == 200) {
+            RespResult.Success(response.isSuccessful)
+        } else {
+            val errorBodyJson = response.errorBody()!!.string()
+            val errorBody = RespMapper.errorMapper(errorBodyJson)
+            RespResult.Error(ErrorType(errorBody.errorMessage, errorBody.code))
+        }
+    }
+
     override suspend fun getPasswordVerificationCode(
         id: String,
         email: String
@@ -115,16 +131,22 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun setNewPassword(password: String): Boolean {
-        val result = userRemoteDataSource.setNewPassword(
+    override suspend fun setNewPassword(password: String): FormatResp {
+        val item = PasswordAndNicknameReq(password, null)
+        val response = userRemoteDataSource.setNewPassword(
             "Bearer " + userLocalDataSource.getAuthPasswordToken(),
-            password
+            item
         )
-        Log.d("로그", "setNewPassword() result : $result")
-        return result.isSuccessful && result.code() == 200
+        return if (response.isSuccessful && response.code() == 200) {
+            FormatResp(response.isSuccessful, null, response.code())
+        } else {
+            val errorBodyJson = response.errorBody()!!.string()
+            val errorBody = RespMapper.errorMapper(errorBodyJson)
+            FormatResp(response.isSuccessful, errorBody.errorMessage, response.code())
+        }
     }
 
-    override suspend fun me() : RespResult<Boolean> {
+    override suspend fun me(): RespResult<Boolean> {
         val response = userRemoteDataSource.me()
         if (response.isSuccessful) {
             return RespResult.Success(response.isSuccessful)

@@ -2,10 +2,12 @@ package com.jjbaksa.jjbaksa.base
 
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import com.google.android.material.snackbar.Snackbar
 import com.jjbaksa.jjbaksa.dialog.LoadingDialog
 
 abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
@@ -44,5 +46,18 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
     fun dismissLoading() {
         loadingDialog?.dismiss()
         loadingDialog = null
+    }
+
+    fun showSnackBar(msg: String, actionMsg: String) {
+        Snackbar.make(binding.root, msg, Snackbar.LENGTH_SHORT).also {
+            it.setAction(
+                actionMsg,
+                object : View.OnClickListener {
+                    override fun onClick(v: View?) {
+                        it.dismiss()
+                    }
+                }
+            )
+        }.show()
     }
 }

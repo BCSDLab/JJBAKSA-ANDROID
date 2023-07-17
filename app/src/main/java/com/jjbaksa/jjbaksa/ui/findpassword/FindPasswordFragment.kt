@@ -117,13 +117,13 @@ class FindPasswordFragment() : BaseFragment<FragmentFindPasswordBinding>() {
                 outlineState = true
                 KeyboardProvider().hideKeyboard(requireContext(), binding.inputEmailEditText)
                 if (it.msg.toString().contains(USER)) {
-                    showSnackBar(requireContext(), getString(R.string.fail_id))
+                    showSnackBar(getString(R.string.fail_id))
                     changeEditTextOutlineColor(binding.inputIdEditText)
                 } else if (it.msg.toString().contains(EMAIL)) {
-                    showSnackBar(requireContext(), getString(R.string.fail_email))
+                    showSnackBar(getString(R.string.fail_email))
                     changeEditTextOutlineColor(binding.inputEmailEditText)
                 } else {
-                    showSnackBar(requireContext(), it.msg.toString())
+                    showSnackBar(it.msg.toString())
                 }
             }
         }

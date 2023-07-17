@@ -10,8 +10,8 @@
         <item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:tagetApi="l">@color/white</item>
-        <item name="android:windowLightStatusBar" tools:tagetApi="m">true</item>
+        <item name="android:statusBarColor">@color/color_00000000</item>
+        <item name="android:windowLightStatusBar">true</item>
         <!-- Customize your theme here. -->
     </style>
     <style name="TopRoundBottomDialog"  parent="Theme.Design.BottomSheetDialog">

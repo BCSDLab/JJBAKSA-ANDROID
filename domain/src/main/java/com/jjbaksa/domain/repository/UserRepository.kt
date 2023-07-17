@@ -16,11 +16,13 @@ interface UserRepository {
         isAutoLogin: Boolean,
         onResult: (LoginResult) -> Unit
     )
+
     suspend fun checkAuthEmail(email: String): FormatResp
+    suspend fun checkPassword(password: String): RespResult<Boolean>
     suspend fun getPasswordVerificationCode(id: String, email: String): FormatResp
     suspend fun findAccount(email: String, code: String): FormatResp
     suspend fun findPassword(user: FindPasswordReq): FormatResp
-    suspend fun setNewPassword(password: String): Boolean
+    suspend fun setNewPassword(password: String): FormatResp
     suspend fun me(): RespResult<Boolean>
     fun getAutoLoginFlag(): Boolean
     fun getAccount(): String

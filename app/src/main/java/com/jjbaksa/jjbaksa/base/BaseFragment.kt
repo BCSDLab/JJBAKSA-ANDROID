@@ -1,6 +1,5 @@
 package com.jjbaksa.jjbaksa.base
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -84,8 +83,8 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
         loadingDialog?.dismiss()
         loadingDialog = null
     }
-    fun showSnackBar(context: Context, msg: String) {
-        Snackbar.make(context, binding.root, msg, Snackbar.LENGTH_SHORT).also {
+    fun showSnackBar(msg: String) {
+        Snackbar.make(binding.root, msg, Snackbar.LENGTH_SHORT).also {
             it.setAction(
                 R.string.close,
                 object : OnClickListener {
