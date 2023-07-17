@@ -1,6 +1,5 @@
 package com.jjbaksa.jjbaksa.ui.splash.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -18,8 +17,8 @@ class SplashViewModel @Inject constructor(
     private var _autoLogin = MutableLiveData<Boolean>()
     val autoLogin: LiveData<Boolean> get() = _autoLogin
 
-    private var _authLoginState = MutableLiveData<Boolean>()
-    val authLoginState: LiveData<Boolean> get() = _authLoginState
+    private var _authLoginState = MutableLiveData<RespResult<Boolean>>()
+    val authLoginState: LiveData<RespResult<Boolean>> get() = _authLoginState
 
     fun getAutoLogin() {
         _autoLogin.value = repository.getAutoLoginFlag()
@@ -30,16 +29,8 @@ class SplashViewModel @Inject constructor(
             runCatching {
                 repository.me()
             }.onSuccess {
-                when(it) {
-                    is RespResult.Success -> {
-                        _authLoginState.value = it.data!!
-                    }
-                    is RespResult.Error -> {
-                        Log.d("로그", "errorMessage : ${it.errorType.errorMessage}")
-                        Log.d("로그", "errorCode : ${it.errorType.code}")
-                    }
-                }
-            }.onFailure {  }
+                _authLoginState.value = it
+            }.onFailure { }
         }
     }
 }

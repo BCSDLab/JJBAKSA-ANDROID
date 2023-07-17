@@ -5,7 +5,6 @@ import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
-import com.google.android.material.snackbar.Snackbar
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseActivity
 import com.jjbaksa.jjbaksa.databinding.ActivityLoginBinding
@@ -36,17 +35,13 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                         goToMainActivity()
                     } else {
                         if (it.erroMessage.isNotEmpty()) {
-                            showSnackBar(it.erroMessage)
+                            showSnackBar(it.erroMessage, getString(R.string.cancel))
                             setEditTextErrorUI()
                         }
                     }
                 }
             }
         }
-    }
-
-    fun showSnackBar(msg: String) {
-        Snackbar.make(binding.root, msg, Snackbar.LENGTH_SHORT).show()
     }
 
     private fun setEditTextErrorUI() {

@@ -148,17 +148,13 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun me(): RespResult<Boolean> {
         val response = userRemoteDataSource.me()
-        if (response.isSuccessful) {
-            return RespResult.Success(response.isSuccessful)
-        }
-//        else if (response.code() == 401){
-//            // todo token 재발급
-//            return
-//        }
-        else {
+
+        return if (response.isSuccessful) {
+            RespResult.Success(response.isSuccessful)
+        } else {
             val errorBodyJson = response.errorBody()!!.string()
             val errorBody = RespMapper.errorMapper(errorBodyJson)
-            return RespResult.Error(ErrorType(errorBody.errorMessage, errorBody.code))
+            RespResult.Error(ErrorType(errorBody.errorMessage, errorBody.code))
         }
     }
 

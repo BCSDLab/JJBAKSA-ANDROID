@@ -1,11 +1,9 @@
 package com.jjbaksa.jjbaksa.ui.splash
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import com.jjbaksa.domain.base.RespResult
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseActivity
 import com.jjbaksa.jjbaksa.databinding.ActivitySplashBinding
@@ -19,14 +17,16 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     override val layoutId: Int
         get() = R.layout.activity_splash
 
-    private val viewModel:SplashViewModel by viewModels()
+    private val viewModel: SplashViewModel by viewModels()
 
-    private val loginResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-        // LoginActivity Result Handle
-    }
-    private val mainResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-        // MainPageActivity Result Handle
-    }
+    private val loginResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            // LoginActivity Result Handle
+        }
+    private val mainResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            // MainPageActivity Result Handle
+        }
 
     override fun initView() {
         observeData()
@@ -44,16 +44,34 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
             if (isLogin) {
                 viewModel.getAccessToken()
             } else {
-                loginResult.launch(Intent(this, LoginActivity::class.java))
+                goToLoginActivity()
+                finish()
             }
         }
         viewModel.authLoginState.observe(this) {
-            if (it) {
-                mainResult.launch(Intent(this, MainPageActivity::class.java))
-                finish()
-            } else {
-
+            when (it) {
+                is RespResult.Success -> {
+                    if (it.data) {
+                        goToMainActivity()
+                        finish()
+                    } else {
+                        goToLoginActivity()
+                        finish()
+                    }
+                }
+                is RespResult.Error -> {
+                    showSnackBar(it.errorType.errorMessage, getString(R.string.cancel))
+                    goToLoginActivity()
+                    finish()
+                }
             }
         }
+    }
+
+    private fun goToLoginActivity() {
+        loginResult.launch(Intent(this, LoginActivity::class.java))
+    }
+    private fun goToMainActivity() {
+        mainResult.launch(Intent(this, MainPageActivity::class.java))
     }
 }
