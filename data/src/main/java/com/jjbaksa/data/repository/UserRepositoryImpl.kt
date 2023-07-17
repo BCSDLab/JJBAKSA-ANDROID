@@ -78,17 +78,17 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun checkPassword(password: String): RespResult<Boolean> {
+    override suspend fun checkPassword(password: String): FormatResp {
         val response = userRemoteDataSource.checkPassword(
             "Bearer " + userLocalDataSource.getAccessToken(),
             password
         )
         return if (response.isSuccessful && response.code() == 200) {
-            RespResult.Success(response.isSuccessful)
+            FormatResp(response.isSuccessful, null, response.code())
         } else {
             val errorBodyJson = response.errorBody()!!.string()
             val errorBody = RespMapper.errorMapper(errorBodyJson)
-            RespResult.Error(ErrorType(errorBody.errorMessage, errorBody.code))
+            FormatResp(response.isSuccessful, errorBody.errorMessage, errorBody.code)
         }
     }
 

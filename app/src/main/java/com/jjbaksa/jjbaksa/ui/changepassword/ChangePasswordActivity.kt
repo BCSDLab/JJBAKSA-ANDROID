@@ -29,9 +29,10 @@ class ChangePasswordActivity : BaseActivity<ActivityChangePasswordBinding>() {
 
     private fun observeData() {
         viewModel.currentPasswordState.observe(this) {
-            isFailedCurrentPassword = !it
-            if (!it) {
+            isFailedCurrentPassword = !it.isSuccess
+            if (isFailedCurrentPassword) {
                 binding.currentPasswordEditText.editTextBackground = failButtonBackground()
+                showSnackBar(it.msg.toString(), getString(R.string.cancel))
             } else {
                 if (newPasswordText != checkPasswordText) {
                     showSnackBar(
@@ -44,6 +45,16 @@ class ChangePasswordActivity : BaseActivity<ActivityChangePasswordBinding>() {
                 } else {
                     viewModel.setNewPassword(binding.newPasswordEditText.editTextText)
                 }
+            }
+        }
+        viewModel.newPasswordState.observe(this) {
+            if (it.isSuccess) {
+                setConfirmDialog()
+            } else {
+                showSnackBar(it.msg.toString(), getString(R.string.cancel))
+                binding.newPasswordEditText.editTextBackground = failButtonBackground()
+                binding.checkNewPasswordEditText.editTextBackground = failButtonBackground()
+                isFailedNewPassword = true
             }
         }
         viewModel.isEnableButton.observe(this) {

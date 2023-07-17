@@ -18,7 +18,7 @@ interface UserRepository {
     )
 
     suspend fun checkAuthEmail(email: String): FormatResp
-    suspend fun checkPassword(password: String): RespResult<Boolean>
+    suspend fun checkPassword(password: String): FormatResp
     suspend fun getPasswordVerificationCode(id: String, email: String): FormatResp
     suspend fun findAccount(email: String, code: String): FormatResp
     suspend fun findPassword(user: FindPasswordReq): FormatResp
