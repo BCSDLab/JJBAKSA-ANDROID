@@ -1,7 +1,6 @@
 package com.jjbaksa.jjbaksa.ui.changepassword.viewmodel
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -38,9 +37,7 @@ class ChangePasswordViewModel @Inject constructor(
                         Log.d("로그", "checkPassword Error code : ${it.errorType.code}")
                     }
                 }
-            }.onFailure {
-
-            }
+            }.onFailure { }
         }
     }
 

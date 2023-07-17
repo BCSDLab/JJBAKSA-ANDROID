@@ -6,6 +6,7 @@ data class UserResp(
     var id: Long,
     var nickname: String,
     var oauthType: String,
+    var profileImage: UserProfileResp,
     var userCountResp: UserCountResp,
     var userType: String
 )

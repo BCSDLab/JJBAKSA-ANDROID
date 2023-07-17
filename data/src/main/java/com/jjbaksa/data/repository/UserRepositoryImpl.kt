@@ -1,6 +1,5 @@
 package com.jjbaksa.data.repository
 
-import android.util.Log
 import com.jjbaksa.data.SUCCESS
 import com.jjbaksa.data.datasource.local.UserLocalDataSource
 import com.jjbaksa.data.datasource.remote.UserRemoteDataSource
