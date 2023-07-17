@@ -15,6 +15,7 @@ interface UserDataSource {
     suspend fun checkAccountAvailable(account: String): Response<Unit>
     suspend fun postLogin(loginReq: LoginReq): Response<LoginResp>?
     suspend fun checkAuthEmail(email: String): Response<Unit>
+    suspend fun checkPassword(password: String, token: String): Response<Unit>
     suspend fun getPasswordVerificationCode(id: String, email: String): Response<Unit>
     suspend fun findAccount(email: String, code: String): Response<FindIdResp>
     suspend fun findPassword(findPasswordReq: FindPasswordReq): Response<String>

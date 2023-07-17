@@ -3,6 +3,7 @@
 
     <attr name="title" format="reference|string" />
     <attr name="titleSize" format="reference|dimension" />
+    <attr name="content" format="reference|string"/>
 
     <declare-styleable name="JjAppbar">
         <attr name="title"/>
@@ -45,4 +46,10 @@
 
     <declare-styleable name="JjSmallEditText">
     </declare-styleable>
+
+    <declare-styleable name="JjNoContentView">
+        <attr name="title"/>
+        <attr name="content"/>
+    </declare-styleable>
+
 </resources>

@@ -1,9 +1,11 @@
 package com.jjbaksa.jjbaksa.ui.setting
 
+import android.content.Intent
 import androidx.activity.viewModels
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseActivity
 import com.jjbaksa.jjbaksa.databinding.ActivitySettingBinding
+import com.jjbaksa.jjbaksa.ui.changepassword.ChangePasswordActivity
 import com.jjbaksa.jjbaksa.ui.setting.viewmodel.SettingViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -28,7 +30,9 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
         binding.jjAppBarContainer.setOnClickListener { finish() }
     }
 
-    fun goToChangePassword() { }
+    fun goToChangePassword() {
+        startActivity(Intent(this, ChangePasswordActivity::class.java))
+    }
     fun goToPrivacyPolicy() { }
     fun goToNotice() { }
     fun goToInquiry() { }

@@ -26,6 +26,10 @@ class UserRemoteDataSource @Inject constructor(
         return noAuthApi.checkIdAvailable(account)
     }
 
+    override suspend fun checkPassword(token: String, password: String): Response<Unit> {
+        return noAuthApi.checkPassword(token, password)
+    }
+
     override suspend fun postLogin(loginReq: LoginReq): Response<LoginResp>? {
         return noAuthApi.login(loginReq)
     }
@@ -46,7 +50,10 @@ class UserRemoteDataSource @Inject constructor(
         return noAuthApi.getPasswordVerificationCode(id, email)
     }
 
-    override suspend fun setNewPassword(token: String, item: PasswordAndNicknameReq): Response<UserResp> {
+    override suspend fun setNewPassword(
+        token: String,
+        item: PasswordAndNicknameReq
+    ): Response<UserResp> {
         return noAuthApi.setNewPassword(token, item)
     }
 
@@ -87,6 +94,7 @@ class UserRemoteDataSource @Inject constructor(
     override fun getAccessToken(): String {
         return ""
     }
+
     override fun getAuthPasswordToken(): String {
         return ""
     }

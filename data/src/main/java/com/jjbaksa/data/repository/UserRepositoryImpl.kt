@@ -1,5 +1,6 @@
 package com.jjbaksa.data.repository
 
+import android.util.Log
 import com.jjbaksa.data.SUCCESS
 import com.jjbaksa.data.datasource.local.UserLocalDataSource
 import com.jjbaksa.data.datasource.remote.UserRemoteDataSource
@@ -75,6 +76,21 @@ class UserRepositoryImpl @Inject constructor(
             val errorBodyJson = result.errorBody()!!.string()
             val errorBody = RespMapper.errorMapper(errorBodyJson)
             FormatResp(result.isSuccessful, errorBody.errorMessage, result.code())
+        }
+    }
+
+    override suspend fun checkPassword(password: String): RespResult<Boolean> {
+        val response = userRemoteDataSource.checkPassword(
+            "Bearer " + userLocalDataSource.getAccessToken(),
+            password
+        )
+        Log.d("로그", "response : $response")
+        return if (response.isSuccessful && response.code() == 200) {
+            RespResult.Success(response.isSuccessful)
+        } else {
+            val errorBodyJson = response.errorBody()!!.string()
+            val errorBody = RespMapper.errorMapper(errorBodyJson)
+            RespResult.Error(ErrorType(errorBody.errorMessage, errorBody.code))
         }
     }
 

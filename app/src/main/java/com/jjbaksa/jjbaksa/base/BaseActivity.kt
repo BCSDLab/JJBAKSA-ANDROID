@@ -1,6 +1,5 @@
 package com.jjbaksa.jjbaksa.base
 
-import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
@@ -49,8 +48,8 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
         loadingDialog = null
     }
 
-    fun showSnackBar(context: Context, msg: String, actionMsg: String) {
-        Snackbar.make(context, binding.root, msg, Snackbar.LENGTH_SHORT).also {
+    fun showSnackBar(msg: String, actionMsg: String) {
+        Snackbar.make(binding.root, msg, Snackbar.LENGTH_SHORT).also {
             it.setAction(
                 actionMsg,
                 object : View.OnClickListener {
