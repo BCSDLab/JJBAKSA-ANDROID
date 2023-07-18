@@ -73,6 +73,24 @@ class UserLocalDataSource @Inject constructor(
         }
     }
 
+    override suspend fun saveNickname(nickname: String) {
+        dataStore.edit {
+            it[PreferenceKeys.NICKNAME] = nickname
+        }
+    }
+
+    override suspend fun saveFollowers(followers: Int) {
+        dataStore.edit {
+            it[PreferenceKeys.FOLLOWERS] = followers
+        }
+    }
+
+    override suspend fun saveProfileImage(image: String) {
+        dataStore.edit {
+            it[PreferenceKeys.IMAGE] = image
+        }
+    }
+
     override suspend fun savePassword(password: String) {
         dataStore.edit {
             it[PreferenceKeys.PASSWORD] = password
@@ -103,9 +121,27 @@ class UserLocalDataSource @Inject constructor(
         }
     }
 
-    override fun getAcount(): String {
+    override fun getAccount(): String {
         return runBlocking {
             dataStore.data.first()[PreferenceKeys.ACCOUNT] ?: ""
+        }
+    }
+
+    override fun getNickname(): String {
+        return runBlocking {
+            dataStore.data.first()[PreferenceKeys.NICKNAME] ?: ""
+        }
+    }
+
+    override fun getFollowers(): Int {
+        return runBlocking {
+            dataStore.data.first()[PreferenceKeys.FOLLOWERS] ?: 0
+        }
+    }
+
+    override fun getProfileImage(): String {
+        return runBlocking {
+            dataStore.data.first()[PreferenceKeys.IMAGE] ?: ""
         }
     }
 

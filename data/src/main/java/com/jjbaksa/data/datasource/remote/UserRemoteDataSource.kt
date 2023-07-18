@@ -63,6 +63,15 @@ class UserRemoteDataSource @Inject constructor(
     override suspend fun saveAccount(account: String) {
     }
 
+    override suspend fun saveNickname(nickname: String) {
+    }
+
+    override suspend fun saveFollowers(followers: Int) {
+    }
+
+    override suspend fun saveProfileImage(image: String) {
+    }
+
     override suspend fun savePassword(password: String) {
     }
 
@@ -83,7 +92,19 @@ class UserRemoteDataSource @Inject constructor(
         return false
     }
 
-    override fun getAcount(): String {
+    override fun getAccount(): String {
+        return ""
+    }
+
+    override fun getNickname(): String {
+        return ""
+    }
+
+    override fun getFollowers(): Int {
+        return 0
+    }
+
+    override fun getProfileImage(): String {
         return ""
     }
 

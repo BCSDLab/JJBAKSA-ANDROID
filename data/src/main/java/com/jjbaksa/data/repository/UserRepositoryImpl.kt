@@ -42,7 +42,6 @@ class UserRepositoryImpl @Inject constructor(
         isAutoLogin: Boolean,
         onResult: (LoginResult) -> Unit
     ) {
-
         val response = userRemoteDataSource.postLogin(LoginReq(account, password))
 
         if (response != null) {
@@ -147,8 +146,10 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun me(): RespResult<Boolean> {
         val response = userRemoteDataSource.me()
-
         return if (response.isSuccessful) {
+            userLocalDataSource.saveNickname(response.body()?.nickname ?: "")
+            userLocalDataSource.saveFollowers(response.body()?.userCountResp?.friendCount ?: 0)
+            userLocalDataSource.saveProfileImage(response.body()?.profileImage?.path ?: "")
             RespResult.Success(response.isSuccessful)
         } else {
             val errorBodyJson = response.errorBody()!!.string()
@@ -162,10 +163,22 @@ class UserRepositoryImpl @Inject constructor(
     }
 
     override fun getAccount(): String {
-        return userLocalDataSource.getAcount()
+        return userLocalDataSource.getAccount()
     }
 
-    override fun getPasswrod(): String {
+    override fun getNickname(): String {
+        return userLocalDataSource.getNickname()
+    }
+
+    override fun getFollowers(): Int {
+        return userLocalDataSource.getFollowers()
+    }
+
+    override fun getProfileImage(): String {
+        return userLocalDataSource.getProfileImage()
+    }
+
+    override fun getPassword(): String {
         return userLocalDataSource.getPassword()
     }
 

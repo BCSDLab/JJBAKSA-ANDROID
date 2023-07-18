@@ -8,6 +8,9 @@
         <variable
             name="view"
             type="com.jjbaksa.jjbaksa.ui.mainpage.mypage.NaviMyPageFragment" />
+        <variable
+            name="vm"
+            type="com.jjbaksa.jjbaksa.ui.mainpage.mypage.viewmodel.MyPageViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,8 +23,9 @@
             android:layout_width="46dp"
             android:layout_height="46dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="7dp"
+            android:layout_marginTop="20dp"
             android:scaleType="centerCrop"
+            app:img="@{vm.profileImage}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/ic_launcher_background" />
@@ -34,6 +38,7 @@
             android:textColor="@color/color_000000"
             android:textSize="16dp"
             android:textStyle="bold"
+            android:text="@{vm.nickname}"
             app:layout_constraintStart_toEndOf="@id/profile_image_view"
             app:layout_constraintTop_toTopOf="@id/profile_image_view"
             tools:text="이병건이올씨다" />
@@ -42,9 +47,10 @@
             android:id="@+id/follower_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="13dp"
             android:textColor="@color/color_000000"
+            android:layout_marginStart="2dp"
             android:textSize="14dp"
+            android:text="@{@string/my_page_followers(vm.profileFollowers)}"
             app:layout_constraintBottom_toBottomOf="@id/profile_name_text_view"
             app:layout_constraintStart_toEndOf="@id/profile_name_text_view"
             app:layout_constraintTop_toTopOf="@id/profile_name_text_view"
@@ -56,10 +62,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:textColor="@color/color_000000"
+            android:text="@{@string/my_page_account(vm.account)}"
             android:textSize="14dp"
             app:layout_constraintStart_toStartOf="@id/profile_name_text_view"
             app:layout_constraintTop_toBottomOf="@id/profile_name_text_view"
-            tools:text="\@dangerousman" />
+            tools:text="\@dangerousman"/>
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/setting_image_button"

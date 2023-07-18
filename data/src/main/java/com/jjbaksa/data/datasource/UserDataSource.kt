@@ -22,12 +22,18 @@ interface UserDataSource {
     suspend fun setNewPassword(token: String, item: PasswordAndNicknameReq): Response<UserResp>
     suspend fun saveAccessToken(accessToken: String)
     suspend fun saveAccount(account: String)
+    suspend fun saveNickname(nickname: String)
+    suspend fun saveFollowers(followers: Int)
+    suspend fun saveProfileImage(image: String)
     suspend fun savePassword(password: String)
     suspend fun saveRefreshToken(refreshToken: String)
     suspend fun saveAutoLogin(isAutoLogin: Boolean)
     suspend fun saveAuthPasswordToken(passwordToken: String)
     fun getAutoLoginFlag(): Boolean
-    fun getAcount(): String
+    fun getAccount(): String
+    fun getNickname(): String
+    fun getFollowers(): Int
+    fun getProfileImage(): String
     fun getPassword(): String
     fun getAccessToken(): String
     fun getAuthPasswordToken(): String

@@ -26,6 +26,9 @@ interface UserRepository {
     suspend fun me(): RespResult<Boolean>
     fun getAutoLoginFlag(): Boolean
     fun getAccount(): String
-    fun getPasswrod(): String
+    fun getNickname(): String
+    fun getFollowers(): Int
+    fun getProfileImage(): String
+    fun getPassword(): String
     fun getAccessToken(): String
 }

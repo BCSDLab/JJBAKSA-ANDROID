@@ -113,4 +113,7 @@
     <string name="no_review_content">다녀온 음식점의 리뷰를 작성해 보세요!</string>
     <string name="no_bookmark_title">등록된 북마크가 없어요.</string>
     <string name="no_bookmark_content">새로운 음식점을 저장해 보세요!</string>
+    
+    <string name="my_page_followers">• 팔로우 %1$d</string>
+    <string name="my_page_account">\@%s</string>
 </resources>
