@@ -14,11 +14,17 @@ class MyPageViewModel @Inject constructor(
     val nickname = MutableLiveData<String>("")
     val profileFollowers = MutableLiveData<Int>(0)
     val profileImage = MutableLiveData<String>("")
+    val textLength = MutableLiveData<String>("")
 
     fun getUserProfile() {
         account.value = repository.getAccount()
         nickname.value = repository.getNickname()
         profileFollowers.value = repository.getFollowers()
         profileImage.value = repository.getProfileImage()
+        textLength.value = repository.getNickname().length.toString()
+    }
+
+    fun setTextLength(length: String) {
+        textLength.value = length
     }
 }

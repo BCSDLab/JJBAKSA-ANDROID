@@ -116,4 +116,6 @@
     
     <string name="my_page_followers">• 팔로우 %1$d</string>
     <string name="my_page_account">\@%s</string>
+    <string name="text_length">%s/10</string>
+    <string name="change_profile_content">%s님,\n프로필을 변경하시겠어요?</string>
 </resources>

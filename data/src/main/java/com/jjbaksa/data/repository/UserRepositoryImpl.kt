@@ -83,7 +83,7 @@ class UserRepositoryImpl @Inject constructor(
             password
         )
         return if (response.isSuccessful && response.code() == 200) {
-            FormatResp(response.isSuccessful, null, response.code())
+            FormatResp(response.isSuccessful, "", response.code())
         } else {
             val errorBodyJson = response.errorBody()!!.string()
             val errorBody = RespMapper.errorMapper(errorBodyJson)
