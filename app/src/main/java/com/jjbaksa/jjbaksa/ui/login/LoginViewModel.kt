@@ -25,25 +25,25 @@ class LoginViewModel @Inject constructor(
     private val _autoLoginState = SingleLiveEvent<Boolean>()
     val autoLoginState: SingleLiveEvent<Boolean> get() = _autoLoginState
 
-    fun login() {
+    fun login(isCheckedSwitch: Boolean) {
         if (!TextUtils.isEmpty(account.value) && !TextUtils.isEmpty(password.value)) {
             viewModelScope.launch(ceh) {
-                repository.postLogin(account.value!!, password.value!!, isAutoLogin.value!!) {
+                repository.postLogin(account.value!!, password.value!!, isCheckedSwitch) {
                     _loginState.value = it
                 }
             }
         }
     }
 
-    fun getAutoLoginFlag() {
-        viewModelScope.launch(ceh) {
-
-            if (repository.getAutoLoginFlag()) {
-                isAutoLogin.value = true
-                account.value = repository.getAccount()
-                password.value = repository.getPasswrod()
-                login()
-            }
-        }
-    }
+//    fun getAutoLoginFlag() {
+//        viewModelScope.launch(ceh) {
+//
+//            if (repository.getAutoLoginFlag()) {
+//                isAutoLogin.value = true
+//                account.value = repository.getAccount()
+//                password.value = repository.getPasswrod()
+//                login()
+//            }
+//        }
+//    }
 }
