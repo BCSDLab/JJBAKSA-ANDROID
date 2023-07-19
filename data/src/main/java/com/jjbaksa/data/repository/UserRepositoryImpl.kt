@@ -69,7 +69,7 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun checkAuthEmail(email: String): FormatResp {
         val result = userRemoteDataSource.checkAuthEmail(email)
         return if (result.isSuccessful) {
-            FormatResp(result.isSuccessful, null, result.code())
+            FormatResp(result.isSuccessful, "", result.code())
         } else {
             val errorBodyJson = result.errorBody()!!.string()
             val errorBody = RespMapper.errorMapper(errorBodyJson)
@@ -97,7 +97,7 @@ class UserRepositoryImpl @Inject constructor(
     ): FormatResp {
         val response = userRemoteDataSource.getPasswordVerificationCode(id, email)
         return if (response.isSuccessful && response.code() == 200) {
-            FormatResp(response.isSuccessful, null, response.code())
+            FormatResp(response.isSuccessful, "", response.code())
         } else {
             val errorBodyJson = response.errorBody()!!.string()
             val errorBody = RespMapper.errorMapper(errorBodyJson)
@@ -120,7 +120,7 @@ class UserRepositoryImpl @Inject constructor(
         val response = userRemoteDataSource.findPassword(user)
         return if (response.isSuccessful && response.code() == 200) {
             userLocalDataSource.saveAuthPasswordToken(response.body().toString())
-            FormatResp(response.isSuccessful, null, response.code())
+            FormatResp(response.isSuccessful, "", response.code())
         } else {
             val errorBodyJson = response.errorBody()!!.string()
             val errorBody = RespMapper.errorMapper(errorBodyJson)
@@ -136,7 +136,7 @@ class UserRepositoryImpl @Inject constructor(
             item
         )
         return if (response.isSuccessful && response.code() == 200) {
-            FormatResp(response.isSuccessful, null, response.code())
+            FormatResp(response.isSuccessful, "", response.code())
         } else {
             val errorBodyJson = response.errorBody()!!.string()
             val errorBody = RespMapper.errorMapper(errorBodyJson)
