@@ -11,6 +11,7 @@ import com.jjbaksa.domain.resp.user.LoginReq
 import com.jjbaksa.domain.resp.user.PasswordAndNicknameReq
 import com.jjbaksa.domain.resp.user.SignUpReq
 import com.jjbaksa.domain.resp.user.SignUpResp
+import okhttp3.MultipartBody
 import retrofit2.Response
 import javax.inject.Inject
 

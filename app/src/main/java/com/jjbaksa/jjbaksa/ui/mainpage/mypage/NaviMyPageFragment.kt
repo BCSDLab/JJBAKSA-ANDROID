@@ -9,7 +9,7 @@ import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseFragment
 import com.jjbaksa.jjbaksa.databinding.FragmentNaviMyPageBinding
-import com.jjbaksa.jjbaksa.dialog.MyPageDialog
+import com.jjbaksa.jjbaksa.dialog.MyPageBottomSheetDialog
 import com.jjbaksa.jjbaksa.ui.mainpage.mypage.viewmodel.MyPageViewModel
 import com.jjbaksa.jjbaksa.ui.setting.SettingActivity
 import com.jjbaksa.jjbaksa.util.setExtendView
@@ -59,14 +59,12 @@ class NaviMyPageFragment : BaseFragment<FragmentNaviMyPageBinding>() {
 
     override fun initEvent() {
         onClickSettingImage()
-        onClickProfileImage()
-    }
-
-    private fun onClickProfileImage() {
         binding.profileImageView.setOnClickListener {
-            MyPageDialog().show(parentFragmentManager, MY_PAGE_DIALOG_TAG)
+            MyPageBottomSheetDialog().show(parentFragmentManager, MY_PAGE_DIALOG_TAG)
         }
     }
+
+
 
     private fun onClickSettingImage() {
         binding.settingImageButton.setOnClickListener {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="1.8">
+    <bytecodeTargetLevel target="17">
       <module name="JACKS.app" target="11" />
       <module name="JACKS.data" target="11" />
       <module name="JJBAKSA-ANDROID.buildSrc" target="11" />
@@ -9,12 +9,6 @@
       <module name="JJBAKSA-ANDROID.buildSrc.test" target="11" />
       <module name="JJBAKSA-AOS.app" target="11" />
       <module name="JJBAKSA-AOS.data" target="11" />
-      <module name="JJBAKSA.app" target="15" />
-      <module name="JJBAKSA.buildSrc" target="15" />
-      <module name="JJBAKSA.buildSrc.main" target="15" />
-      <module name="JJBAKSA.buildSrc.test" target="15" />
-      <module name="JJBAKSA.data" target="15" />
-      <module name="JJBAKSA.image_selector" target="15" />
     </bytecodeTargetLevel>
   </component>
 </project>

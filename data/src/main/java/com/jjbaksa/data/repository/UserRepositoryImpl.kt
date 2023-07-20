@@ -1,8 +1,10 @@
 package com.jjbaksa.data.repository
 
+import android.net.Uri
 import com.jjbaksa.data.SUCCESS
 import com.jjbaksa.data.datasource.local.UserLocalDataSource
 import com.jjbaksa.data.datasource.remote.UserRemoteDataSource
+import com.jjbaksa.data.mapper.FormDataUtil
 import com.jjbaksa.data.mapper.RespMapper
 import com.jjbaksa.domain.base.ErrorType
 import com.jjbaksa.domain.base.RespResult
@@ -14,6 +16,9 @@ import com.jjbaksa.domain.resp.user.SignUpReq
 import com.jjbaksa.domain.resp.user.SignUpResp
 import com.jjbaksa.domain.resp.user.FindPasswordReq
 import com.jjbaksa.domain.resp.user.PasswordAndNicknameReq
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
@@ -159,10 +164,14 @@ class UserRepositoryImpl @Inject constructor(
     }
 
     override suspend fun editUserProfileImage(profile: String): RespResult<Boolean> {
-        val fileBody = profile.toRequestBody("image/*".toMediaTypeOrNull())
-        val profilePart = MultipartBody.Part.createFormData("profile", profile, fileBody)
-        val response = userRemoteDataSource.editUserProfileImage(profilePart)
-        return RespResult.Success(true)
+        val fileBody = FormDataUtil.getImageBody("multipartFile", Uri.parse(profile))
+        val response = userRemoteDataSource.editUserProfileImage(fileBody)
+        if (response.isSuccessful) {
+            return RespResult.Success(true)
+        } else {
+            return RespResult.Success(false)
+        }
+
     }
 
     override fun getAutoLoginFlag(): Boolean {
