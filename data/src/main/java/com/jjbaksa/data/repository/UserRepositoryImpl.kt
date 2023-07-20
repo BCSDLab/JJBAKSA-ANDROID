@@ -158,6 +158,13 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun editUserProfileImage(profile: String): RespResult<Boolean> {
+        val fileBody = profile.toRequestBody("image/*".toMediaTypeOrNull())
+        val profilePart = MultipartBody.Part.createFormData("profile", profile, fileBody)
+        val response = userRemoteDataSource.editUserProfileImage(profilePart)
+        return RespResult.Success(true)
+    }
+
     override fun getAutoLoginFlag(): Boolean {
         return userLocalDataSource.getAutoLoginFlag()
     }

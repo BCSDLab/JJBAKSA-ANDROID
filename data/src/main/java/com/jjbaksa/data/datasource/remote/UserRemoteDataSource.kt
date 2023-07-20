@@ -87,6 +87,9 @@ class UserRemoteDataSource @Inject constructor(
     suspend fun me(): Response<UserResp> {
         return authApi.userMe()
     }
+    suspend fun editUserProfileImage(profile: MultipartBody.Part): Response<UserResp> {
+        return authApi.editUserProfileImage(profile)
+    }
 
     override fun getAutoLoginFlag(): Boolean {
         return false

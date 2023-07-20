@@ -7,4 +7,9 @@ import retrofit2.Response
 interface AuthApi {
     @GET("user/me")
     suspend fun userMe(): Response<UserResp>
+    @Multipart
+    @PATCH("user/profile")
+    suspend fun editUserProfileImage(
+        @Part  profile: MultipartBody.Part
+    ): Response<UserResp>
 }
