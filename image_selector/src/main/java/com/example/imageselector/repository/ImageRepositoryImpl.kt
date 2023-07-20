@@ -2,6 +2,7 @@ package com.example.imageselector.repository
 
 import android.content.ContentResolver
 import android.provider.MediaStore
+import android.util.Log
 import com.example.imageselector.model.Image
 import javax.inject.Inject
 
@@ -9,7 +10,7 @@ class ImageRepositoryImpl @Inject constructor(
     private val contentResolver: ContentResolver,
 ) : ImageRepository {
 
-    private val selectedImage = ArrayList<Image>()
+    private val selectedImages = ArrayList<Image>()
     private val selectedImageUri = ArrayList<String>()
     private val uriArr = ArrayList<String>()
 
@@ -21,7 +22,6 @@ class ImageRepositoryImpl @Inject constructor(
             null,
             MediaStore.Images.ImageColumns.DATE_TAKEN + " DESC"
         )
-        val imageList = ArrayList<Image>()
         if (cursor != null) {
             while (cursor.moveToNext()) {
                 val uri =
@@ -31,8 +31,7 @@ class ImageRepositoryImpl @Inject constructor(
             cursor.close()
         }
         for (uri in uriArr) {
-            selectedImage.add(Image(uri, 0, false))
-            imageList.add(Image(uri, 0, false))
+            selectedImages.add(Image(uri, 0, false))
         }
     }
 
@@ -46,14 +45,14 @@ class ImageRepositoryImpl @Inject constructor(
     }
 
     override fun refreshSelectList() {
-        for (data in selectedImage) {
+        for (data in selectedImages) {
             data.index = 0
             data.isSelected = false
         }
 
         for (i in 0 until selectedImageUri.size) {
             val path = selectedImageUri[i]
-            for (data in selectedImage) {
+            for (data in selectedImages) {
                 if (data.uri.equals(path)) {
                     data.index = i + 1
                     data.isSelected = true
@@ -71,7 +70,7 @@ class ImageRepositoryImpl @Inject constructor(
         return uriArr
     }
 
-    override fun getSelectedImageList(): ArrayList<Image> {
-        return selectedImage
+    override fun getSelectedImages(): ArrayList<Image> {
+        return selectedImages
     }
 }

@@ -8,5 +8,5 @@ interface ImageRepository {
     fun refreshSelectList()
     fun getSelectedImageUri(): ArrayList<String>
     fun getUriArr(): ArrayList<String>
-    fun getSelectedImageList(): ArrayList<Image>
+    fun getSelectedImages(): ArrayList<Image>
 }
