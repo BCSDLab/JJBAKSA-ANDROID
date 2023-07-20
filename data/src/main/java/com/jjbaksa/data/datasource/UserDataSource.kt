@@ -20,6 +20,7 @@ interface UserDataSource {
     suspend fun findAccount(email: String, code: String): Response<FindIdResp>
     suspend fun findPassword(findPasswordReq: FindPasswordReq): Response<String>
     suspend fun setNewPassword(token: String, item: PasswordAndNicknameReq): Response<UserResp>
+    suspend fun setNewNickname(item: PasswordAndNicknameReq): Response<UserResp>
     suspend fun saveAccessToken(accessToken: String)
     suspend fun saveAccount(account: String)
     suspend fun saveNickname(nickname: String)

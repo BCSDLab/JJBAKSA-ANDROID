@@ -23,6 +23,7 @@ interface UserRepository {
     suspend fun findAccount(email: String, code: String): FormatResp
     suspend fun findPassword(user: FindPasswordReq): FormatResp
     suspend fun setNewPassword(password: String): FormatResp
+    suspend fun setNewNickname(nickname: String): FormatResp
     suspend fun me(): RespResult<Boolean>
     suspend fun editUserProfileImage(photo: String): RespResult<Boolean>
     fun getAutoLoginFlag(): Boolean

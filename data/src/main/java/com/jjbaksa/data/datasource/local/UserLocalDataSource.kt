@@ -61,6 +61,10 @@ class UserLocalDataSource @Inject constructor(
         TODO("Not yet implemented")
     }
 
+    override suspend fun setNewNickname(item: PasswordAndNicknameReq): Response<UserResp> {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun saveAccessToken(accessToken: String) {
         dataStore.edit {
             it[PreferenceKeys.ACCESS_TOKEN] = accessToken

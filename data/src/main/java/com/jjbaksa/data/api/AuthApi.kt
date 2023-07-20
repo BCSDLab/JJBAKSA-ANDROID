@@ -13,6 +13,10 @@ import retrofit2.http.Part
 interface AuthApi {
     @GET("user/me")
     suspend fun userMe(): Response<UserResp>
+    @PATCH("user/me")
+    suspend fun setUserNickname(
+        @Body item: PasswordAndNicknameReq
+    ): Response<UserResp>
     @Multipart
     @PATCH("user/profile")
     suspend fun editUserProfileImage(

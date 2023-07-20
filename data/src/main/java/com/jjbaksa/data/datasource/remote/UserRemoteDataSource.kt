@@ -58,6 +58,10 @@ class UserRemoteDataSource @Inject constructor(
         return noAuthApi.setNewPassword(token, item)
     }
 
+    override suspend fun setNewNickname(item: PasswordAndNicknameReq): Response<UserResp> {
+        return authApi.setUserNickname(item)
+    }
+
     override suspend fun saveAccessToken(accessToken: String) {
     }
 
