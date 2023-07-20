@@ -27,4 +27,8 @@ class MyPageViewModel @Inject constructor(
     fun setTextLength(length: String) {
         textLength.value = length
     }
+
+    fun setProfileImage(image: String) {
+        profileImage.value = image
+    }
 }
