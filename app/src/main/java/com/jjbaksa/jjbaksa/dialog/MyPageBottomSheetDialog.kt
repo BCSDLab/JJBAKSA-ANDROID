@@ -13,7 +13,7 @@ import coil.load
 import coil.transform.CircleCropTransformation
 
 @AndroidEntryPoint
-class MyPageDialog : BaseBottomSheetDialogFragment<DialogMypageBinding>() {
+class MyPageBottomSheetDialog : BaseBottomSheetDialogFragment<DialogMypageBinding>() {
     override val layoutResId: Int
         get() = R.layout.dialog_mypage
     private val viewModel: MyPageViewModel by activityViewModels()
@@ -25,10 +25,11 @@ class MyPageDialog : BaseBottomSheetDialogFragment<DialogMypageBinding>() {
         }
     }
 
-
     override fun initView(view: View) {
         binding.vm = viewModel
         viewModel.getUserProfile()
+        this.heightPercent = 0.55f
+        this.setLayoutMaxHeight(view)
     }
 
     override fun initEvent() {
@@ -41,6 +42,14 @@ class MyPageDialog : BaseBottomSheetDialogFragment<DialogMypageBinding>() {
 
     private fun confirmProfile() {
         binding.confirmButton.setOnClickListener {
+            if (viewModel.profileImage.value.isNullOrEmpty() || viewModel.textLength.value == "0") {
+                // todo:: empty profile image or nickname
+            } else {
+                viewModel.setProfileImageAndNickname(
+                    viewModel.profileImage.value.toString(),
+                    binding.profileNicknameEditText.text.toString()
+                )
+            }
         }
     }
 
