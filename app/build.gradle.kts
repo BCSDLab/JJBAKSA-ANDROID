@@ -11,7 +11,7 @@ plugins {
 
 android {
 
-    compileSdk = 32
+    compileSdk = Constants.compileSdk
     defaultConfig {
         applicationId = Constants.packageName
         minSdk = Constants.minSdk
@@ -40,8 +40,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = Versions.javaVersion
+        targetCompatibility = Versions.javaVersion
     }
 
     kotlinOptions {
