@@ -1,12 +1,12 @@
 package com.jjbaksa.jjbaksa.ui.mainpage.mypage.viewmodel
 
-import android.net.Uri
-import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.jjbaksa.domain.base.RespResult
 import com.jjbaksa.domain.repository.UserRepository
 import com.jjbaksa.jjbaksa.base.BaseViewModel
+import com.jjbaksa.jjbaksa.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -20,6 +20,13 @@ class MyPageViewModel @Inject constructor(
     val profileFollowers = MutableLiveData<Int>(0)
     val profileImage = MutableLiveData<String>("")
     val textLength = MutableLiveData<String>("")
+
+    private val _loadImage = SingleLiveEvent<String>()
+    val loadImage: LiveData<String> get() = _loadImage
+
+    private val _isResult = SingleLiveEvent<Boolean>()
+    val isResult: LiveData<Boolean> get() = _isResult
+
     fun getUserProfile() {
         account.value = repository.getAccount()
         nickname.value = repository.getNickname()
@@ -32,13 +39,21 @@ class MyPageViewModel @Inject constructor(
         textLength.value = length
     }
 
-    fun setProfileImage(image: String) {
-        profileImage.value = image
+    fun setLoadImage(image: String) {
+        _loadImage.value = image
     }
-    fun uploadProfileImg() {
+
+    fun uploadProfileImgAndNickname(image: String, newNickname: String) {
         viewModelScope.launch(ceh) {
-            var result = repository.editUserProfileImage(profileImage.value!!)
-            Log.e("tag", result.toString())
+            val response = repository.editUserProfileImage(image)
+            if (response == RespResult.Success(true)) {
+                profileImage.value = repository.getProfileImage()
+                val nicknameResponse = repository.setNewNickname(newNickname)
+                if (nicknameResponse.isSuccess) {
+                    nickname.value = repository.getNickname()
+                    _isResult.value = true
+                }
+            }
         }
     }
 }

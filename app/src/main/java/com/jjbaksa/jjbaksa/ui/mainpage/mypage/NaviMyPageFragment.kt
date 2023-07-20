@@ -4,6 +4,8 @@ import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import coil.load
+import coil.transform.CircleCropTransformation
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.jjbaksa.jjbaksa.R
@@ -34,7 +36,26 @@ class NaviMyPageFragment : BaseFragment<FragmentNaviMyPageBinding>() {
         initFragment(reviewFragment)
         setTabLayout()
         binding.vm = viewModel
+        binding.lifecycleOwner = this
         viewModel.getUserProfile()
+        observeData()
+    }
+
+    private fun observeData() {
+        viewModel.nickname.observe(viewLifecycleOwner) {
+            binding.profileNameTextView.text = it
+        }
+        viewModel.profileImage.observe(viewLifecycleOwner) {
+            if (it.isEmpty()) {
+                binding.profileImageView.load(R.drawable.baseline_supervised_user_circle_24) {
+                    transformations(CircleCropTransformation())
+                }
+            } else {
+                binding.profileImageView.load(it) {
+                    transformations(CircleCropTransformation())
+                }
+            }
+        }
     }
 
     private fun initFragment(fragment: Fragment) {
@@ -63,8 +84,6 @@ class NaviMyPageFragment : BaseFragment<FragmentNaviMyPageBinding>() {
             MyPageBottomSheetDialog().show(parentFragmentManager, MY_PAGE_DIALOG_TAG)
         }
     }
-
-
 
     private fun onClickSettingImage() {
         binding.settingImageButton.setOnClickListener {

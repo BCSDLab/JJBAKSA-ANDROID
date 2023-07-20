@@ -3,7 +3,6 @@ package com.jjbaksa.jjbaksa.dialog
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
-import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.addTextChangedListener
@@ -16,7 +15,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.example.imageselector.gallery.GalleryActivity
-import com.jjbaksa.jjbaksa.util.checkPermissionsAndRequest
 import com.jjbaksa.jjbaksa.util.hasPermission
 
 @AndroidEntryPoint
@@ -24,34 +22,24 @@ class MyPageBottomSheetDialog : BaseBottomSheetDialogFragment<DialogMypageBindin
     override val layoutResId: Int
         get() = R.layout.dialog_mypage
     private val viewModel: MyPageViewModel by activityViewModels()
-    private val loadImageUri =
-        registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-            if (uri == null) {
-                return@registerForActivityResult
-            } else {
-                viewModel.setProfileImage(uri.toString())
-            }
-        }
-    val permissions = arrayOf(
-        Manifest.permission.WRITE_EXTERNAL_STORAGE
-    )
+
     private val galleryActivityLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == Activity.RESULT_OK) {
             val images = it.data!!.getStringArrayListExtra("images")!!
-            viewModel.setProfileImage(images[0])
+            viewModel.setLoadImage(images[0])
+            binding.profileImageView.load(images[0]) {
+                transformations(CircleCropTransformation())
+            }
         }
     }
     private val requestPermissions = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) {
-        Log.e("jdm_tag", it.toString())
         if (it) {
             val intent = Intent(requireContext(), GalleryActivity::class.java)
             intent.putExtra("limit", 1)
             galleryActivityLauncher.launch(intent)
-            //loadImageUri.launch("image/*")
         } else {
-            Log.e("jdm_tag", "else")
         }
     }
 
@@ -72,20 +60,13 @@ class MyPageBottomSheetDialog : BaseBottomSheetDialogFragment<DialogMypageBindin
 
     private fun confirmProfile() {
         binding.confirmButton.setOnClickListener {
-            if (viewModel.profileImage.value.isNullOrEmpty() || viewModel.textLength.value == "0") {
-                Log.e("jdm_tag", "${viewModel.profileImage.value} / ${viewModel.textLength.value}")
+            if (viewModel.loadImage.value.isNullOrEmpty() || viewModel.textLength.value == "0") {
                 // todo:: empty profile image or nickname
             } else {
-                Log.e("jdm_tag", "else")
-                /*
-                viewModel.uploadProfileImg(
-                    viewModel.profileImage.value.toString(),
+                viewModel.uploadProfileImgAndNickname(
+                    viewModel.loadImage.value.toString(),
                     binding.profileNicknameEditText.text.toString()
                 )
-
-                 */
-                viewModel.uploadProfileImg()
-
             }
         }
     }
@@ -118,10 +99,8 @@ class MyPageBottomSheetDialog : BaseBottomSheetDialogFragment<DialogMypageBindin
         viewModel.textLength.observe(viewLifecycleOwner) {
             binding.textLengthCountTextView.text = getString(R.string.text_length, it)
         }
-        viewModel.profileImage.observe(viewLifecycleOwner) {
-            binding.profileImageView.load(it) {
-                transformations(CircleCropTransformation())
-            }
+        viewModel.isResult.observe(viewLifecycleOwner) {
+            if (it) dismiss()
         }
     }
 

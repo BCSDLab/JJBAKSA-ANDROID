@@ -16,9 +16,6 @@ import com.jjbaksa.domain.resp.user.SignUpReq
 import com.jjbaksa.domain.resp.user.SignUpResp
 import com.jjbaksa.domain.resp.user.FindPasswordReq
 import com.jjbaksa.domain.resp.user.PasswordAndNicknameReq
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.toRequestBody
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
@@ -149,6 +146,19 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun setNewNickname(nickname: String): FormatResp {
+        val item = PasswordAndNicknameReq(null, nickname)
+        val response = userRemoteDataSource.setNewNickname(item)
+        return if (response.isSuccessful && response.code() == 200) {
+            userLocalDataSource.saveNickname(nickname)
+            FormatResp(response.isSuccessful, "", response.code())
+        } else {
+            val errorBodyJson = response.errorBody()!!.string()
+            val errorBody = RespMapper.errorMapper(errorBodyJson)
+            FormatResp(response.isSuccessful, errorBody.errorMessage, response.code())
+        }
+    }
+
     override suspend fun me(): RespResult<Boolean> {
         val response = userRemoteDataSource.me()
         return if (response.isSuccessful) {
@@ -171,7 +181,6 @@ class UserRepositoryImpl @Inject constructor(
         } else {
             return RespResult.Success(false)
         }
-
     }
 
     override fun getAutoLoginFlag(): Boolean {
