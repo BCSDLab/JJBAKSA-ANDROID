@@ -1,10 +1,8 @@
 package com.jjbaksa.jjbaksa.util
 
 import android.content.Context
-import android.content.Intent
 import android.os.Looper
 import android.util.Log
-import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
@@ -14,7 +12,7 @@ class FusedLocationUtil(
     private val context: Context,
     private val callBackLocation: (Double, Double) -> Unit
 ) {
-    private val fusedLocationClient by lazy {  LocationServices.getFusedLocationProviderClient(context) }
+    private val fusedLocationClient by lazy { LocationServices.getFusedLocationProviderClient(context) }
     private val permissions = arrayOf(
         android.Manifest.permission.ACCESS_FINE_LOCATION,
         android.Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -28,9 +26,8 @@ class FusedLocationUtil(
                     val latitude = location.latitude
                     val longitude = location.longitude
 
-                    Log.e("service", "${latitude} / ${longitude}")
+                    Log.e("service", "$latitude / $longitude")
                     callBackLocation(latitude, longitude)
-
                 }
             }
         }

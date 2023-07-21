@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -25,7 +24,7 @@ class SearchShopAdapter(
     private val VIEW_TYPE_LOADING = 0
     private val VIEW_TYPE_NORMAL = 1
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):  BaseViewHolder<Shop> {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<Shop> {
         return when (viewType) {
             VIEW_TYPE_NORMAL -> ViewHolder(
                 ItemSearchShopBinding.inflate(
@@ -39,7 +38,8 @@ class SearchShopAdapter(
                 ItemLoadingBinding.inflate(
                     LayoutInflater.from(
                         parent.context
-                    ), parent, false
+                    ),
+                    parent, false
                 )
             )
 
@@ -78,9 +78,7 @@ class SearchShopAdapter(
         if (shopList.filter { it.type == VIEW_TYPE_LOADING }.count() == 0) {
             add(Shop(type = VIEW_TYPE_LOADING))
         }
-
     }
-
 
     fun removeLoading() {
         if (!shopList.isEmpty()) {
@@ -89,14 +87,12 @@ class SearchShopAdapter(
             shopList.removeAt(position)
             notifyItemRemoved(position)
         }
-
     }
 
     fun clear() {
         shopList.clear()
         notifyDataSetChanged()
     }
-
 
     inner class ViewHolder(private val binding: ItemSearchShopBinding) :
         BaseViewHolder<Shop>(binding) {
@@ -135,7 +131,6 @@ class SearchShopAdapter(
 
     inner class LoadingViewHolder(val binding: ItemLoadingBinding) : BaseViewHolder<Shop>(binding) {
         override fun bindViews(item: Shop, position: Int, adapterListener: AdapterListener) {
-
         }
     }
 

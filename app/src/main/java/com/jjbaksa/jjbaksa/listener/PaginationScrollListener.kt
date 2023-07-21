@@ -1,14 +1,12 @@
 package com.jjbaksa.jjbaksa.listener
 
-import android.util.Log
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 abstract class PaginationScrollListener(
     private val layoutManager: LinearLayoutManager,
     private val pageSize: Int
-): RecyclerView.OnScrollListener() {
+) : RecyclerView.OnScrollListener() {
     override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
         super.onScrollStateChanged(recyclerView, newState)
     }
@@ -20,7 +18,6 @@ abstract class PaginationScrollListener(
         if (totalItemCount == lastPosition) {
             loading()
             loadMoreItems()
-
         }
     }
 

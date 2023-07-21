@@ -13,7 +13,7 @@ import javax.inject.Inject
 class SearchRemoteDataSource @Inject constructor(
     private val authApi: AuthApi,
     private val noAuthApi: NoAuthApi
-): SearchDataSource {
+) : SearchDataSource {
     override suspend fun getTrending(): Response<TrendResp> {
         return noAuthApi.getTrending()
     }

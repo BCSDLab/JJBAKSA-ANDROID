@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.jjbaksa.jjbaksa.databinding.ItemTrendBinding
 
-class TrendTextAdapter(private val onClickTrendText: (String) -> Unit) : ListAdapter<String, TrendTextAdapter.ViewHolder>(diffUtil){
+class TrendTextAdapter(private val onClickTrendText: (String) -> Unit) : ListAdapter<String, TrendTextAdapter.ViewHolder>(diffUtil) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(ItemTrendBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
@@ -17,12 +17,11 @@ class TrendTextAdapter(private val onClickTrendText: (String) -> Unit) : ListAda
         holder.bindView(item)
     }
 
-    inner class ViewHolder(private val binding: ItemTrendBinding) : RecyclerView.ViewHolder(binding.root){
+    inner class ViewHolder(private val binding: ItemTrendBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bindView(item: String) {
             binding.tvTrend.text = item
             binding.clItemTrend.setOnClickListener { onClickTrendText(item) }
         }
-
     }
     companion object {
         val diffUtil = object : DiffUtil.ItemCallback<String>() {

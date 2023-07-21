@@ -2,10 +2,7 @@ package com.jjbaksa.jjbaksa.ui.search
 
 import android.util.Log
 import androidx.lifecycle.viewModelScope
-import com.jjbaksa.domain.model.mainpage.UserLocation
 import com.jjbaksa.domain.repository.SearchRepository
-import com.jjbaksa.domain.resp.search.AutoKeyword
-import com.jjbaksa.domain.resp.search.Shop
 import com.jjbaksa.domain.resp.search.ShopData
 import com.jjbaksa.jjbaksa.base.BaseViewModel
 import com.jjbaksa.jjbaksa.util.SingleLiveEvent
@@ -16,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     private val searchRepository: SearchRepository
-): BaseViewModel() {
+) : BaseViewModel() {
     private var lat: Double = 0.0
     private var lng: Double = 0.0
     private val _trendTextData = SingleLiveEvent<List<String>>()
@@ -44,8 +41,8 @@ class SearchViewModel @Inject constructor(
                 onSuccess = {
                     _autoCompleteData.value = it
                 }, onError = {
-                    _autoCompleteData.value = listOf()
-                }
+                _autoCompleteData.value = listOf()
+            }
             )
         }
     }
@@ -59,7 +56,7 @@ class SearchViewModel @Inject constructor(
                 onSuccess = {
                     _shopData.value = it
                 }, onError = {
-                }
+            }
             )
         }
     }
@@ -75,8 +72,7 @@ class SearchViewModel @Inject constructor(
                     onSuccess = {
                         _shopData.value = it
                     }, onError = {
-
-                    }
+                }
                 )
             }
         }

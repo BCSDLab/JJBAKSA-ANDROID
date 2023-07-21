@@ -7,5 +7,5 @@ data class SearchShopResp(
     @SerializedName("shopQueryResponseList")
     val shopQueryResponseList: List<ShopResp>? = listOf(),
     @SerializedName("pageToken")
-    val pageToken: String? =  ""
-): BaseResp()
+    val pageToken: String? = ""
+) : BaseResp()

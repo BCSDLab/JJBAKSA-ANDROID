@@ -9,7 +9,7 @@ import com.jjbaksa.jjbaksa.databinding.ItemKeywordBinding
 
 class AutoCompleteKeywordAdapter(
     private val onClickKeyword: (String) -> Unit
-): ListAdapter<String, AutoCompleteKeywordAdapter.ViewHolder>(diffUtil) {
+) : ListAdapter<String, AutoCompleteKeywordAdapter.ViewHolder>(diffUtil) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(ItemKeywordBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
@@ -19,7 +19,7 @@ class AutoCompleteKeywordAdapter(
         holder.bindView(item)
     }
 
-    inner class ViewHolder(private val binding: ItemKeywordBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding: ItemKeywordBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bindView(item: String) {
             binding.tvItemKeyword.text = item
             binding.clItemKeyword.setOnClickListener { onClickKeyword(item) }

@@ -6,4 +6,4 @@ import com.jjbaksa.domain.BaseResp
 data class AutoKeywordResp(
     @SerializedName("autoCompletes")
     val autoCompletes: List<String>? = null
-): BaseResp()
+) : BaseResp()

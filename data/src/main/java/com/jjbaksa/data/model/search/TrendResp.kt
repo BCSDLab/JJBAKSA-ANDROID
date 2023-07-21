@@ -6,4 +6,4 @@ import com.jjbaksa.domain.BaseResp
 data class TrendResp(
     @SerializedName("trendings")
     val trendings: List<String>
-): BaseResp()
+) : BaseResp()

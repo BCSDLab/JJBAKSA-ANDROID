@@ -76,6 +76,8 @@ interface NoAuthApi {
     @POST("shops")
     suspend fun getShops(@Query("keyword") keyword: String, @Body locationBody: LocationBody): Response<SearchShopResp>
     @POST("shops/page/{page_token}")
-    suspend fun getShopsPage(@Path("page_token") pageToken: String, @Body locationBody: LocationBody): Response<SearchShopResp>
-
+    suspend fun getShopsPage(
+        @Path("page_token") pageToken: String,
+        @Body locationBody: LocationBody
+    ): Response<SearchShopResp>
 }

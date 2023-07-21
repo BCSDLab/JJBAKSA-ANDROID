@@ -1,7 +1,5 @@
 package com.jjbaksa.jjbaksa.ui.search
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
@@ -32,17 +30,18 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>() {
         )
     }
     private val searchShopAdapter: SearchShopAdapter by lazy {
-        SearchShopAdapter(this, object : OnClickShopListener {
-            override fun onClick(item: Shop, position: Int) {
-
+        SearchShopAdapter(
+            this,
+            object : OnClickShopListener {
+                override fun onClick(item: Shop, position: Int) {
+                }
             }
-        })
+        )
     }
     override val layoutId: Int
         get() = R.layout.activity_search
 
     private var currentPage = ""
-
 
     override fun initView() {
         with(binding) {
@@ -57,13 +56,10 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>() {
                     if (!currentPage.isEmpty())
                         searchShopAdapter.addLoading()
                     Log.e("jdm_tag", "isLoading : ")
-
                 }
 
-
-
                 override fun loadMoreItems() {
-                    Log.e("jdm_tag", "loadMoreItem : ${currentPage}")
+                    Log.e("jdm_tag", "loadMoreItem : $currentPage")
                     searchViewModel.searchPage(currentPage)
                 }
             })
@@ -83,7 +79,6 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>() {
             currentPage = it.pageToken
             searchShopAdapter.removeLoading()
             searchShopAdapter.addAll(it.shopQueryResponseList)
-
         }
     }
 
@@ -121,7 +116,6 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>() {
     override fun onStart() {
         fusedLocationUtil.startLocationUpdate()
         super.onStart()
-
     }
 
     override fun onStop() {
@@ -132,5 +126,4 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>() {
     private fun onClickTrendKeyword(trendText: String) {
         binding.etSearch.setText(trendText)
     }
-
 }

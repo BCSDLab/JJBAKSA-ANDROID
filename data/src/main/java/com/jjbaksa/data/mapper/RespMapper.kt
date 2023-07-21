@@ -19,22 +19,22 @@ object RespMapper {
     }
 }
 fun AutoKeywordResp.toAutoKeyword() = AutoKeyword(
-    autoCompletes = autoCompletes?: listOf()
+    autoCompletes = autoCompletes ?: listOf()
 )
 fun SearchShopResp.toShopData() = ShopData(
-    pageToken = pageToken?: "",
+    pageToken = pageToken ?: "",
     shopQueryResponseList = shopQueryResponseList?.map { it.toShop() }?.toMutableList() ?: mutableListOf<Shop>()
 )
 fun ShopResp.toShop() = Shop(
-    dist = dist?: 0.0,
-    category = category?: "",
-    formattedAddress = formattedAddress?: "",
-    lat = lat?: 0.0,
-    lng = lng?: 0.0,
-    name = name?: "",
-    openNow = openNow?: false,
-    photoToken = photoToken?: "",
-    placeId = placeId?: "",
-    ratingCount = ratingCount?: 0.0,
-    totalRating = totalRating?: 0.0
+    dist = dist ?: 0.0,
+    category = category ?: "",
+    formattedAddress = formattedAddress ?: "",
+    lat = lat ?: 0.0,
+    lng = lng ?: 0.0,
+    name = name ?: "",
+    openNow = openNow ?: false,
+    photoToken = photoToken ?: "",
+    placeId = placeId ?: "",
+    ratingCount = ratingCount ?: 0.0,
+    totalRating = totalRating ?: 0.0
 )

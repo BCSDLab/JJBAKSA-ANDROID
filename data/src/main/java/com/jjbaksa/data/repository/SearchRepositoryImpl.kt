@@ -8,7 +8,9 @@ import com.jjbaksa.domain.repository.SearchRepository
 import com.jjbaksa.domain.resp.search.ShopData
 import javax.inject.Inject
 
-class SearchRepositoryImpl @Inject constructor(private val searchRemoteDataSource: SearchRemoteDataSource): SearchRepository {
+class SearchRepositoryImpl @Inject constructor(
+    private val searchRemoteDataSource: SearchRemoteDataSource
+) : SearchRepository {
     override suspend fun getTrendText(onSuccess: (List<String>) -> Unit) {
         var result = searchRemoteDataSource.getTrending()
         if (result.isSuccessful) {
@@ -17,7 +19,9 @@ class SearchRepositoryImpl @Inject constructor(private val searchRemoteDataSourc
     }
 
     override suspend fun getSearchKeyword(
-        word: String, onSuccess: (List<String>) -> Unit, onError: () -> Unit
+        word: String,
+        onSuccess: (List<String>) -> Unit,
+        onError: () -> Unit
     ) {
         var result = searchRemoteDataSource.getSearchKeyword(word)
         if (result.isSuccessful) {
