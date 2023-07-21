@@ -7,6 +7,7 @@ import com.jjbaksa.jjbaksa.base.BaseActivity
 import com.jjbaksa.jjbaksa.databinding.ActivitySettingBinding
 import com.jjbaksa.jjbaksa.ui.changepassword.ChangePasswordActivity
 import com.jjbaksa.jjbaksa.ui.setting.viewmodel.SettingViewModel
+import com.jjbaksa.jjbaksa.ui.withdrawal.WithdrawalActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -33,9 +34,12 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
     fun goToChangePassword() {
         startActivity(Intent(this, ChangePasswordActivity::class.java))
     }
-    fun goToPrivacyPolicy() { }
-    fun goToNotice() { }
-    fun goToInquiry() { }
-    fun logout() { }
-    fun withdraw() {}
+
+    fun goToPrivacyPolicy() {}
+    fun goToNotice() {}
+    fun goToInquiry() {}
+    fun logout() {}
+    fun withdraw() {
+        startActivity(Intent(this, WithdrawalActivity::class.java))
+    }
 }
