@@ -58,7 +58,7 @@ class FindIdFragment : BaseFragment<FragmentFindIdBinding>() {
                 binding.buttonFindIdSendToVerificationCode.isEnabled = false
                 binding.editTextFindIdToEmail.background = ContextCompat.getDrawable(
                     requireContext(),
-                    R.drawable.shape_rect_eeeeee_solid_radius_100_stroke_ff7f23
+                    R.drawable.shape_rectf6bf54_solid_radius_100_stroke_ff7f23
                 )
             }
         }

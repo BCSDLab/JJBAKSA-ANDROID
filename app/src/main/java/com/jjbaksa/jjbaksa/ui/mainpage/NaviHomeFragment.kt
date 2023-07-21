@@ -1,17 +1,20 @@
 package com.jjbaksa.jjbaksa.ui.mainpage
 
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.jjbaksa.domain.model.mainpage.UserLocation
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseFragment
 import com.jjbaksa.jjbaksa.databinding.FragmentNaviHomeBinding
 import com.jjbaksa.jjbaksa.dialog.HomeAlertDialog
 import com.jjbaksa.jjbaksa.ui.mainpage.viewmodel.HomeViewModel
+import com.jjbaksa.jjbaksa.ui.search.SearchActivity
 import com.jjbaksa.jjbaksa.util.ColorObject
 import com.jjbaksa.jjbaksa.util.hasPermission
 import com.naver.maps.geometry.LatLng
@@ -39,6 +42,11 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
     }
 
     override fun initEvent() {
+        with(binding) {
+            editTextMainPage.setOnClickListener {
+                Intent(requireContext(), SearchActivity::class.java).run { startActivity(this) }
+            }
+        }
     }
 
     override fun subscribe() {

@@ -112,4 +112,10 @@
     <string name="no_review_content">다녀온 음식점의 리뷰를 작성해 보세요!</string>
     <string name="no_bookmark_title">등록된 북마크가 없어요.</string>
     <string name="no_bookmark_content">새로운 음식점을 저장해 보세요!</string>
+    <string name="search">검색</string>
+    <string name="search_main_title">오늘은 어떤음식이 땡기나요?</string>
+    <string name="sharp">#</string>
+    <string name="no_img">등록된 사진이 없어요!</string>
+    <string name="open_now">영업중</string>
+    <string name="open_not_now">영업종료</string>
 </resources>
