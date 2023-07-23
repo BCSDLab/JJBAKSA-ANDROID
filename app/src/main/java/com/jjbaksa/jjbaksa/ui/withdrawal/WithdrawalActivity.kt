@@ -1,13 +1,17 @@
 package com.jjbaksa.jjbaksa.ui.withdrawal
 
-import android.util.Log
+import android.content.Intent
 import androidx.activity.viewModels
+import androidx.core.app.ActivityCompat
 import androidx.core.widget.addTextChangedListener
+import com.jjbaksa.domain.resp.user.WithdrawalReasonReq
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseActivity
 import com.jjbaksa.jjbaksa.databinding.ActivityWithdrawalBinding
 import com.jjbaksa.jjbaksa.dialog.ConfirmDialog
+import com.jjbaksa.jjbaksa.ui.login.LoginActivity
 import com.jjbaksa.jjbaksa.ui.withdrawal.viewmodel.WithdrawalViewModel
+import com.jjbaksa.jjbaksa.util.KeyboardProvider
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,7 +27,24 @@ class WithdrawalActivity : BaseActivity<ActivityWithdrawalBinding>() {
         viewModel.getNickname()
     }
 
-    override fun subscribe() {}
+    override fun subscribe() {
+        observeData()
+    }
+
+    private fun observeData() {
+        viewModel.saveWithdrawalReasonState.observe(this) {
+            if (it.isSuccess) {
+                viewModel.withdraw()
+            } else {
+                showSnackBar(it.message.toString(), getString(R.string.close))
+            }
+        }
+        viewModel.isWithdrawUser.observe(this) {
+            if (it) {
+                showCompleteWithdrawalDialog()
+            }
+        }
+    }
 
     override fun initEvent() {
         binding.jjAppBarContainer.setOnClickListener { finish() }
@@ -35,8 +56,13 @@ class WithdrawalActivity : BaseActivity<ActivityWithdrawalBinding>() {
 
     private fun withdrawal() {
         binding.withdrawalButton.setOnClickListener {
-            showCompleteWithdrawalDialog()
-            Log.d("로그", "${viewModel.reason.value} / ${binding.inputEditTextField.text }")
+            if (viewModel.reason.value?.isNotEmpty()!! && binding.inputEditTextField.text?.isNotEmpty()!!) {
+                val withdrawalReasonReq = WithdrawalReasonReq(
+                    viewModel.reason.value.toString(),
+                    binding.inputEditTextField.text.toString()
+                )
+                viewModel.saveWithdrawalReason(withdrawalReasonReq)
+            }
         }
     }
 
@@ -99,7 +125,10 @@ class WithdrawalActivity : BaseActivity<ActivityWithdrawalBinding>() {
             getString(R.string.complete_withdrawal),
             getString(R.string.complete_withdrawal_content),
             getString(R.string.close),
-            { it.dismiss() },
+            {
+                ActivityCompat.finishAffinity(this)
+                startActivity(Intent(this, LoginActivity::class.java))
+            },
             "#222222"
         ).show(supportFragmentManager, WITHDRAWAL_DIALOG_TAG)
     }

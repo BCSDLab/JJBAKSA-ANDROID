@@ -11,6 +11,7 @@ import com.jjbaksa.domain.resp.user.LoginReq
 import com.jjbaksa.domain.resp.user.PasswordAndNicknameReq
 import com.jjbaksa.domain.resp.user.SignUpReq
 import com.jjbaksa.domain.resp.user.SignUpResp
+import com.jjbaksa.domain.resp.user.WithdrawalReasonReq
 import okhttp3.MultipartBody
 import retrofit2.Response
 import javax.inject.Inject
@@ -60,6 +61,14 @@ class UserRemoteDataSource @Inject constructor(
 
     override suspend fun setNewNickname(item: PasswordAndNicknameReq): Response<UserResp> {
         return authApi.setUserNickname(item)
+    }
+
+    override suspend fun saveWithdrawalReason(withdrawalReason: WithdrawalReasonReq): Response<Unit> {
+        return authApi.saveWithdrawalReason(withdrawalReason)
+    }
+
+    override suspend fun deleteUser(): Response<Unit> {
+        return authApi.deleteUser()
     }
 
     override suspend fun saveAccessToken(accessToken: String) {

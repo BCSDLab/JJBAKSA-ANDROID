@@ -8,6 +8,7 @@ import com.jjbaksa.domain.resp.user.LoginReq
 import com.jjbaksa.domain.resp.user.PasswordAndNicknameReq
 import com.jjbaksa.domain.resp.user.SignUpReq
 import com.jjbaksa.domain.resp.user.SignUpResp
+import com.jjbaksa.domain.resp.user.WithdrawalReasonReq
 import retrofit2.Response
 
 interface UserDataSource {
@@ -19,6 +20,8 @@ interface UserDataSource {
     suspend fun getPasswordVerificationCode(id: String, email: String): Response<Unit>
     suspend fun findAccount(email: String, code: String): Response<FindIdResp>
     suspend fun findPassword(findPasswordReq: FindPasswordReq): Response<String>
+    suspend fun saveWithdrawalReason(withdrawalReason: WithdrawalReasonReq): Response<Unit>
+    suspend fun deleteUser(): Response<Unit>
     suspend fun setNewPassword(token: String, item: PasswordAndNicknameReq): Response<UserResp>
     suspend fun setNewNickname(item: PasswordAndNicknameReq): Response<UserResp>
     suspend fun saveAccessToken(accessToken: String)

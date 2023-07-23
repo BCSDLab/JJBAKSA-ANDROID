@@ -14,6 +14,7 @@ import com.jjbaksa.domain.resp.user.LoginReq
 import com.jjbaksa.domain.resp.user.PasswordAndNicknameReq
 import com.jjbaksa.domain.resp.user.SignUpReq
 import com.jjbaksa.domain.resp.user.SignUpResp
+import com.jjbaksa.domain.resp.user.WithdrawalReasonReq
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -62,6 +63,14 @@ class UserLocalDataSource @Inject constructor(
     }
 
     override suspend fun setNewNickname(item: PasswordAndNicknameReq): Response<UserResp> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun saveWithdrawalReason(withdrawalReason: WithdrawalReasonReq): Response<Unit> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun deleteUser(): Response<Unit> {
         TODO("Not yet implemented")
     }
 

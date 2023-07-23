@@ -16,6 +16,7 @@ import com.jjbaksa.domain.resp.user.SignUpReq
 import com.jjbaksa.domain.resp.user.SignUpResp
 import com.jjbaksa.domain.resp.user.FindPasswordReq
 import com.jjbaksa.domain.resp.user.PasswordAndNicknameReq
+import com.jjbaksa.domain.resp.user.WithdrawalReasonReq
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
@@ -180,6 +181,28 @@ class UserRepositoryImpl @Inject constructor(
             return RespResult.Success(true)
         } else {
             return RespResult.Success(false)
+        }
+    }
+
+    override suspend fun saveWithdrawalReason(withdrawalReason: WithdrawalReasonReq): RespResult<Boolean> {
+        val response = userRemoteDataSource.saveWithdrawalReason(withdrawalReason)
+        return if (response.isSuccessful) {
+            RespResult.Success(true)
+        } else {
+            val errorBodyJson = response.errorBody()!!.string()
+            val errorBody = RespMapper.errorMapper(errorBodyJson)
+            RespResult.Error(ErrorType(errorBody.errorMessage, errorBody.code))
+        }
+    }
+
+    override suspend fun deleteUser(): RespResult<Boolean> {
+        val response = userRemoteDataSource.deleteUser()
+        return if (response.isSuccessful && response.code() == 204) {
+            RespResult.Success(response.isSuccessful)
+        } else {
+            val errorBodyJson = response.errorBody()!!.string()
+            val errorBody = RespMapper.errorMapper(errorBodyJson)
+            RespResult.Error(ErrorType(errorBody.errorMessage, errorBody.code))
         }
     }
 

@@ -6,6 +6,7 @@ import com.jjbaksa.domain.resp.user.FormatResp
 import com.jjbaksa.domain.resp.user.LoginResult
 import com.jjbaksa.domain.resp.user.SignUpReq
 import com.jjbaksa.domain.resp.user.SignUpResp
+import com.jjbaksa.domain.resp.user.WithdrawalReasonReq
 
 interface UserRepository {
     suspend fun postSignUp(signUpReq: SignUpReq): SignUpResp?
@@ -26,6 +27,8 @@ interface UserRepository {
     suspend fun setNewNickname(nickname: String): FormatResp
     suspend fun me(): RespResult<Boolean>
     suspend fun editUserProfileImage(photo: String): RespResult<Boolean>
+    suspend fun saveWithdrawalReason(withdrawalReason: WithdrawalReasonReq): RespResult<Boolean>
+    suspend fun deleteUser(): RespResult<Boolean>
     fun getAutoLoginFlag(): Boolean
     fun getAccount(): String
     fun getNickname(): String
