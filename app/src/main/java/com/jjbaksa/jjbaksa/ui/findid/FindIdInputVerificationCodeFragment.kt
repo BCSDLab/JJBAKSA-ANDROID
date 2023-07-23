@@ -68,14 +68,14 @@ class FindIdInputVerificationCodeFragment : BaseFragment<FragmentFindIdInputVeri
 
     private fun reSendVerificationCode() {
         binding.textViewFindIdResendVerificationCode.setOnClickListener {
-            KeyboardProvider().hideKeyboard(requireContext(), binding.editTextContainer)
+            KeyboardProvider(requireContext()).hideKeyboard(binding.editTextContainer)
             viewModel.getAuthEmail(viewModel.userEmail.value.toString())
         }
     }
 
     private fun findId() {
         binding.buttonFindIdVerificationCode.setOnClickListener {
-            KeyboardProvider().hideKeyboard(requireContext(), binding.editTextContainer)
+            KeyboardProvider(requireContext()).hideKeyboard(binding.editTextContainer)
             if (viewModel.stateBoxNumber.value?.contains(null) == false) {
                 viewModel.getUserAccount(stateBoxNumber.joinToString(""))
             }

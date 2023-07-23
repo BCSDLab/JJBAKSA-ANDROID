@@ -17,6 +17,7 @@ class WithdrawalActivity : BaseActivity<ActivityWithdrawalBinding>() {
     private val viewModel: WithdrawalViewModel by viewModels()
 
     override fun initView() {
+        KeyboardProvider(this).inputKeyboardResize(window, binding.root)
         binding.vm = viewModel
         binding.lifecycleOwner = this
         viewModel.getNickname()
