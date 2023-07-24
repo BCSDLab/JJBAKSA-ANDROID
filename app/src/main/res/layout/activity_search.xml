@@ -114,6 +114,31 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginHorizontal="16dp"
             tools:listitem="@layout/item_search_shop"/>
+        <LinearLayout
+            android:id="@+id/ll_empty_shop"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/rv_keyword"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginHorizontal="16dp">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="87dp"
+                android:layout_height="57dp"
+                android:src="@drawable/ic_empty_img"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/empty_search_shop_text"
+                android:gravity="center"
+                android:layout_marginTop="14dp"/>
+
+        </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

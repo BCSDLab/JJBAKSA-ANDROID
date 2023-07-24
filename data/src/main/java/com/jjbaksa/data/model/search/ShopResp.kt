@@ -12,6 +12,6 @@ data class ShopResp(
     @SerializedName("openNow") val openNow: Boolean?,
     @SerializedName("photoToken") val photoToken: String?,
     @SerializedName("placeId") val placeId: String?,
-    @SerializedName("ratingCount") val ratingCount: Double?,
-    @SerializedName("totalRating") val totalRating: Double?
+    @SerializedName("ratingCount") val ratingCount: Int?,
+    @SerializedName("totalRating") val totalRating: Int?
 )

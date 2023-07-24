@@ -1,9 +1,13 @@
 package com.jjbaksa.jjbaksa.ui.search
 
 import android.content.Context
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -14,6 +18,8 @@ import com.jjbaksa.jjbaksa.base.BaseViewHolder
 import com.jjbaksa.jjbaksa.databinding.ItemLoadingBinding
 import com.jjbaksa.jjbaksa.databinding.ItemSearchShopBinding
 import com.jjbaksa.jjbaksa.listener.AdapterListener
+import java.math.RoundingMode
+import java.text.DecimalFormat
 
 class SearchShopAdapter(
     private val context: Context,
@@ -23,7 +29,8 @@ class SearchShopAdapter(
 
     private val VIEW_TYPE_LOADING = 0
     private val VIEW_TYPE_NORMAL = 1
-
+    private val decimalFormat = DecimalFormat("#.##")
+        .apply { roundingMode = RoundingMode.UP }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<Shop> {
         return when (viewType) {
             VIEW_TYPE_NORMAL -> ViewHolder(
@@ -117,14 +124,22 @@ class SearchShopAdapter(
                     ivItemSearchShopPhoto.visibility = View.VISIBLE
                 }
                 tvItemSearchShopCategory.text = item.category
-                tvItemSearchShopAddress.text = item.formattedAddress
+                // tvItemSearchShopAddress.text = "${item.formattedAddress.trim()} | ${decimalFormat.format(item.dist / 1000.0)}km"
+                var addressString = "${item.formattedAddress.trim()} | ${decimalFormat.format(item.dist / 1000.0)}km"
+                var sp = SpannableString("${item.formattedAddress} | ${decimalFormat.format(item.dist / 1000.0)}km")
+                sp.setSpan(ForegroundColorSpan(ContextCompat.getColor(context, R.color.color_666666)), item.formattedAddress.length, addressString.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                tvItemSearchShopAddress.setText(sp)
                 tvItemSearchShopRating.text = item.totalRating.toString()
                 if (item.openNow) {
                     tvItemSearchShopOpen.text = context.getString(R.string.open_now)
                 } else {
                     tvItemSearchShopOpen.text = context.getString(R.string.open_not_now)
                 }
-                tvItemSearchShopKm.text = " | ${item.dist / 1000.0}.km"
+                if (item.totalRating == 0) {
+                    tvItemSearchShopReviewCnt.text = context.getString(R.string.empty_review)
+                } else {
+                    tvItemSearchShopReviewCnt.text = String.format(context.getString(R.string.format_review), item.ratingCount)
+                }
             }
         }
     }

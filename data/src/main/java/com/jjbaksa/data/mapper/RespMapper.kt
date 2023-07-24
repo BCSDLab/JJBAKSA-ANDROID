@@ -35,6 +35,6 @@ fun ShopResp.toShop() = Shop(
     openNow = openNow ?: false,
     photoToken = photoToken ?: "",
     placeId = placeId ?: "",
-    ratingCount = ratingCount ?: 0.0,
-    totalRating = totalRating ?: 0.0
+    ratingCount = ratingCount ?: 0,
+    totalRating = totalRating ?: 0
 )

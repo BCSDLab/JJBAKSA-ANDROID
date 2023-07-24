@@ -35,6 +35,7 @@ class FusedLocationUtil(
     fun startLocationUpdate() {
         if (context.hasPermission(permissions)) {
             fusedLocationClient.requestLocationUpdates(createLocationRequest(), locationCallback, Looper.getMainLooper())
+        } else {
         }
     }
     private fun createLocationRequest(): LocationRequest {

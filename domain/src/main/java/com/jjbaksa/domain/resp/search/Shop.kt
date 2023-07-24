@@ -10,7 +10,7 @@ data class Shop(
     val openNow: Boolean = false,
     val photoToken: String = "",
     val placeId: String = "",
-    val ratingCount: Double = 0.0,
-    val totalRating: Double = 0.0,
+    val ratingCount: Int = 0,
+    val totalRating: Int = 0,
     var type: Int = 1
 )

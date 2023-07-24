@@ -118,4 +118,7 @@
     <string name="no_img">등록된 사진이 없어요!</string>
     <string name="open_now">영업중</string>
     <string name="open_not_now">영업종료</string>
+    <string name="empty_review">리뷰없음</string>
+    <string name="format_review">%d개의 리뷰</string>
+    <string name="empty_search_shop_text">해당 검색어와 관련된\n음식점/게시물을 찾을 수 없습니다.</string>
 </resources>

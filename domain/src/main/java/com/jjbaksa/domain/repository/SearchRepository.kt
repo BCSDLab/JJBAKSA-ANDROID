@@ -1,26 +1,19 @@
 package com.jjbaksa.domain.repository
 
 import com.jjbaksa.domain.resp.search.ShopData
+import kotlinx.coroutines.flow.Flow
 
 interface SearchRepository {
-    suspend fun getTrendText(onSuccess: (List<String>) -> Unit)
-    suspend fun getSearchKeyword(
-        word: String,
-        onSuccess: (List<String>) -> Unit,
-        onError: () -> Unit
-    )
+    suspend fun getTrendText(): Flow<Result<List<String>>>
+    suspend fun getSearchKeyword(word: String): Flow<Result<List<String>>>
     suspend fun getShops(
         keyword: String,
         lat: Double,
         lng: Double,
-        onSuccess: (ShopData) -> Unit,
-        onError: () -> Unit
-    )
+    ): Flow<Result<ShopData>>
     suspend fun getShopsPage(
         pageToken: String,
         lat: Double,
         lng: Double,
-        onSuccess: (ShopData) -> Unit,
-        onError: () -> Unit
-    )
+    ): Flow<Result<ShopData>>
 }

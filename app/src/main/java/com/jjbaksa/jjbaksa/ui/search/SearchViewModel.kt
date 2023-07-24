@@ -1,18 +1,22 @@
 package com.jjbaksa.jjbaksa.ui.search
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
-import com.jjbaksa.domain.repository.SearchRepository
 import com.jjbaksa.domain.resp.search.ShopData
+import com.jjbaksa.domain.usecase.GetAutoCompleteKeywordUseCase
+import com.jjbaksa.domain.usecase.GetSearchShopUseCase
+import com.jjbaksa.domain.usecase.GetTrendingSearchKeyword
 import com.jjbaksa.jjbaksa.base.BaseViewModel
 import com.jjbaksa.jjbaksa.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val searchRepository: SearchRepository
+    private val getTrendingSearchKeyword: GetTrendingSearchKeyword,
+    private val getAutoCompleteKeywordUseCase: GetAutoCompleteKeywordUseCase,
+    private val getSearchShopUseCase: GetSearchShopUseCase
 ) : BaseViewModel() {
     private var lat: Double = 0.0
     private var lng: Double = 0.0
@@ -29,54 +33,44 @@ class SearchViewModel @Inject constructor(
 
     fun getTrendingText() {
         viewModelScope.launch(ceh) {
-            searchRepository.getTrendText {
-                _trendTextData.value = it
-            }
+            getTrendingSearchKeyword.invoke()
+                .collect {
+                    it.onSuccess { _trendTextData.value = it }
+                }
         }
     }
+
     fun getAutoCompleteKeyword(word: String) {
         viewModelScope.launch(ceh) {
-            searchRepository.getSearchKeyword(
-                word = word,
-                onSuccess = {
-                    _autoCompleteData.value = it
-                }, onError = {
-                _autoCompleteData.value = listOf()
-            }
-            )
+            getAutoCompleteKeywordUseCase.invoke(word)
+                .collect {
+                    it.onSuccess { _autoCompleteData.value = it }
+                }
         }
     }
+
     fun searchKeyword(keyword: String) {
         comparePage = ""
         viewModelScope.launch(ceh) {
-            searchRepository.getShops(
-                keyword = keyword,
-                lat = lat,
-                lng = lng,
-                onSuccess = {
-                    _shopData.value = it
-                }, onError = {
-            }
-            )
+            getSearchShopUseCase.firstSearch(keyword, lat, lng)
+                .collect {
+                    it.onSuccess { _shopData.value = it }
+                }
         }
     }
+
     fun searchPage(pageToken: String) {
         if (pageToken != comparePage) {
-            Log.e("jdm_tag", "cnt")
             comparePage = pageToken
             viewModelScope.launch(ceh) {
-                searchRepository.getShopsPage(
-                    pageToken = pageToken,
-                    lat = lat,
-                    lng = lng,
-                    onSuccess = {
-                        _shopData.value = it
-                    }, onError = {
-                }
-                )
+                getSearchShopUseCase.pagingSearch(pageToken, lat, lng)
+                    .collect {
+                        it.onSuccess { _shopData.value = it }
+                    }
             }
         }
     }
+
     fun setLocation(lat: Double, lng: Double) {
         this.lat = lat
         this.lng = lng

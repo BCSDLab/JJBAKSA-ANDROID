@@ -1,6 +1,5 @@
 package com.jjbaksa.jjbaksa.ui.search
 
-import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
@@ -12,10 +11,12 @@ import com.jjbaksa.jjbaksa.databinding.ActivitySearchBinding
 import com.jjbaksa.jjbaksa.listener.OnClickShopListener
 import com.jjbaksa.jjbaksa.listener.PaginationScrollListener
 import com.jjbaksa.jjbaksa.util.FusedLocationUtil
+import com.jjbaksa.jjbaksa.util.KeyboardProvider
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SearchActivity : BaseActivity<ActivitySearchBinding>() {
+    private val keyboardProvider = KeyboardProvider()
     private val searchViewModel: SearchViewModel by viewModels()
     private val trendTextAdapter: TrendTextAdapter by lazy { TrendTextAdapter(this::onClickTrendKeyword) }
     private val fusedLocationUtil: FusedLocationUtil by lazy {
@@ -55,12 +56,11 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>() {
                 override fun loading() {
                     if (!currentPage.isEmpty())
                         searchShopAdapter.addLoading()
-                    Log.e("jdm_tag", "isLoading : ")
                 }
 
                 override fun loadMoreItems() {
-                    Log.e("jdm_tag", "loadMoreItem : $currentPage")
-                    searchViewModel.searchPage(currentPage)
+                    if (!currentPage.isEmpty())
+                        searchViewModel.searchPage(currentPage)
                 }
             })
         }
@@ -76,9 +76,27 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>() {
             autoCompleteKeywordAdapter.notifyDataSetChanged()
         }
         searchViewModel.shopData.observe(this) {
-            currentPage = it.pageToken
-            searchShopAdapter.removeLoading()
-            searchShopAdapter.addAll(it.shopQueryResponseList)
+            if (it.shopQueryResponseList.isEmpty()) {
+                if (searchShopAdapter.itemCount == 0) {
+                    binding.rvTrend.visibility = View.VISIBLE
+                    binding.llEmptyShop.visibility = View.VISIBLE
+                    binding.rvShop.visibility = View.GONE
+                }
+            } else {
+                binding.rvTrend.visibility = View.GONE
+                binding.llEmptyShop.visibility = View.GONE
+                binding.rvShop.visibility = View.VISIBLE
+                currentPage = it.pageToken
+                searchShopAdapter.removeLoading()
+                searchShopAdapter.addAll(it.shopQueryResponseList)
+            }
+        }
+        searchViewModel.isLoading.observe(this) {
+            if (it) {
+                showLoading()
+            } else {
+                dismissLoading()
+            }
         }
     }
 
@@ -96,8 +114,13 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>() {
             }
             ivSearch.setOnClickListener {
                 rvKeyword.visibility = View.GONE
-                rvShop.visibility = View.VISIBLE
+                tvSearchTitle.visibility = View.GONE
                 searchViewModel.searchKeyword(etSearch.text.toString())
+                searchShopAdapter.clear()
+                keyboardProvider.hideKeyboard(this@SearchActivity, etSearch)
+            }
+            appbarSearch.ivAppbarBack.setOnClickListener {
+                onBackPressed()
             }
         }
     }
