@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.jjbaksa.jjbaksa.ui.withdrawal.viewmodel.WithdrawalViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/withdrawal_constraint_layout_container"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.withdrawal.WithdrawalActivity">
+
+        <com.jjbaksa.jjbaksa.view.JjAppbar
+            android:id="@+id/jj_app_bar_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="@string/withdrawal"
+            app:titleSize="18sp"
+            app:titleTextColor="@color/color_222222" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/jj_app_bar_container">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/withdrawal_title_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="24dp"
+                    android:text="@{@string/withdrawal_jjbaksa_title(vm.userNickname)}"
+                    android:textColor="@color/color_222222"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="조돌이님,\n쩝쩝박사 학위를 포기하시겠어요...?" />
+
+                <View
+                    android:id="@+id/line_view"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="11dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@color/color_eeeeee"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/withdrawal_title_text_view" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/withdrawal_question_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/why_reason_delete_account"
+                    android:textColor="@color/color_222222"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/line_view" />
+
+                <RadioGroup
+                    android:id="@+id/reason_withdrawal_radio_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="vertical"
+                    app:layout_constraintStart_toStartOf="@+id/withdrawal_question_text_view"
+                    app:layout_constraintTop_toBottomOf="@+id/withdrawal_question_text_view">
+
+                    <RadioButton
+                        android:id="@+id/reason_withdrawal_radio_button_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:button="@drawable/sel_jj_check_box_check_box"
+                        android:paddingStart="11dp"
+                        android:text="@string/withdrawal_reason1" />
+
+                    <RadioButton
+                        android:id="@+id/reason_withdrawal_radio_button_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:button="@drawable/sel_jj_check_box_check_box"
+                        android:paddingStart="11dp"
+                        android:text="@string/withdrawal_reason2" />
+
+                    <RadioButton
+                        android:id="@+id/reason_withdrawal_radio_button_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:button="@drawable/sel_jj_check_box_check_box"
+                        android:paddingStart="11dp"
+                        android:text="@string/withdrawal_reason3" />
+
+                    <RadioButton
+                        android:id="@+id/reason_withdrawal_radio_button_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:button="@drawable/sel_jj_check_box_check_box"
+                        android:paddingStart="11dp"
+                        android:text="@string/withdrawal_reason4" />
+
+                    <RadioButton
+                        android:id="@+id/reason_withdrawal_radio_button_5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:button="@drawable/sel_jj_check_box_check_box"
+                        android:paddingStart="11dp"
+                        android:text="@string/withdrawal_reason5" />
+
+                </RadioGroup>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/withdrawal_opinion_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/privacy_opinion_for_jjbaksa"
+                    android:textColor="@color/color_222222"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/reason_withdrawal_radio_group" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/withdrawal_improve_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/improve_jjbaksa_content"
+                    android:textColor="@color/color_ff7f23"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/withdrawal_opinion_text_view" />
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/outlinedTextField"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginEnd="32dp"
+                    app:boxStrokeColor="@color/color_c4c4c4"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/withdrawal_improve_text_view">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/input_edit_text_field"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="top|start"
+                        android:maxLength="150"
+                        android:text="@string/free_write"
+                        android:textColor="@{vm.isEnabled ? @color/color_666666 : @color/color_c4c4c4}"
+                        android:textColorHint="@color/color_c4c4c4" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/text_length_count_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{@string/text_length150(vm.inputTextLength)}"
+                    android:textColor="@{vm.maxInputTextLength ? @color/color_ff7f23 : @color/color_c4c4c4}"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="@id/outlinedTextField"
+                    app:layout_constraintTop_toBottomOf="@+id/outlinedTextField"
+                    tools:text="0/150" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/withdrawal_notice_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="14dp"
+                    android:text="@string/withdrawal_notice_text"
+                    android:textColor="@color/color_c4c4c4"
+                    android:textSize="10sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/outlinedTextField" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/withdrawal_button"
+                    android:layout_width="0dp"
+                    android:layout_height="39dp"
+                    android:layout_marginStart="60dp"
+                    android:layout_marginTop="74dp"
+                    android:layout_marginEnd="60dp"
+                    android:background="@drawable/bg_withdrawal_button"
+                    android:enabled="@{vm.isEnabled}"
+                    android:text="@string/base_withdrawal"
+                    android:textColor="@color/color_ffffff"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/withdrawal_notice_text_view" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

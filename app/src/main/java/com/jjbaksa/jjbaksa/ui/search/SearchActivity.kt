@@ -16,7 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SearchActivity : BaseActivity<ActivitySearchBinding>() {
-    private val keyboardProvider = KeyboardProvider()
+    private val keyboardProvider = KeyboardProvider(this)
     private val searchViewModel: SearchViewModel by viewModels()
     private val trendTextAdapter: TrendTextAdapter by lazy { TrendTextAdapter(this::onClickTrendKeyword) }
     private val fusedLocationUtil: FusedLocationUtil by lazy {
@@ -117,7 +117,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>() {
                 tvSearchTitle.visibility = View.GONE
                 searchViewModel.searchKeyword(etSearch.text.toString())
                 searchShopAdapter.clear()
-                keyboardProvider.hideKeyboard(this@SearchActivity, etSearch)
+                keyboardProvider.hideKeyboard(etSearch)
             }
             appbarSearch.ivAppbarBack.setOnClickListener {
                 onBackPressed()

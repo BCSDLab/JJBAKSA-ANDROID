@@ -1,9 +1,10 @@
 package com.jjbaksa.data.repository
 
-import android.util.Log
+import android.net.Uri
 import com.jjbaksa.data.SUCCESS
 import com.jjbaksa.data.datasource.local.UserLocalDataSource
 import com.jjbaksa.data.datasource.remote.UserRemoteDataSource
+import com.jjbaksa.data.mapper.FormDataUtil
 import com.jjbaksa.data.mapper.RespMapper
 import com.jjbaksa.domain.base.ErrorType
 import com.jjbaksa.domain.base.RespResult
@@ -15,6 +16,7 @@ import com.jjbaksa.domain.resp.user.SignUpReq
 import com.jjbaksa.domain.resp.user.SignUpResp
 import com.jjbaksa.domain.resp.user.FindPasswordReq
 import com.jjbaksa.domain.resp.user.PasswordAndNicknameReq
+import com.jjbaksa.domain.resp.user.WithdrawalReasonReq
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
@@ -43,7 +45,6 @@ class UserRepositoryImpl @Inject constructor(
         isAutoLogin: Boolean,
         onResult: (LoginResult) -> Unit
     ) {
-
         val response = userRemoteDataSource.postLogin(LoginReq(account, password))
 
         if (response != null) {
@@ -71,7 +72,7 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun checkAuthEmail(email: String): FormatResp {
         val result = userRemoteDataSource.checkAuthEmail(email)
         return if (result.isSuccessful) {
-            FormatResp(result.isSuccessful, null, result.code())
+            FormatResp(result.isSuccessful, "", result.code())
         } else {
             val errorBodyJson = result.errorBody()!!.string()
             val errorBody = RespMapper.errorMapper(errorBodyJson)
@@ -79,18 +80,17 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun checkPassword(password: String): RespResult<Boolean> {
+    override suspend fun checkPassword(password: String): FormatResp {
         val response = userRemoteDataSource.checkPassword(
             "Bearer " + userLocalDataSource.getAccessToken(),
             password
         )
-        Log.d("로그", "response : $response")
         return if (response.isSuccessful && response.code() == 200) {
-            RespResult.Success(response.isSuccessful)
+            FormatResp(response.isSuccessful, "", response.code())
         } else {
             val errorBodyJson = response.errorBody()!!.string()
             val errorBody = RespMapper.errorMapper(errorBodyJson)
-            RespResult.Error(ErrorType(errorBody.errorMessage, errorBody.code))
+            FormatResp(response.isSuccessful, errorBody.errorMessage, errorBody.code)
         }
     }
 
@@ -100,7 +100,7 @@ class UserRepositoryImpl @Inject constructor(
     ): FormatResp {
         val response = userRemoteDataSource.getPasswordVerificationCode(id, email)
         return if (response.isSuccessful && response.code() == 200) {
-            FormatResp(response.isSuccessful, null, response.code())
+            FormatResp(response.isSuccessful, "", response.code())
         } else {
             val errorBodyJson = response.errorBody()!!.string()
             val errorBody = RespMapper.errorMapper(errorBodyJson)
@@ -123,7 +123,7 @@ class UserRepositoryImpl @Inject constructor(
         val response = userRemoteDataSource.findPassword(user)
         return if (response.isSuccessful && response.code() == 200) {
             userLocalDataSource.saveAuthPasswordToken(response.body().toString())
-            FormatResp(response.isSuccessful, null, response.code())
+            FormatResp(response.isSuccessful, "", response.code())
         } else {
             val errorBodyJson = response.errorBody()!!.string()
             val errorBody = RespMapper.errorMapper(errorBodyJson)
@@ -133,12 +133,26 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun setNewPassword(password: String): FormatResp {
         val item = PasswordAndNicknameReq(password, null)
+        val token = userLocalDataSource.getAuthPasswordToken().ifEmpty { userLocalDataSource.getAccessToken() }
         val response = userRemoteDataSource.setNewPassword(
-            "Bearer " + userLocalDataSource.getAuthPasswordToken(),
+            "Bearer $token",
             item
         )
         return if (response.isSuccessful && response.code() == 200) {
-            FormatResp(response.isSuccessful, null, response.code())
+            FormatResp(response.isSuccessful, "", response.code())
+        } else {
+            val errorBodyJson = response.errorBody()!!.string()
+            val errorBody = RespMapper.errorMapper(errorBodyJson)
+            FormatResp(response.isSuccessful, errorBody.errorMessage, response.code())
+        }
+    }
+
+    override suspend fun setNewNickname(nickname: String): FormatResp {
+        val item = PasswordAndNicknameReq(null, nickname)
+        val response = userRemoteDataSource.setNewNickname(item)
+        return if (response.isSuccessful && response.code() == 200) {
+            userLocalDataSource.saveNickname(nickname)
+            FormatResp(response.isSuccessful, "", response.code())
         } else {
             val errorBodyJson = response.errorBody()!!.string()
             val errorBody = RespMapper.errorMapper(errorBodyJson)
@@ -148,8 +162,42 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun me(): RespResult<Boolean> {
         val response = userRemoteDataSource.me()
-
         return if (response.isSuccessful) {
+            userLocalDataSource.saveNickname(response.body()?.nickname ?: "")
+            userLocalDataSource.saveFollowers(response.body()?.userCountResponse?.friendCount ?: 0)
+            userLocalDataSource.saveProfileImage(response.body()?.profileImage?.path ?: "")
+            RespResult.Success(response.isSuccessful)
+        } else {
+            val errorBodyJson = response.errorBody()!!.string()
+            val errorBody = RespMapper.errorMapper(errorBodyJson)
+            RespResult.Error(ErrorType(errorBody.errorMessage, errorBody.code))
+        }
+    }
+
+    override suspend fun editUserProfileImage(profile: String): RespResult<Boolean> {
+        val fileBody = FormDataUtil.getImageBody("multipartFile", Uri.parse(profile))
+        val response = userRemoteDataSource.editUserProfileImage(fileBody)
+        if (response.isSuccessful) {
+            return RespResult.Success(true)
+        } else {
+            return RespResult.Success(false)
+        }
+    }
+
+    override suspend fun saveWithdrawalReason(withdrawalReason: WithdrawalReasonReq): RespResult<Boolean> {
+        val response = userRemoteDataSource.saveWithdrawalReason(withdrawalReason)
+        return if (response.isSuccessful) {
+            RespResult.Success(true)
+        } else {
+            val errorBodyJson = response.errorBody()!!.string()
+            val errorBody = RespMapper.errorMapper(errorBodyJson)
+            RespResult.Error(ErrorType(errorBody.errorMessage, errorBody.code))
+        }
+    }
+
+    override suspend fun deleteUser(): RespResult<Boolean> {
+        val response = userRemoteDataSource.deleteUser()
+        return if (response.isSuccessful && response.code() == 204) {
             RespResult.Success(response.isSuccessful)
         } else {
             val errorBodyJson = response.errorBody()!!.string()
@@ -163,10 +211,22 @@ class UserRepositoryImpl @Inject constructor(
     }
 
     override fun getAccount(): String {
-        return userLocalDataSource.getAcount()
+        return userLocalDataSource.getAccount()
     }
 
-    override fun getPasswrod(): String {
+    override fun getNickname(): String {
+        return userLocalDataSource.getNickname()
+    }
+
+    override fun getFollowers(): Int {
+        return userLocalDataSource.getFollowers()
+    }
+
+    override fun getProfileImage(): String {
+        return userLocalDataSource.getProfileImage()
+    }
+
+    override fun getPassword(): String {
         return userLocalDataSource.getPassword()
     }
 

@@ -2,7 +2,7 @@ package com.jjbaksa.jjbaksa.ui.mainpage.viewmodel
 
 import androidx.lifecycle.viewModelScope
 import com.jjbaksa.domain.model.mainpage.UserLocation
-import com.jjbaksa.domain.repository.HomeRepository
+import com.jjbaksa.domain.repository.UserRepository
 import com.jjbaksa.jjbaksa.base.BaseViewModel
 import com.jjbaksa.jjbaksa.ui.mainpage.sub.FusedLocationProvider
 import com.jjbaksa.jjbaksa.util.SingleLiveEvent
@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val repository: HomeRepository
+    private val repository: UserRepository
 ) : BaseViewModel() {
 
     lateinit var fusedLocationProvider: FusedLocationProvider
@@ -28,6 +28,12 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             fusedLocationProvider.requestLastLocation()
             fusedLocationProvider.startLocationUpdates()
+        }
+    }
+
+    fun getUserMe() {
+        viewModelScope.launch {
+            repository.me()
         }
     }
 }

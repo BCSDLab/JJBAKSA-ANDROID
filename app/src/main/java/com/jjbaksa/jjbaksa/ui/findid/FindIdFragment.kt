@@ -42,7 +42,7 @@ class FindIdFragment : BaseFragment<FragmentFindIdBinding>() {
 
     private fun sendVerificationCode() {
         binding.buttonFindIdSendToVerificationCode.setOnClickListener {
-            KeyboardProvider().hideKeyboard(requireContext(), binding.editTextFindIdToEmail)
+            KeyboardProvider(requireContext()).hideKeyboard(binding.editTextFindIdToEmail)
             viewModel.getAuthEmail(binding.editTextFindIdToEmail.text.toString())
         }
     }

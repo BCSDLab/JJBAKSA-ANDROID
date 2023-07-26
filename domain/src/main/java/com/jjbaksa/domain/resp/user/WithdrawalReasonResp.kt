@@ -1,7 +1,6 @@
 package com.jjbaksa.domain.resp.user
 
-data class FormatResp(
+data class WithdrawalReasonResp(
     val isSuccess: Boolean,
-    val msg: String,
-    val code: Int
+    val message: String?
 )
