@@ -5,7 +5,14 @@ import com.kakao.sdk.common.KakaoSdk
 import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
+import com.jjbaksa.data.database.PreferenceKeys
+import com.jjbaksa.data.database.userDataStore
+import com.jjbaksa.jjbaksa.util.MyInfo
 import dagger.hilt.android.HiltAndroidApp
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 @HiltAndroidApp
 class JjbaksaApp : Application() {
@@ -17,6 +24,9 @@ class JjbaksaApp : Application() {
         super.onCreate()
         KakaoSdk.init(this, BuildConfig.kakao_native_app_key)
         instance = this
+        GlobalScope.launch {
+            MyInfo.id = appContext.userDataStore.data.first()[PreferenceKeys.NICKNAME] ?: ""
+        }
     }
 
     /**

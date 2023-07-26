@@ -28,16 +28,20 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
             // MainPageActivity Result Handle
         }
 
-    override fun initView() {
+    override fun subscribe() {
         observeData()
     }
-
-    override fun subscribe() {
+    override fun initView() {
+        viewModel.getAutoLogin()
     }
 
     override fun initEvent() {
-        viewModel.getAutoLogin()
+
     }
+
+//    override fun initData() {
+//        viewModel.getAutoLogin()
+//    }
 
     private fun observeData() {
         viewModel.autoLogin.observe(this) { isLogin ->
@@ -59,6 +63,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
                         finish()
                     }
                 }
+
                 is RespResult.Error -> {
                     showSnackBar(it.errorType.errorMessage, getString(R.string.cancel))
                     goToLoginActivity()
@@ -71,6 +76,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     private fun goToLoginActivity() {
         loginResult.launch(Intent(this, LoginActivity::class.java))
     }
+
     private fun goToMainActivity() {
         mainResult.launch(Intent(this, MainPageActivity::class.java))
     }

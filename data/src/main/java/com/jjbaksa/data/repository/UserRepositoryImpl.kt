@@ -164,7 +164,7 @@ class UserRepositoryImpl @Inject constructor(
         val response = userRemoteDataSource.me()
         return if (response.isSuccessful) {
             userLocalDataSource.saveNickname(response.body()?.nickname ?: "")
-            userLocalDataSource.saveFollowers(response.body()?.userCountResp?.friendCount ?: 0)
+            userLocalDataSource.saveFollowers(response.body()?.userCountResponse?.friendCount ?: 0)
             userLocalDataSource.saveProfileImage(response.body()?.profileImage?.path ?: "")
             RespResult.Success(response.isSuccessful)
         } else {
