@@ -95,6 +95,8 @@ obj/
 /out/
 
 # User-specific configurations
+.idea/compiler.xml
+.idea/misc.xml
 .idea/caches/
 .idea/libraries/
 .idea/shelf/
