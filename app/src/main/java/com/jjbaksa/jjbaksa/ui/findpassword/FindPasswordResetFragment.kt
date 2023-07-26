@@ -118,7 +118,7 @@ class FindPasswordResetFragment : BaseFragment<FragmentFindPasswordResetBinding>
             ContextCompat.getDrawable(requireContext(), R.drawable.shape_rect_eeeeee_solid_radius_100_stroke_ff7f23)
         binding.inputCheckPasswordEditText.editTextBackground =
             ContextCompat.getDrawable(requireContext(), R.drawable.shape_rect_eeeeee_solid_radius_100_stroke_ff7f23)
-        KeyboardProvider().hideKeyboard(requireContext(), binding.root)
+        KeyboardProvider(requireContext()).hideKeyboard(binding.root)
     }
 
     companion object {

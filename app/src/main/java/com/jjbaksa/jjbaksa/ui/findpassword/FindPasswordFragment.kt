@@ -115,7 +115,7 @@ class FindPasswordFragment() : BaseFragment<FragmentFindPasswordBinding>() {
                 findNavController().navigate(R.id.action_nav_find_password_to_nav_find_password_input_code)
             } else {
                 outlineState = true
-                KeyboardProvider().hideKeyboard(requireContext(), binding.inputEmailEditText)
+                KeyboardProvider(requireContext()).hideKeyboard(binding.inputEmailEditText)
                 if (it.msg.toString().contains(USER)) {
                     showSnackBar(getString(R.string.fail_id))
                     changeEditTextOutlineColor(binding.inputIdEditText)

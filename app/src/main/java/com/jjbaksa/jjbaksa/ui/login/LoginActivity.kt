@@ -28,11 +28,11 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
     override fun subscribe() {
         with(viewModel) {
-
             loginState.observe(this@LoginActivity) {
                 if (it != null) {
                     if (it.isSuccess) {
                         goToMainActivity()
+                        viewModel.loadUserMe()
                     } else {
                         if (it.erroMessage.isNotEmpty()) {
                             showSnackBar(it.erroMessage, getString(R.string.cancel))

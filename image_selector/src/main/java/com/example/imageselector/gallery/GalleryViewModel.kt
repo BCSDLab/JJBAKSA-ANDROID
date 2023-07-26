@@ -14,9 +14,8 @@ import javax.inject.Inject
 class GalleryViewModel @Inject constructor(
     private val repository: ImageRepository,
 ) : ViewModel() {
-    val currentValue: LiveData<Int>
-        get() = _currentValue
     private val _currentValue = MutableLiveData<Int>()
+    val currentValue: LiveData<Int> get() = _currentValue
 
     fun getAllPhotos() {
         repository.getAllPhotos()
@@ -39,15 +38,17 @@ class GalleryViewModel @Inject constructor(
         return repository.getUriArr()
     }
 
-    fun getSelectedImageList(): ArrayList<Image> {
-        return repository.getSelectedImageList()
+    fun getSelectedImages(): ArrayList<Image> {
+        return repository.getSelectedImages()
+    }
+
+    fun clearData() {
+        with(repository) {
+            getUriArr().clear()
+            getSelectedImages().clear()
+            getSelectedImageUri().clear()
+        }
     }
 }
 
-object DataBindingAdapterUtil {
-    @JvmStatic
-    @BindingAdapter("select")
-    fun select(view: View, b: Boolean) {
-        view.isSelected = b
-    }
-}
+

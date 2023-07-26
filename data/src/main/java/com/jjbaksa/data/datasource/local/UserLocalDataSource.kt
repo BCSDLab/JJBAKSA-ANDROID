@@ -14,6 +14,7 @@ import com.jjbaksa.domain.resp.user.LoginReq
 import com.jjbaksa.domain.resp.user.PasswordAndNicknameReq
 import com.jjbaksa.domain.resp.user.SignUpReq
 import com.jjbaksa.domain.resp.user.SignUpResp
+import com.jjbaksa.domain.resp.user.WithdrawalReasonReq
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -61,6 +62,18 @@ class UserLocalDataSource @Inject constructor(
         TODO("Not yet implemented")
     }
 
+    override suspend fun setNewNickname(item: PasswordAndNicknameReq): Response<UserResp> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun saveWithdrawalReason(withdrawalReason: WithdrawalReasonReq): Response<Unit> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun deleteUser(): Response<Unit> {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun saveAccessToken(accessToken: String) {
         dataStore.edit {
             it[PreferenceKeys.ACCESS_TOKEN] = accessToken
@@ -70,6 +83,24 @@ class UserLocalDataSource @Inject constructor(
     override suspend fun saveAccount(account: String) {
         dataStore.edit {
             it[PreferenceKeys.ACCOUNT] = account
+        }
+    }
+
+    override suspend fun saveNickname(nickname: String) {
+        dataStore.edit {
+            it[PreferenceKeys.NICKNAME] = nickname
+        }
+    }
+
+    override suspend fun saveFollowers(followers: Int) {
+        dataStore.edit {
+            it[PreferenceKeys.FOLLOWERS] = followers
+        }
+    }
+
+    override suspend fun saveProfileImage(image: String) {
+        dataStore.edit {
+            it[PreferenceKeys.IMAGE] = image
         }
     }
 
@@ -103,9 +134,27 @@ class UserLocalDataSource @Inject constructor(
         }
     }
 
-    override fun getAcount(): String {
+    override fun getAccount(): String {
         return runBlocking {
             dataStore.data.first()[PreferenceKeys.ACCOUNT] ?: ""
+        }
+    }
+
+    override fun getNickname(): String {
+        return runBlocking {
+            dataStore.data.first()[PreferenceKeys.NICKNAME] ?: ""
+        }
+    }
+
+    override fun getFollowers(): Int {
+        return runBlocking {
+            dataStore.data.first()[PreferenceKeys.FOLLOWERS] ?: 0
+        }
+    }
+
+    override fun getProfileImage(): String {
+        return runBlocking {
+            dataStore.data.first()[PreferenceKeys.IMAGE] ?: ""
         }
     }
 

@@ -4,6 +4,8 @@
     <string name="login">로그인</string>
     <string name="logout">로그아웃</string>
     <string name="withdrawal"><u>탈퇴하기</u></string>
+    <string name="base_withdrawal">탈퇴하기</string>
+    <string name="complete_withdrawal"><u>탈퇴 완료</u></string>
     <string name="id">아이디</string>
     <string name="password">비밀번호</string>
     <string name="auto_login">자동로그인</string>
@@ -31,6 +33,12 @@
     <string name="jjbaksa_term_title">쩝쩝박사 이용약관(필수)</string>
     <string name="jjbaksa_term_text"> 쩝쩝박사 서비스 이용약관은 bcsd lab에서 서비스를 제공함에 있어, 이용자간의 관리, 의무 및 책임 사항 등을 목적으로 합니다.\n본 약관(이하 ‘본 약관’이라 함)은 쩝쩝박사 어플리케이션과 모바일 및 PC 포함 이와 관련된 웹사이트들(이하 ‘쩝쩝박사’라 함)을 통하여 제공되는 모든 제품 및 서비스(이하 ‘본 서비스’라 함)와 관련하여 본 약관에 따라 당사와 이용계약을 체결하고 본 서비스를 이용하는 고객(이하 ‘회원’이라 함)과 당사 간의 권리, 의무 및 책임사항을 규정함을 목적으로 합니다. 당사에 회원가입을 하지 않고 단순 열람을 원하는 경우, 비회원 이용자를 위한 이용정책이 적용됩니다.</string>
     <string name="terms_agree_all">전체동의</string>
+    <string name="withdrawal_jjbaksa_title"><b>%s</b>님,\n쩝쩝박사 학위를 포기하시겠어요...?</string>
+    <string name="why_reason_delete_account">계정을 삭제하시려는 이유가 궁금해요.</string>
+    <string name="privacy_opinion_for_jjbaksa">쩝쩝박사에서 개선되면 좋을 점이나\n불편하셨던 점을 말씀해주세요!</string>
+    <string name="improve_jjbaksa_content">적극 반영하여 개선하도록 하겠습니다.\n쩝쩝박사의 문은 언제든 열려있으니 다시 찾아와 주세요!</string>
+    <string name="withdrawal_notice_text"><u>유의사항</u>\n&#183; 작성한 리뷰, 북마크, 프로필 등 모든 정보가 삭제 됩니다.\n&#183; 추후 같은 계정으로 재가입해도 작성한 내역은 복구되지 않아요.</string>
+    <string name="free_write">자유롭게 작성해주세요 :)</string>
 
     <string name="new_password">새 비밀번호</string>
     <string name="check_password">비밀번호 확인</string>
@@ -46,6 +54,7 @@
     <string name="check_new_password">새 비밀번호 확인</string>
     <string name="input_new_password">새 비밀번호를 입력하세요.</string>
     <string name="set_new_password">새 비밀번호를 설정해 주세요.</string>
+    <string name="not_match_new_password">새 비밀번호가 일치하지 않습니다.</string>
     <string name="send_to_verification_number">인증번호 보내기</string>
     <string name="verification_completed">인증 완료</string>
     <string name="input_verification_code_from_email">이메일로 발송된\n인증번호를 입력해 주세요.</string>
@@ -70,6 +79,7 @@
     <string name="need_id_check">아이디 중복확인을 해주세요.</string>
 
     <string name="welcome_text">회원가입을 축하합니다!\n당신을 어떻게 부르면 좋을까요?</string>
+    <string name="complete_withdrawal_content">다음에 또 봐요! 재가입은 탈퇴 후 일주일 후 부터 가능합니다.</string>
 
     <string name="next">다음</string>
     <string name="complete">완료</string>
@@ -112,4 +122,15 @@
     <string name="no_review_content">다녀온 음식점의 리뷰를 작성해 보세요!</string>
     <string name="no_bookmark_title">등록된 북마크가 없어요.</string>
     <string name="no_bookmark_content">새로운 음식점을 저장해 보세요!</string>
+    <string name="withdrawal_reason1">가게 정보가 부족해요</string>
+    <string name="withdrawal_reason2">사용이 불편해요</string>
+    <string name="withdrawal_reason3">다른 앱을 더 많이 사용해요</string>
+    <string name="withdrawal_reason4">새 계정을 만들고 싶어요</string>
+    <string name="withdrawal_reason5">그 외</string>
+
+    <string name="my_page_followers">• 팔로우 %1$d</string>
+    <string name="my_page_account">\@%s</string>
+    <string name="text_length">%s/10</string>
+    <string name="text_length150">%s/150</string>
+    <string name="change_profile_content">%s님,\n프로필을 변경하시겠어요?</string>
 </resources>

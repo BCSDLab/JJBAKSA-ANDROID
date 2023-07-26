@@ -1,6 +1,7 @@
 package com.jjbaksa.jjbaksa.dialog
 
 import android.app.Dialog
+import android.graphics.Color
 import android.view.View
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseDialogFragment
@@ -11,6 +12,7 @@ class ConfirmDialog(
     val msg: String? = null,
     val confirmText: String,
     val confirmClick: (Dialog) -> Unit,
+    val titleColor: String = "#ff7f23",
     val isCancel: Boolean = true
 ) : BaseDialogFragment<DialogConfirmBinding>() {
     override val layoutResId: Int
@@ -20,6 +22,7 @@ class ConfirmDialog(
         isCancelable = isCancel
         with(binding) {
             confirmDialogTitle.text = title
+            confirmDialogTitle.setTextColor(Color.parseColor(titleColor))
             if (msg == null) {
                 confirmDialogMsg.visibility = View.GONE
             } else {

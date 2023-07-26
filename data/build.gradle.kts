@@ -7,8 +7,8 @@ plugins {
 }
 
 android {
-    compileSdk = Constants.compileSdk
 
+    compileSdk = 32
     defaultConfig {
         minSdk = Constants.minSdk
         targetSdk = Constants.targetSdk

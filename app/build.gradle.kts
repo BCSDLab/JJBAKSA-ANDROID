@@ -10,8 +10,8 @@ plugins {
 }
 
 android {
-    compileSdk = Constants.compileSdk
 
+    compileSdk = Constants.compileSdk
     defaultConfig {
         applicationId = Constants.packageName
         minSdk = Constants.minSdk

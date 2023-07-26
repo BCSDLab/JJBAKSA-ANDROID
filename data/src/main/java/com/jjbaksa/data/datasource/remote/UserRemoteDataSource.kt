@@ -11,6 +11,8 @@ import com.jjbaksa.domain.resp.user.LoginReq
 import com.jjbaksa.domain.resp.user.PasswordAndNicknameReq
 import com.jjbaksa.domain.resp.user.SignUpReq
 import com.jjbaksa.domain.resp.user.SignUpResp
+import com.jjbaksa.domain.resp.user.WithdrawalReasonReq
+import okhttp3.MultipartBody
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -57,10 +59,31 @@ class UserRemoteDataSource @Inject constructor(
         return noAuthApi.setNewPassword(token, item)
     }
 
+    override suspend fun setNewNickname(item: PasswordAndNicknameReq): Response<UserResp> {
+        return authApi.setUserNickname(item)
+    }
+
+    override suspend fun saveWithdrawalReason(withdrawalReason: WithdrawalReasonReq): Response<Unit> {
+        return authApi.saveWithdrawalReason(withdrawalReason)
+    }
+
+    override suspend fun deleteUser(): Response<Unit> {
+        return authApi.deleteUser()
+    }
+
     override suspend fun saveAccessToken(accessToken: String) {
     }
 
     override suspend fun saveAccount(account: String) {
+    }
+
+    override suspend fun saveNickname(nickname: String) {
+    }
+
+    override suspend fun saveFollowers(followers: Int) {
+    }
+
+    override suspend fun saveProfileImage(image: String) {
     }
 
     override suspend fun savePassword(password: String) {
@@ -78,12 +101,27 @@ class UserRemoteDataSource @Inject constructor(
     suspend fun me(): Response<UserResp> {
         return authApi.userMe()
     }
+    suspend fun editUserProfileImage(profile: MultipartBody.Part): Response<UserResp> {
+        return authApi.editUserProfileImage(profile)
+    }
 
     override fun getAutoLoginFlag(): Boolean {
         return false
     }
 
-    override fun getAcount(): String {
+    override fun getAccount(): String {
+        return ""
+    }
+
+    override fun getNickname(): String {
+        return ""
+    }
+
+    override fun getFollowers(): Int {
+        return 0
+    }
+
+    override fun getProfileImage(): String {
         return ""
     }
 

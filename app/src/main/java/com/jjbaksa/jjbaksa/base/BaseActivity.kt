@@ -30,10 +30,12 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
     abstract fun initView()
     abstract fun subscribe()
     abstract fun initEvent()
+//    abstract fun initData()
     open fun initState() {
         initView()
         initEvent()
         subscribe()
+//        initData()
     }
 
     fun isPermissionGranted(perm: String): Boolean {

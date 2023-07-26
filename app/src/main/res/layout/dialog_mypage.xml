@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.jjbaksa.jjbaksa.ui.mainpage.mypage.viewmodel.MyPageViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/dialog_title_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="30dp"
+            android:text="@{@string/change_profile_content(vm.nickname)}"
+            android:textColor="@color/color_000000"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="조돌이님,\n프로필을 변경하시겠어요?" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/profile_image_view"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_marginTop="35dp"
+            android:scaleType="centerCrop"
+            app:img="@{vm.profileImage}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dialog_title_text_view"
+            tools:src="@drawable/ic_launcher_background" />
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/profile_add_icon_image_view"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:backgroundTint="@color/color_666666"
+            android:elevation="1dp"
+            android:src="@drawable/ic_baseline_add_16"
+            app:layout_constraintBottom_toBottomOf="@id/profile_add_image_view"
+            app:layout_constraintEnd_toEndOf="@id/profile_add_image_view"
+            app:layout_constraintStart_toStartOf="@id/profile_add_image_view"
+            app:layout_constraintTop_toTopOf="@id/profile_add_image_view" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/profile_add_image_view"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/shape_circ_d9d9d9_stroke_ffffff"
+            app:layout_constraintBottom_toBottomOf="@id/profile_image_view"
+            app:layout_constraintEnd_toEndOf="@id/profile_image_view" />
+
+        <androidx.constraintlayout.helper.widget.Layer
+            android:id="@+id/add_profile_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="profile_add_icon_image_view, profile_add_image_view, profile_image_view"
+            app:layout_constraintBottom_toBottomOf="@id/profile_image_view"
+            app:layout_constraintEnd_toEndOf="@id/profile_image_view" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/profile_nickname_edit_text"
+            android:layout_width="176dp"
+            android:layout_height="wrap_content"
+            android:theme="@style/EditTextTheme"
+            android:layout_marginTop="25dp"
+            android:text="@{vm.nickname}"
+            android:cursorVisible="true"
+            android:maxLength="10"
+            android:textColor="@color/color_222222"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@id/profile_image_view"
+            app:layout_constraintStart_toStartOf="@id/profile_image_view"
+            app:layout_constraintTop_toBottomOf="@id/profile_image_view"
+            tools:hint="조돌이" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_length_count_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_c4c4c4"
+            android:textSize="10sp"
+            android:text="@{@string/text_length(vm.textLength)}"
+            app:layout_constraintBottom_toBottomOf="@id/profile_nickname_edit_text"
+            app:layout_constraintEnd_toEndOf="@id/profile_nickname_edit_text"
+            app:layout_constraintHorizontal_bias="0.9"
+            app:layout_constraintStart_toStartOf="@id/profile_nickname_edit_text"
+            app:layout_constraintTop_toTopOf="@id/profile_nickname_edit_text"
+            tools:text="3/10" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/confirm_button"
+            android:layout_width="141dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/shape_rect_ff7f23_solid_radius_100"
+            android:text="@string/complete"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/cancel_button"
+            app:layout_constraintTop_toBottomOf="@id/profile_nickname_edit_text" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/cancel_button"
+            android:layout_width="141dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/shape_rect_c4c4c4_solid_radius_100"
+            android:text="@string/cancel"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/confirm_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profile_nickname_edit_text" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

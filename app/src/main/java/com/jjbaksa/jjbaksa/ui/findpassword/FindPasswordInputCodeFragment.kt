@@ -58,7 +58,7 @@ class FindPasswordInputCodeFragment : BaseFragment<FragmentFindPasswordInputCode
 
     private fun completedResult() {
         binding.completeButton.setOnClickListener {
-            KeyboardProvider().hideKeyboard(requireContext(), binding.editTextContainer)
+            KeyboardProvider(requireContext()).hideKeyboard(binding.editTextContainer)
             if (viewModel.stateBoxNumber.value?.contains(null) == false) {
                 viewModel.findPassword(stateBoxNumber.joinToString(""))
             }
@@ -67,8 +67,7 @@ class FindPasswordInputCodeFragment : BaseFragment<FragmentFindPasswordInputCode
 
     private fun resendVerificationCode() {
         binding.resendVerificationCodeTextView.setOnClickListener {
-            KeyboardProvider().hideKeyboard(
-                requireContext(),
+            KeyboardProvider(requireContext()).hideKeyboard(
                 binding.resendVerificationCodeTextView
             )
             viewModel.getPasswordVerificationCode(
