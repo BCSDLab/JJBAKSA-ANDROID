@@ -1,8 +1,11 @@
 package com.jjbaksa.jjbaksa.util
 
+import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Looper
 import android.util.Log
+import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
@@ -12,7 +15,11 @@ class FusedLocationUtil(
     private val context: Context,
     private val callBackLocation: (Double, Double) -> Unit
 ) {
-    private val fusedLocationClient by lazy { LocationServices.getFusedLocationProviderClient(context) }
+    private val fusedLocationClient by lazy {
+        LocationServices.getFusedLocationProviderClient(
+            context
+        )
+    }
     private val permissions = arrayOf(
         android.Manifest.permission.ACCESS_FINE_LOCATION,
         android.Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -32,12 +39,25 @@ class FusedLocationUtil(
             }
         }
     }
+
     fun startLocationUpdate() {
-        if (context.hasPermission(permissions)) {
-            fusedLocationClient.requestLocationUpdates(createLocationRequest(), locationCallback, Looper.getMainLooper())
+        if (ActivityCompat.checkSelfPermission(
+                context,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            fusedLocationClient.requestLocationUpdates(
+                createLocationRequest(),
+                locationCallback,
+                Looper.getMainLooper()
+            )
         } else {
         }
     }
+
     private fun createLocationRequest(): LocationRequest {
         return LocationRequest.create().apply {
             interval = 10 * 1000
@@ -45,6 +65,7 @@ class FusedLocationUtil(
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         }
     }
+
     fun stopLocationUpdates() {
         fusedLocationClient.removeLocationUpdates(locationCallback)
     }
