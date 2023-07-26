@@ -36,7 +36,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     }
 
     override fun initEvent() {
-
     }
 
 //    override fun initData() {

@@ -2,7 +2,6 @@ package com.jjbaksa.jjbaksa.ui.mainpage.viewmodel
 
 import androidx.lifecycle.viewModelScope
 import com.jjbaksa.domain.model.mainpage.UserLocation
-import com.jjbaksa.domain.repository.HomeRepository
 import com.jjbaksa.domain.repository.UserRepository
 import com.jjbaksa.jjbaksa.base.BaseViewModel
 import com.jjbaksa.jjbaksa.ui.mainpage.sub.FusedLocationProvider

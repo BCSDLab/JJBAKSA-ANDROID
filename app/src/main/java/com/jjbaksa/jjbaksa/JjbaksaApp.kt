@@ -9,7 +9,6 @@ import com.jjbaksa.data.database.PreferenceKeys
 import com.jjbaksa.data.database.userDataStore
 import com.jjbaksa.jjbaksa.util.MyInfo
 import dagger.hilt.android.HiltAndroidApp
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
