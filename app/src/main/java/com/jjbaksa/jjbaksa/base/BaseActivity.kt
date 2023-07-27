@@ -30,21 +30,21 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
     abstract fun initView()
     abstract fun subscribe()
     abstract fun initEvent()
-//    abstract fun initData()
     open fun initState() {
         initView()
         initEvent()
         subscribe()
-//        initData()
     }
 
     fun isPermissionGranted(perm: String): Boolean {
         return ActivityCompat.checkSelfPermission(this, perm) == PackageManager.PERMISSION_GRANTED
     }
+
     fun showLoading() {
         loadingDialog = LoadingDialog()
         loadingDialog?.show(supportFragmentManager, LoadingDialog.TAG)
     }
+
     fun dismissLoading() {
         loadingDialog?.dismiss()
         loadingDialog = null

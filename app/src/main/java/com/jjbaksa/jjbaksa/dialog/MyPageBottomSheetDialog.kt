@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.view.View
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
@@ -32,16 +33,6 @@ class MyPageBottomSheetDialog : BaseBottomSheetDialogFragment<DialogMypageBindin
             }
         }
     }
-    private val requestPermissions = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) {
-        if (it) {
-            val intent = Intent(requireContext(), GalleryActivity::class.java)
-            intent.putExtra("limit", 1)
-            galleryActivityLauncher.launch(intent)
-        } else {
-        }
-    }
 
     override fun initView(view: View) {
         binding.vm = viewModel
@@ -61,7 +52,7 @@ class MyPageBottomSheetDialog : BaseBottomSheetDialogFragment<DialogMypageBindin
     private fun confirmProfile() {
         binding.confirmButton.setOnClickListener {
             if (viewModel.loadImage.value.isNullOrEmpty() || viewModel.textLength.value == "0") {
-                // todo:: empty profile image or nickname
+                Toast.makeText(requireContext(), "닉네임 또는 프로필 이미지를 변경하지 않았습니다.", Toast.LENGTH_SHORT).show()
             } else {
                 viewModel.uploadProfileImgAndNickname(
                     viewModel.loadImage.value.toString(),
@@ -79,13 +70,9 @@ class MyPageBottomSheetDialog : BaseBottomSheetDialogFragment<DialogMypageBindin
 
     private fun loadProfileImage() {
         binding.addProfileImage.setOnClickListener {
-            if (requireContext().hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                val intent = Intent(requireContext(), GalleryActivity::class.java)
-                intent.putExtra("limit", 1)
-                galleryActivityLauncher.launch(intent)
-            } else {
-                requestPermissions.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-            }
+            val intent = Intent(requireContext(), GalleryActivity::class.java)
+            intent.putExtra("limit", 1)
+            galleryActivityLauncher.launch(intent)
         }
     }
 
