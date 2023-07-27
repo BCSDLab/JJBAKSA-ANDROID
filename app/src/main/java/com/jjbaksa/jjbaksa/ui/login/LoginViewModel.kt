@@ -3,6 +3,7 @@ package com.jjbaksa.jjbaksa.ui.login
 import android.text.TextUtils
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.jjbaksa.domain.base.RespResult
 import com.jjbaksa.domain.repository.UserRepository
 import com.jjbaksa.domain.resp.user.LoginResult
 import com.jjbaksa.jjbaksa.base.BaseViewModel
@@ -29,12 +30,6 @@ class LoginViewModel @Inject constructor(
                     _loginState.value = it
                 }
             }
-        }
-    }
-
-    fun loadUserMe() {
-        viewModelScope.launch {
-            repository.me()
         }
     }
 }

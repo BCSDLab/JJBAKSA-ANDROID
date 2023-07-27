@@ -134,7 +134,6 @@ class UserLocalDataSource @Inject constructor(
         }
     }
 
-
     override fun getAutoLoginFlag(): Boolean {
         return runBlocking {
             dataStore.data.first()[PreferenceKeys.AUTO_LOGIN] ?: false

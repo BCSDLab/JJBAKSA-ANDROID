@@ -28,7 +28,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
             // MainPageActivity Result Handle
         }
 
-
     override fun initView() {
         viewModel.getAutoLogin()
     }
@@ -39,7 +38,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     override fun subscribe() {
         observeData()
     }
-
 
     private fun observeData() {
         viewModel.autoLogin.observe(this) { isLogin ->

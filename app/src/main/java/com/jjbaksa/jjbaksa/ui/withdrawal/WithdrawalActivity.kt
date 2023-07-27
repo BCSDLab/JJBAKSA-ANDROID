@@ -12,6 +12,8 @@ import com.jjbaksa.jjbaksa.dialog.ConfirmDialog
 import com.jjbaksa.jjbaksa.ui.login.LoginActivity
 import com.jjbaksa.jjbaksa.ui.withdrawal.viewmodel.WithdrawalViewModel
 import com.jjbaksa.jjbaksa.util.KeyboardProvider
+import com.jjbaksa.jjbaksa.util.MyInfo
+import com.jjbaksa.jjbaksa.util.setTextProperties
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -24,7 +26,11 @@ class WithdrawalActivity : BaseActivity<ActivityWithdrawalBinding>() {
         KeyboardProvider(this).inputKeyboardResize(window, binding.root)
         binding.vm = viewModel
         binding.lifecycleOwner = this
-        viewModel.getNickname()
+        binding.withdrawalTitleTextView.text =
+            setTextProperties(
+                MyInfo.nickname + getString(R.string.withdrawal_jjbaksa_title),
+                MyInfo.nickname.length
+            )
     }
 
     override fun subscribe() {

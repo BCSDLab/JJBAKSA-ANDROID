@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.jjbaksa.domain.base.RespResult
 import com.jjbaksa.domain.repository.UserRepository
 import com.jjbaksa.jjbaksa.base.BaseViewModel
+import com.jjbaksa.jjbaksa.util.MyInfo
 import com.jjbaksa.jjbaksa.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -28,11 +29,11 @@ class MyPageViewModel @Inject constructor(
     val isResult: LiveData<Boolean> get() = _isResult
 
     fun getUserProfile() {
-        account.value = repository.getAccount()
-        nickname.value = repository.getNickname()
-        profileFollowers.value = repository.getFollowers()
-        profileImage.value = repository.getProfileImage()
-        textLength.value = repository.getNickname().length.toString()
+        account.value = MyInfo.account
+        nickname.value = MyInfo.nickname
+        profileFollowers.value = MyInfo.followers
+        profileImage.value = MyInfo.profileImage
+        textLength.value = MyInfo.nickname.length.toString()
     }
 
     fun setTextLength(length: String) {
@@ -47,10 +48,16 @@ class MyPageViewModel @Inject constructor(
         viewModelScope.launch(ceh) {
             val response = repository.editUserProfileImage(image)
             if (response == RespResult.Success(true)) {
-                profileImage.value = repository.getProfileImage()
+                repository.getProfileImage().also {
+                    profileImage.value = it
+                    MyInfo.profileImage = it
+                }
                 val nicknameResponse = repository.setNewNickname(newNickname)
                 if (nicknameResponse.isSuccess) {
-                    nickname.value = repository.getNickname()
+                    repository.getNickname().also {
+                        nickname.value = it
+                        MyInfo.nickname = it
+                    }
                     _isResult.value = true
                 }
             }

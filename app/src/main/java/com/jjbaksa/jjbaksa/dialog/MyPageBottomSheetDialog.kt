@@ -1,6 +1,5 @@
 package com.jjbaksa.jjbaksa.dialog
 
-import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.view.View
@@ -16,7 +15,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.example.imageselector.gallery.GalleryActivity
-import com.jjbaksa.jjbaksa.util.hasPermission
 
 @AndroidEntryPoint
 class MyPageBottomSheetDialog : BaseBottomSheetDialogFragment<DialogMypageBinding>() {
@@ -46,7 +44,6 @@ class MyPageBottomSheetDialog : BaseBottomSheetDialogFragment<DialogMypageBindin
         cancelProfile()
         loadProfileImage()
         setTextLength()
-        observeData()
     }
 
     private fun confirmProfile() {
@@ -82,6 +79,10 @@ class MyPageBottomSheetDialog : BaseBottomSheetDialogFragment<DialogMypageBindin
         }
     }
 
+    override fun subscribe() {
+        observeData()
+    }
+
     private fun observeData() {
         viewModel.textLength.observe(viewLifecycleOwner) {
             binding.textLengthCountTextView.text = getString(R.string.text_length, it)
@@ -89,9 +90,6 @@ class MyPageBottomSheetDialog : BaseBottomSheetDialogFragment<DialogMypageBindin
         viewModel.isResult.observe(viewLifecycleOwner) {
             if (it) dismiss()
         }
-    }
-
-    override fun subscribe() {
     }
 
     override fun initData() {

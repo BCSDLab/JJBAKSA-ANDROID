@@ -1,7 +1,6 @@
 package com.jjbaksa.data.repository
 
 import android.net.Uri
-import android.util.Log
 import com.jjbaksa.data.SUCCESS
 import com.jjbaksa.data.datasource.local.UserLocalDataSource
 import com.jjbaksa.data.datasource.remote.UserRemoteDataSource
@@ -51,21 +50,19 @@ class UserRepositoryImpl @Inject constructor(
         if (response != null) {
             if (response.isSuccessful) {
                 if (response.body()?.code == SUCCESS) {
-                    if (isAutoLogin) {
-                        userLocalDataSource.saveAccessToken(response.body()!!.accessToken)
-                        userLocalDataSource.saveRefreshToken(response.body()!!.refreshToken)
-                        userLocalDataSource.saveAccount(account)
-                        userLocalDataSource.savePassword(password)
-                        userLocalDataSource.saveAutoLogin(isAutoLogin)
-                    }
+                    userLocalDataSource.saveAccessToken(response.body()!!.accessToken)
+                    userLocalDataSource.saveRefreshToken(response.body()!!.refreshToken)
+                    userLocalDataSource.saveAccount(account)
+                    userLocalDataSource.savePassword(password)
+                    userLocalDataSource.saveAutoLogin(isAutoLogin)
                     onResult(LoginResult(isSuccess = true))
                 } else {
-                    onResult(LoginResult(erroMessage = response.body()!!.errorMessage))
+                    onResult(LoginResult(errorMessage = response.body()!!.errorMessage))
                 }
             } else {
                 var errorBodyJson = "${response.errorBody()!!.string()}"
                 val errorBody = RespMapper.errorMapper(errorBodyJson)
-                onResult(LoginResult(erroMessage = errorBody.errorMessage))
+                onResult(LoginResult(errorMessage = errorBody.errorMessage))
             }
         }
     }
@@ -199,7 +196,7 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun deleteUser(): RespResult<Boolean> {
         val response = userRemoteDataSource.deleteUser()
         return if (response.isSuccessful && response.code() == 204) {
-            userRemoteDataSource.clearDataStore()
+            userLocalDataSource.clearDataStore()
             RespResult.Success(response.isSuccessful)
         } else {
             val errorBodyJson = response.errorBody()!!.string()

@@ -17,7 +17,6 @@ import javax.inject.Inject
 class WithdrawalViewModel @Inject constructor(
     val repository: UserRepository
 ) : ViewModel() {
-    val userNickname = MutableLiveData<String>("")
     private val _isEnabled = SingleLiveEvent<Boolean>()
     val isEnabled: LiveData<Boolean> get() = _isEnabled
     val inputTextLength = MutableLiveData<String>("0")
@@ -29,10 +28,6 @@ class WithdrawalViewModel @Inject constructor(
     val saveWithdrawalReasonState: LiveData<WithdrawalReasonResp> get() = _saveWithdrawalReasonState
     private val _isWithdrawUser = MutableLiveData<Boolean>()
     val isWithdrawUser: LiveData<Boolean> get() = _isWithdrawUser
-
-    fun getNickname() {
-        userNickname.value = repository.getNickname()
-    }
 
     fun setIsEnabled(enabled: Boolean) {
         _isEnabled.value = enabled
