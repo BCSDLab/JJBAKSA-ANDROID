@@ -1,6 +1,7 @@
 package com.jjbaksa.data.repository
 
 import android.net.Uri
+import android.util.Log
 import com.jjbaksa.data.SUCCESS
 import com.jjbaksa.data.datasource.local.UserLocalDataSource
 import com.jjbaksa.data.datasource.remote.UserRemoteDataSource
@@ -198,6 +199,7 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun deleteUser(): RespResult<Boolean> {
         val response = userRemoteDataSource.deleteUser()
         return if (response.isSuccessful && response.code() == 204) {
+            userRemoteDataSource.clearDataStore()
             RespResult.Success(response.isSuccessful)
         } else {
             val errorBodyJson = response.errorBody()!!.string()

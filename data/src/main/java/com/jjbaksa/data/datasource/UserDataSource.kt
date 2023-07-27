@@ -13,6 +13,7 @@ import retrofit2.Response
 
 interface UserDataSource {
     suspend fun postSignUp(signUpReq: SignUpReq): Response<SignUpResp>?
+    suspend fun clearDataStore()
     suspend fun checkAccountAvailable(account: String): Response<Unit>
     suspend fun postLogin(loginReq: LoginReq): Response<LoginResp>?
     suspend fun checkAuthEmail(email: String): Response<Unit>

@@ -56,7 +56,13 @@ class WithdrawalActivity : BaseActivity<ActivityWithdrawalBinding>() {
 
     private fun withdrawal() {
         binding.withdrawalButton.setOnClickListener {
-            if (viewModel.reason.value?.isNotEmpty()!! && binding.inputEditTextField.text?.isNotEmpty()!!) {
+            if (viewModel.reason.value.isNullOrEmpty()) {
+                showSnackBar("계정을 삭제하려는 이유를 선택해주세요.", getString(R.string.close))
+                KeyboardProvider(this).hideKeyboard(binding.root)
+            } else if (binding.inputEditTextField.text.isNullOrEmpty()) {
+                showSnackBar("개선해야 될 사항을 적어주세요.", getString(R.string.close))
+                KeyboardProvider(this).hideKeyboard(binding.inputEditTextField)
+            } else {
                 val withdrawalReasonReq = WithdrawalReasonReq(
                     viewModel.reason.value.toString(),
                     binding.inputEditTextField.text.toString()

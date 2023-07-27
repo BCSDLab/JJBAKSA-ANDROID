@@ -30,6 +30,12 @@ class UserLocalDataSource @Inject constructor(
         return null
     }
 
+    override suspend fun clearDataStore() {
+        dataStore.edit {
+            it.clear()
+        }
+    }
+
     override suspend fun checkAccountAvailable(account: String): Response<Unit> {
         TODO("Not yet implemented")
     }
@@ -127,6 +133,7 @@ class UserLocalDataSource @Inject constructor(
             it[PreferenceKeys.AUTH_PASSWORD_TOKEN] = passwordToken
         }
     }
+
 
     override fun getAutoLoginFlag(): Boolean {
         return runBlocking {
