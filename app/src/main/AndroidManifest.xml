@@ -68,6 +68,9 @@
             android:name=".ui.login.LoginActivity"
             android:exported="false"></activity>
         <activity
+            android:name=".ui.search.SearchActivity"
+            android:exported="false" />
+        <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
             android:exported="true">
             <intent-filter>

@@ -46,9 +46,9 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     private fun setEditTextErrorUI() {
         with(binding) {
             editTextId.background =
-                getDrawable(R.drawable.shape_rect_eeeeee_solid_radius_100_stroke_ff7f23)
+                getDrawable(R.drawable.shape_rectf6bf54_solid_radius_100_stroke_ff7f23)
             editTextPassword.background =
-                getDrawable(R.drawable.shape_rect_eeeeee_solid_radius_100_stroke_ff7f23)
+                getDrawable(R.drawable.shape_rectf6bf54_solid_radius_100_stroke_ff7f23)
         }
     }
 

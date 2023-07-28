@@ -136,7 +136,7 @@ class ChangePasswordActivity : BaseActivity<ActivityChangePasswordBinding>() {
 
     private fun failButtonBackground(): Drawable? = ContextCompat.getDrawable(
         this,
-        R.drawable.shape_rect_eeeeee_solid_radius_100_stroke_ff7f23
+        R.drawable.shape_rectf6bf54_solid_radius_100_stroke_ff7f23
     )
 
     private fun comeBackButtonBackground(): Drawable? = ContextCompat.getDrawable(

@@ -7,6 +7,7 @@ import com.jjbaksa.data.database.UserDao
 import com.jjbaksa.data.datasource.local.HomeLocalDataSource
 import com.jjbaksa.data.datasource.local.UserLocalDataSource
 import com.jjbaksa.data.datasource.remote.HomeRemoteDataSource
+import com.jjbaksa.data.datasource.remote.SearchRemoteDataSource
 import com.jjbaksa.data.datasource.remote.UserRemoteDataSource
 import dagger.Module
 import dagger.Provides
@@ -37,5 +38,11 @@ object DataSourceModule {
     @Singleton
     fun provideHomeLocalDataSource(@ApplicationContext context: Context, userDao: UserDao): HomeLocalDataSource {
         return HomeLocalDataSource(context, userDao)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRemoteSearchDataSource(authApi: AuthApi, noAuthApi: NoAuthApi): SearchRemoteDataSource {
+        return SearchRemoteDataSource(authApi, noAuthApi)
     }
 }
