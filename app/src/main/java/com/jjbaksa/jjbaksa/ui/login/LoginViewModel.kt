@@ -31,10 +31,4 @@ class LoginViewModel @Inject constructor(
             }
         }
     }
-
-    fun loadUserMe() {
-        viewModelScope.launch {
-            repository.me()
-        }
-    }
 }

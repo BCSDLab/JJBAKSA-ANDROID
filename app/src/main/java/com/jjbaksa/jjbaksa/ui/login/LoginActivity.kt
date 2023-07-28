@@ -23,7 +23,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     val viewModel: LoginViewModel by viewModels()
     override fun initView() {
         binding.vm = viewModel
-//        viewModel.getAutoLoginFlag()
     }
 
     override fun subscribe() {
@@ -32,10 +31,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                 if (it != null) {
                     if (it.isSuccess) {
                         goToMainActivity()
-                        viewModel.loadUserMe()
+                        finish()
                     } else {
-                        if (it.erroMessage.isNotEmpty()) {
-                            showSnackBar(it.erroMessage, getString(R.string.cancel))
+                        if (it.errorMessage.isNotEmpty()) {
+                            showSnackBar(it.errorMessage, getString(R.string.cancel))
                             setEditTextErrorUI()
                         }
                     }

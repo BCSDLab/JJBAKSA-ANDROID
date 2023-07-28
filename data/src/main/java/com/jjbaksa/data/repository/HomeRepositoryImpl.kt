@@ -8,4 +8,28 @@ import javax.inject.Inject
 class HomeRepositoryImpl @Inject constructor(
     private val homeRemoteDataSource: HomeRemoteDataSource,
     private val homeLocalDataSource: HomeLocalDataSource
-) : HomeRepository
+) : HomeRepository {
+    override fun getMyInfoAutoLogin(): Boolean {
+        return homeLocalDataSource.getUserAutoLogin()
+    }
+
+    override fun getMyInfoAccount(): String {
+        return homeLocalDataSource.getUserAccount()
+    }
+
+    override fun getMyInfoNickname(): String {
+        return homeLocalDataSource.getUserNickname()
+    }
+
+    override fun getMyInfoFollowers(): Int {
+        return homeLocalDataSource.getUserFollowers()
+    }
+
+    override fun getMyInfoProfileImage(): String {
+        return homeLocalDataSource.getUserProfileImage()
+    }
+
+    override fun getMyInfoToken(): String {
+        return homeLocalDataSource.getUserToken()
+    }
+}

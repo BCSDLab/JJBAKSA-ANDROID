@@ -1,10 +1,13 @@
 package com.jjbaksa.jjbaksa.ui.mainpage.viewmodel
 
 import androidx.lifecycle.viewModelScope
+import com.jjbaksa.domain.base.RespResult
 import com.jjbaksa.domain.model.mainpage.UserLocation
+import com.jjbaksa.domain.repository.HomeRepository
 import com.jjbaksa.domain.repository.UserRepository
 import com.jjbaksa.jjbaksa.base.BaseViewModel
 import com.jjbaksa.jjbaksa.ui.mainpage.sub.FusedLocationProvider
+import com.jjbaksa.jjbaksa.util.MyInfo
 import com.jjbaksa.jjbaksa.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -12,7 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val repository: UserRepository
+    private val userRepository: UserRepository,
+    private val repository: HomeRepository
 ) : BaseViewModel() {
 
     lateinit var fusedLocationProvider: FusedLocationProvider
@@ -31,9 +35,25 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun getUserMe() {
+    fun getMyInfo() {
         viewModelScope.launch {
-            repository.me()
+            runCatching {
+                userRepository.me()
+            }.onSuccess {
+                when (it) {
+                    is RespResult.Success -> {
+                        MyInfo.autoLogin = repository.getMyInfoAutoLogin()
+                        MyInfo.account = repository.getMyInfoAccount()
+                        MyInfo.nickname = repository.getMyInfoNickname()
+                        MyInfo.followers = repository.getMyInfoFollowers()
+                        MyInfo.profileImage = repository.getMyInfoProfileImage()
+                        MyInfo.token = repository.getMyInfoToken()
+                    }
+                    is RespResult.Error -> {
+                    }
+                }
+            }.onFailure {
+            }
         }
     }
 }

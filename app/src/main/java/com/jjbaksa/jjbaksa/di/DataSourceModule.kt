@@ -4,7 +4,9 @@ import android.content.Context
 import com.jjbaksa.data.api.AuthApi
 import com.jjbaksa.data.api.NoAuthApi
 import com.jjbaksa.data.database.UserDao
+import com.jjbaksa.data.datasource.local.HomeLocalDataSource
 import com.jjbaksa.data.datasource.local.UserLocalDataSource
+import com.jjbaksa.data.datasource.remote.HomeRemoteDataSource
 import com.jjbaksa.data.datasource.remote.SearchRemoteDataSource
 import com.jjbaksa.data.datasource.remote.UserRemoteDataSource
 import dagger.Module
@@ -27,6 +29,17 @@ object DataSourceModule {
     fun provideLocalDataSource(@ApplicationContext context: Context, userDao: UserDao): UserLocalDataSource {
         return UserLocalDataSource(context, userDao)
     }
+    @Provides
+    @Singleton
+    fun provideHomeRemoteDataSource(authApi: AuthApi, noAuthApi: NoAuthApi): HomeRemoteDataSource {
+        return HomeRemoteDataSource(authApi, noAuthApi)
+    }
+    @Provides
+    @Singleton
+    fun provideHomeLocalDataSource(@ApplicationContext context: Context, userDao: UserDao): HomeLocalDataSource {
+        return HomeLocalDataSource(context, userDao)
+    }
+
     @Provides
     @Singleton
     fun provideRemoteSearchDataSource(authApi: AuthApi, noAuthApi: NoAuthApi): SearchRemoteDataSource {

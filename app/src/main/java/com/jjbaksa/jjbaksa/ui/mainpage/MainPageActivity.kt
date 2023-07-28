@@ -21,7 +21,7 @@ class MainPageActivity : BaseActivity<ActivityMainPageBinding>() {
     override val layoutId: Int
         get() = R.layout.activity_main_page
 
-    private val homeViewModel: HomeViewModel by viewModels()
+    private val viewModel: HomeViewModel by viewModels()
     val locationPermissions = arrayOf(
         Manifest.permission.ACCESS_COARSE_LOCATION,
         Manifest.permission.ACCESS_FINE_LOCATION
@@ -31,11 +31,11 @@ class MainPageActivity : BaseActivity<ActivityMainPageBinding>() {
     ) { isGranted ->
         when {
             isGranted.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
-                homeViewModel.requestLocation()
+                viewModel.requestLocation()
             }
 
             isGranted.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
-                homeViewModel.requestLocation()
+                viewModel.requestLocation()
             }
 
             else -> {
@@ -49,9 +49,10 @@ class MainPageActivity : BaseActivity<ActivityMainPageBinding>() {
     }
 
     override fun initView() {
-        binding.lifecycleOwner = this
-        homeViewModel.fusedLocationProvider = FusedLocationProvider(this, homeViewModel)
+        viewModel.fusedLocationProvider = FusedLocationProvider(this, viewModel)
         this.setStatusBarTransparent()
+        viewModel.getMyInfo()
+        binding.lifecycleOwner = this
     }
 
     override fun subscribe() {}
@@ -70,7 +71,7 @@ class MainPageActivity : BaseActivity<ActivityMainPageBinding>() {
 
     private fun checkLocationPermissions() {
         if (hasPermission(locationPermissions)) {
-            homeViewModel.requestLocation()
+            viewModel.requestLocation()
         } else {
             requestLocationPermissions.launch(locationPermissions)
         }
@@ -78,7 +79,7 @@ class MainPageActivity : BaseActivity<ActivityMainPageBinding>() {
 
     override fun onDestroy() {
         super.onDestroy()
-        homeViewModel.fusedLocationProvider.stopLocationUpdates()
+        viewModel.fusedLocationProvider.stopLocationUpdates()
     }
 
     companion object {

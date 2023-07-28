@@ -34,28 +34,10 @@ class NaviMyPageFragment : BaseFragment<FragmentNaviMyPageBinding>() {
     override fun initView() {
         requireActivity().setExtendView(binding.myPageConstraintLayout)
         initFragment(reviewFragment)
-        setTabLayout()
         binding.vm = viewModel
         binding.lifecycleOwner = this
         viewModel.getUserProfile()
-        observeData()
-    }
-
-    private fun observeData() {
-        viewModel.nickname.observe(viewLifecycleOwner) {
-            binding.profileNameTextView.text = it
-        }
-        viewModel.profileImage.observe(viewLifecycleOwner) {
-            if (it.isEmpty()) {
-                binding.profileImageView.load(R.drawable.baseline_supervised_user_circle_24) {
-                    transformations(CircleCropTransformation())
-                }
-            } else {
-                binding.profileImageView.load(it) {
-                    transformations(CircleCropTransformation())
-                }
-            }
-        }
+        setTabLayout()
     }
 
     private fun initFragment(fragment: Fragment) {
@@ -92,6 +74,24 @@ class NaviMyPageFragment : BaseFragment<FragmentNaviMyPageBinding>() {
     }
 
     override fun subscribe() {
+        observeData()
+    }
+
+    private fun observeData() {
+        viewModel.nickname.observe(viewLifecycleOwner) {
+            binding.profileNameTextView.text = it
+        }
+        viewModel.profileImage.observe(viewLifecycleOwner) {
+            if (it.isEmpty()) {
+                binding.profileImageView.load(R.drawable.baseline_supervised_user_circle_24) {
+                    transformations(CircleCropTransformation())
+                }
+            } else {
+                binding.profileImageView.load(it) {
+                    transformations(CircleCropTransformation())
+                }
+            }
+        }
     }
 
     companion object {

@@ -8,4 +8,28 @@ import javax.inject.Inject
 class HomeRemoteDataSource @Inject constructor(
     private val authApi: AuthApi,
     private val noAuthApi: NoAuthApi
-) : HomeDataSource
+) : HomeDataSource {
+    override fun getUserAutoLogin(): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    override fun getUserAccount(): String {
+        TODO("Not yet implemented")
+    }
+
+    override fun getUserNickname(): String {
+        TODO("Not yet implemented")
+    }
+
+    override fun getUserFollowers(): Int {
+        TODO("Not yet implemented")
+    }
+
+    override fun getUserProfileImage(): String {
+        TODO("Not yet implemented")
+    }
+
+    override fun getUserToken(): String {
+        TODO("Not yet implemented")
+    }
+}

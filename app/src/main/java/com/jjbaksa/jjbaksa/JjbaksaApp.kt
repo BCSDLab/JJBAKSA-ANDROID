@@ -9,7 +9,8 @@ import com.jjbaksa.data.database.PreferenceKeys
 import com.jjbaksa.data.database.userDataStore
 import com.jjbaksa.jjbaksa.util.MyInfo
 import dagger.hilt.android.HiltAndroidApp
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
@@ -23,8 +24,14 @@ class JjbaksaApp : Application() {
         super.onCreate()
         KakaoSdk.init(this, BuildConfig.kakao_native_app_key)
         instance = this
-        GlobalScope.launch {
-            MyInfo.id = appContext.userDataStore.data.first()[PreferenceKeys.NICKNAME] ?: ""
+        val dataStore = appContext.userDataStore.data
+        CoroutineScope(Dispatchers.IO).launch {
+            MyInfo.autoLogin = dataStore.first()[PreferenceKeys.AUTO_LOGIN] ?: false
+            MyInfo.account = dataStore.first()[PreferenceKeys.ACCOUNT] ?: ""
+            MyInfo.nickname = dataStore.first()[PreferenceKeys.NICKNAME] ?: ""
+            MyInfo.followers = dataStore.first()[PreferenceKeys.FOLLOWERS] ?: 0
+            MyInfo.profileImage = dataStore.first()[PreferenceKeys.IMAGE] ?: ""
+            MyInfo.token = dataStore.first()[PreferenceKeys.ACCESS_TOKEN] ?: ""
         }
     }
 

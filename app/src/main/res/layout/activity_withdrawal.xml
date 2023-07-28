@@ -45,7 +45,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="24dp"
-                    android:text="@{@string/withdrawal_jjbaksa_title(vm.userNickname)}"
+                    android:bufferType="spannable"
                     android:textColor="@color/color_222222"
                     android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="parent"
