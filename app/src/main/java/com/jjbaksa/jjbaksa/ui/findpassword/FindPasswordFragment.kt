@@ -132,7 +132,7 @@ class FindPasswordFragment() : BaseFragment<FragmentFindPasswordBinding>() {
     private fun changeEditTextOutlineColor(editText: JjEditText) {
         editText.editTextBackground = ContextCompat.getDrawable(
             requireContext(),
-            R.drawable.shape_rect_eeeeee_solid_radius_100_stroke_ff7f23
+            R.drawable.shape_rectf6bf54_solid_radius_100_stroke_ff7f23
         )
     }
 

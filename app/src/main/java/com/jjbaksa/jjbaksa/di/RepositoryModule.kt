@@ -11,7 +11,10 @@ import com.jjbaksa.data.repository.HomeRepositoryImpl
 import com.jjbaksa.domain.repository.UserRepository
 import com.jjbaksa.data.repository.UserRepositoryImpl
 import com.example.imageselector.repository.ImageRepository
+import com.jjbaksa.data.datasource.remote.SearchRemoteDataSource
+import com.jjbaksa.data.repository.SearchRepositoryImpl
 import com.jjbaksa.domain.repository.HomeRepository
+import com.jjbaksa.domain.repository.SearchRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -49,5 +52,12 @@ object RepositoryModule {
         homeLocalDataSource: HomeLocalDataSource
     ): HomeRepository {
         return HomeRepositoryImpl(homeRemoteDataSource, homeLocalDataSource)
+    }
+    @Singleton
+    @Provides
+    fun provideSearchRepository(
+        searchRemoteDataSource: SearchRemoteDataSource
+    ): SearchRepository {
+        return SearchRepositoryImpl(searchRemoteDataSource)
     }
 }

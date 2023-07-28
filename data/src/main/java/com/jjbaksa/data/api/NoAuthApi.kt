@@ -1,6 +1,10 @@
 package com.jjbaksa.data.api
 
 import com.jjbaksa.data.model.findid.FindIdResp
+import com.jjbaksa.data.model.search.AutoKeywordResp
+import com.jjbaksa.data.model.search.LocationBody
+import com.jjbaksa.data.model.search.SearchShopResp
+import com.jjbaksa.data.model.search.TrendResp
 import com.jjbaksa.domain.resp.user.LoginReq
 import com.jjbaksa.data.model.user.LoginResp
 import com.jjbaksa.data.model.user.UserResp
@@ -15,6 +19,7 @@ import retrofit2.http.POST
 import retrofit2.http.Query
 import retrofit2.http.Header
 import retrofit2.http.PATCH
+import retrofit2.http.Path
 
 interface NoAuthApi {
     @POST("user")
@@ -63,4 +68,16 @@ interface NoAuthApi {
         @Header("Authorization") token: String,
         @Body passwordAndNicknameReq: PasswordAndNicknameReq
     ): Response<UserResp>
+    @GET("trending")
+    suspend fun getTrending(): Response<TrendResp>
+
+    @GET("auto-complete/{word}")
+    suspend fun getSearchKeyword(@Path("word") word: String): Response<AutoKeywordResp>
+    @POST("shops")
+    suspend fun getShops(@Query("keyword") keyword: String, @Body locationBody: LocationBody): Response<SearchShopResp>
+    @POST("shops/page/{page_token}")
+    suspend fun getShopsPage(
+        @Path("page_token") pageToken: String,
+        @Body locationBody: LocationBody
+    ): Response<SearchShopResp>
 }

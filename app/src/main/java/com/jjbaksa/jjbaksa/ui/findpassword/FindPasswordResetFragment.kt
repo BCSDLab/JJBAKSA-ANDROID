@@ -115,9 +115,9 @@ class FindPasswordResetFragment : BaseFragment<FragmentFindPasswordResetBinding>
         isFailNewPassword = true
         isFailCheckPassword = true
         binding.inputNewPasswordEditText.editTextBackground =
-            ContextCompat.getDrawable(requireContext(), R.drawable.shape_rect_eeeeee_solid_radius_100_stroke_ff7f23)
+            ContextCompat.getDrawable(requireContext(), R.drawable.shape_rectf6bf54_solid_radius_100_stroke_ff7f23)
         binding.inputCheckPasswordEditText.editTextBackground =
-            ContextCompat.getDrawable(requireContext(), R.drawable.shape_rect_eeeeee_solid_radius_100_stroke_ff7f23)
+            ContextCompat.getDrawable(requireContext(), R.drawable.shape_rectf6bf54_solid_radius_100_stroke_ff7f23)
         KeyboardProvider(requireContext()).hideKeyboard(binding.root)
     }
 
