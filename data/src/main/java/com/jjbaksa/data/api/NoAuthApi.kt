@@ -1,6 +1,7 @@
 package com.jjbaksa.data.api
 
 import com.jjbaksa.data.model.findid.FindIdResp
+import com.jjbaksa.data.model.inquiry.InquiryResp
 import com.jjbaksa.data.model.search.AutoKeywordResp
 import com.jjbaksa.data.model.search.LocationBody
 import com.jjbaksa.data.model.search.SearchShopResp
@@ -80,4 +81,10 @@ interface NoAuthApi {
         @Path("page_token") pageToken: String,
         @Body locationBody: LocationBody
     ): Response<SearchShopResp>
+    @GET("inquiry")
+    suspend fun getInquiry(
+        @Query("idCursor") idCursor: String?,
+        @Query("dateCursor") dateCursor: String?,
+        @Query("size") size: Int,
+    ): Response<InquiryResp>
 }

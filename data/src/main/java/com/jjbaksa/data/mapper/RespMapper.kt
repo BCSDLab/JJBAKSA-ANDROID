@@ -1,10 +1,16 @@
 package com.jjbaksa.data.mapper
 
 import com.google.gson.Gson
+import com.jjbaksa.data.model.inquiry.InquiryResp
+import com.jjbaksa.data.model.inquiry.dto.InquiryContentDTO
+import com.jjbaksa.data.model.inquiry.dto.InquiryImagesDTO
 import com.jjbaksa.data.model.search.AutoKeywordResp
 import com.jjbaksa.data.model.search.SearchShopResp
 import com.jjbaksa.data.model.search.ShopResp
 import com.jjbaksa.domain.BaseResp
+import com.jjbaksa.domain.resp.inquiry.InquiryContent
+import com.jjbaksa.domain.resp.inquiry.InquiryData
+import com.jjbaksa.domain.resp.inquiry.InquiryImages
 import com.jjbaksa.domain.resp.search.AutoKeyword
 import com.jjbaksa.domain.resp.search.Shop
 import com.jjbaksa.domain.resp.search.ShopData
@@ -37,4 +43,26 @@ fun ShopResp.toShop() = Shop(
     placeId = placeId ?: "",
     ratingCount = ratingCount ?: 0,
     totalRating = totalRating ?: 0
+)
+
+fun InquiryResp.toInquiryData() = InquiryData(
+    content = content?.map { it.toInquiryContent() }.orEmpty(),
+    size = size ?: 0
+)
+
+fun InquiryContentDTO.toInquiryContent() = InquiryContent(
+    id = id ?: 0,
+    answer = answer ?: "",
+    content = content ?: "",
+    createdAt = createdAt ?: "",
+    createdBy = createdBy ?: "",
+    inquiryImages = inquiryImages?.map { it.toInquiryImages() }.orEmpty(),
+    isSecreted = isSecreted ?: 0,
+    title = title ?: ""
+)
+
+fun InquiryImagesDTO.toInquiryImages() = InquiryImages(
+    imageUrl = imageUrl ?: "",
+    originalName = originalName ?: "",
+    path = path ?: ""
 )

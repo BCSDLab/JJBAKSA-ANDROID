@@ -16,11 +16,19 @@ class InquiryAllFragment : BaseFragment<FragmentInquiryAllBinding>() {
     private val viewModel: InquiryViewModel by activityViewModels()
 
     override fun initView() {
+        viewModel.getInquiry("","",1)
     }
 
     override fun initEvent() {
     }
 
     override fun subscribe() {
+        observeData()
+    }
+
+    private fun observeData() {
+        viewModel.inquiryData.observe(viewLifecycleOwner) { inquiryData ->
+            // todo : 전체 문의 내역 불러오기
+        }
     }
 }
