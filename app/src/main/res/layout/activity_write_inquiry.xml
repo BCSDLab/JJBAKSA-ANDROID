@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+    <data>
+        <variable
+            name="view"
+            type="com.jjbaksa.jjbaksa.ui.inquiry.WriteInquiryActivity" />
+        <variable
+            name="vm"
+            type="com.jjbaksa.jjbaksa.ui.inquiry.viewmodel.WriteInquiryViewModel" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -141,8 +149,8 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="5dp"
-                            android:text=""
-                            android:textColor="@color/color_c4c4c4"
+                            android:text="@{@string/text_length500(String.valueOf(vm.inquiryContentLength))}"
+                            android:textColor="@{vm.inquiryContentLength == 500 ? @color/color_ff7f23 : @color/color_c4c4c4}"
                             android:textSize="12sp"
                             app:layout_constraintBottom_toTopOf="@+id/inquiry_content_linear_layout"
                             app:layout_constraintEnd_toEndOf="@+id/inquiry_content_linear_layout"
@@ -168,6 +176,7 @@
                                 android:background="@null"
                                 android:hint="@string/write_inquiry_content"
                                 android:padding="8dp"
+                                android:maxLength="500"
                                 android:textColor="@color/color_000000"
                                 android:textColorHint="@color/color_c4c4c4"
                                 android:textSize="14sp" />
@@ -183,6 +192,7 @@
                                     android:layout_height="wrap_content"
                                     android:background="@drawable/shape_rect_stroke_ff7f23"
                                     android:src="@drawable/ic_baseline_add_16"
+                                    android:onClick="@{() -> view.goToGallery()}"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent"
                                     app:tint="@color/color_ff7f23" />
@@ -216,7 +226,7 @@
                             android:layout_width="26dp"
                             android:layout_height="14dp"
                             android:layout_marginStart="8dp"
-                            android:checked="true"
+                            android:checked="false"
                             android:thumb="@drawable/shape_circ_ffffff_solid_thumb"
                             android:track="@drawable/selector_ff7f23_c4c4c4"
                             app:layout_constraintBottom_toBottomOf="@id/secret_setting_text_view"
@@ -247,6 +257,7 @@
                     android:layout_marginBottom="12dp"
                     android:background="@drawable/selector_rect_radius_100_c4c4c4_ff7f23"
                     android:gravity="center"
+                    android:enabled="@{vm.isCheckableButton()}"
                     android:text="@string/register"
                     android:textColor="@color/color_ffffff"
                     android:textSize="14sp"
