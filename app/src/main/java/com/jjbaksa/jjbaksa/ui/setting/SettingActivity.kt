@@ -6,6 +6,7 @@ import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseActivity
 import com.jjbaksa.jjbaksa.databinding.ActivitySettingBinding
 import com.jjbaksa.jjbaksa.ui.changepassword.ChangePasswordActivity
+import com.jjbaksa.jjbaksa.ui.inquiry.InquiryActivity
 import com.jjbaksa.jjbaksa.ui.setting.viewmodel.SettingViewModel
 import com.jjbaksa.jjbaksa.ui.withdrawal.WithdrawalActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,7 +38,9 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
 
     fun goToPrivacyPolicy() {}
     fun goToNotice() {}
-    fun goToInquiry() {}
+    fun goToInquiry() {
+        startActivity(Intent(this, InquiryActivity::class.java))
+    }
     fun logout() {}
     fun withdraw() {
         startActivity(Intent(this, WithdrawalActivity::class.java))

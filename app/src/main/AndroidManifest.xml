@@ -23,6 +23,12 @@
         tools:replace="android:appComponentFactory"
         tools:targetApi="31">
         <activity
+            android:name=".ui.inquiry.WriteInquiryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.inquiry.InquiryActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.withdrawal.WithdrawalActivity"
             android:exported="false" />
         <activity
@@ -66,7 +72,7 @@
             android:exported="false" />
         <activity
             android:name=".ui.login.LoginActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
             android:name=".ui.search.SearchActivity"
             android:exported="false" />
