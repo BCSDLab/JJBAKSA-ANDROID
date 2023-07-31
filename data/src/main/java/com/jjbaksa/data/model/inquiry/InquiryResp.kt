@@ -26,10 +26,3 @@ data class InquiryResp(
     @SerializedName("totalPages")
     val totalPages: Int?
 )
-
-
-
-
-
-
-

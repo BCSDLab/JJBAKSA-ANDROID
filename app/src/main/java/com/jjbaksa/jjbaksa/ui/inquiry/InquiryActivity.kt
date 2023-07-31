@@ -17,7 +17,6 @@ class InquiryActivity : BaseActivity<ActivityInquiryBinding>() {
     private val viewModel: InquiryViewModel by viewModels()
 
     private val startWriteInquiry = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-
     }
 
     override fun initView() {

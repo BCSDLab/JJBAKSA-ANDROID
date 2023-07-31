@@ -1,7 +1,5 @@
 package com.jjbaksa.jjbaksa.ui.inquiry
 
-import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.activityViewModels
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseFragment
@@ -16,7 +14,7 @@ class InquiryAllFragment : BaseFragment<FragmentInquiryAllBinding>() {
     private val viewModel: InquiryViewModel by activityViewModels()
 
     override fun initView() {
-        viewModel.getInquiry("","",1)
+        viewModel.getInquiry("", "", 1)
     }
 
     override fun initEvent() {

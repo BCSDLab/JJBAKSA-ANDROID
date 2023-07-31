@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 class InquiryRepositoryImpl @Inject constructor(
     private val inquiryRemoteDataSource: InquiryRemoteDataSource
-): InquiryRepository {
+) : InquiryRepository {
     override suspend fun getInquiry(
         idCursor: String,
         dateCursor: String,

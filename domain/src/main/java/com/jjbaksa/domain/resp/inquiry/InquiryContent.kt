@@ -5,7 +5,7 @@ data class InquiryContent(
     val answer: String = "",
     val content: String = "",
     val createdAt: String = "",
-    val createdBy : String = "",
+    val createdBy: String = "",
     val inquiryImages: List<InquiryImages> = emptyList(),
     val isSecreted: Int = 0,
     val title: String = ""

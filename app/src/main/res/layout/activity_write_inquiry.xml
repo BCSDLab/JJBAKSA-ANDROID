@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
     <data>
+        <import type="android.view.View"/>
         <variable
             name="view"
             type="com.jjbaksa.jjbaksa.ui.inquiry.WriteInquiryActivity" />
@@ -112,9 +113,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:layout_marginEnd="24dp"
+                            android:inputType="text"
                             android:background="@drawable/bg_inquiry_edit_text"
                             android:hint="@string/write_title"
-                            android:maxLines="1"
                             android:padding="8dp"
                             android:textColor="@color/color_000000"
                             android:textColorHint="@color/color_c4c4c4"
@@ -188,6 +189,7 @@
                                 android:padding="12dp">
 
                                 <androidx.appcompat.widget.AppCompatImageView
+                                    android:id="@+id/add_photo_image_view"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:background="@drawable/shape_rect_stroke_ff7f23"
@@ -203,8 +205,21 @@
                                     android:text="@string/attachable_max_photo"
                                     android:textColor="@color/color_c4c4c4"
                                     android:textSize="12sp"
+                                    android:visibility="@{vm.isExtraPhoto ? View.GONE : View.VISIBLE, default = visible}"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/inquiry_photo_recycler_view"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    android:orientation="horizontal"
+                                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                    tools:listitem="@layout/item_inquiry_photo"
+                                    tools:itemCount="3"/>
 
                             </androidx.constraintlayout.widget.ConstraintLayout>
                         </LinearLayout>
@@ -257,7 +272,7 @@
                     android:layout_marginBottom="12dp"
                     android:background="@drawable/selector_rect_radius_100_c4c4c4_ff7f23"
                     android:gravity="center"
-                    android:enabled="@{vm.isCheckableButton()}"
+                    android:enabled="false"
                     android:text="@string/register"
                     android:textColor="@color/color_ffffff"
                     android:textSize="14sp"
