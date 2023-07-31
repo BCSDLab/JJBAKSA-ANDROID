@@ -1,13 +1,11 @@
 package com.jjbaksa.jjbaksa.ui.inquiry.viewmodel
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jjbaksa.domain.resp.inquiry.InquiryData
 import com.jjbaksa.domain.usecase.inquiry.GetAllInquiryUseCase
 import com.jjbaksa.jjbaksa.base.BaseViewModel
 import com.jjbaksa.jjbaksa.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
