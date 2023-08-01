@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp">
+    android:paddingTop="16dp"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/post_title_text_view"
@@ -44,5 +46,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/post_title_text_view"
         tools:text="2023.10.28" />
+    
+    <View
+        android:layout_marginTop="16dp"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintTop_toBottomOf="@id/post_create_time_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
