@@ -11,13 +11,13 @@ import javax.inject.Inject
 class PostRemoteDataSource @Inject constructor(
     private val authApi: AuthApi,
     private val noAuthApi: NoAuthApi
-): PostDataSource {
+) : PostDataSource {
     override suspend fun getPost(
         idCursor: String,
         dateCursor: String,
         size: Int
     ): Response<PostResp> {
-        return  noAuthApi.getPost(idCursor, dateCursor, size)
+        return noAuthApi.getPost(idCursor, dateCursor, size)
     }
 
     override suspend fun getPostDetail(postId: Int): Response<PostDetailResp> {

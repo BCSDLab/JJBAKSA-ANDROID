@@ -1,10 +1,8 @@
 package com.jjbaksa.jjbaksa.ui.post
 
 import android.content.Intent
-import android.os.Build
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jjbaksa.domain.resp.post.Post
 import com.jjbaksa.jjbaksa.R
@@ -21,9 +19,9 @@ class PostActivity : BaseActivity<ActivityPostBinding>() {
     private val viewModel: PostViewModel by viewModels()
     private lateinit var adapter: PostAdapter
 
-    private val startPostDetail = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-
-    }
+    private val startPostDetail =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        }
 
     override fun initView() {
         adapter = PostAdapter(::onClickPostItem)
@@ -31,7 +29,7 @@ class PostActivity : BaseActivity<ActivityPostBinding>() {
             it.adapter = adapter
             it.layoutManager = LinearLayoutManager(this)
         }
-        viewModel.getPost("","",20)
+        viewModel.getPost("", "", 20)
     }
 
     override fun subscribe() {
@@ -49,11 +47,9 @@ class PostActivity : BaseActivity<ActivityPostBinding>() {
     }
 
     private fun onClickPostItem(post: Post) {
-        val intent = Intent(this,  PostDetailActivity::class.java).apply {
+        val intent = Intent(this, PostDetailActivity::class.java).apply {
             putExtra("post_id", post.id)
         }
         startPostDetail.launch(intent)
     }
-
 }
-

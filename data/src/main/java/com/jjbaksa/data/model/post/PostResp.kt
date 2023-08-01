@@ -7,4 +7,4 @@ import com.jjbaksa.domain.BaseResp
 data class PostResp(
     @SerializedName("content")
     val content: List<PostContentDTO>? = emptyList()
-): BaseResp()
+) : BaseResp()

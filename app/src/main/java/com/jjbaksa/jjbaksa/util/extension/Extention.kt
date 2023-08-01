@@ -16,8 +16,10 @@ fun Context.hasPermission(permission: Array<String>): Boolean =
     permission.all {
         ActivityCompat.checkSelfPermission(this, it) == PackageManager.PERMISSION_GRANTED
     }
+
 fun Context.hasPermission(permission: String): Boolean =
     ActivityCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
+
 fun Context.checkPermissionsAndRequest(
     permission: Array<String>,
     request: ActivityResultLauncher<Array<String>>
@@ -47,5 +49,5 @@ fun String.setCalculateDate(): Long {
     val postDate = SimpleDateFormat("yyyy-MM-dd").parse(this)
     val today = SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().time)
     val todayDate = SimpleDateFormat("yyyy-MM-dd").parse(today)
-    return (todayDate.time - postDate.time) / (60*60*24*1000)
+    return (todayDate.time - postDate.time) / (60 * 60 * 24 * 1000)
 }

@@ -6,7 +6,10 @@ import kotlinx.coroutines.flow.Flow
 
 interface PostRepository {
     suspend fun getPost(
-        idCursor: String, dateCursor: String, size: Int
+        idCursor: String,
+        dateCursor: String,
+        size: Int
     ): Flow<Result<PostData>>
+
     suspend fun getPostDetail(postId: Int): Flow<Result<PostDetail>>
 }

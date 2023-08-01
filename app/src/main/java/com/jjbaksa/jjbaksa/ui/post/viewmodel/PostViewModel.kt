@@ -13,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class PostViewModel @Inject constructor(
     private val getPostUseCase: GetPostUseCase
-): BaseViewModel() {
+) : BaseViewModel() {
     private val _post = SingleLiveEvent<PostData>()
     val post: SingleLiveEvent<PostData> get() = _post
 

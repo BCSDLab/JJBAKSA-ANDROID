@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 class PostRepositoryImpl @Inject constructor(
     private val postRemoteDataSource: PostRemoteDataSource
-): PostRepository {
+) : PostRepository {
     override suspend fun getPost(
         idCursor: String,
         dateCursor: String,
