@@ -1,10 +1,14 @@
 package com.jjbaksa.data.mapper
 
 import com.google.gson.Gson
+import com.jjbaksa.data.model.post.PostResp
+import com.jjbaksa.data.model.post.dto.PostContentDTO
 import com.jjbaksa.data.model.search.AutoKeywordResp
 import com.jjbaksa.data.model.search.SearchShopResp
 import com.jjbaksa.data.model.search.ShopResp
 import com.jjbaksa.domain.BaseResp
+import com.jjbaksa.domain.resp.post.Post
+import com.jjbaksa.domain.resp.post.PostData
 import com.jjbaksa.domain.resp.search.AutoKeyword
 import com.jjbaksa.domain.resp.search.Shop
 import com.jjbaksa.domain.resp.search.ShopData
@@ -37,4 +41,14 @@ fun ShopResp.toShop() = Shop(
     placeId = placeId ?: "",
     ratingCount = ratingCount ?: 0,
     totalRating = totalRating ?: 0
+)
+
+fun PostResp.toPostData() = PostData(
+    content = content?.map { it.toPost() }.orEmpty()
+)
+
+fun PostContentDTO.toPost() = Post(
+    id = id ?: 0,
+    title = title ?: "",
+    createdAt = createdAt ?: ""
 )
