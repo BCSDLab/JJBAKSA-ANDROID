@@ -19,6 +19,9 @@ class PostAdapter(
             binding.postTitleTextView.text = post.title
             binding.postCreateTimeTextView.text = post.createdAt
 
+            if (post.createdAt.setCalculateDate() >= 1) {
+                binding.recentPostImageView.visibility = View.GONE
+            }
 
             binding.root.setOnClickListener {
                 onClickItem(post)
