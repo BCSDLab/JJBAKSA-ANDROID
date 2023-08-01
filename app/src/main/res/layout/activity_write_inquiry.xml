@@ -54,13 +54,14 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/inquiry_image_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="90dp"
+                    android:layout_height="0dp"
                     android:layout_marginEnd="33dp"
-                    android:src="@drawable/ic_error_img"
+                    android:src="@drawable/ic_inquiry"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/inquiry_title_text_view"
-                    app:layout_constraintTop_toTopOf="@id/inquiry_title_text_view" />
+                    app:layout_constraintTop_toTopOf="@id/inquiry_title_text_view"
+                    app:layout_constraintBottom_toBottomOf="@+id/inquiry_content_text_view"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/inquiry_content_text_view"
