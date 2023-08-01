@@ -1,6 +1,7 @@
 package com.jjbaksa.data.api
 
 import com.jjbaksa.data.model.findid.FindIdResp
+import com.jjbaksa.data.model.post.PostDetailResp
 import com.jjbaksa.data.model.post.PostResp
 import com.jjbaksa.data.model.search.AutoKeywordResp
 import com.jjbaksa.data.model.search.LocationBody
@@ -87,4 +88,8 @@ interface NoAuthApi {
         @Query("dateCursor") dateCursor: String,
         @Query("size") size: Int
     ): Response<PostResp>
+    @GET("post/{post-id}")
+    suspend fun getPostDetail(
+        @Path("post-id") postId: Int
+    ): Response<PostDetailResp>
 }

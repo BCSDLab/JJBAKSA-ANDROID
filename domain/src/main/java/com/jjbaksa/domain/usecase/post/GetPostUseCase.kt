@@ -2,6 +2,7 @@ package com.jjbaksa.domain.usecase.post
 
 import com.jjbaksa.domain.repository.PostRepository
 import com.jjbaksa.domain.resp.post.PostData
+import com.jjbaksa.domain.resp.post.PostDetail
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -14,5 +15,9 @@ class GetPostUseCase @Inject constructor(
         size: Int
     ): Flow<Result<PostData>> {
         return postRepository.getPost(idCursor, dateCursor, size)
+    }
+
+    suspend fun postDetail(postId: Int): Flow<Result<PostDetail>> {
+        return postRepository.getPostDetail(postId)
     }
 }
