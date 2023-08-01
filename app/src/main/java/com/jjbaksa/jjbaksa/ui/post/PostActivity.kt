@@ -1,6 +1,8 @@
 package com.jjbaksa.jjbaksa.ui.post
 
+import android.content.Intent
 import android.os.Build
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,7 +21,10 @@ class PostActivity : BaseActivity<ActivityPostBinding>() {
     private val viewModel: PostViewModel by viewModels()
     private lateinit var adapter: PostAdapter
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    private val startPostDetail = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+
+    }
+
     override fun initView() {
         adapter = PostAdapter(::onClickPostItem)
         binding.postRecyclerView.also {
@@ -44,6 +49,11 @@ class PostActivity : BaseActivity<ActivityPostBinding>() {
     }
 
     private fun onClickPostItem(post: Post) {
-
+        val intent = Intent(this,  PostDetailActivity::class.java).apply {
+            putExtra("post_id", post.id)
+        }
+        startPostDetail.launch(intent)
     }
+
 }
+
