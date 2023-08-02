@@ -29,6 +29,7 @@ interface UserRepository {
     suspend fun editUserProfileImage(photo: String): RespResult<Boolean>
     suspend fun saveWithdrawalReason(withdrawalReason: WithdrawalReasonReq): RespResult<Boolean>
     suspend fun deleteUser(): RespResult<Boolean>
+    suspend fun singOut()
     fun getAutoLoginFlag(): Boolean
     fun getAccount(): String
     fun getNickname(): String
