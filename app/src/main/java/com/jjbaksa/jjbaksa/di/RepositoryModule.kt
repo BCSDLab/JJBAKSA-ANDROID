@@ -17,6 +17,9 @@ import com.jjbaksa.data.repository.InquiryRepositoryImpl
 import com.jjbaksa.data.repository.SearchRepositoryImpl
 import com.jjbaksa.domain.repository.HomeRepository
 import com.jjbaksa.domain.repository.InquiryRepository
+import com.jjbaksa.data.datasource.remote.PostRemoteDataSource
+import com.jjbaksa.data.repository.PostRepositoryImpl
+import com.jjbaksa.domain.repository.PostRepository
 import com.jjbaksa.domain.repository.SearchRepository
 import dagger.Module
 import dagger.Provides
@@ -69,5 +72,12 @@ object RepositoryModule {
         inquiryRemoteDataSource: InquiryRemoteDataSource
     ): InquiryRepository {
         return InquiryRepositoryImpl(inquiryRemoteDataSource)
+    }
+    @Singleton
+    @Provides
+    fun providePostRepository(
+        postRemoteDataSource: PostRemoteDataSource
+    ): PostRepository {
+        return PostRepositoryImpl(postRemoteDataSource)
     }
 }

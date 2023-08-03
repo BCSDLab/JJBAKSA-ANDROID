@@ -78,6 +78,8 @@
     <string name="password_rule_not_match">비밀번호는 문자, 숫자, 특수문자를 포함한 8~16자리로 이루어져야합니다.</string>
     <string name="password_not_match">비밀번호가 일치하지 않습니다.</string>
     <string name="need_id_check">아이디 중복확인을 해주세요.</string>
+    <string name="sign_out_title_text">로그아웃을 진행하실건가요?</string>
+    <string name="sign_out_content_text">쩝쩝박사 로그아웃을 진행하시면 로그인 페이지로 돌아갑니다.</string>
 
     <string name="welcome_text">회원가입을 축하합니다!\n당신을 어떻게 부르면 좋을까요?</string>
     <string name="complete_withdrawal_content">다음에 또 봐요! 재가입은 탈퇴 후 일주일 후 부터 가능합니다.</string>

@@ -4,6 +4,9 @@ import com.google.gson.Gson
 import com.jjbaksa.data.model.inquiry.InquiryResp
 import com.jjbaksa.data.model.inquiry.dto.InquiryContentDTO
 import com.jjbaksa.data.model.inquiry.dto.InquiryImagesDTO
+import com.jjbaksa.data.model.post.PostDetailResp
+import com.jjbaksa.data.model.post.PostResp
+import com.jjbaksa.data.model.post.dto.PostContentDTO
 import com.jjbaksa.data.model.search.AutoKeywordResp
 import com.jjbaksa.data.model.search.SearchShopResp
 import com.jjbaksa.data.model.search.ShopResp
@@ -11,6 +14,9 @@ import com.jjbaksa.domain.BaseResp
 import com.jjbaksa.domain.resp.inquiry.InquiryContent
 import com.jjbaksa.domain.resp.inquiry.InquiryData
 import com.jjbaksa.domain.resp.inquiry.InquiryImages
+import com.jjbaksa.domain.resp.post.Post
+import com.jjbaksa.domain.resp.post.PostData
+import com.jjbaksa.domain.resp.post.PostDetail
 import com.jjbaksa.domain.resp.search.AutoKeyword
 import com.jjbaksa.domain.resp.search.Shop
 import com.jjbaksa.domain.resp.search.ShopData
@@ -65,4 +71,20 @@ fun InquiryImagesDTO.toInquiryImages() = InquiryImages(
     imageUrl = imageUrl ?: "",
     originalName = originalName ?: "",
     path = path ?: ""
+)
+fun PostResp.toPostData() = PostData(
+    content = content?.map { it.toPost() }.orEmpty()
+)
+
+fun PostContentDTO.toPost() = Post(
+    id = id ?: 0,
+    title = title ?: "",
+    createdAt = createdAt ?: ""
+)
+
+fun PostDetailResp.toPostDetail() = PostDetail(
+    id = id ?: 0,
+    title = title ?: "",
+    content = content ?: "",
+    createdAt = createdAt ?: ""
 )

@@ -26,7 +26,12 @@
             android:name=".ui.inquiry.WriteInquiryActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.inquiry.InquiryActivity"
+            android:name=".ui.inquiry.InquiryActivity"/>
+        <activity
+            android:name=".ui.post.PostDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.post.PostActivity"
             android:exported="false" />
         <activity
             android:name=".ui.withdrawal.WithdrawalActivity"

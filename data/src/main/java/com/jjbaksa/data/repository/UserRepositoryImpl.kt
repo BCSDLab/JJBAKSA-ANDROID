@@ -205,6 +205,10 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun singOut() {
+        userLocalDataSource.clearDataStore()
+    }
+
     override fun getAutoLoginFlag(): Boolean {
         return userLocalDataSource.getAutoLoginFlag()
     }
