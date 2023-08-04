@@ -25,6 +25,7 @@
     <string name="google_login">구글 로그인</string>
     <string name="naver_login">네이버 로그인</string>
     <string name="close">닫기</string>
+    <string name="register">등록하기</string>
 
     <string name="terms_agreement">약관 동의</string>
     <string name="privacy_term_title">개인정보 이용약관(필수)</string>
@@ -89,9 +90,18 @@
     <string name="cancel">취소</string>
     <string name="setting">설정</string>
     <string name="manage_account">계정 관리</string>
+    <string name="title">제목</string>
     <string name="service">서비스</string>
     <string name="notice">공지사항</string>
     <string name="inquiry">문의하기</string>
+    <string name="inquiry_content">문의 내용</string>
+    <string-array name="inquiry_tab">
+        <item>전체 문의 내역</item>
+        <item>나의 문의 내역</item>
+    </string-array>
+    <string name="go_to_inquiry">문의하러 가기</string>
+    <string name="write_inquiry">문의 작성하기</string>
+    <string name="setting_secret">비밀글 설정</string>
     <string name="app_version">앱 버전</string>
 
     <string name="id_check">중복확인</string>
@@ -138,10 +148,18 @@
     <string name="withdrawal_reason3">다른 앱을 더 많이 사용해요</string>
     <string name="withdrawal_reason4">새 계정을 만들고 싶어요</string>
     <string name="withdrawal_reason5">그 외</string>
+    
+    <string name="register_inquiry_title">쩝쩝박사 이용 중에 생긴 불편한 점이나 문의사항을 등록해주세요.</string>
+    <string name="register_inquiry_content">확인 후 순차적으로 답변 드리겠습니다.</string>
+    <string name="secret_inquiry_content_visible">비밀글은 나의 문의 내역에서만 볼 수 있어요.</string>
+    <string name="attachable_max_photo">최대 3장 첨부 가능</string>
+    <string name="write_inquiry_content">문의 내용을 작성해주세요.</string>
+    <string name="write_title">제목을 작성해주세요.</string>
 
     <string name="my_page_followers">• 팔로우 %1$d</string>
     <string name="my_page_account">\@%s</string>
     <string name="text_length">%s/10</string>
     <string name="text_length150">%s/150</string>
+    <string name="text_length500">%s/500</string>
     <string name="change_profile_content">%s님,\n프로필을 변경하시겠어요?</string>
 </resources>

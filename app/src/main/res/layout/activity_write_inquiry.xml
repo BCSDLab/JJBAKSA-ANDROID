@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="view"
+            type="com.jjbaksa.jjbaksa.ui.inquiry.WriteInquiryActivity" />
+        <variable
+            name="vm"
+            type="com.jjbaksa.jjbaksa.ui.inquiry.viewmodel.WriteInquiryViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.inquiry.WriteInquiryActivity">
+
+        <com.jjbaksa.jjbaksa.view.JjAppbar
+            android:id="@+id/jj_app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="@string/write_inquiry"
+            app:titleSize="18sp"
+            app:titleTextColor="@color/color_222222" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/jj_app_bar">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/inquiry_title_text_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="28dp"
+                    android:layout_marginEnd="36dp"
+                    android:text="@string/register_inquiry_title"
+                    android:textColor="@color/color_222222"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toStartOf="@id/inquiry_image_view"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/inquiry_image_view"
+                    android:layout_width="90dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="33dp"
+                    android:src="@drawable/ic_inquiry"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/inquiry_title_text_view"
+                    app:layout_constraintTop_toTopOf="@id/inquiry_title_text_view"
+                    app:layout_constraintBottom_toBottomOf="@+id/inquiry_content_text_view"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/inquiry_content_text_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/register_inquiry_content"
+                    android:textColor="@color/color_666666"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="@id/inquiry_title_text_view"
+                    app:layout_constraintTop_toBottomOf="@id/inquiry_title_text_view" />
+
+                <androidx.core.widget.NestedScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginBottom="16dp"
+                    app:layout_constraintBottom_toTopOf="@+id/register_button"
+                    app:layout_constraintTop_toBottomOf="@+id/inquiry_content_text_view">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/title_edit_text_view"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="24dp"
+                            android:text="@string/title"
+                            android:textColor="@color/color_000000"
+                            android:textSize="16sp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="3dp"
+                            android:src="@drawable/shape_circ_ff7f23_solid"
+                            app:layout_constraintBottom_toBottomOf="@id/title_edit_text_view"
+                            app:layout_constraintStart_toEndOf="@id/title_edit_text_view"
+                            app:layout_constraintTop_toTopOf="@id/title_edit_text_view"
+                            app:layout_constraintVertical_bias="0.15" />
+
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/title_edit_text"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="24dp"
+                            android:inputType="text"
+                            android:background="@drawable/bg_inquiry_edit_text"
+                            android:hint="@string/write_title"
+                            android:padding="8dp"
+                            android:textColor="@color/color_000000"
+                            android:textColorHint="@color/color_c4c4c4"
+                            android:textSize="14sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/title_edit_text_view"
+                            app:layout_constraintTop_toBottomOf="@id/title_edit_text_view" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/content_edit_text_view"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:text="@string/inquiry_content"
+                            android:textColor="@color/color_000000"
+                            android:textSize="16sp"
+                            app:layout_constraintStart_toStartOf="@id/title_edit_text_view"
+                            app:layout_constraintTop_toBottomOf="@id/title_edit_text" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="3dp"
+                            android:src="@drawable/shape_circ_ff7f23_solid"
+                            app:layout_constraintBottom_toBottomOf="@id/content_edit_text_view"
+                            app:layout_constraintStart_toEndOf="@id/content_edit_text_view"
+                            app:layout_constraintTop_toTopOf="@id/content_edit_text_view"
+                            app:layout_constraintVertical_bias="0.15" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/content_edit_length_text_view"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:text="@{@string/text_length500(String.valueOf(vm.inquiryContentLength))}"
+                            android:textColor="@{vm.inquiryContentLength == 500 ? @color/color_ff7f23 : @color/color_c4c4c4}"
+                            android:textSize="12sp"
+                            app:layout_constraintBottom_toTopOf="@+id/inquiry_content_linear_layout"
+                            app:layout_constraintEnd_toEndOf="@+id/inquiry_content_linear_layout"
+                            tools:text="0/500" />
+
+                        <LinearLayout
+                            android:id="@+id/inquiry_content_linear_layout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="24dp"
+                            android:background="@drawable/bg_inquiry_edit_text"
+                            android:orientation="vertical"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/content_edit_text_view"
+                            app:layout_constraintTop_toBottomOf="@id/content_edit_text_view">
+
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/content_edit_text"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:hint="@string/write_inquiry_content"
+                                android:gravity="top"
+                                android:padding="8dp"
+                                android:minHeight="150dp"
+                                android:maxLength="500"
+                                android:textColor="@color/color_000000"
+                                android:textColorHint="@color/color_c4c4c4"
+                                android:textSize="14sp" />
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/bg_inquiry_edit_text"
+                                android:padding="12dp">
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:id="@+id/add_photo_image_view"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/shape_rect_stroke_ff7f23"
+                                    android:src="@drawable/ic_baseline_add_16"
+                                    android:onClick="@{() -> view.goToGallery()}"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:tint="@color/color_ff7f23" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/attachable_max_photo"
+                                    android:textColor="@color/color_c4c4c4"
+                                    android:textSize="12sp"
+                                    android:visibility="@{vm.isExtraPhoto ? View.GONE : View.VISIBLE, default = visible}"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/inquiry_photo_recycler_view"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    android:orientation="horizontal"
+                                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                    tools:listitem="@layout/item_inquiry_photo"
+                                    tools:itemCount="3"/>
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+                        </LinearLayout>
+
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/secret_setting_text_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:text="@string/setting_secret"
+                            android:textColor="@color/color_000000"
+                            android:textSize="16sp"
+                            app:layout_constraintStart_toStartOf="@id/inquiry_content_linear_layout"
+                            app:layout_constraintTop_toBottomOf="@+id/inquiry_content_linear_layout" />
+
+                        <Switch
+                            android:id="@+id/secret_setting_switch"
+                            android:layout_width="26dp"
+                            android:layout_height="14dp"
+                            android:layout_marginStart="8dp"
+                            android:checked="false"
+                            android:thumb="@drawable/shape_circ_ffffff_solid_thumb"
+                            android:track="@drawable/selector_ff7f23_c4c4c4"
+                            app:layout_constraintBottom_toBottomOf="@id/secret_setting_text_view"
+                            app:layout_constraintStart_toEndOf="@id/secret_setting_text_view"
+                            app:layout_constraintTop_toTopOf="@id/secret_setting_text_view" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/secret_setting_content_text_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="@string/secret_inquiry_content_visible"
+                            android:textColor="@color/color_c4c4c4"
+                            android:textSize="14sp"
+                            app:layout_constraintStart_toStartOf="@id/inquiry_content_linear_layout"
+                            app:layout_constraintTop_toBottomOf="@+id/secret_setting_text_view" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.core.widget.NestedScrollView>
+
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/register_button"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginHorizontal="75dp"
+                    android:layout_marginBottom="12dp"
+                    android:background="@drawable/selector_rect_radius_100_c4c4c4_ff7f23"
+                    android:gravity="center"
+                    android:enabled="false"
+                    android:text="@string/register"
+                    android:textColor="@color/color_ffffff"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
