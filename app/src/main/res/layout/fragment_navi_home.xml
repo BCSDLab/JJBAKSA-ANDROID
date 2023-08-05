@@ -59,6 +59,8 @@
             android:backgroundTint="@color/color_ffffff"
             app:borderWidth="0dp"
             app:fabCustomSize="48dp"
+            android:checked="true"
+            android:onClick="@{() -> view.seeMoreCategory()}"
             app:layout_constraintBottom_toBottomOf="@+id/edit_text_main_page"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/edit_text_main_page"
@@ -68,6 +70,7 @@
             app:tint="@color/color_666666" />
 
         <LinearLayout
+            android:id="@+id/category_linear_layout"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginTop="12dp"
@@ -143,6 +146,7 @@
             android:backgroundTint="@color/color_ffffff"
             app:borderWidth="0dp"
             app:fabCustomSize="48dp"
+            android:onClick="@{() -> view.loadLocation()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:maxImageSize="32dp"
@@ -157,6 +161,7 @@
             android:drawableStart="@drawable/ic_research"
             android:drawablePadding="6dp"
             android:paddingHorizontal="12dp"
+            android:onClick="@{() -> view.reloadLocation()}"
             android:text="@string/check_the_real_location"
             android:textColor="@color/color_ff7f23"
             android:textSize="14sp"

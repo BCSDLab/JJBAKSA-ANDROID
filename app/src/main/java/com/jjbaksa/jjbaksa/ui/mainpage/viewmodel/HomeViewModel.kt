@@ -1,7 +1,9 @@
 package com.jjbaksa.jjbaksa.ui.mainpage.viewmodel
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.jjbaksa.domain.base.RespResult
+import com.jjbaksa.domain.model.mainpage.JjCategory
 import com.jjbaksa.domain.model.mainpage.UserLocation
 import com.jjbaksa.domain.repository.HomeRepository
 import com.jjbaksa.domain.repository.UserRepository
@@ -17,6 +19,20 @@ class HomeViewModel @Inject constructor(
     private val userRepository: UserRepository,
     private val repository: HomeRepository
 ) : BaseViewModel() {
+    val location = MutableLiveData<UserLocation>()
+    val lastLocation = MutableLiveData<UserLocation>()
+    val category = SingleLiveEvent<JjCategory>()
+    val moveCamera = MutableLiveData<Boolean>(true)
+    val searchCurrentPosition = MutableLiveData<Boolean>()
+    fun setLatLng(lat:Double, lng:Double) {
+        location.value = UserLocation(lat, lng)
+    }
+    fun setLastLocation(lat: Double, lng: Double) {
+        lastLocation.value = UserLocation(lat, lng)
+    }
+    fun setCategory(category: JjCategory) {
+        this.category.value = category
+    }
     fun getMyInfo() {
         viewModelScope.launch {
             runCatching {
