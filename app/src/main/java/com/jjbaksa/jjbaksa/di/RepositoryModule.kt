@@ -12,13 +12,16 @@ import com.jjbaksa.domain.repository.UserRepository
 import com.jjbaksa.data.repository.UserRepositoryImpl
 import com.example.imageselector.repository.ImageRepository
 import com.jjbaksa.data.datasource.remote.InquiryRemoteDataSource
+import com.jjbaksa.data.datasource.remote.MapRemoteDataSource
 import com.jjbaksa.data.datasource.remote.SearchRemoteDataSource
 import com.jjbaksa.data.repository.InquiryRepositoryImpl
 import com.jjbaksa.data.repository.SearchRepositoryImpl
 import com.jjbaksa.domain.repository.HomeRepository
 import com.jjbaksa.domain.repository.InquiryRepository
 import com.jjbaksa.data.datasource.remote.PostRemoteDataSource
+import com.jjbaksa.data.repository.MapRepositoryImpl
 import com.jjbaksa.data.repository.PostRepositoryImpl
+import com.jjbaksa.domain.repository.MapRepository
 import com.jjbaksa.domain.repository.PostRepository
 import com.jjbaksa.domain.repository.SearchRepository
 import dagger.Module
@@ -79,5 +82,12 @@ object RepositoryModule {
         postRemoteDataSource: PostRemoteDataSource
     ): PostRepository {
         return PostRepositoryImpl(postRemoteDataSource)
+    }
+    @Singleton
+    @Provides
+    fun provideMapRepository(
+        mapRemoteDataSource: MapRemoteDataSource
+    ): MapRepository {
+        return MapRepositoryImpl(mapRemoteDataSource)
     }
 }

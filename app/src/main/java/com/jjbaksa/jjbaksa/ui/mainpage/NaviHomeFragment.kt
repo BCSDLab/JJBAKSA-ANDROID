@@ -2,6 +2,7 @@ package com.jjbaksa.jjbaksa.ui.mainpage
 
 import android.Manifest
 import android.content.Intent
+import android.util.Log
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -24,6 +25,7 @@ import com.naver.maps.map.NaverMap
 import com.naver.maps.map.NaverMapOptions
 import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.overlay.LocationOverlay
+import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -124,6 +126,29 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
                 }
             }
         }
+        viewModel.mapMarkers.observe(viewLifecycleOwner) {
+            Log.e("로그", "markers : $it")
+            if (!viewModel.lastMapMarkers.value.isNullOrEmpty()) {
+                viewModel.lastMapMarkers.value!!.forEach { marker ->
+                    marker.map = null
+                }
+            }
+
+            // TODO : 마커 중복 해결하기
+            if (it.isNotEmpty()) {
+                viewModel.lastMapMarkers.value = it
+
+                it.forEachIndexed { index, marker ->
+                    marker.map = currentMap
+                    marker.captionText = viewModel.mapShops.value?.get(index)?.name ?: ""
+
+                    marker.setOnClickListener {
+                        Log.e("로그", "marker position : ${marker.position}")
+                        false
+                    }
+                }
+            }
+        }
     }
 
     private fun updateCategoryColorState(categoryView: TextView, state: Boolean) {
@@ -193,8 +218,8 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
     private fun checkLocationPermissions() {
         if (requireContext().hasPermission(locationPermissions)) {
             currentCameraPosition(
-                viewModel.location.value?.latitude ?: return,
-                viewModel.location.value?.longitude ?: return
+                viewModel.lastLocation.value?.latitude ?: return,
+                viewModel.lastLocation.value?.longitude ?: return
             )
             fusedLocationUtil.startLocationUpdate()
         }
@@ -241,6 +266,11 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
         viewModel.moveCamera.value = true
         if (requireContext().hasPermission(locationPermissions)) {
             // TODO: 현재 위치에서 상점 검색
+            viewModel.getMapShop(
+                0, 1, 0,
+                currentMap.cameraPosition.target.latitude,
+                currentMap.cameraPosition.target.longitude
+            )
         } else {
             locationPermissionsResult.launch(locationPermissions)
         }

@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.jjbaksa.data.model.inquiry.InquiryResp
 import com.jjbaksa.data.model.inquiry.dto.InquiryContentDTO
 import com.jjbaksa.data.model.inquiry.dto.InquiryImagesDTO
+import com.jjbaksa.data.model.map.MapShopResp
 import com.jjbaksa.data.model.post.PostDetailResp
 import com.jjbaksa.data.model.post.PostResp
 import com.jjbaksa.data.model.post.dto.PostContentDTO
@@ -14,6 +15,8 @@ import com.jjbaksa.domain.BaseResp
 import com.jjbaksa.domain.resp.inquiry.InquiryContent
 import com.jjbaksa.domain.resp.inquiry.InquiryData
 import com.jjbaksa.domain.resp.inquiry.InquiryImages
+import com.jjbaksa.domain.resp.map.MapShopContent
+import com.jjbaksa.domain.resp.map.MapShopData
 import com.jjbaksa.domain.resp.post.Post
 import com.jjbaksa.domain.resp.post.PostData
 import com.jjbaksa.domain.resp.post.PostDetail
@@ -87,4 +90,16 @@ fun PostDetailResp.toPostDetail() = PostDetail(
     title = title ?: "",
     content = content ?: "",
     createdAt = createdAt ?: ""
+)
+
+fun List<MapShopResp>?.toMapShopData() = MapShopData(
+    mapShopContent = this?.map { it.toMapShopContent() }.orEmpty()
+)
+
+fun MapShopResp.toMapShopContent() = MapShopContent(
+    placeId = placeId ?: "",
+    name = name ?: "",
+    lat = geometry.location?.lat ?: 0.0,
+    lng = geometry.location?.lng ?: 0.0,
+    photo = photo ?: "",
 )

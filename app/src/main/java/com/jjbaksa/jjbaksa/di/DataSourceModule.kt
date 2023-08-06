@@ -7,6 +7,9 @@ import com.jjbaksa.data.database.UserDao
 import com.jjbaksa.data.datasource.local.HomeLocalDataSource
 import com.jjbaksa.data.datasource.local.UserLocalDataSource
 import com.jjbaksa.data.datasource.remote.HomeRemoteDataSource
+import com.jjbaksa.data.datasource.remote.InquiryRemoteDataSource
+import com.jjbaksa.data.datasource.remote.MapRemoteDataSource
+import com.jjbaksa.data.datasource.remote.PostRemoteDataSource
 import com.jjbaksa.data.datasource.remote.SearchRemoteDataSource
 import com.jjbaksa.data.datasource.remote.UserRemoteDataSource
 import dagger.Module
@@ -26,7 +29,7 @@ object DataSourceModule {
     }
     @Provides
     @Singleton
-    fun provideLocalDataSource(@ApplicationContext context: Context, userDao: UserDao): UserLocalDataSource {
+    fun provideUserLocalDataSource(@ApplicationContext context: Context, userDao: UserDao): UserLocalDataSource {
         return UserLocalDataSource(context, userDao)
     }
     @Provides
@@ -44,5 +47,21 @@ object DataSourceModule {
     @Singleton
     fun provideRemoteSearchDataSource(authApi: AuthApi, noAuthApi: NoAuthApi): SearchRemoteDataSource {
         return SearchRemoteDataSource(authApi, noAuthApi)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRemoteInquiryDataSource(authApi: AuthApi, noAuthApi: NoAuthApi): InquiryRemoteDataSource {
+        return InquiryRemoteDataSource(authApi, noAuthApi)
+    }
+    @Provides
+    @Singleton
+    fun provideRemotePostDataSource(authApi: AuthApi, noAuthApi: NoAuthApi): PostRemoteDataSource {
+        return PostRemoteDataSource(authApi, noAuthApi)
+    }
+    @Provides
+    @Singleton
+    fun provideRemoteMapDataSource(authApi: AuthApi, noAuthApi: NoAuthApi): MapRemoteDataSource {
+        return MapRemoteDataSource(authApi, noAuthApi)
     }
 }
