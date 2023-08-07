@@ -12,4 +12,4 @@ data class MapShopResp(
     val geometry: GeometryDTO,
     @SerializedName("photo")
     val photo: String? = ""
-): BaseResp()
+) : BaseResp()

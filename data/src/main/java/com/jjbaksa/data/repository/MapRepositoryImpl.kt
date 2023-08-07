@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 class MapRepositoryImpl @Inject constructor(
     private val mapRemoteDataSource: MapRemoteDataSource
-): MapRepository {
+) : MapRepository {
     override suspend fun getMapShop(
         optionsFriend: Int,
         optionsNearby: Int,

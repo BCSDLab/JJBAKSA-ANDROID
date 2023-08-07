@@ -33,13 +33,17 @@ object RespMapper {
         return baseResp
     }
 }
+
 fun AutoKeywordResp.toAutoKeyword() = AutoKeyword(
     autoCompletes = autoCompletes ?: listOf()
 )
+
 fun SearchShopResp.toShopData() = ShopData(
     pageToken = pageToken ?: "",
-    shopQueryResponseList = shopQueryResponseList?.map { it.toShop() }?.toMutableList() ?: mutableListOf<Shop>()
+    shopQueryResponseList = shopQueryResponseList?.map { it.toShop() }?.toMutableList()
+        ?: mutableListOf<Shop>()
 )
+
 fun ShopResp.toShop() = Shop(
     dist = dist ?: 0.0,
     category = category ?: "",
@@ -75,6 +79,7 @@ fun InquiryImagesDTO.toInquiryImages() = InquiryImages(
     originalName = originalName ?: "",
     path = path ?: ""
 )
+
 fun PostResp.toPostData() = PostData(
     content = content?.map { it.toPost() }.orEmpty()
 )

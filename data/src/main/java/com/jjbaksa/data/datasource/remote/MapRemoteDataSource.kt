@@ -1,6 +1,5 @@
 package com.jjbaksa.data.datasource.remote
 
-import android.util.Log
 import com.jjbaksa.data.api.AuthApi
 import com.jjbaksa.data.api.NoAuthApi
 import com.jjbaksa.data.datasource.MapDataSource
@@ -12,7 +11,7 @@ import javax.inject.Inject
 class MapRemoteDataSource @Inject constructor(
     private val authApi: AuthApi,
     private val noAuthApi: NoAuthApi
-): MapDataSource {
+) : MapDataSource {
     override suspend fun getMapShop(
         optionsFriend: Int,
         optionsNearby: Int,
