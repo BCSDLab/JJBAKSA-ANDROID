@@ -1,6 +1,5 @@
 package com.jjbaksa.domain.usecase.map
 
-import com.jjbaksa.domain.repository.HomeRepository
 import com.jjbaksa.domain.repository.MapRepository
 import com.jjbaksa.domain.resp.map.MapShopData
 import kotlinx.coroutines.flow.Flow
