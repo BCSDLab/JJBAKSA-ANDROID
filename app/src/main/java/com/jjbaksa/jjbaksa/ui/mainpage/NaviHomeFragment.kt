@@ -2,7 +2,6 @@ package com.jjbaksa.jjbaksa.ui.mainpage
 
 import android.Manifest
 import android.content.Intent
-import android.util.Log
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -26,7 +25,6 @@ import com.naver.maps.map.NaverMap
 import com.naver.maps.map.NaverMapOptions
 import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.overlay.LocationOverlay
-import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -142,7 +140,7 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
                     marker.captionText = viewModel.mapShops.value?.get(index)?.name ?: ""
 
                     marker.setOnClickListener {
-                        val intent= Intent(requireContext(), PinActivity::class.java).apply {
+                        val intent = Intent(requireContext(), PinActivity::class.java).apply {
                             putExtra("place_id", viewModel.mapShops.value?.get(index)?.placeId)
                         }
                         startActivity(intent)

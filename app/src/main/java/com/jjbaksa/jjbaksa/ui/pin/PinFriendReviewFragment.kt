@@ -3,9 +3,8 @@ package com.jjbaksa.jjbaksa.ui.pin
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseFragment
 import com.jjbaksa.jjbaksa.databinding.FragmentPinFriendReviewBinding
-import com.jjbaksa.jjbaksa.databinding.FragmentPinMyReviewBinding
 
-class PinFriendReviewFragment: BaseFragment<FragmentPinFriendReviewBinding>() {
+class PinFriendReviewFragment : BaseFragment<FragmentPinFriendReviewBinding>() {
     override val layoutId: Int
         get() = R.layout.fragment_pin_friend_review
 

@@ -1,8 +1,6 @@
 package com.jjbaksa.jjbaksa.ui.mainpage
 
 import android.Manifest
-import android.app.AlertDialog
-import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.navigation.fragment.NavHostFragment
@@ -14,7 +12,6 @@ import com.jjbaksa.jjbaksa.databinding.ActivityMainPageBinding
 import com.jjbaksa.jjbaksa.ui.mainpage.viewmodel.HomeViewModel
 import com.jjbaksa.jjbaksa.util.FusedLocationUtil
 import com.jjbaksa.jjbaksa.util.checkPermissionsAndRequest
-import com.jjbaksa.jjbaksa.util.hasPermission
 import com.jjbaksa.jjbaksa.util.setStatusBarTransparent
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -11,11 +11,10 @@ import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.Task
-import com.jjbaksa.domain.model.mainpage.UserLocation
 
 class FusedLocationUtil(
     private val context: Context,
-    private val callBackLocation: (Double, Double) -> Unit = { _,_ -> }
+    private val callBackLocation: (Double, Double) -> Unit = { _, _ -> }
 ) {
     private val fusedLocationClient by lazy {
         LocationServices.getFusedLocationProviderClient(
@@ -69,9 +68,7 @@ class FusedLocationUtil(
         }
     }
 
-
     fun stopLocationUpdates() {
         fusedLocationClient.removeLocationUpdates(locationCallback)
     }
 }
-

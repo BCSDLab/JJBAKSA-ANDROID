@@ -9,12 +9,12 @@ import android.provider.Settings
 import androidx.fragment.app.DialogFragment
 import com.jjbaksa.jjbaksa.R
 
-class PermissionDialog(): DialogFragment(){
+class PermissionDialog() : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return AlertDialog.Builder(requireContext())
             .setMessage(R.string.location_service_term_text)
             .setNegativeButton(R.string.cancel, null)
-            .setPositiveButton(R.string.move_setting) {_, _ ->
+            .setPositiveButton(R.string.move_setting) { _, _ ->
                 val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
                     data = Uri.fromParts("package", requireContext().packageName, null)
                 }
