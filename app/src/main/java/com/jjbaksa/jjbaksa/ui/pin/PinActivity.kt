@@ -9,7 +9,7 @@ import com.jjbaksa.jjbaksa.ui.pin.adapter.PinAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class PinActivity: BaseActivity<ActivityPinBinding>() {
+class PinActivity : BaseActivity<ActivityPinBinding>() {
     override val layoutId: Int
         get() = R.layout.activity_pin
 
