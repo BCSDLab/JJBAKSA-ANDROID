@@ -23,10 +23,12 @@
         tools:replace="android:appComponentFactory"
         tools:targetApi="31">
         <activity
-            android:name=".ui.inquiry.WriteInquiryActivity"
+            android:name=".ui.pin.PinActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.inquiry.InquiryActivity"/>
+            android:name=".ui.inquiry.WriteInquiryActivity"
+            android:exported="false" />
+        <activity android:name=".ui.inquiry.InquiryActivity" />
         <activity
             android:name=".ui.post.PostDetailActivity"
             android:exported="false" />

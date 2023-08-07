@@ -14,6 +14,7 @@ import com.jjbaksa.jjbaksa.base.BaseFragment
 import com.jjbaksa.jjbaksa.databinding.FragmentNaviHomeBinding
 import com.jjbaksa.jjbaksa.dialog.PermissionDialog
 import com.jjbaksa.jjbaksa.ui.mainpage.viewmodel.HomeViewModel
+import com.jjbaksa.jjbaksa.ui.pin.PinActivity
 import com.jjbaksa.jjbaksa.ui.search.SearchActivity
 import com.jjbaksa.jjbaksa.util.FusedLocationUtil
 import com.jjbaksa.jjbaksa.util.hasPermission
@@ -127,14 +128,12 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
             }
         }
         viewModel.mapMarkers.observe(viewLifecycleOwner) {
-            Log.e("로그", "markers : $it")
             if (!viewModel.lastMapMarkers.value.isNullOrEmpty()) {
                 viewModel.lastMapMarkers.value!!.forEach { marker ->
                     marker.map = null
                 }
             }
 
-            // TODO : 마커 중복 해결하기
             if (it.isNotEmpty()) {
                 viewModel.lastMapMarkers.value = it
 
@@ -143,7 +142,10 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
                     marker.captionText = viewModel.mapShops.value?.get(index)?.name ?: ""
 
                     marker.setOnClickListener {
-                        Log.e("로그", "marker position : ${marker.position}")
+                        val intent= Intent(requireContext(), PinActivity::class.java).apply {
+                            putExtra("place_id", viewModel.mapShops.value?.get(index)?.placeId)
+                        }
+                        startActivity(intent)
                         false
                     }
                 }
@@ -189,6 +191,8 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
             .mapType(NaverMap.MapType.Basic)
             .enabledLayerGroups(NaverMap.LAYER_GROUP_BUILDING)
         initUiSettings()
+
+        getShops()
 
         fusedLocationUtil.getLastLocation()?.addOnSuccessListener {
             if (it == null) return@addOnSuccessListener
@@ -265,15 +269,18 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
         viewModel.searchCurrentPosition.value = false
         viewModel.moveCamera.value = true
         if (requireContext().hasPermission(locationPermissions)) {
-            // TODO: 현재 위치에서 상점 검색
-            viewModel.getMapShop(
-                0, 1, 0,
-                currentMap.cameraPosition.target.latitude,
-                currentMap.cameraPosition.target.longitude
-            )
+            getShops()
         } else {
             locationPermissionsResult.launch(locationPermissions)
         }
+    }
+
+    private fun getShops() {
+        viewModel.getMapShop(
+            0, 1, 0,
+            currentMap.cameraPosition.target.latitude,
+            currentMap.cameraPosition.target.longitude
+        )
     }
 
     fun zoomIn() {
