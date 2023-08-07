@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.jjbaksa.domain.base.ErrorType
 import com.jjbaksa.domain.base.RespResult
 import com.jjbaksa.domain.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,7 +31,10 @@ class SplashViewModel @Inject constructor(
                 repository.me()
             }.onSuccess {
                 _authLoginState.value = it
-            }.onFailure { }
+            }.onFailure {
+                _authLoginState.value = RespResult.Error(ErrorType(it.message.toString(), -1))
+                it.printStackTrace()
+            }
         }
     }
 }
