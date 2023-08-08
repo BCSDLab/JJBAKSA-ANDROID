@@ -20,9 +20,7 @@
             android:id="@+id/map"
             android:name="com.naver.maps.map.MapFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:layout_editor_absoluteX="-64dp"
-            tools:layout_editor_absoluteY="-46dp" />
+            android:layout_height="match_parent" />
 
         <com.naver.maps.map.widget.CompassView
             android:id="@+id/naver_map_compass_view"
@@ -37,29 +35,21 @@
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="64dp"
             android:layout_marginEnd="8dp"
-            android:gravity="center_vertical"
             android:background="@drawable/shape_rect_ccffffff_solid_radius_100"
+            android:drawableEnd="@drawable/ic_search_666666"
+            android:gravity="center_vertical"
             android:hint="@string/main_page_search_edit_text_hint"
-            android:paddingLeft="16dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="12dp"
             android:textColor="@color/color_666666"
             android:textColorHint="@color/color_666666"
             android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/button_see_more"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.06" />
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/image_view_main_page_search_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:src="@drawable/ic_search_666666"
-            app:layout_constraintBottom_toBottomOf="@+id/edit_text_main_page"
-            app:layout_constraintEnd_toEndOf="@id/edit_text_main_page"
-            app:layout_constraintTop_toTopOf="@+id/edit_text_main_page" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/button_see_more"
@@ -67,9 +57,10 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
             android:backgroundTint="@color/color_ffffff"
-            android:onClick="@{() -> view.seeMoreStoreCategory()}"
             app:borderWidth="0dp"
             app:fabCustomSize="48dp"
+            android:checked="true"
+            android:onClick="@{() -> view.seeMoreCategory()}"
             app:layout_constraintBottom_toBottomOf="@+id/edit_text_main_page"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/edit_text_main_page"
@@ -78,59 +69,41 @@
             app:srcCompat="@drawable/baseline_more_vert_24"
             app:tint="@color/color_666666" />
 
-        <View
-            android:id="@+id/store_category_container"
-            android:layout_width="118dp"
-            android:layout_height="78dp"
+        <LinearLayout
+            android:id="@+id/category_linear_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginTop="12dp"
             android:background="@drawable/shape_rect_e6ffffff_stroke_eeeeee_radius_15"
+            android:orientation="vertical"
+            android:padding="15dp"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="@id/button_see_more"
-            app:layout_constraintTop_toBottomOf="@id/button_see_more" />
+            app:layout_constraintTop_toBottomOf="@id/button_see_more"
+            tools:visibility="visible">
 
-        <ImageView
-            android:id="@+id/store_category_friend_image_view"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="15dp"
-            android:src="@drawable/ic_friend"
-            app:layout_constraintStart_toStartOf="@+id/store_category_container"
-            app:layout_constraintTop_toTopOf="@id/store_category_container" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/category_friend_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:drawableStart="@drawable/ic_friend"
+                android:drawablePadding="10dp"
+                android:text="@string/friend_restaurant"
+                android:textColor="@color/color_666666"
+                android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/store_category_friend_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="9dp"
-            android:text="@string/friend_restaurant"
-            android:textColor="@color/color_666666"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="@id/store_category_friend_image_view"
-            app:layout_constraintStart_toEndOf="@id/store_category_friend_image_view"
-            app:layout_constraintTop_toTopOf="@id/store_category_friend_image_view" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/category_bookmark_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_bookmark"
+                android:drawablePadding="10dp"
+                android:text="@string/bookmark_restaurant"
+                android:textColor="@color/color_666666"
+                android:textSize="14sp" />
 
-        <ImageView
-            android:id="@+id/store_category_bookmark_image_view"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:layout_marginTop="14dp"
-            android:src="@drawable/ic_bookmark"
-            app:layout_constraintStart_toStartOf="@id/store_category_friend_image_view"
-            app:layout_constraintTop_toBottomOf="@id/store_category_friend_image_view" />
-
-        <TextView
-            android:id="@+id/store_category_bookmark_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="3dp"
-            android:text="@string/bookmark_restaurant"
-            android:textColor="@color/color_666666"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="@id/store_category_bookmark_image_view"
-            app:layout_constraintStart_toEndOf="@id/store_category_bookmark_image_view"
-            app:layout_constraintTop_toTopOf="@id/store_category_bookmark_image_view" />
-
+        </LinearLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/button_zoom_in"
@@ -173,53 +146,31 @@
             android:backgroundTint="@color/color_ffffff"
             app:borderWidth="0dp"
             app:fabCustomSize="48dp"
-            android:onClick="@{() -> view.checkLocation()}"
+            android:onClick="@{() -> view.loadLocation()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:maxImageSize="32dp"
-            app:srcCompat="@drawable/ic_baseline_location_searching_24"
+            app:srcCompat="@drawable/ic_location"
             app:tint="@color/color_ff7f23" />
 
-        <Button
-            android:id="@+id/button_check_the_real_location"
-            style="@style/Widget.App.Button"
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/search_current_location_button"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:alpha="80"
-            android:backgroundTint="@color/color_fbfbfa"
-            android:padding="10dp"
+            android:layout_height="38dp"
+            android:background="@drawable/shape_rect_ffffff_solid_radius_20"
+            android:drawableStart="@drawable/ic_research"
+            android:drawablePadding="6dp"
+            android:paddingHorizontal="12dp"
+            android:onClick="@{() -> view.reloadLocation()}"
             android:text="@string/check_the_real_location"
             android:textColor="@color/color_ff7f23"
-            android:onClick="@{() -> view.searchCurrentLocation()}"
-            android:textSize="12sp"
+            android:textSize="14sp"
             android:visibility="gone"
-            app:icon="@drawable/ic_baseline_refresh_24"
-            app:iconSize="18dp"
-            app:iconTint="@color/color_ff7f23"
             app:layout_constraintBottom_toBottomOf="@id/button_check_location"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.511"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <androidx.constraintlayout.helper.widget.Layer
-            android:id="@+id/store_category_friend_layer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="@{() -> view.onClickFriendStoreCategory()}"
-            android:padding="4dp"
-            app:constraint_referenced_ids="store_category_friend_text_view, store_category_friend_image_view"
-            tools:ignore="MissingConstraints" />
-
-        <androidx.constraintlayout.helper.widget.Layer
-            android:id="@+id/store_category_bookmark_layer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="@{() -> view.onClickBookmarkStoreCategory()}"
-            android:padding="4dp"
-            app:constraint_referenced_ids="store_category_bookmark_text_view, store_category_bookmark_image_view"
-            tools:ignore="MissingConstraints" />
+            tools:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

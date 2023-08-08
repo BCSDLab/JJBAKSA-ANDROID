@@ -2,18 +2,19 @@ package com.jjbaksa.jjbaksa.util
 
 import android.Manifest
 import android.content.Context
-import android.content.pm.PackageManager
+import android.location.Location
 import android.os.Looper
 import android.util.Log
-import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
+import com.google.android.gms.tasks.Task
 
 class FusedLocationUtil(
     private val context: Context,
-    private val callBackLocation: (Double, Double) -> Unit
+    private val callBackLocation: (Double, Double) -> Unit = { _, _ -> }
 ) {
     private val fusedLocationClient by lazy {
         LocationServices.getFusedLocationProviderClient(
@@ -21,8 +22,8 @@ class FusedLocationUtil(
         )
     }
     private val permissions = arrayOf(
-        android.Manifest.permission.ACCESS_FINE_LOCATION,
-        android.Manifest.permission.ACCESS_COARSE_LOCATION,
+        Manifest.permission.ACCESS_FINE_LOCATION,
+        Manifest.permission.ACCESS_COARSE_LOCATION,
     )
     private val locationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult) {
@@ -40,15 +41,10 @@ class FusedLocationUtil(
         }
     }
 
+    private fun checkPermission(): Boolean = context.hasPermission(permissions)
+
     fun startLocationUpdate() {
-        if (ActivityCompat.checkSelfPermission(
-                context,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                    context,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ) == PackageManager.PERMISSION_GRANTED
-        ) {
+        if (checkPermission()) {
             fusedLocationClient.requestLocationUpdates(
                 createLocationRequest(),
                 locationCallback,
@@ -59,10 +55,16 @@ class FusedLocationUtil(
     }
 
     private fun createLocationRequest(): LocationRequest {
-        return LocationRequest.create().apply {
-            interval = 10 * 1000
-            fastestInterval = 5 * 1000
-            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        return LocationRequest
+            .Builder(Priority.PRIORITY_HIGH_ACCURACY, 5 * 1000)
+            .build()
+    }
+
+    fun getLastLocation(): Task<Location>? {
+        return if (checkPermission()) {
+            fusedLocationClient.lastLocation
+        } else {
+            null
         }
     }
 

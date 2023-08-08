@@ -1,7 +1,6 @@
 package com.jjbaksa.domain.model.mainpage
 
 data class UserLocation(
-    val currentLatitude: Double?,
-    val currentLongitude: Double?,
-    val updateCamera: Boolean
+    val latitude: Double,
+    val longitude: Double,
 )

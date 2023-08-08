@@ -1,22 +1,24 @@
 package com.jjbaksa.jjbaksa.ui.mainpage
 
+import android.Manifest
 import android.content.Intent
-import android.content.res.ColorStateList
-import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
-import com.jjbaksa.domain.model.mainpage.UserLocation
+import com.jjbaksa.domain.model.mainpage.JjCategory
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseFragment
 import com.jjbaksa.jjbaksa.databinding.FragmentNaviHomeBinding
-import com.jjbaksa.jjbaksa.dialog.HomeAlertDialog
+import com.jjbaksa.jjbaksa.dialog.PermissionDialog
 import com.jjbaksa.jjbaksa.ui.mainpage.viewmodel.HomeViewModel
+import com.jjbaksa.jjbaksa.ui.pin.PinActivity
 import com.jjbaksa.jjbaksa.ui.search.SearchActivity
-import com.jjbaksa.jjbaksa.util.ColorObject
+import com.jjbaksa.jjbaksa.util.FusedLocationUtil
 import com.jjbaksa.jjbaksa.util.hasPermission
 import com.naver.maps.geometry.LatLng
+import com.naver.maps.map.CameraAnimation
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
@@ -31,7 +33,45 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
     override val layoutId: Int
         get() = R.layout.fragment_navi_home
 
+    private val viewModel: HomeViewModel by activityViewModels()
+    private lateinit var currentMap: NaverMap
+    private lateinit var mapOptions: NaverMapOptions
+    private lateinit var cameraUpdate: CameraUpdate
+    private var locationOverlay: LocationOverlay? = null
+
+    private val fusedLocationUtil: FusedLocationUtil by lazy {
+        FusedLocationUtil(
+            requireContext(),
+            this::locationCallback
+        )
+    }
+
+    private val locationPermissionsResult = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { isGranted ->
+        when {
+            isGranted.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
+                fusedLocationUtil.startLocationUpdate()
+            }
+
+            isGranted.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
+                fusedLocationUtil.startLocationUpdate()
+            }
+
+            else -> {
+                // TODO : 위치 권한 거부 시 설정으로 이동 또는 교육용 팝업 띄우기
+                PermissionDialog().show(parentFragmentManager, LOCATION_PERM_DIALOG)
+            }
+        }
+    }
+
     override fun initView() {
+        binding.view = this
+        initMap()
+        checkLocationPermissions()
+    }
+
+    private fun initMap() {
         val fm = childFragmentManager
         val mapFragment = fm.findFragmentById(R.id.map) as MapFragment?
             ?: MapFragment.newInstance().also {
@@ -41,170 +81,221 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
     }
 
     override fun initEvent() {
-        with(binding) {
-            editTextMainPage.setOnClickListener {
-                Intent(requireContext(), SearchActivity::class.java).run { startActivity(this) }
-            }
+        search()
+        selectCategory()
+    }
+
+    private fun search() {
+        binding.editTextMainPage.setOnClickListener {
+            Intent(requireContext(), SearchActivity::class.java).run { startActivity(this) }
+        }
+    }
+
+    private fun selectCategory() {
+        binding.categoryFriendTextView.setOnClickListener {
+            viewModel.setCategory(JjCategory.FRIEND)
+        }
+        binding.categoryBookmarkTextView.setOnClickListener {
+            viewModel.setCategory(JjCategory.BOOKMARK)
         }
     }
 
     override fun subscribe() {
-        homeViewModel.userLocation.observe(
-            viewLifecycleOwner,
-            Observer<UserLocation> {
-                if (it.currentLatitude != null) {
-                    if (it.updateCamera) {
-                        val cameraUpdate =
-                            CameraUpdate.scrollTo(
-                                LatLng(
-                                    it.currentLatitude!!,
-                                    it.currentLongitude!!
-                                )
-                            )
-                        currentMap?.moveCamera(cameraUpdate)
-                    }
-                    currentLocationOverlay = currentMap?.locationOverlay
-                    currentLocationOverlay?.icon =
-                        OverlayImage.fromResource(R.drawable.shape_circ_3d93f8_stroke_ffffff)
-                    currentLocationOverlay?.circleRadius = 100
-                    currentLocationOverlay?.position = LatLng(
-                        it.currentLatitude!!,
-                        it.currentLongitude!!
-                    )
-                    currentLocationOverlay?.isVisible = true
+        viewModel.lastLocation.observe(viewLifecycleOwner) {
+            currentCameraPosition(it.latitude, it.longitude)
+            initLocationOverlay(it.latitude, it.longitude)
+        }
+        viewModel.location.observe(viewLifecycleOwner) {
+            if (locationOverlay == null) return@observe
+            initLocationOverlay(it.latitude, it.longitude)
+        }
+        viewModel.searchCurrentPosition.observe(viewLifecycleOwner) {
+            binding.searchCurrentLocationButton.isVisible = it
+        }
+        viewModel.category.observe(viewLifecycleOwner) { category ->
+            when (category) {
+                JjCategory.FRIEND -> {
+                    updateCategoryColorState(binding.categoryFriendTextView, true)
+                    updateCategoryColorState(binding.categoryBookmarkTextView, false)
+                }
+
+                JjCategory.BOOKMARK -> {
+                    updateCategoryColorState(binding.categoryFriendTextView, false)
+                    updateCategoryColorState(binding.categoryBookmarkTextView, true)
                 }
             }
-        )
+        }
+        viewModel.mapMarkers.observe(viewLifecycleOwner) {
+            if (!viewModel.lastMapMarkers.value.isNullOrEmpty()) {
+                viewModel.lastMapMarkers.value!!.forEach { marker ->
+                    marker.map = null
+                }
+            }
+
+            if (it.isNotEmpty()) {
+                viewModel.lastMapMarkers.value = it
+
+                it.forEachIndexed { index, marker ->
+                    marker.map = currentMap
+                    marker.captionText = viewModel.mapShops.value?.get(index)?.name ?: ""
+
+                    marker.setOnClickListener {
+                        val intent = Intent(requireContext(), PinActivity::class.java).apply {
+                            putExtra("place_id", viewModel.mapShops.value?.get(index)?.placeId)
+                        }
+                        startActivity(intent)
+                        false
+                    }
+                }
+            }
+        }
     }
 
-    private val homeViewModel: HomeViewModel by activityViewModels()
+    private fun updateCategoryColorState(categoryView: TextView, state: Boolean) {
+        if (state) {
+            categoryView.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.color_ff7f23
+                )
+            )
+            categoryView.compoundDrawableTintList =
+                ContextCompat.getColorStateList(requireContext(), R.color.color_ff7f23)
+        } else {
+            categoryView.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.color_666666
+                )
+            )
+            categoryView.compoundDrawableTintList =
+                ContextCompat.getColorStateList(requireContext(), R.color.color_666666)
+        }
+    }
 
-    private lateinit var cameraUpdate: CameraUpdate
-    private var mapOptions: NaverMapOptions? = null
-    private var currentMap: NaverMap? = null
-    private var currentLocationOverlay: LocationOverlay? = null
-
-    private var isVisibleStoreCategory = false
-    private var isStoreCategoryFriend = false
-    private var isStoreCategoryBookmark = false
+    private fun initLocationOverlay(lat: Double, lon: Double) {
+        locationOverlay?.apply {
+            this.icon = OverlayImage.fromResource(R.drawable.shape_circ_3d93f8_stroke_ffffff)
+            this.circleRadius = 100
+            this.position = LatLng(lat, lon)
+            this.isVisible = true
+        }
+    }
 
     override fun onMapReady(naverMap: NaverMap) {
         currentMap = naverMap
+        locationOverlay = currentMap.locationOverlay
         mapOptions = NaverMapOptions()
             .mapType(NaverMap.MapType.Basic)
             .enabledLayerGroups(NaverMap.LAYER_GROUP_BUILDING)
-        MapFragment.newInstance(mapOptions)
+        initUiSettings()
 
-        currentMap?.setContentPadding(0, 0, 0, 0)
+        getShops()
 
-        val uiSettings = currentMap?.uiSettings
-        uiSettings?.isCompassEnabled = false
-        uiSettings?.isZoomControlEnabled = false
+        fusedLocationUtil.getLastLocation()?.addOnSuccessListener {
+            if (it == null) return@addOnSuccessListener
+            viewModel.setLastLocation(it.latitude, it.longitude)
+        }
+
+        currentMap.addOnCameraChangeListener { reason, _ ->
+            if (reason == -1 && viewModel.moveCamera.value == true) {
+                viewModel.searchCurrentPosition.value = true
+                viewModel.moveCamera.value = false
+            }
+        }
+    }
+
+    private fun currentCameraPosition(lat: Double, lon: Double) {
+        cameraUpdate = CameraUpdate.scrollAndZoomTo(LatLng(lat, lon), 18.0)
+            .animate(CameraAnimation.Easing)
+        currentMap.moveCamera(cameraUpdate)
+    }
+
+    private fun initUiSettings() {
+        currentMap.uiSettings.isCompassEnabled = false
+        currentMap.uiSettings.isZoomControlEnabled = false
         binding.naverMapCompassView.map = currentMap
+    }
 
-        naverMap.addOnCameraChangeListener { reason, _ ->
-            when (reason) {
-                -1, -2 -> {
-                    binding.buttonCheckLocation.imageTintList = ColorObject.ColorFF7F23
-                    binding.buttonCheckTheRealLocation.isVisible = true
-                }
-            }
+    private fun checkLocationPermissions() {
+        if (requireContext().hasPermission(locationPermissions)) {
+            currentCameraPosition(
+                viewModel.lastLocation.value?.latitude ?: return,
+                viewModel.lastLocation.value?.longitude ?: return
+            )
+            fusedLocationUtil.startLocationUpdate()
         }
     }
 
-    fun checkLocation() {
-        if (setLocationPermission()) {
-            homeViewModel.requestLocation()
-            binding.buttonCheckLocation.imageTintList = ColorObject.Color666666
+    private fun locationCallback(latitude: Double, longitude: Double) {
+        viewModel.setLatLng(latitude, longitude)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        fusedLocationUtil.startLocationUpdate()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        fusedLocationUtil.stopLocationUpdates()
+    }
+
+    fun seeMoreCategory() {
+        binding.categoryLinearLayout.isVisible = !binding.categoryLinearLayout.isVisible
+        if (binding.categoryLinearLayout.isVisible) {
+            binding.buttonSeeMore.imageTintList =
+                ContextCompat.getColorStateList(requireContext(), R.color.color_ff7f23)
         } else {
-            HomeAlertDialog().show(parentFragmentManager, DIALOG_TAG)
+            binding.buttonSeeMore.imageTintList =
+                ContextCompat.getColorStateList(requireContext(), R.color.color_666666)
         }
     }
 
-    fun onClickFriendStoreCategory() {
-        if (!isStoreCategoryBookmark) {
-            if (isStoreCategoryFriend) {
-                setIconColorAndTextColor(
-                    binding.storeCategoryFriendImageView,
-                    binding.storeCategoryFriendTextView,
-                    ColorObject.Color666666
-                )
-            } else {
-                setIconColorAndTextColor(
-                    binding.storeCategoryFriendImageView,
-                    binding.storeCategoryFriendTextView,
-                    ColorObject.ColorFF7F23
-                )
+    fun loadLocation() {
+        if (requireContext().hasPermission(locationPermissions)) {
+            fusedLocationUtil.getLastLocation()?.addOnSuccessListener {
+                if (it == null) return@addOnSuccessListener
+                viewModel.setLastLocation(it.latitude, it.longitude)
             }
-            isStoreCategoryFriend = !isStoreCategoryFriend
-        }
-    }
-
-    fun onClickBookmarkStoreCategory() {
-        if (!isStoreCategoryFriend) {
-            if (isStoreCategoryBookmark) {
-                setIconColorAndTextColor(
-                    binding.storeCategoryBookmarkImageView,
-                    binding.storeCategoryBookmarkTextView,
-                    ColorObject.Color666666
-                )
-            } else {
-                setIconColorAndTextColor(
-                    binding.storeCategoryBookmarkImageView,
-                    binding.storeCategoryBookmarkTextView,
-                    ColorObject.ColorFF7F23
-                )
-            }
-            isStoreCategoryBookmark = !isStoreCategoryBookmark
-        }
-    }
-
-    fun seeMoreStoreCategory() {
-        isVisibleStoreCategory = !isVisibleStoreCategory
-        binding.storeCategoryContainer.isVisible = isVisibleStoreCategory
-        if (isVisibleStoreCategory) {
-            binding.buttonSeeMore.imageTintList = ColorObject.ColorFF7F23
         } else {
-            binding.buttonSeeMore.imageTintList = ColorObject.Color666666
+            locationPermissionsResult.launch(locationPermissions)
         }
+    }
+
+    fun reloadLocation() {
+        viewModel.searchCurrentPosition.value = false
+        viewModel.moveCamera.value = true
+        if (requireContext().hasPermission(locationPermissions)) {
+            getShops()
+        } else {
+            locationPermissionsResult.launch(locationPermissions)
+        }
+    }
+
+    private fun getShops() {
+        viewModel.getMapShop(
+            0, 1, 0,
+            currentMap.cameraPosition.target.latitude,
+            currentMap.cameraPosition.target.longitude
+        )
     }
 
     fun zoomIn() {
         cameraUpdate = CameraUpdate.zoomIn()
-        currentMap?.moveCamera(cameraUpdate)
+        currentMap.moveCamera(cameraUpdate)
     }
 
     fun zoomOut() {
         cameraUpdate = CameraUpdate.zoomOut()
-        currentMap?.moveCamera(cameraUpdate)
-    }
-
-    fun searchCurrentLocation() {
-        if (setLocationPermission()) {
-            homeViewModel.requestLocation()
-            binding.buttonCheckTheRealLocation.isVisible = false
-        } else {
-            HomeAlertDialog().show(parentFragmentManager, DIALOG_TAG)
-        }
-    }
-
-    private fun setLocationPermission(): Boolean {
-        return requireContext().hasPermission((requireActivity() as MainPageActivity).locationPermissions)
-    }
-
-    private fun setIconColorAndTextColor(icon: ImageView, text: TextView, color: ColorStateList) {
-        icon.imageTintList = color
-        text.setTextColor(color)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        mapOptions = null
-        currentMap = null
-        currentLocationOverlay = null
+        currentMap.moveCamera(cameraUpdate)
     }
 
     companion object {
-        const val DIALOG_TAG = "Permission_denied_dialog"
+        val locationPermissions = arrayOf(
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        )
+        const val LOCATION_PERM_DIALOG = "LOCATION_PERM_DIALOG"
     }
 }

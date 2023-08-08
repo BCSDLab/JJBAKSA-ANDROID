@@ -39,7 +39,6 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setOnBackPress()
         initState()
     }
 
@@ -63,15 +62,6 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
         onBackPressedCallBack?.remove()
         onBackPressedCallBack = null
         super.onDetach()
-    }
-
-    fun setOnBackPress() {
-        if (onBackPressedCallBack == null)
-            return
-        requireActivity().onBackPressedDispatcher.addCallback(
-            viewLifecycleOwner,
-            onBackPressedCallBack!!
-        )
     }
 
     fun showLoading() {
