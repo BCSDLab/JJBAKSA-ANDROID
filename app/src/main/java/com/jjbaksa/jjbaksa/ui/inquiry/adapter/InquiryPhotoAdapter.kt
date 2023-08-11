@@ -7,15 +7,15 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.transform.RoundedCornersTransformation
-import com.jjbaksa.jjbaksa.databinding.ItemInquiryPhotoBinding
+import com.jjbaksa.jjbaksa.databinding.ItemPhotoBinding
 
 class InquiryPhotoAdapter(
     private val onClickClose: (Int) -> Unit
 ) : ListAdapter<String, InquiryPhotoAdapter.ViewHolder>(diffUtil) {
-    inner class ViewHolder(private val binding: ItemInquiryPhotoBinding) :
+    inner class ViewHolder(private val binding: ItemPhotoBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(image: String, position: Int) {
-            binding.inquiryImageView.load(image) {
+            binding.photoImageView.load(image) {
                 transformations(
                     RoundedCornersTransformation(
                         topLeft = 10f,
@@ -33,7 +33,7 @@ class InquiryPhotoAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            ItemInquiryPhotoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemPhotoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
     }
 

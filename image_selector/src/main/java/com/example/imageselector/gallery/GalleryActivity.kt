@@ -55,6 +55,7 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>() {
         with(binding) {
             recyclerView.layoutManager = GridLayoutManager(this@GalleryActivity, 3)
             recyclerView.adapter = galleryAdapter
+            recyclerView.itemAnimator = null
         }
     }
 
