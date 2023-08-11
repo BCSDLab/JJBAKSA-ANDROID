@@ -1,6 +1,5 @@
 package com.jjbaksa.jjbaksa.ui.pin.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -9,8 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.jjbaksa.jjbaksa.databinding.ItemImageFrameBinding
 
-class ImageFrameAdapter(
-) : ListAdapter<String, ImageFrameAdapter.ViewHolder>(diffUtil) {
+class ImageFrameAdapter : ListAdapter<String, ImageFrameAdapter.ViewHolder>(diffUtil) {
     inner class ViewHolder(private val binding: ItemImageFrameBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(imageUrl: String) {

@@ -15,7 +15,6 @@ import com.jjbaksa.domain.resp.map.ShopDetail
 import com.jjbaksa.domain.resp.map.ShopMyReview
 import com.jjbaksa.domain.resp.map.ShopReview
 import kotlinx.coroutines.flow.Flow
-import okhttp3.MultipartBody
 import javax.inject.Inject
 
 class MapRepositoryImpl @Inject constructor(
@@ -29,7 +28,14 @@ class MapRepositoryImpl @Inject constructor(
         lng: Double
     ): Flow<Result<MapShopData>> {
         return apiCall(
-            call = { mapRemoteDataSource.getMapShop(optionsFriend, optionsNearby, optionsScrap, LocationBody(lat, lng)) },
+            call = {
+                mapRemoteDataSource.getMapShop(
+                    optionsFriend,
+                    optionsNearby,
+                    optionsScrap,
+                    LocationBody(lat, lng)
+                )
+            },
             mapper = {
                 if (it.isSuccessful) {
                     it.body()!!.toMapShopData()
@@ -39,11 +45,12 @@ class MapRepositoryImpl @Inject constructor(
             }
         )
     }
+
     override suspend fun getShopDetail(placeId: String): Flow<Result<ShopDetail>> {
         return apiCall(
             call = {
                 mapRemoteDataSource.getShopDetail(placeId)
-           },
+            },
             mapper = {
                 if (it.isSuccessful) {
                     it.body()!!.toShopDetail()
@@ -62,7 +69,7 @@ class MapRepositoryImpl @Inject constructor(
     ): Flow<Result<ShopReview>> {
         return apiCall(
             call = {
-                val filesBody= reviewImages.map {
+                val filesBody = reviewImages.map {
                     FormDataUtil.getImageBody("reviewImages", Uri.parse(it))
                 }
                 mapRemoteDataSource.setReview(placeId, content, rate, filesBody)
@@ -87,7 +94,17 @@ class MapRepositoryImpl @Inject constructor(
         sort: String?
     ): Flow<Result<ShopMyReview>> {
         return apiCall(
-            call = { mapRemoteDataSource.getMyReview(placeId, idCursor, dateCursor, rateCursor, size, direction, sort) },
+            call = {
+                mapRemoteDataSource.getMyReview(
+                    placeId,
+                    idCursor,
+                    dateCursor,
+                    rateCursor,
+                    size,
+                    direction,
+                    sort
+                )
+            },
             mapper = {
                 if (it.isSuccessful) {
                     it.body()!!.toShopMyReview()

@@ -2,14 +2,12 @@ package com.jjbaksa.jjbaksa.ui.mainpage
 
 import android.Manifest
 import android.content.Intent
-import android.util.Log
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import com.jjbaksa.domain.model.mainpage.JjCategory
-import com.jjbaksa.domain.resp.map.MapShopContent
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseFragment
 import com.jjbaksa.jjbaksa.databinding.FragmentNaviHomeBinding
@@ -32,15 +30,9 @@ import com.naver.maps.map.overlay.LocationOverlay
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
 import dagger.hilt.android.AndroidEntryPoint
-import ted.gun0912.clustering.BaseBuilder
-import ted.gun0912.clustering.MarkerManager
-import ted.gun0912.clustering.TedClustering
-import ted.gun0912.clustering.clustering.ClusterManager
 import ted.gun0912.clustering.clustering.TedClusterItem
 import ted.gun0912.clustering.geometry.TedLatLng
 import ted.gun0912.clustering.naver.TedNaverClustering
-import ted.gun0912.clustering.naver.TedNaverMap
-import ted.gun0912.clustering.naver.TedNaverMarker
 
 @AndroidEntryPoint
 class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCallback {
@@ -225,9 +217,11 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
                             ContextCompat.getColor(requireContext(), R.color.color_ffffff)
                         captionTextSize = 12f
                         captionText = item.name
-                        icon = OverlayImage.fromView(JjMarker(requireContext()).apply {
-                            setImageUrl(item.photo)
-                        })
+                        icon = OverlayImage.fromView(
+                            JjMarker(requireContext()).apply {
+                                setImageUrl(item.photo)
+                            }
+                        )
                     }
                 }
                 .markerClickListener {
@@ -238,7 +232,6 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
                 }
                 .make()
     }
-
 
     private fun addTedNaverClusteringMarkers(shopList: List<MockShopItem>) {
         if (shopList.isNotEmpty()) {

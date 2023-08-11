@@ -1,19 +1,15 @@
 package com.jjbaksa.jjbaksa.ui.pin.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jjbaksa.domain.enums.MyReviewCursor
 import com.jjbaksa.domain.resp.map.ShopDetail
 import com.jjbaksa.domain.resp.map.ShopMyReview
-import com.jjbaksa.domain.resp.map.ShopMyReviewContent
 import com.jjbaksa.domain.usecase.map.GetMapShopUseCase
 import com.jjbaksa.jjbaksa.base.BaseViewModel
 import com.jjbaksa.jjbaksa.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

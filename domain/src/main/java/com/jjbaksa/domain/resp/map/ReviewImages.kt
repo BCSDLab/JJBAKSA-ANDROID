@@ -1,6 +1,6 @@
 package com.jjbaksa.domain.resp.map
 
-data class ReviewImages (
+data class ReviewImages(
     val originalName: String? = "",
     val imageUrl: String? = ""
 )

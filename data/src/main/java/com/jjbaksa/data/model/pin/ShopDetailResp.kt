@@ -2,7 +2,7 @@ package com.jjbaksa.data.model.pin
 
 import com.google.gson.annotations.SerializedName
 
-data class ShopDetailResp (
+data class ShopDetailResp(
     @SerializedName("placeId")
     val placeId: String? = "",
     @SerializedName("category")

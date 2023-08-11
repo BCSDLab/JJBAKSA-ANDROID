@@ -1,7 +1,6 @@
 package com.jjbaksa.jjbaksa.ui.pin
 
 import android.content.Intent
-import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.view.isVisible

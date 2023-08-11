@@ -1,18 +1,11 @@
 package com.jjbaksa.jjbaksa.view
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.Canvas
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.databinding.ItemMarkerBinding
 
@@ -36,7 +29,7 @@ class JjMarker @JvmOverloads constructor(
         context.theme.obtainStyledAttributes(
             attrs,
             R.styleable.JjMarker,
-            0,0
+            0, 0
         ).apply {
             markerCount = getString(R.styleable.JjMarker_markerCount)
             imageUrl = getString(R.styleable.JjMarker_imageUrl)
@@ -72,5 +65,4 @@ class JjMarker @JvmOverloads constructor(
             .override(30)
             .into(binding.shopImageView)
     }
-
 }

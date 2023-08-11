@@ -28,41 +28,62 @@ object DataSourceModule {
     fun provideUserRemoteDataSource(authApi: AuthApi, noAuthApi: NoAuthApi): UserRemoteDataSource {
         return UserRemoteDataSource(authApi, noAuthApi)
     }
+
     @Provides
     @Singleton
-    fun provideUserLocalDataSource(@ApplicationContext context: Context, userDao: UserDao): UserLocalDataSource {
+    fun provideUserLocalDataSource(
+        @ApplicationContext context: Context,
+        userDao: UserDao
+    ): UserLocalDataSource {
         return UserLocalDataSource(context, userDao)
     }
+
     @Provides
     @Singleton
     fun provideHomeRemoteDataSource(authApi: AuthApi, noAuthApi: NoAuthApi): HomeRemoteDataSource {
         return HomeRemoteDataSource(authApi, noAuthApi)
     }
+
     @Provides
     @Singleton
-    fun provideHomeLocalDataSource(@ApplicationContext context: Context, userDao: UserDao): HomeLocalDataSource {
+    fun provideHomeLocalDataSource(
+        @ApplicationContext context: Context,
+        userDao: UserDao
+    ): HomeLocalDataSource {
         return HomeLocalDataSource(context, userDao)
     }
 
     @Provides
     @Singleton
-    fun provideRemoteSearchDataSource(authApi: AuthApi, noAuthApi: NoAuthApi): SearchRemoteDataSource {
+    fun provideRemoteSearchDataSource(
+        authApi: AuthApi,
+        noAuthApi: NoAuthApi
+    ): SearchRemoteDataSource {
         return SearchRemoteDataSource(authApi, noAuthApi)
     }
 
     @Provides
     @Singleton
-    fun provideRemoteInquiryDataSource(authApi: AuthApi, noAuthApi: NoAuthApi): InquiryRemoteDataSource {
+    fun provideRemoteInquiryDataSource(
+        authApi: AuthApi,
+        noAuthApi: NoAuthApi
+    ): InquiryRemoteDataSource {
         return InquiryRemoteDataSource(authApi, noAuthApi)
     }
+
     @Provides
     @Singleton
     fun provideRemotePostDataSource(authApi: AuthApi, noAuthApi: NoAuthApi): PostRemoteDataSource {
         return PostRemoteDataSource(authApi, noAuthApi)
     }
+
     @Provides
     @Singleton
-    fun provideRemoteMapDataSource(authApi: AuthApi, noAuthApi: NoAuthApi, testNoAuthApi: TestNoAuthApi): MapRemoteDataSource {
+    fun provideRemoteMapDataSource(
+        authApi: AuthApi,
+        noAuthApi: NoAuthApi,
+        testNoAuthApi: TestNoAuthApi
+    ): MapRemoteDataSource {
         return MapRemoteDataSource(authApi, noAuthApi, testNoAuthApi)
     }
 }

@@ -1,6 +1,6 @@
 package com.jjbaksa.domain.resp.map
 
-data class ShopDetail (
+data class ShopDetail(
     val placeId: String = "",
     val category: String = "",
     val lastReviewDate: String = "",

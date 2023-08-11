@@ -19,10 +19,6 @@ class PinMyReviewFragment : BaseFragment<FragmentPinMyReviewBinding>() {
     private lateinit var myReviewAdapter: PinMyReviewAdapter
 
     override fun initView() {
-//        viewModel.getMyReview(
-//            placeId = "ChIJBahxzkWjfDUR7iD24mIMTHU"
-////            placeId = viewModel.placeId.value.toString()
-//        )
         myReviewAdapter = PinMyReviewAdapter()
         binding.myReviewRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)

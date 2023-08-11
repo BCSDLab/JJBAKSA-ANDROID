@@ -8,8 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jjbaksa.domain.resp.map.ShopMyReviewContent
 import com.jjbaksa.jjbaksa.databinding.ItemMyReviewBinding
 
-class PinMyReviewAdapter: ListAdapter<ShopMyReviewContent, PinMyReviewAdapter.ViewHolder>(diffUtil) {
-    inner class ViewHolder(private val binding: ItemMyReviewBinding): RecyclerView.ViewHolder(binding.root) {
+class PinMyReviewAdapter :
+    ListAdapter<ShopMyReviewContent, PinMyReviewAdapter.ViewHolder>(diffUtil) {
+    inner class ViewHolder(private val binding: ItemMyReviewBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ShopMyReviewContent) {
             binding.myReviewContentTextView.text = item.content
             binding.myReviewCreatedDateTextView.text = item.createdAt
@@ -32,7 +34,7 @@ class PinMyReviewAdapter: ListAdapter<ShopMyReviewContent, PinMyReviewAdapter.Vi
     }
 
     companion object {
-        val diffUtil = object: DiffUtil.ItemCallback<ShopMyReviewContent>() {
+        val diffUtil = object : DiffUtil.ItemCallback<ShopMyReviewContent>() {
             override fun areItemsTheSame(
                 oldItem: ShopMyReviewContent,
                 newItem: ShopMyReviewContent
