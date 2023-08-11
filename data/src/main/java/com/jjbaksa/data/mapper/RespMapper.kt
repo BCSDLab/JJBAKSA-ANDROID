@@ -5,6 +5,11 @@ import com.jjbaksa.data.model.inquiry.InquiryResp
 import com.jjbaksa.data.model.inquiry.dto.InquiryContentDTO
 import com.jjbaksa.data.model.inquiry.dto.InquiryImagesDTO
 import com.jjbaksa.data.model.map.MapShopResp
+import com.jjbaksa.data.model.map.MyReviewContentDTO
+import com.jjbaksa.data.model.map.MyReviewResp
+import com.jjbaksa.data.model.map.ReviewImagesDTO
+import com.jjbaksa.data.model.map.ShopReviewResp
+import com.jjbaksa.data.model.pin.ShopDetailResp
 import com.jjbaksa.data.model.post.PostDetailResp
 import com.jjbaksa.data.model.post.PostResp
 import com.jjbaksa.data.model.post.dto.PostContentDTO
@@ -17,6 +22,11 @@ import com.jjbaksa.domain.resp.inquiry.InquiryData
 import com.jjbaksa.domain.resp.inquiry.InquiryImages
 import com.jjbaksa.domain.resp.map.MapShopContent
 import com.jjbaksa.domain.resp.map.MapShopData
+import com.jjbaksa.domain.resp.map.ReviewImages
+import com.jjbaksa.domain.resp.map.ShopDetail
+import com.jjbaksa.domain.resp.map.ShopMyReview
+import com.jjbaksa.domain.resp.map.ShopMyReviewContent
+import com.jjbaksa.domain.resp.map.ShopReview
 import com.jjbaksa.domain.resp.post.Post
 import com.jjbaksa.domain.resp.post.PostData
 import com.jjbaksa.domain.resp.post.PostDetail
@@ -107,4 +117,39 @@ fun MapShopResp.toMapShopContent() = MapShopContent(
     lat = geometry.location?.lat ?: 0.0,
     lng = geometry.location?.lng ?: 0.0,
     photo = photo ?: "",
+)
+
+fun ShopDetailResp.toShopDetail() = ShopDetail(
+    placeId = placeId ?: "",
+    category = category ?: "",
+    lastReviewDate = lastReviewDate ?: "",
+    name = name ?: "",
+    lat = lat ?: 0.0,
+    lng = lng ?: 0.0,
+    ratingCount = ratingCount ?: "",
+    photos = photos ?: emptyList(),
+)
+
+fun ShopReviewResp.toShopReview() = ShopReview(
+    id = id ?: 0,
+    content = content ?: "",
+    rate = rate ?: 0,
+    createdAt = createdAt ?: "",
+    reviewImages = reviewImages?.map { it.toReviewImages() }.orEmpty()
+)
+
+fun ReviewImagesDTO.toReviewImages() = ReviewImages(
+    originalName = originalName ?: "",
+    imageUrl = imageUrl ?: ""
+)
+
+fun MyReviewResp.toShopMyReview() = ShopMyReview(
+    content = content?.map { it.toShopMyReviewContent() }.orEmpty()
+)
+
+fun MyReviewContentDTO.toShopMyReviewContent() = ShopMyReviewContent(
+    id = id ?: 0,
+    content = content ?: "",
+    rate = rate ?: 0,
+    createdAt = createdAt ?: ""
 )

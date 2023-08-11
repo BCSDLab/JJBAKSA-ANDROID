@@ -3,6 +3,7 @@ package com.jjbaksa.jjbaksa.di
 import android.content.Context
 import com.jjbaksa.data.api.AuthApi
 import com.jjbaksa.data.api.NoAuthApi
+import com.jjbaksa.data.api.TestNoAuthApi
 import com.jjbaksa.data.database.UserDao
 import com.jjbaksa.data.datasource.local.HomeLocalDataSource
 import com.jjbaksa.data.datasource.local.UserLocalDataSource
@@ -61,7 +62,7 @@ object DataSourceModule {
     }
     @Provides
     @Singleton
-    fun provideRemoteMapDataSource(authApi: AuthApi, noAuthApi: NoAuthApi): MapRemoteDataSource {
-        return MapRemoteDataSource(authApi, noAuthApi)
+    fun provideRemoteMapDataSource(authApi: AuthApi, noAuthApi: NoAuthApi, testNoAuthApi: TestNoAuthApi): MapRemoteDataSource {
+        return MapRemoteDataSource(authApi, noAuthApi, testNoAuthApi)
     }
 }

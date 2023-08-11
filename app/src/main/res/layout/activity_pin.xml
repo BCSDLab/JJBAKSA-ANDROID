@@ -23,12 +23,31 @@
                     android:layout_height="wrap_content"
                     app:layout_collapseMode="parallax">
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="300dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/ic_error_img"
-                        app:layout_constraintTop_toTopOf="parent" />
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/shop_images_view_pager"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:background="@color/color_c4c4c4"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintDimensionRatio="16:9"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:background="@color/color_ff7f23" />
+
+                    <com.google.android.material.tabs.TabLayout
+                        android:id="@+id/shop_images_tab_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:tabBackground="@drawable/selector_tab"
+                        app:tabGravity="fill"
+                        app:tabIndicator="@null"
+                        tools:background="@color/black" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.appcompat.widget.Toolbar
@@ -48,7 +67,8 @@
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -61,7 +81,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    android:text="비빔밥"
                     android:textColor="@color/color_222222"
                     android:textSize="24sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -73,7 +92,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:text="일식집"
                     android:textColor="@color/color_666666"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="@id/shop_title_text_view"
@@ -86,11 +104,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:drawableStart="@drawable/ic_review_star"
-                    android:text="4.0"
                     android:textColor="@color/color_666666"
                     android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="@id/shop_title_text_view"
-                    app:layout_constraintTop_toBottomOf="@id/shop_title_text_view" />
+                    app:layout_constraintTop_toBottomOf="@id/shop_title_text_view"
+                    tools:text="4.0" />
 
                 <View
                     android:id="@+id/review_line_view"
@@ -108,12 +126,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:text="마지막 리뷰 25/06/30"
                     android:textColor="@color/color_666666"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="@id/review_star_count_text_view"
                     app:layout_constraintStart_toEndOf="@id/review_line_view"
-                    app:layout_constraintTop_toTopOf="@id/review_star_count_text_view" />
+                    app:layout_constraintTop_toTopOf="@id/review_star_count_text_view"
+                    tools:text="마지막 리뷰 25/06/30" />
 
 
                 <androidx.appcompat.widget.AppCompatImageView
@@ -121,12 +139,12 @@
                     android:layout_width="28dp"
                     android:layout_height="24dp"
                     android:tint="@color/color_ff7f23"
-                    app:layout_constraintVertical_chainStyle="packed"
                     app:layout_constraintBottom_toTopOf="@id/bookmark_text_view"
-                    app:layout_constraintTop_toTopOf="@id/shop_title_text_view"
                     app:layout_constraintEnd_toEndOf="@id/bookmark_text_view"
                     app:layout_constraintStart_toStartOf="@id/bookmark_text_view"
-                    app:srcCompat="@drawable/ic_bookmark_empty" />
+                    app:layout_constraintTop_toTopOf="@id/shop_title_text_view"
+                    app:layout_constraintVertical_chainStyle="packed"
+                    app:srcCompat="@drawable/selector_bookmark" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/bookmark_text_view"
@@ -138,8 +156,8 @@
                     android:textColor="@color/color_666666"
                     android:textSize="11sp"
                     app:layout_constraintBottom_toBottomOf="@id/review_star_count_text_view"
-                    app:layout_constraintTop_toBottomOf="@id/bookmark_image_view"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/bookmark_image_view" />
 
                 <androidx.constraintlayout.helper.widget.Layer
                     android:id="@+id/bookmark_layer"
@@ -181,6 +199,39 @@
             android:text="@string/write_review"
             android:textColor="@color/color_666666"
             android:textSize="14sp" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/progress_bar_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="3dp"
+            android:background="@color/color_ffffff"
+            tools:visibility="invisible">
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <TextView
+                android:id="@+id/progress_bar_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/progress_text"
+                android:textSize="14sp"
+                android:layout_marginTop="12dp"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/progress_bar"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
 
 </layout>

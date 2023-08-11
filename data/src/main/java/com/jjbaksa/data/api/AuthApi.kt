@@ -1,5 +1,7 @@
 package com.jjbaksa.data.api
 
+import com.jjbaksa.data.model.map.MyReviewResp
+import com.jjbaksa.data.model.map.ShopReviewResp
 import retrofit2.http.GET
 import com.jjbaksa.data.model.user.UserResp
 import okhttp3.MultipartBody
@@ -12,6 +14,8 @@ import retrofit2.http.Multipart
 import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.Part
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface AuthApi {
     @GET("user/me")
@@ -31,4 +35,22 @@ interface AuthApi {
     suspend fun saveWithdrawalReason(
         @Body withdrawalReason: WithdrawalReasonReq
     ): Response<Unit>
+    @Multipart
+    @POST("review")
+    suspend fun setReview(
+        @Query("placeId") placeId: String,
+        @Query("content") content: String,
+        @Query("rate") rate: Int,
+        @Part reviewImages: List<MultipartBody.Part>
+    ): Response<ShopReviewResp>
+    @GET("review/shop/{place-id}")
+    suspend fun getMyReview(
+        @Path("place-id") placeId: String,
+        @Query("idCursor") idCursor: Int?,
+        @Query("dateCursor") dateCursor: String?,
+        @Query("rateCursor") rateCursor: Int?,
+        @Query("size") size: Int?,
+        @Query("direction") direction: String?,
+        @Query("sort") sort: String?,
+    ): Response<MyReviewResp>
 }
