@@ -1,5 +1,6 @@
 package com.jjbaksa.jjbaksa.ui.mainpage.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.jjbaksa.domain.base.RespResult
@@ -31,9 +32,6 @@ class HomeViewModel @Inject constructor(
     val searchCurrentPosition = MutableLiveData<Boolean>()
     val lastMapMarkers = SingleLiveEvent<List<Marker>>()
 
-    private val _mapMarkers = SingleLiveEvent<List<Marker>>()
-    val mapMarkers: SingleLiveEvent<List<Marker>> get() = _mapMarkers
-
     private val _mapShops = SingleLiveEvent<List<MapShopContent>>()
     val mapShops: SingleLiveEvent<List<MapShopContent>> get() = _mapShops
 
@@ -61,9 +59,6 @@ class HomeViewModel @Inject constructor(
                 .collect {
                     it.onSuccess {
                         _mapShops.value = it.mapShopContent
-                        _mapMarkers.value = it.mapShopContent.map { shop ->
-                            Marker(LatLng(shop.lat, shop.lng))
-                        }
                     }
                         .onFailure { it.printStackTrace() }
                 }

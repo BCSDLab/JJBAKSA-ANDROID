@@ -52,4 +52,8 @@
         <attr name="content"/>
     </declare-styleable>
 
+    <declare-styleable name="JjMarker">
+        <attr name="markerCount" format="string"/>
+        <attr name="imageUrl" format="string"/>
+    </declare-styleable>
 </resources>

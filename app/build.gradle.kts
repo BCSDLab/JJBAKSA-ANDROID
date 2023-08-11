@@ -64,6 +64,7 @@ dependencies {
     implementation("com.google.android.gms:play-services-auth:20.3.0")
     implementation("com.navercorp.nid:oauth:5.1.1")
     implementation("com.github.bumptech.glide:glide:4.12.0")
+    implementation("io.github.ParkSangGwon:tedclustering-naver:1.0.2")
     implementation(project(mapOf("path" to ":image_selector")))
     annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
     KotlinDependencies.run {
