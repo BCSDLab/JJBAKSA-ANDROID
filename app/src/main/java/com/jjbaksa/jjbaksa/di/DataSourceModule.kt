@@ -11,6 +11,7 @@ import com.jjbaksa.data.datasource.remote.HomeRemoteDataSource
 import com.jjbaksa.data.datasource.remote.InquiryRemoteDataSource
 import com.jjbaksa.data.datasource.remote.MapRemoteDataSource
 import com.jjbaksa.data.datasource.remote.PostRemoteDataSource
+import com.jjbaksa.data.datasource.remote.ScrapRemoteDataSource
 import com.jjbaksa.data.datasource.remote.SearchRemoteDataSource
 import com.jjbaksa.data.datasource.remote.UserRemoteDataSource
 import dagger.Module
@@ -85,5 +86,10 @@ object DataSourceModule {
         testNoAuthApi: TestNoAuthApi
     ): MapRemoteDataSource {
         return MapRemoteDataSource(authApi, noAuthApi, testNoAuthApi)
+    }
+    @Provides
+    @Singleton
+    fun provideRemoteScrapDataSource(authApi: AuthApi, noAuthApi: NoAuthApi): ScrapRemoteDataSource {
+        return ScrapRemoteDataSource(authApi, noAuthApi)
     }
 }

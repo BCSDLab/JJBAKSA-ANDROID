@@ -5,6 +5,7 @@ import com.jjbaksa.data.model.map.MyReviewResp
 import com.jjbaksa.data.model.map.ShopReviewLastDateResp
 import com.jjbaksa.data.model.map.ShopReviewResp
 import com.jjbaksa.data.model.pin.ShopDetailResp
+import com.jjbaksa.data.model.scrap.ShopScrapResp
 import retrofit2.http.GET
 import com.jjbaksa.data.model.user.UserResp
 import okhttp3.MultipartBody
@@ -42,6 +43,10 @@ interface AuthApi {
     suspend fun getShopDetail(
         @Path("place_id") placeId: String
     ): Response<ShopDetailResp>
+    @GET("scraps/shops/{scrap_id}")
+    suspend fun getShopScrap(
+        @Path("scrap_id") scrapId: Int
+    ): Response<ShopScrapResp>
     @Multipart
     @POST("review")
     suspend fun setReview(

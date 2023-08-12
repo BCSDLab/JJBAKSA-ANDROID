@@ -6,6 +6,7 @@ import com.jjbaksa.data.model.map.MyReviewResp
 import com.jjbaksa.data.model.map.ShopReviewLastDateResp
 import com.jjbaksa.data.model.map.ShopReviewResp
 import com.jjbaksa.data.model.pin.ShopDetailResp
+import com.jjbaksa.data.model.scrap.ShopScrapResp
 import com.jjbaksa.data.model.search.LocationBody
 import okhttp3.MultipartBody
 import retrofit2.Response

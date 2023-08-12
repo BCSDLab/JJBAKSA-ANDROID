@@ -10,7 +10,9 @@ import com.jjbaksa.domain.resp.follower.FollowerShopReview
 import com.jjbaksa.domain.resp.map.ShopDetail
 import com.jjbaksa.domain.resp.map.ShopMyReview
 import com.jjbaksa.domain.resp.map.ShopReviewLastDate
+import com.jjbaksa.domain.resp.scrap.ShopScrap
 import com.jjbaksa.domain.usecase.map.GetMapShopUseCase
+import com.jjbaksa.domain.usecase.scrap.GetShopScrapUseCase
 import com.jjbaksa.jjbaksa.base.BaseViewModel
 import com.jjbaksa.jjbaksa.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +21,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PinViewModel @Inject constructor(
-    private val useCase: GetMapShopUseCase
+    private val useCase: GetMapShopUseCase,
+    private val scrapUseCase: GetShopScrapUseCase
 ) : BaseViewModel() {
     val placeId = SingleLiveEvent<String>()
     val showProgress = SingleLiveEvent<Boolean>()
@@ -35,6 +38,9 @@ class PinViewModel @Inject constructor(
 
     private val _shopInfo = SingleLiveEvent<ShopDetail>()
     val shopInfo: SingleLiveEvent<ShopDetail> get() = _shopInfo
+
+    private val _scrapId = SingleLiveEvent<String>()
+    val scrapId: SingleLiveEvent<String> get() = _scrapId
 
     private val _myReview = SingleLiveEvent<ShopMyReview>()
     val myReview: SingleLiveEvent<ShopMyReview> get() = _myReview

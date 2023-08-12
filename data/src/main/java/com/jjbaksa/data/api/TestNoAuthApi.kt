@@ -8,6 +8,6 @@ interface TestNoAuthApi {
     /**
      * AuthApi getShopDetail TEST
      */
-    @GET("v3/aa8a9ed8-f512-42a0-af21-664a6c102fdb")
+    @GET("v3/330d86e7-1702-4ae0-a39a-e2ba6b8fe431")
     suspend fun getShopDetail(): Response<ShopDetailResp>
 }

@@ -17,6 +17,7 @@ import com.jjbaksa.data.model.pin.ShopDetailResp
 import com.jjbaksa.data.model.post.PostDetailResp
 import com.jjbaksa.data.model.post.PostResp
 import com.jjbaksa.data.model.post.dto.PostContentDTO
+import com.jjbaksa.data.model.scrap.ShopScrapResp
 import com.jjbaksa.data.model.search.AutoKeywordResp
 import com.jjbaksa.data.model.search.SearchShopResp
 import com.jjbaksa.data.model.search.ShopResp
@@ -37,6 +38,7 @@ import com.jjbaksa.domain.resp.map.ShopReviewLastDate
 import com.jjbaksa.domain.resp.post.Post
 import com.jjbaksa.domain.resp.post.PostData
 import com.jjbaksa.domain.resp.post.PostDetail
+import com.jjbaksa.domain.resp.scrap.ShopScrap
 import com.jjbaksa.domain.resp.search.AutoKeyword
 import com.jjbaksa.domain.resp.search.Shop
 import com.jjbaksa.domain.resp.search.ShopData
@@ -137,6 +139,17 @@ fun ShopDetailResp.toShopDetail() = ShopDetail(
     ratingCount = ratingCount ?: 0,
     scrap = scrap ?: false,
     photos = photos ?: emptyList(),
+)
+
+fun ShopScrapResp.toShopScrap() = ShopScrap(
+    scrapId = scrapId ?: 0,
+    placeId = placeId ?: "",
+    category = category ?: "",
+    name = name ?: "",
+    totalRating = totalRating ?: 0,
+    ratingCount = ratingCount ?: 0,
+    address = address ?: "",
+    photo = photo ?: emptyList(),
 )
 
 fun ShopReviewResp.toShopReview() = ShopReview(
