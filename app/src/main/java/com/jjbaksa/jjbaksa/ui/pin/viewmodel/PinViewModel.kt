@@ -33,28 +33,14 @@ class PinViewModel @Inject constructor(
     private val _friendReviewLastDate = MutableLiveData<ShopReviewLastDate>()
     val friendReviewLastDate: LiveData<ShopReviewLastDate> get() = _friendReviewLastDate
 
-    private val _imageList = MutableLiveData<MutableList<String>>()
-    val imageList: LiveData<MutableList<String>> get() = _imageList
-
     private val _shopInfo = SingleLiveEvent<ShopDetail>()
     val shopInfo: SingleLiveEvent<ShopDetail> get() = _shopInfo
-
-    private val _isReview = SingleLiveEvent<Boolean>()
-    val isReview: SingleLiveEvent<Boolean> get() = _isReview
 
     private val _myReview = SingleLiveEvent<ShopMyReview>()
     val myReview: SingleLiveEvent<ShopMyReview> get() = _myReview
 
     private val _friendReview = SingleLiveEvent<FollowerShopReview>()
     val friendReview: SingleLiveEvent<FollowerShopReview> get() = _friendReview
-
-    fun setImageList(images: List<String>) {
-        _imageList.value = images.toMutableList()
-    }
-
-    fun removeImageList(position: Int) {
-        _imageList.value?.removeAt(position)
-    }
 
     fun getShopDetail(placeId: String) {
         showProgress.value = true
@@ -116,19 +102,6 @@ class PinViewModel @Inject constructor(
                         _myReview.value = ShopMyReview()
                     }
                 }
-        }
-    }
-
-    fun setReview(placeId: String, content: String, rate: Int, reviewImages: List<String>) {
-        viewModelScope.launch(ceh) {
-            useCase.setReview(placeId, content, rate, reviewImages).collect {
-                it.onSuccess {
-                    _isReview.value = true
-                }.onFailure {
-                    it.printStackTrace()
-                    _isReview.value = false
-                }
-            }
         }
     }
 

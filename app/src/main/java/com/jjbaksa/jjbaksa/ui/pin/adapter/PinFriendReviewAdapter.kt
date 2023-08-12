@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jjbaksa.domain.resp.follower.FollowerShopReviewContent
 import com.jjbaksa.jjbaksa.databinding.ItemFriendReviewBinding
 
-class PinFriendReviewAdapter :
+class PinFriendReviewAdapter(
+    private val onReport: (FollowerShopReviewContent) -> Unit
+) :
     ListAdapter<FollowerShopReviewContent, PinFriendReviewAdapter.ViewHolder>(diffUtil) {
     inner class ViewHolder(private val binding: ItemFriendReviewBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -18,6 +20,10 @@ class PinFriendReviewAdapter :
             binding.friendReviewContentTextView.text = item.content
             binding.friendReviewCreatedDateTextView.text = item.createdAt
             binding.reviewStarCountTextView.text = item.rate.toFloat().toString()
+
+            binding.myFriendReviewReportTextView.setOnClickListener {
+                onReport(item)
+            }
         }
     }
 

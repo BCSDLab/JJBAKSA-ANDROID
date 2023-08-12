@@ -112,6 +112,7 @@
     <string name="by_star_rating">별점순</string>
     <string name="star_rating_description">음식에 대한 별점을 매겨주세요.</string>
     <string name="report">신고하기</string>
+    <string name="review_report">리뷰 신고</string>
     <string name="go_to_inquiry">문의하러 가기</string>
     <string name="write_inquiry">문의 작성하기</string>
     <string name="setting_secret">비밀글 설정</string>

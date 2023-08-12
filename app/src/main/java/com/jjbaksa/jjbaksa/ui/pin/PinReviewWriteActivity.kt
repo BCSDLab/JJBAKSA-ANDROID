@@ -2,7 +2,6 @@ package com.jjbaksa.jjbaksa.ui.pin
 
 import android.app.Activity
 import android.content.Intent
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -11,7 +10,7 @@ import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseActivity
 import com.jjbaksa.jjbaksa.databinding.ActivityPinReviewWriteBinding
 import com.jjbaksa.jjbaksa.ui.pin.adapter.PinReviewImageAdapter
-import com.jjbaksa.jjbaksa.ui.pin.viewmodel.PinViewModel
+import com.jjbaksa.jjbaksa.ui.pin.viewmodel.PinReviewWriteViewModel
 import com.jjbaksa.jjbaksa.util.KeyboardProvider
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class PinReviewWriteActivity : BaseActivity<ActivityPinReviewWriteBinding>() {
     override val layoutId: Int
         get() = R.layout.activity_pin_review_write
-    private val viewModel: PinViewModel by viewModels()
+    private val viewModel: PinReviewWriteViewModel by viewModels()
 
     private val pinReviewImageAdapter by lazy {
         PinReviewImageAdapter(::onDelete)

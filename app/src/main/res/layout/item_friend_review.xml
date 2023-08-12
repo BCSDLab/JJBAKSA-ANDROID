@@ -4,56 +4,56 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="24dp"
-    android:paddingHorizontal="24dp">
+    android:paddingHorizontal="24dp"
+    android:paddingTop="24dp">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/friend_review_profile_image_view"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        tools:src="@color/black"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@color/black" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/friend_review_name_text_view"
-        app:layout_constraintTop_toTopOf="@id/friend_review_profile_image_view"
-        android:layout_marginStart="9dp"
-        app:layout_constraintEnd_toStartOf="@id/friend_review_account_text_view"
-        app:layout_constraintStart_toEndOf="@+id/friend_review_profile_image_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constrainedWidth="true"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintHorizontal_bias="0"
-        android:textStyle="bold"
+        android:layout_marginStart="9dp"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:textColor="@color/color_222222"
         android:textSize="16sp"
-        android:maxLines="1"
-        android:ellipsize="end"
-        tools:text="조돌이"/>
+        android:textStyle="bold"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toStartOf="@id/friend_review_account_text_view"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/friend_review_profile_image_view"
+        app:layout_constraintTop_toTopOf="@id/friend_review_profile_image_view"
+        tools:text="조돌이" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/friend_review_account_text_view"
-        android:layout_marginStart="4dp"
-        app:layout_constraintBottom_toBottomOf="@id/friend_review_name_text_view"
-        app:layout_constraintStart_toEndOf="@id/friend_review_name_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/color_666666"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constrainedWidth="true"
-        android:textSize="12sp"
-        android:maxLines="1"
+        android:layout_marginStart="4dp"
         android:ellipsize="end"
-        tools:text="codmso"/>
+        android:maxLines="1"
+        android:textColor="@color/color_666666"
+        android:textSize="12sp"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toBottomOf="@id/friend_review_name_text_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/friend_review_name_text_view"
+        tools:text="codmso" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/friend_review_content_text_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textColor="@color/color_222222"
         android:layout_marginTop="8dp"
+        android:textColor="@color/color_222222"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/friend_review_name_text_view"
@@ -87,26 +87,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
+        android:drawableStart="@drawable/ic_review_star"
         android:textColor="@color/color_666666"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@id/friend_review_created_date_text_view"
         app:layout_constraintStart_toEndOf="@id/friend_review_line_view"
         app:layout_constraintTop_toTopOf="@id/friend_review_created_date_text_view"
-        android:drawableStart="@drawable/ic_review_star"
         tools:drawableStart="@drawable/ic_review_star"
         tools:text="4.0" />
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/my_friend_review_report_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_report"
+        android:text="@string/report"
         android:textColor="@color/color_c4c4c4"
         android:textSize="11sp"
-        android:drawableStart="@drawable/ic_report"
-        android:padding="5dp"
         android:textStyle="bold"
-        android:text="@string/report"
         app:layout_constraintBottom_toBottomOf="@+id/friend_review_created_date_text_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
     <View
