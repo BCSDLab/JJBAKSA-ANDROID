@@ -46,7 +46,6 @@ class PinReviewWriteActivity : BaseActivity<ActivityPinReviewWriteBinding>() {
             this.adapter = pinReviewImageAdapter
             this.itemAnimator = null
         }
-
     }
 
     override fun subscribe() {
@@ -71,8 +70,8 @@ class PinReviewWriteActivity : BaseActivity<ActivityPinReviewWriteBinding>() {
             }
 
             if (binding.contentEditText.text.isNotEmpty() &&
-                    binding.ratingBar.rating != 0.0f &&
-                    !viewModel.imageList.value.isNullOrEmpty()
+                binding.ratingBar.rating != 0.0f &&
+                !viewModel.imageList.value.isNullOrEmpty()
             ) {
                 viewModel.setReview(
                     viewModel.placeId.value.toString(),

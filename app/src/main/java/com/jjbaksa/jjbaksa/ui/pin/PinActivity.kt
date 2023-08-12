@@ -1,7 +1,6 @@
 package com.jjbaksa.jjbaksa.ui.pin
 
 import android.content.Intent
-import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
@@ -25,33 +24,36 @@ class PinActivity : BaseActivity<ActivityPinBinding>() {
     private val viewModel: PinViewModel by viewModels()
     private lateinit var imageFrameAdapter: ImageFrameAdapter
 
-    private val reviewWriteResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (it.resultCode == RESULT_OK) {
-            viewModel.getShopDetail(viewModel.placeId.value.toString())
-            when (viewModel.pinReviewCursor.value) {
-                PinReviewCursor.MY_REVIEW -> {
-                     viewModel.getShopReviewLastDate(viewModel.placeId.value.toString())
-                }
-                PinReviewCursor.FOLLOWER_REVIEW -> {
-                     viewModel.getShopFollowerReviewLastDate(viewModel.placeId.value.toString())
-                }
-                else -> {}
-            }
+    private val reviewWriteResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == RESULT_OK) {
+                viewModel.getShopDetail(viewModel.placeId.value.toString())
+                when (viewModel.pinReviewCursor.value) {
+                    PinReviewCursor.MY_REVIEW -> {
+                        viewModel.getShopReviewLastDate(viewModel.placeId.value.toString())
+                    }
 
-            if (viewModel.myReviewUpdateCursor.value == MyReviewCursor.LATEST) {
-                viewModel.getMyReview(
-                     placeId = viewModel.placeId.value.toString(),
-                    size = 10
-                )
-            } else if (viewModel.myReviewUpdateCursor.value == MyReviewCursor.STAR) {
-                viewModel.getMyReview(
-                     placeId = viewModel.placeId.value.toString(),
-                    sort = "rate",
-                    size = 10
-                )
+                    PinReviewCursor.FOLLOWER_REVIEW -> {
+                        viewModel.getShopFollowerReviewLastDate(viewModel.placeId.value.toString())
+                    }
+
+                    else -> {}
+                }
+
+                if (viewModel.myReviewUpdateCursor.value == MyReviewCursor.LATEST) {
+                    viewModel.getMyReview(
+                        placeId = viewModel.placeId.value.toString(),
+                        size = 10
+                    )
+                } else if (viewModel.myReviewUpdateCursor.value == MyReviewCursor.STAR) {
+                    viewModel.getMyReview(
+                        placeId = viewModel.placeId.value.toString(),
+                        sort = "rate",
+                        size = 10
+                    )
+                }
             }
         }
-    }
 
     override fun initView() {
         intent.getStringExtra("place_id")?.let {
@@ -88,7 +90,8 @@ class PinActivity : BaseActivity<ActivityPinBinding>() {
         viewModel.shopInfo.observe(this) {
             binding.shopTitleTextView.text = it.name
             binding.shopTypeTextView.text = it.category
-            binding.reviewStarCountTextView.text = round((it.totalRating/it.ratingCount.toDouble())*10).div(10).toString()
+            binding.reviewStarCountTextView.text =
+                round((it.totalRating / it.ratingCount.toDouble()) * 10).div(10).toString()
             binding.bookmarkImageView.isSelected = it.scrap
 
             it.photos.forEach {
@@ -109,10 +112,11 @@ class PinActivity : BaseActivity<ActivityPinBinding>() {
         viewModel.pinReviewCursor.observe(this) {
             when (it) {
                 PinReviewCursor.MY_REVIEW -> {
-                     viewModel.getShopReviewLastDate(viewModel.placeId.value.toString())
+                    viewModel.getShopReviewLastDate(viewModel.placeId.value.toString())
                 }
+
                 PinReviewCursor.FOLLOWER_REVIEW -> {
-                     viewModel.getShopFollowerReviewLastDate(viewModel.placeId.value.toString())
+                    viewModel.getShopFollowerReviewLastDate(viewModel.placeId.value.toString())
                 }
             }
         }
@@ -149,7 +153,6 @@ class PinActivity : BaseActivity<ActivityPinBinding>() {
                     viewModel.addShopScrap(0, viewModel.placeId.value.toString())
                 }.show(supportFragmentManager, "북마크 다이어로그")
             }
-
         }
         binding.reviewButton.setOnClickListener {
             val intent = Intent(this, PinReviewWriteActivity::class.java).apply {

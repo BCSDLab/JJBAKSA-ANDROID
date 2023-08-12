@@ -11,7 +11,6 @@ import com.jjbaksa.domain.resp.map.ShopDetail
 import com.jjbaksa.domain.resp.map.ShopMyReview
 import com.jjbaksa.domain.resp.map.ShopReviewLastDate
 import com.jjbaksa.domain.resp.scrap.AddShopScrap
-import com.jjbaksa.domain.resp.scrap.ShopScrap
 import com.jjbaksa.domain.usecase.map.GetMapShopUseCase
 import com.jjbaksa.domain.usecase.scrap.GetShopScrapUseCase
 import com.jjbaksa.jjbaksa.base.BaseViewModel
@@ -64,7 +63,7 @@ class PinViewModel @Inject constructor(
         }
     }
 
-    fun addShopScrap(directoryId:Int, placeId: String) {
+    fun addShopScrap(directoryId: Int, placeId: String) {
         viewModelScope.launch(ceh) {
             scrapUseCase.addShopScrap(directoryId, placeId).collect {
                 it.onSuccess {

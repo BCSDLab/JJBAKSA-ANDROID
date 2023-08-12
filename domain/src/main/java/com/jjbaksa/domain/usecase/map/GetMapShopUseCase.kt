@@ -7,7 +7,6 @@ import com.jjbaksa.domain.resp.map.ShopDetail
 import com.jjbaksa.domain.resp.map.ShopMyReview
 import com.jjbaksa.domain.resp.map.ShopReview
 import com.jjbaksa.domain.resp.map.ShopReviewLastDate
-import com.jjbaksa.domain.resp.scrap.ShopScrap
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

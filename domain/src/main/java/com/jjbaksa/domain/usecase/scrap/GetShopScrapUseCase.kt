@@ -13,7 +13,7 @@ class GetShopScrapUseCase @Inject constructor(
         return scrapRepository.getShopScrap(scrapId)
     }
 
-    suspend fun addShopScrap(directoryId:Int, placeId: String): Flow<Result<AddShopScrap>> {
+    suspend fun addShopScrap(directoryId: Int, placeId: String): Flow<Result<AddShopScrap>> {
         return scrapRepository.addShopScrap(directoryId, placeId)
     }
 }

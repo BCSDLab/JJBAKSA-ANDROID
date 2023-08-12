@@ -8,5 +8,6 @@ interface ScrapRepository {
     suspend fun getShopScrap(
         scrapId: Int
     ): Flow<Result<ShopScrap>>
-    suspend fun addShopScrap(directoryId:Int, placeId: String): Flow<Result<AddShopScrap>>
+
+    suspend fun addShopScrap(directoryId: Int, placeId: String): Flow<Result<AddShopScrap>>
 }

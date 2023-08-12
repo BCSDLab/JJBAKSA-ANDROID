@@ -1,8 +1,5 @@
 package com.jjbaksa.jjbaksa.ui.pin
 
-import android.os.Bundle
-import android.util.Log
-import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager

@@ -1,14 +1,11 @@
 package com.jjbaksa.jjbaksa.ui.pin
 
 import android.content.Intent
-import android.os.Bundle
 import android.util.Log
-import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jjbaksa.domain.enums.FriendReviewCursor
-import com.jjbaksa.domain.enums.MyReviewCursor
 import com.jjbaksa.domain.enums.PinReviewCursor
 import com.jjbaksa.domain.resp.follower.FollowerShopReviewContent
 import com.jjbaksa.jjbaksa.R

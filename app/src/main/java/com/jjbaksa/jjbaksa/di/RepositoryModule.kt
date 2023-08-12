@@ -11,7 +11,6 @@ import com.jjbaksa.data.repository.HomeRepositoryImpl
 import com.jjbaksa.domain.repository.UserRepository
 import com.jjbaksa.data.repository.UserRepositoryImpl
 import com.example.imageselector.repository.ImageRepository
-import com.jjbaksa.data.datasource.ScrapDataSource
 import com.jjbaksa.data.datasource.remote.InquiryRemoteDataSource
 import com.jjbaksa.data.datasource.remote.MapRemoteDataSource
 import com.jjbaksa.data.datasource.remote.SearchRemoteDataSource

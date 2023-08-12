@@ -3,7 +3,6 @@ package com.jjbaksa.data.api
 import com.jjbaksa.data.model.findid.FindIdResp
 import com.jjbaksa.data.model.inquiry.InquiryResp
 import com.jjbaksa.data.model.map.MapShopResp
-import com.jjbaksa.data.model.pin.ShopDetailResp
 import com.jjbaksa.data.model.post.PostDetailResp
 import com.jjbaksa.data.model.post.PostResp
 import com.jjbaksa.data.model.search.AutoKeywordResp

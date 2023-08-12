@@ -156,9 +156,9 @@ class MapRepositoryImpl @Inject constructor(
     ): Flow<Result<FollowerShopReview>> {
         return apiCall(
             call = {
-                   mapRemoteDataSource.getFollowerShopReview(
-                       placeId, idCursor, dateCursor, rateCursor, size, direction, sort
-                   )
+                mapRemoteDataSource.getFollowerShopReview(
+                    placeId, idCursor, dateCursor, rateCursor, size, direction, sort
+                )
             },
             mapper = {
                 if (it.isSuccessful) {

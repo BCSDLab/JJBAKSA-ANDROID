@@ -45,7 +45,6 @@ import com.jjbaksa.domain.resp.search.AutoKeyword
 import com.jjbaksa.domain.resp.search.Shop
 import com.jjbaksa.domain.resp.search.ShopData
 import com.jjbaksa.domain.resp.user.UserReviewInfo
-import java.util.Date
 
 object RespMapper {
     fun errorMapper(json: String): BaseResp {

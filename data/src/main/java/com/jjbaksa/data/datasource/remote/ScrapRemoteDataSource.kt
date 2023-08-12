@@ -12,12 +12,15 @@ import javax.inject.Inject
 class ScrapRemoteDataSource @Inject constructor(
     private val authApi: AuthApi,
     private val noAuthApi: NoAuthApi
-): ScrapDataSource {
+) : ScrapDataSource {
     override suspend fun getShopScrap(scrapId: Int): Response<ShopScrapResp> {
         return authApi.getShopScrap(scrapId)
     }
 
-    override suspend fun addShopScrap(directoryId:Int, placeId: String): Response<AddShopScrapResp> {
+    override suspend fun addShopScrap(
+        directoryId: Int,
+        placeId: String
+    ): Response<AddShopScrapResp> {
         return authApi.postShopScrap(AddShopScrapBodyReq(directoryId, placeId))
     }
 }

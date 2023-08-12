@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 class ScrapRepositoryImpl @Inject constructor(
     private val scrapRemoteDataSource: ScrapRemoteDataSource
-): ScrapRepository {
+) : ScrapRepository {
     override suspend fun getShopScrap(scrapId: Int): Flow<Result<ShopScrap>> {
         return apiCall(
             call = { scrapRemoteDataSource.getShopScrap(scrapId) },
@@ -26,7 +26,10 @@ class ScrapRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun addShopScrap(directoryId:Int, placeId: String): Flow<Result<AddShopScrap>> {
+    override suspend fun addShopScrap(
+        directoryId: Int,
+        placeId: String
+    ): Flow<Result<AddShopScrap>> {
         return apiCall(
             call = { scrapRemoteDataSource.addShopScrap(directoryId, placeId) },
             mapper = {
@@ -36,5 +39,6 @@ class ScrapRepositoryImpl @Inject constructor(
                     AddShopScrap()
                 }
             }
-        )    }
+        )
+    }
 }
