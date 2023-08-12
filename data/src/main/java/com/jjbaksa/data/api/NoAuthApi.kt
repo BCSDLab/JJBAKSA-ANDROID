@@ -92,10 +92,6 @@ interface NoAuthApi {
         @Query("options_scrap") optionsScrap: Int,
         @Body locationBody: LocationBody
     ): Response<List<MapShopResp>>
-    @GET("shops/pin/{place_id}")
-    suspend fun getShopDetail(
-        @Path("place_id") placeId: String
-    ): Response<ShopDetailResp>
     @GET("inquiry")
     suspend fun getInquiry(
         @Query("idCursor") idCursor: String?,

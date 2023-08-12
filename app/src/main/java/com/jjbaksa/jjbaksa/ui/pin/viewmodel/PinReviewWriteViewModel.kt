@@ -14,6 +14,8 @@ import javax.inject.Inject
 class PinReviewWriteViewModel @Inject constructor(
     private val useCase: GetMapShopUseCase
 ) : BaseViewModel() {
+    val placeId = SingleLiveEvent<String>()
+
     private val _imageList = MutableLiveData<MutableList<String>>()
     val imageList: LiveData<MutableList<String>> get() = _imageList
 

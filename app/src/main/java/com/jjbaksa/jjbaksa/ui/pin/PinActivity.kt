@@ -29,26 +29,22 @@ class PinActivity : BaseActivity<ActivityPinBinding>() {
             viewModel.getShopDetail(viewModel.placeId.value.toString())
             when (viewModel.pinReviewCursor.value) {
                 PinReviewCursor.MY_REVIEW -> {
-                    viewModel.getShopReviewLastDate("ChIJBahxzkWjfDUR7iD24mIMTHU")
-                    // viewModel.getShopReviewLastDate(viewModel.placeId.value.toString())
+                     viewModel.getShopReviewLastDate(viewModel.placeId.value.toString())
                 }
                 PinReviewCursor.FOLLOWER_REVIEW -> {
-                    viewModel.getShopFollowerReviewLastDate("ChIJBahxzkWjfDUR7iD24mIMTHU")
-                    // viewModel.getShopReviewLastDate(it)
+                     viewModel.getShopFollowerReviewLastDate(viewModel.placeId.value.toString())
                 }
                 else -> {}
             }
 
             if (viewModel.myReviewUpdateCursor.value == MyReviewCursor.LATEST) {
                 viewModel.getMyReview(
-                    placeId = "ChIJBahxzkWjfDUR7iD24mIMTHU",
-                    // placeId = viewModel.placeId.value.toString()
+                     placeId = viewModel.placeId.value.toString(),
                     size = 10
                 )
             } else if (viewModel.myReviewUpdateCursor.value == MyReviewCursor.STAR) {
                 viewModel.getMyReview(
-                    placeId = "ChIJBahxzkWjfDUR7iD24mIMTHU",
-                    // placeId = viewModel.placeId.value.toString()
+                     placeId = viewModel.placeId.value.toString(),
                     sort = "rate",
                     size = 10
                 )
@@ -60,7 +56,6 @@ class PinActivity : BaseActivity<ActivityPinBinding>() {
         intent.getStringExtra("place_id")?.let {
             viewModel.placeId.value = it
             viewModel.getShopDetail(it)
-
         }
         initViewPagerWithTabLayout()
         initShopImageViewPagerWithTabLayout()
@@ -113,12 +108,10 @@ class PinActivity : BaseActivity<ActivityPinBinding>() {
         viewModel.pinReviewCursor.observe(this) {
             when (it) {
                 PinReviewCursor.MY_REVIEW -> {
-                    viewModel.getShopReviewLastDate("ChIJBahxzkWjfDUR7iD24mIMTHU")
-                    // viewModel.getShopReviewLastDate(it)
+                     viewModel.getShopReviewLastDate(viewModel.placeId.value.toString())
                 }
                 PinReviewCursor.FOLLOWER_REVIEW -> {
-                    viewModel.getShopFollowerReviewLastDate("ChIJBahxzkWjfDUR7iD24mIMTHU")
-                    // viewModel.getShopReviewLastDate(it)
+                     viewModel.getShopFollowerReviewLastDate(viewModel.placeId.value.toString())
                 }
             }
         }
@@ -155,6 +148,7 @@ class PinActivity : BaseActivity<ActivityPinBinding>() {
         binding.reviewButton.setOnClickListener {
             val intent = Intent(this, PinReviewWriteActivity::class.java).apply {
                 putExtra("name", viewModel.shopInfo.value?.name ?: return@setOnClickListener)
+                putExtra("place_id", viewModel.placeId.value ?: return@setOnClickListener)
             }
             reviewWriteResult.launch(intent)
         }

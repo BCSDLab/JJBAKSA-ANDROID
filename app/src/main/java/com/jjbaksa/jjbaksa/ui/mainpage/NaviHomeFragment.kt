@@ -320,7 +320,7 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
         if (requireContext().hasPermission(locationPermissions)) {
             clearTedNaverClusteringMarkers()
             // getShops()
-            shop = requireContext().readData("shops2.json", MockShops::class.java) ?: return
+            shop = requireContext().readData("shops.json", MockShops::class.java) ?: return
             addTedNaverClusteringMarkers(shop.shops)
         } else {
             locationPermissionsResult.launch(locationPermissions)

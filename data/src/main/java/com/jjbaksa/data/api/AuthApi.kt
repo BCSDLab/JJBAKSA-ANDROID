@@ -4,6 +4,7 @@ import com.jjbaksa.data.model.follower.FollowerShopReviewResp
 import com.jjbaksa.data.model.map.MyReviewResp
 import com.jjbaksa.data.model.map.ShopReviewLastDateResp
 import com.jjbaksa.data.model.map.ShopReviewResp
+import com.jjbaksa.data.model.pin.ShopDetailResp
 import retrofit2.http.GET
 import com.jjbaksa.data.model.user.UserResp
 import okhttp3.MultipartBody
@@ -37,6 +38,10 @@ interface AuthApi {
     suspend fun saveWithdrawalReason(
         @Body withdrawalReason: WithdrawalReasonReq
     ): Response<Unit>
+    @GET("shops/pin/{place_id}")
+    suspend fun getShopDetail(
+        @Path("place_id") placeId: String
+    ): Response<ShopDetailResp>
     @Multipart
     @POST("review")
     suspend fun setReview(

@@ -63,8 +63,7 @@ class PinMyReviewFragment : BaseFragment<FragmentPinMyReviewBinding>() {
                 MyReviewCursor.LATEST -> {
                     binding.updateReviewTextView.text = getString(R.string.newest)
                     viewModel.getMyReview(
-                        placeId = "ChIJBahxzkWjfDUR7iD24mIMTHU",
-                        // placeId = viewModel.placeId.value.toString()
+                        placeId = viewModel.placeId.value.toString(),
                         size = 10
                     )
                 }
@@ -72,8 +71,7 @@ class PinMyReviewFragment : BaseFragment<FragmentPinMyReviewBinding>() {
                 MyReviewCursor.STAR -> {
                     binding.updateReviewTextView.text = getString(R.string.by_star_rating)
                     viewModel.getMyReview(
-                        placeId = "ChIJBahxzkWjfDUR7iD24mIMTHU",
-                        // placeId = viewModel.placeId.value.toString()
+                        placeId = viewModel.placeId.value.toString(),
                         sort = "rate",
                         size = 10
                     )

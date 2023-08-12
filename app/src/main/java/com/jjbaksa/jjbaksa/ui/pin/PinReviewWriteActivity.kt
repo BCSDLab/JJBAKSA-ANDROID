@@ -39,6 +39,9 @@ class PinReviewWriteActivity : BaseActivity<ActivityPinReviewWriteBinding>() {
         intent.getStringExtra("name")?.let {
             binding.titleTextView.text = it
         }
+        intent.getStringExtra("place_id")?.let {
+            viewModel.placeId.value = it
+        }
         binding.recyclerView.apply {
             this.adapter = pinReviewImageAdapter
             this.itemAnimator = null
@@ -72,8 +75,7 @@ class PinReviewWriteActivity : BaseActivity<ActivityPinReviewWriteBinding>() {
                     !viewModel.imageList.value.isNullOrEmpty()
             ) {
                 viewModel.setReview(
-                    "ChIJBahxzkWjfDUR7iD24mIMTHU",
-                    // viewModel.placeId.value,
+                    viewModel.placeId.value.toString(),
                     binding.contentEditText.text.toString(),
                     binding.ratingBar.rating.toInt(),
                     viewModel.imageList.value?.toList().orEmpty()
