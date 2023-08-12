@@ -2,6 +2,8 @@ package com.jjbaksa.jjbaksa.ui.mainpage
 
 import android.Manifest
 import android.content.Intent
+import android.net.Uri
+import android.provider.Settings
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -11,7 +13,7 @@ import com.jjbaksa.domain.model.mainpage.JjCategory
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseFragment
 import com.jjbaksa.jjbaksa.databinding.FragmentNaviHomeBinding
-import com.jjbaksa.jjbaksa.dialog.PermissionDialog
+import com.jjbaksa.jjbaksa.dialog.BasicDialog
 import com.jjbaksa.jjbaksa.ui.mainpage.viewmodel.HomeViewModel
 import com.jjbaksa.jjbaksa.ui.pin.PinActivity
 import com.jjbaksa.jjbaksa.ui.search.SearchActivity
@@ -69,7 +71,18 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
 
             else -> {
                 // TODO : 위치 권한 거부 시 설정으로 이동 또는 교육용 팝업 띄우기
-                PermissionDialog().show(parentFragmentManager, LOCATION_PERM_DIALOG)
+                BasicDialog(
+                    getString(R.string.location_service_term_text),
+                    getString(R.string.cancel),
+                    getString(R.string.move_setting)
+                ) {
+                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                        data = Uri.fromParts("package", requireContext().packageName, null)
+                    }
+                    if (intent.resolveActivity(requireContext().packageManager) != null) {
+                        startActivity(intent)
+                    }
+                }.show(parentFragmentManager, LOCATION_PERM_DIALOG)
             }
         }
     }
