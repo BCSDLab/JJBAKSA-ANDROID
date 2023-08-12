@@ -1,5 +1,6 @@
 package com.jjbaksa.jjbaksa.ui.pin.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -48,6 +49,8 @@ class PinViewModel @Inject constructor(
                 it.onSuccess {
                     _shopInfo.value = it
                     showProgress.value = false
+                    Log.e("로그", "$it")
+                    Log.e("로그", "${showProgress.value}")
                 }.onFailure {
                     it.printStackTrace()
                     _shopInfo.value = ShopDetail()

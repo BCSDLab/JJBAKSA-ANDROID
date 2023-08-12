@@ -70,7 +70,6 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
             }
 
             else -> {
-                // TODO : 위치 권한 거부 시 설정으로 이동 또는 교육용 팝업 띄우기
                 BasicDialog(
                     getString(R.string.location_service_term_text),
                     getString(R.string.cancel),

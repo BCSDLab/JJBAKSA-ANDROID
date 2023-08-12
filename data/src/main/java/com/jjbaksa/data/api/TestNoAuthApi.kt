@@ -5,6 +5,6 @@ import retrofit2.Response
 import retrofit2.http.GET
 
 interface TestNoAuthApi {
-    @GET("v3/10ef369e-a221-4925-a4dd-1c5ec5a6992f")
+    @GET("v3/aa8a9ed8-f512-42a0-af21-664a6c102fdb")
     suspend fun getShopDetail(): Response<ShopDetailResp>
 }

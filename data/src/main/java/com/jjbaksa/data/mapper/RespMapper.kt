@@ -120,13 +120,14 @@ fun MapShopResp.toMapShopContent() = MapShopContent(
 )
 
 fun ShopDetailResp.toShopDetail() = ShopDetail(
+    shopId = shopId ?: 0,
     placeId = placeId ?: "",
     category = category ?: "",
-    lastReviewDate = lastReviewDate ?: "",
+//    lastReviewDate = lastReviewDate ?: "",
     name = name ?: "",
-    lat = lat ?: 0.0,
-    lng = lng ?: 0.0,
-    ratingCount = ratingCount ?: "",
+    totalRating = totalRating ?: 0,
+    ratingCount = ratingCount ?: 0,
+    scrap = scrap ?: false,
     photos = photos ?: emptyList(),
 )
 
