@@ -2,6 +2,7 @@ package com.jjbaksa.data.datasource
 
 import com.jjbaksa.data.model.map.MapShopResp
 import com.jjbaksa.data.model.map.MyReviewResp
+import com.jjbaksa.data.model.map.ShopReviewLastDateResp
 import com.jjbaksa.data.model.map.ShopReviewResp
 import com.jjbaksa.data.model.pin.ShopDetailResp
 import com.jjbaksa.data.model.search.LocationBody
@@ -33,4 +34,5 @@ interface MapDataSource {
         direction: String?,
         sort: String?
     ): Response<MyReviewResp>
+    suspend fun getShopReviewLastDate(placeId: String): Response<ShopReviewLastDateResp>
 }

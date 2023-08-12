@@ -8,6 +8,7 @@ import com.jjbaksa.data.model.map.MapShopResp
 import com.jjbaksa.data.model.map.MyReviewContentDTO
 import com.jjbaksa.data.model.map.MyReviewResp
 import com.jjbaksa.data.model.map.ReviewImagesDTO
+import com.jjbaksa.data.model.map.ShopReviewLastDateResp
 import com.jjbaksa.data.model.map.ShopReviewResp
 import com.jjbaksa.data.model.pin.ShopDetailResp
 import com.jjbaksa.data.model.post.PostDetailResp
@@ -27,6 +28,7 @@ import com.jjbaksa.domain.resp.map.ShopDetail
 import com.jjbaksa.domain.resp.map.ShopMyReview
 import com.jjbaksa.domain.resp.map.ShopMyReviewContent
 import com.jjbaksa.domain.resp.map.ShopReview
+import com.jjbaksa.domain.resp.map.ShopReviewLastDate
 import com.jjbaksa.domain.resp.post.Post
 import com.jjbaksa.domain.resp.post.PostData
 import com.jjbaksa.domain.resp.post.PostDetail
@@ -153,4 +155,8 @@ fun MyReviewContentDTO.toShopMyReviewContent() = ShopMyReviewContent(
     content = content ?: "",
     rate = rate ?: 0,
     createdAt = createdAt ?: ""
+)
+
+fun ShopReviewLastDateResp.toShopReviewLastDate() = ShopReviewLastDate(
+    lastDate = lastDate ?: ""
 )

@@ -1,6 +1,7 @@
 package com.jjbaksa.data.api
 
 import com.jjbaksa.data.model.map.MyReviewResp
+import com.jjbaksa.data.model.map.ShopReviewLastDateResp
 import com.jjbaksa.data.model.map.ShopReviewResp
 import retrofit2.http.GET
 import com.jjbaksa.data.model.user.UserResp
@@ -53,4 +54,8 @@ interface AuthApi {
         @Query("direction") direction: String?,
         @Query("sort") sort: String?,
     ): Response<MyReviewResp>
+    @GET("review/last-date/shop/{place-id}")
+    suspend fun getShopReviewLastDate(
+        @Path("place-id") placeId: String
+    ): Response<ShopReviewLastDateResp>
 }

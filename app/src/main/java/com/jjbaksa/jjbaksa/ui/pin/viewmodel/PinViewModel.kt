@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.jjbaksa.domain.enums.MyReviewCursor
 import com.jjbaksa.domain.resp.map.ShopDetail
 import com.jjbaksa.domain.resp.map.ShopMyReview
+import com.jjbaksa.domain.resp.map.ShopReviewLastDate
 import com.jjbaksa.domain.usecase.map.GetMapShopUseCase
 import com.jjbaksa.jjbaksa.base.BaseViewModel
 import com.jjbaksa.jjbaksa.util.SingleLiveEvent
@@ -21,6 +22,9 @@ class PinViewModel @Inject constructor(
     val placeId = SingleLiveEvent<String>()
     val showProgress = SingleLiveEvent<Boolean>()
     val myReviewUpdateCursor = SingleLiveEvent<MyReviewCursor>()
+
+    private val _reviewLastDate = MutableLiveData<ShopReviewLastDate>()
+    val reviewLastDate: LiveData<ShopReviewLastDate> get() = _reviewLastDate
 
     private val _imageList = MutableLiveData<MutableList<String>>()
     val imageList: LiveData<MutableList<String>> get() = _imageList
@@ -49,11 +53,22 @@ class PinViewModel @Inject constructor(
                 it.onSuccess {
                     _shopInfo.value = it
                     showProgress.value = false
-                    Log.e("로그", "$it")
-                    Log.e("로그", "${showProgress.value}")
                 }.onFailure {
                     it.printStackTrace()
                     _shopInfo.value = ShopDetail()
+                }
+            }
+        }
+    }
+
+    fun getShopReviewLastDate(placeId: String) {
+        viewModelScope.launch(ceh) {
+            useCase.getShopReviewLastDate(placeId).collect {
+                it.onSuccess {
+                    _reviewLastDate.value = it
+                }.onFailure {
+                    it.printStackTrace()
+                    _reviewLastDate.value = ShopReviewLastDate()
                 }
             }
         }

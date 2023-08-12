@@ -27,6 +27,8 @@ class PinActivity : BaseActivity<ActivityPinBinding>() {
     private val reviewWriteResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == RESULT_OK) {
             viewModel.getShopDetail(viewModel.placeId.value.toString())
+            // viewModel.getShopReviewLastDate(viewModel.placeId.value.toString())
+            viewModel.getShopReviewLastDate("ChIJBahxzkWjfDUR7iD24mIMTHU")
             if (viewModel.myReviewUpdateCursor.value == MyReviewCursor.LATEST) {
                 viewModel.getMyReview(
                     placeId = "ChIJBahxzkWjfDUR7iD24mIMTHU",
@@ -48,6 +50,8 @@ class PinActivity : BaseActivity<ActivityPinBinding>() {
         intent.getStringExtra("place_id")?.let {
             viewModel.placeId.value = it
             viewModel.getShopDetail(it)
+            viewModel.getShopReviewLastDate("ChIJBahxzkWjfDUR7iD24mIMTHU")
+            // viewModel.getShopReviewLastDate(it)
         }
         initViewPagerWithTabLayout()
         initShopImageViewPagerWithTabLayout()
@@ -80,14 +84,17 @@ class PinActivity : BaseActivity<ActivityPinBinding>() {
             binding.shopTitleTextView.text = it.name
             binding.shopTypeTextView.text = it.category
             binding.reviewStarCountTextView.text = round((it.totalRating/it.ratingCount.toDouble())*10).div(10).toString()
-//            val lastRegisterDate = it.lastReviewDate.split("-")
-//            binding.lastReviewCountTextView.text = getString(R.string.last_register_date, lastRegisterDate[0], lastRegisterDate[1], lastRegisterDate[2])
             binding.bookmarkImageView.isSelected = it.scrap
 
             it.photos.forEach {
                 binding.shopImagesTabLayout.addTab(binding.shopImagesTabLayout.newTab())
             }
             imageFrameAdapter.submitList(it.photos)
+        }
+        viewModel.reviewLastDate.observe(this) {
+            binding.lastReviewCountTextView.text = getString(
+                R.string.last_register_date, it.lastDate
+            )
         }
     }
 

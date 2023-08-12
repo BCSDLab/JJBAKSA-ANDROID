@@ -5,6 +5,7 @@ import com.jjbaksa.domain.resp.map.MapShopData
 import com.jjbaksa.domain.resp.map.ShopDetail
 import com.jjbaksa.domain.resp.map.ShopMyReview
 import com.jjbaksa.domain.resp.map.ShopReview
+import com.jjbaksa.domain.resp.map.ShopReviewLastDate
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -44,5 +45,9 @@ class GetMapShopUseCase @Inject constructor(
         sort: String? = null // createdAt / rate
     ): Flow<Result<ShopMyReview>> {
         return mapShopRepository.getMyReview(placeId, idCursor, dateCursor, rateCursor, size, direction, sort)
+    }
+
+    suspend fun getShopReviewLastDate(placeId: String): Flow<Result<ShopReviewLastDate>> {
+        return mapShopRepository.getShopReviewLastDate(placeId)
     }
 }

@@ -7,6 +7,7 @@ import com.jjbaksa.data.mapper.toMapShopData
 import com.jjbaksa.data.mapper.toShopDetail
 import com.jjbaksa.data.mapper.toShopMyReview
 import com.jjbaksa.data.mapper.toShopReview
+import com.jjbaksa.data.mapper.toShopReviewLastDate
 import com.jjbaksa.data.model.apiCall
 import com.jjbaksa.data.model.search.LocationBody
 import com.jjbaksa.domain.repository.MapRepository
@@ -14,6 +15,7 @@ import com.jjbaksa.domain.resp.map.MapShopData
 import com.jjbaksa.domain.resp.map.ShopDetail
 import com.jjbaksa.domain.resp.map.ShopMyReview
 import com.jjbaksa.domain.resp.map.ShopReview
+import com.jjbaksa.domain.resp.map.ShopReviewLastDate
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -110,6 +112,21 @@ class MapRepositoryImpl @Inject constructor(
                     it.body()!!.toShopMyReview()
                 } else {
                     ShopMyReview()
+                }
+            }
+        )
+    }
+
+    override suspend fun getShopReviewLastDate(placeId: String): Flow<Result<ShopReviewLastDate>> {
+        return apiCall(
+            call = {
+                   mapRemoteDataSource.getShopReviewLastDate(placeId)
+            },
+            mapper = {
+                if (it.isSuccessful) {
+                    it.body()!!.toShopReviewLastDate()
+                } else {
+                    ShopReviewLastDate()
                 }
             }
         )

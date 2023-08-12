@@ -9,8 +9,6 @@ data class ShopDetailResp(
     val placeId: String? = "",
     @SerializedName("category")
     val category: String? = "",
-//    @SerializedName("lastReviewDate")
-//    val lastReviewDate: String? = "",
     @SerializedName("name")
     val name: String? = "",
     @SerializedName("totalRating")
