@@ -1,6 +1,7 @@
 package com.jjbaksa.jjbaksa.ui.pin
 
 import android.content.Intent
+import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
@@ -115,6 +116,11 @@ class PinActivity : BaseActivity<ActivityPinBinding>() {
                 }
             }
         }
+        viewModel.addScrapInfo.observe(this) {
+            if (it.id != 0) {
+                binding.bookmarkImageView.isSelected = true
+            }
+        }
     }
 
     private fun observeData() {
@@ -126,7 +132,7 @@ class PinActivity : BaseActivity<ActivityPinBinding>() {
     override fun initEvent() {
         binding.jjAppBar.setOnClickListener { finish() }
         binding.bookmarkLayer.setOnClickListener {
-            if (viewModel.shopInfo.value?.scrap == true) {
+            if (binding.bookmarkImageView.isSelected) {
                 BasicDialog(
                     "${viewModel.shopInfo.value?.name} 북마크를 취소하시겠습니까?",
                     "닫기",
@@ -140,7 +146,7 @@ class PinActivity : BaseActivity<ActivityPinBinding>() {
                     "닫기",
                     "북마크 등록"
                 ) {
-                    // TODO : 스크랩 추가 API 연동
+                    viewModel.addShopScrap(0, viewModel.placeId.value.toString())
                 }.show(supportFragmentManager, "북마크 다이어로그")
             }
 

@@ -17,6 +17,7 @@ import com.jjbaksa.data.model.pin.ShopDetailResp
 import com.jjbaksa.data.model.post.PostDetailResp
 import com.jjbaksa.data.model.post.PostResp
 import com.jjbaksa.data.model.post.dto.PostContentDTO
+import com.jjbaksa.data.model.scrap.AddShopScrapResp
 import com.jjbaksa.data.model.scrap.ShopScrapResp
 import com.jjbaksa.data.model.search.AutoKeywordResp
 import com.jjbaksa.data.model.search.SearchShopResp
@@ -38,11 +39,13 @@ import com.jjbaksa.domain.resp.map.ShopReviewLastDate
 import com.jjbaksa.domain.resp.post.Post
 import com.jjbaksa.domain.resp.post.PostData
 import com.jjbaksa.domain.resp.post.PostDetail
+import com.jjbaksa.domain.resp.scrap.AddShopScrap
 import com.jjbaksa.domain.resp.scrap.ShopScrap
 import com.jjbaksa.domain.resp.search.AutoKeyword
 import com.jjbaksa.domain.resp.search.Shop
 import com.jjbaksa.domain.resp.search.ShopData
 import com.jjbaksa.domain.resp.user.UserReviewInfo
+import java.util.Date
 
 object RespMapper {
     fun errorMapper(json: String): BaseResp {
@@ -150,6 +153,14 @@ fun ShopScrapResp.toShopScrap() = ShopScrap(
     ratingCount = ratingCount ?: 0,
     address = address ?: "",
     photo = photo ?: emptyList(),
+)
+
+fun AddShopScrapResp.toAddShopScrap() = AddShopScrap(
+    id = id ?: 0,
+    createdAt = createdAt ?: 0,
+    updatedAt = updatedAt ?: 0,
+    directory = directory ?: 0,
+    shopId = shopId ?: 0
 )
 
 fun ShopReviewResp.toShopReview() = ShopReview(

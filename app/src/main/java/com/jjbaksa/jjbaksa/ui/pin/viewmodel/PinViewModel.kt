@@ -10,6 +10,7 @@ import com.jjbaksa.domain.resp.follower.FollowerShopReview
 import com.jjbaksa.domain.resp.map.ShopDetail
 import com.jjbaksa.domain.resp.map.ShopMyReview
 import com.jjbaksa.domain.resp.map.ShopReviewLastDate
+import com.jjbaksa.domain.resp.scrap.AddShopScrap
 import com.jjbaksa.domain.resp.scrap.ShopScrap
 import com.jjbaksa.domain.usecase.map.GetMapShopUseCase
 import com.jjbaksa.domain.usecase.scrap.GetShopScrapUseCase
@@ -39,8 +40,8 @@ class PinViewModel @Inject constructor(
     private val _shopInfo = SingleLiveEvent<ShopDetail>()
     val shopInfo: SingleLiveEvent<ShopDetail> get() = _shopInfo
 
-    private val _scrapId = SingleLiveEvent<String>()
-    val scrapId: SingleLiveEvent<String> get() = _scrapId
+    private val _addScrapInfo = SingleLiveEvent<AddShopScrap>()
+    val addScrapInfo: SingleLiveEvent<AddShopScrap> get() = _addScrapInfo
 
     private val _myReview = SingleLiveEvent<ShopMyReview>()
     val myReview: SingleLiveEvent<ShopMyReview> get() = _myReview
@@ -58,6 +59,19 @@ class PinViewModel @Inject constructor(
                 }.onFailure {
                     it.printStackTrace()
                     _shopInfo.value = ShopDetail()
+                }
+            }
+        }
+    }
+
+    fun addShopScrap(directoryId:Int, placeId: String) {
+        viewModelScope.launch(ceh) {
+            scrapUseCase.addShopScrap(directoryId, placeId).collect {
+                it.onSuccess {
+                    _addScrapInfo.value = it
+                }.onFailure {
+                    it.printStackTrace()
+                    _addScrapInfo.value = AddShopScrap()
                 }
             }
         }
