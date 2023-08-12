@@ -1,5 +1,6 @@
 package com.jjbaksa.domain.repository
 
+import com.jjbaksa.domain.resp.follower.FollowerShopReview
 import com.jjbaksa.domain.resp.map.MapShopData
 import com.jjbaksa.domain.resp.map.ShopDetail
 import com.jjbaksa.domain.resp.map.ShopMyReview
@@ -34,4 +35,13 @@ interface MapRepository {
         sort: String?
     ): Flow<Result<ShopMyReview>>
     suspend fun getShopReviewLastDate(placeId: String): Flow<Result<ShopReviewLastDate>>
+    suspend fun getFollowerShopReview(
+        placeId: String,
+        idCursor: Int?,
+        dateCursor: String?,
+        rateCursor: Int?,
+        size: Int?,
+        direction: String?,
+        sort: String?
+    ): Flow<Result<FollowerShopReview>>
 }

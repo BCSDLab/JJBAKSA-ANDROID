@@ -3,6 +3,7 @@ package com.jjbaksa.data.repository
 import android.net.Uri
 import com.jjbaksa.data.datasource.remote.MapRemoteDataSource
 import com.jjbaksa.data.mapper.FormDataUtil
+import com.jjbaksa.data.mapper.toFollowerShopReview
 import com.jjbaksa.data.mapper.toMapShopData
 import com.jjbaksa.data.mapper.toShopDetail
 import com.jjbaksa.data.mapper.toShopMyReview
@@ -11,6 +12,7 @@ import com.jjbaksa.data.mapper.toShopReviewLastDate
 import com.jjbaksa.data.model.apiCall
 import com.jjbaksa.data.model.search.LocationBody
 import com.jjbaksa.domain.repository.MapRepository
+import com.jjbaksa.domain.resp.follower.FollowerShopReview
 import com.jjbaksa.domain.resp.map.MapShopData
 import com.jjbaksa.domain.resp.map.ShopDetail
 import com.jjbaksa.domain.resp.map.ShopMyReview
@@ -127,6 +129,31 @@ class MapRepositoryImpl @Inject constructor(
                     it.body()!!.toShopReviewLastDate()
                 } else {
                     ShopReviewLastDate()
+                }
+            }
+        )
+    }
+
+    override suspend fun getFollowerShopReview(
+        placeId: String,
+        idCursor: Int?,
+        dateCursor: String?,
+        rateCursor: Int?,
+        size: Int?,
+        direction: String?,
+        sort: String?
+    ): Flow<Result<FollowerShopReview>> {
+        return apiCall(
+            call = {
+                   mapRemoteDataSource.getFollowerShopReview(
+                       placeId, idCursor, dateCursor, rateCursor, size, direction, sort
+                   )
+            },
+            mapper = {
+                if (it.isSuccessful) {
+                    it.body()!!.toFollowerShopReview()
+                } else {
+                    FollowerShopReview()
                 }
             }
         )

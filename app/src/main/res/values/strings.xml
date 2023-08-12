@@ -107,6 +107,7 @@
     </string-array>
     <string name="write_review">리뷰 작성하기</string>
     <string name="my_review_empty_description">오늘 다녀오셨나요?\n리뷰를 한 번 작성해보아요!</string>
+    <string name="friend_review_empty_description">작성한 리뷰가 없어요!</string>
     <string name="newest">최신순</string>
     <string name="by_star_rating">별점순</string>
     <string name="star_rating_description">음식에 대한 별점을 매겨주세요.</string>

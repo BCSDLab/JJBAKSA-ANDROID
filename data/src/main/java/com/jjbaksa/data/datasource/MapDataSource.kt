@@ -1,5 +1,6 @@
 package com.jjbaksa.data.datasource
 
+import com.jjbaksa.data.model.follower.FollowerShopReviewResp
 import com.jjbaksa.data.model.map.MapShopResp
 import com.jjbaksa.data.model.map.MyReviewResp
 import com.jjbaksa.data.model.map.ShopReviewLastDateResp
@@ -35,4 +36,13 @@ interface MapDataSource {
         sort: String?
     ): Response<MyReviewResp>
     suspend fun getShopReviewLastDate(placeId: String): Response<ShopReviewLastDateResp>
+    suspend fun getFollowerShopReview(
+        placeId: String,
+        idCursor: Int?,
+        dateCursor: String?,
+        rateCursor: Int?,
+        size: Int?,
+        direction: String?,
+        sort: String?
+    ): Response<FollowerShopReviewResp>
 }

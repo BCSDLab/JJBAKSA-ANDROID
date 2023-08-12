@@ -1,6 +1,8 @@
 package com.jjbaksa.data.mapper
 
 import com.google.gson.Gson
+import com.jjbaksa.data.model.follower.FollowerShopReviewContentDTO
+import com.jjbaksa.data.model.follower.FollowerShopReviewResp
 import com.jjbaksa.data.model.inquiry.InquiryResp
 import com.jjbaksa.data.model.inquiry.dto.InquiryContentDTO
 import com.jjbaksa.data.model.inquiry.dto.InquiryImagesDTO
@@ -10,6 +12,7 @@ import com.jjbaksa.data.model.map.MyReviewResp
 import com.jjbaksa.data.model.map.ReviewImagesDTO
 import com.jjbaksa.data.model.map.ShopReviewLastDateResp
 import com.jjbaksa.data.model.map.ShopReviewResp
+import com.jjbaksa.data.model.map.UserReviewResp
 import com.jjbaksa.data.model.pin.ShopDetailResp
 import com.jjbaksa.data.model.post.PostDetailResp
 import com.jjbaksa.data.model.post.PostResp
@@ -18,6 +21,8 @@ import com.jjbaksa.data.model.search.AutoKeywordResp
 import com.jjbaksa.data.model.search.SearchShopResp
 import com.jjbaksa.data.model.search.ShopResp
 import com.jjbaksa.domain.BaseResp
+import com.jjbaksa.domain.resp.follower.FollowerShopReview
+import com.jjbaksa.domain.resp.follower.FollowerShopReviewContent
 import com.jjbaksa.domain.resp.inquiry.InquiryContent
 import com.jjbaksa.domain.resp.inquiry.InquiryData
 import com.jjbaksa.domain.resp.inquiry.InquiryImages
@@ -35,6 +40,7 @@ import com.jjbaksa.domain.resp.post.PostDetail
 import com.jjbaksa.domain.resp.search.AutoKeyword
 import com.jjbaksa.domain.resp.search.Shop
 import com.jjbaksa.domain.resp.search.ShopData
+import com.jjbaksa.domain.resp.user.UserReviewInfo
 
 object RespMapper {
     fun errorMapper(json: String): BaseResp {
@@ -159,4 +165,23 @@ fun MyReviewContentDTO.toShopMyReviewContent() = ShopMyReviewContent(
 
 fun ShopReviewLastDateResp.toShopReviewLastDate() = ShopReviewLastDate(
     lastDate = lastDate ?: ""
+)
+
+fun FollowerShopReviewResp.toFollowerShopReview() = FollowerShopReview(
+    content = content?.map { it.toFollowerShopReviewContent() }.orEmpty()
+)
+
+fun FollowerShopReviewContentDTO.toFollowerShopReviewContent() = FollowerShopReviewContent(
+    id = id ?: 0,
+    content = content ?: "",
+    rate = rate ?: 0,
+    createdAt = createdAt ?: "",
+    userReviewResponse = userReviewResponse?.toUserReviewInfo() ?: UserReviewInfo(),
+    shopPlaceId = shopPlaceId ?: ""
+)
+
+fun UserReviewResp.toUserReviewInfo() = UserReviewInfo(
+    id = id ?: 0,
+    account = account ?: "",
+    nickname = nickname ?: ""
 )

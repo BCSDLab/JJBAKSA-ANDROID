@@ -4,6 +4,7 @@ import com.jjbaksa.data.api.AuthApi
 import com.jjbaksa.data.api.NoAuthApi
 import com.jjbaksa.data.api.TestNoAuthApi
 import com.jjbaksa.data.datasource.MapDataSource
+import com.jjbaksa.data.model.follower.FollowerShopReviewResp
 import com.jjbaksa.data.model.map.MapShopResp
 import com.jjbaksa.data.model.map.MyReviewResp
 import com.jjbaksa.data.model.map.ShopReviewLastDateResp
@@ -55,5 +56,17 @@ class MapRemoteDataSource @Inject constructor(
 
     override suspend fun getShopReviewLastDate(placeId: String): Response<ShopReviewLastDateResp> {
         return authApi.getShopReviewLastDate(placeId)
+    }
+
+    override suspend fun getFollowerShopReview(
+        placeId: String,
+        idCursor: Int?,
+        dateCursor: String?,
+        rateCursor: Int?,
+        size: Int?,
+        direction: String?,
+        sort: String?
+    ): Response<FollowerShopReviewResp> {
+        return authApi.getFollowerShopReview(placeId, idCursor, dateCursor, rateCursor, size, direction, sort)
     }
 }

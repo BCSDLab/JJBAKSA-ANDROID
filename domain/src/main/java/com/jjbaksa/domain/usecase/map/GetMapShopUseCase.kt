@@ -1,6 +1,7 @@
 package com.jjbaksa.domain.usecase.map
 
 import com.jjbaksa.domain.repository.MapRepository
+import com.jjbaksa.domain.resp.follower.FollowerShopReview
 import com.jjbaksa.domain.resp.map.MapShopData
 import com.jjbaksa.domain.resp.map.ShopDetail
 import com.jjbaksa.domain.resp.map.ShopMyReview
@@ -49,5 +50,17 @@ class GetMapShopUseCase @Inject constructor(
 
     suspend fun getShopReviewLastDate(placeId: String): Flow<Result<ShopReviewLastDate>> {
         return mapShopRepository.getShopReviewLastDate(placeId)
+    }
+
+    suspend fun getFollowerShopReview(
+        placeId: String,
+        idCursor: Int? = null,
+        dateCursor: String? = null,
+        rateCursor: Int? = null,
+        size: Int? = null,
+        direction: String? = null,
+        sort: String? = null
+    ): Flow<Result<FollowerShopReview>> {
+        return mapShopRepository.getFollowerShopReview(placeId, idCursor, dateCursor, rateCursor, size, direction, sort)
     }
 }

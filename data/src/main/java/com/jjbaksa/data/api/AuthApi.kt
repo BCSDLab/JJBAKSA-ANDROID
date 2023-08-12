@@ -1,5 +1,6 @@
 package com.jjbaksa.data.api
 
+import com.jjbaksa.data.model.follower.FollowerShopReviewResp
 import com.jjbaksa.data.model.map.MyReviewResp
 import com.jjbaksa.data.model.map.ShopReviewLastDateResp
 import com.jjbaksa.data.model.map.ShopReviewResp
@@ -58,4 +59,14 @@ interface AuthApi {
     suspend fun getShopReviewLastDate(
         @Path("place-id") placeId: String
     ): Response<ShopReviewLastDateResp>
+    @GET("review/followers/shop/{place-id}")
+    suspend fun getFollowerShopReview(
+        @Path("place-id") placeId: String,
+        @Query("idCursor") idCursor: Int?,
+        @Query("dateCursor") dateCursor: String?,
+        @Query("rateCursor") rateCursor: Int?,
+        @Query("size") size: Int?,
+        @Query("direction") direction: String?,
+        @Query("sort") sort: String?
+    ): Response<FollowerShopReviewResp>
 }

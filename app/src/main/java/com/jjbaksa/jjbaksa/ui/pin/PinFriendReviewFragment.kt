@@ -1,19 +1,80 @@
 package com.jjbaksa.jjbaksa.ui.pin
 
+import androidx.core.view.isVisible
+import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.jjbaksa.domain.enums.FriendReviewCursor
+import com.jjbaksa.domain.enums.MyReviewCursor
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseFragment
 import com.jjbaksa.jjbaksa.databinding.FragmentPinFriendReviewBinding
+import com.jjbaksa.jjbaksa.ui.pin.adapter.PinFriendReviewAdapter
+import com.jjbaksa.jjbaksa.ui.pin.viewmodel.PinViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PinFriendReviewFragment : BaseFragment<FragmentPinFriendReviewBinding>() {
     override val layoutId: Int
         get() = R.layout.fragment_pin_friend_review
+    private val viewModel: PinViewModel by activityViewModels()
+    private lateinit var friendReviewAdapter: PinFriendReviewAdapter
 
     override fun initView() {
+        friendReviewAdapter = PinFriendReviewAdapter()
+        binding.friendReviewRecyclerView.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = friendReviewAdapter
+            itemAnimator = null
+        }
+        viewModel.friendReviewUpdateCursor.value = FriendReviewCursor.LATEST
     }
 
     override fun initEvent() {
+        viewModel.friendReview.observe(viewLifecycleOwner) {
+            if (it.content.isEmpty()) {
+                binding.friendReviewEmptyContainer.isVisible = true
+            } else {
+                binding.friendReviewEmptyContainer.isVisible = false
+                friendReviewAdapter.submitList(it.content)
+            }
+        }
+        binding.updateLayer.setOnClickListener {
+            when (viewModel.friendReviewUpdateCursor.value) {
+                FriendReviewCursor.LATEST -> {
+                    viewModel.friendReviewUpdateCursor.value = FriendReviewCursor.STAR
+                }
+
+                FriendReviewCursor.STAR -> {
+                    viewModel.friendReviewUpdateCursor.value = FriendReviewCursor.LATEST
+                }
+
+                else -> {}
+            }
+        }
     }
 
     override fun subscribe() {
+        viewModel.friendReviewUpdateCursor.observe(viewLifecycleOwner) {
+            when (it) {
+                FriendReviewCursor.LATEST -> {
+                    binding.updateReviewTextView.text = getString(R.string.newest)
+                    viewModel.getFollowerShopReview(
+                        placeId = "ChIJBahxzkWjfDUR7iD24mIMTHU",
+                        // placeId = viewModel.placeId.value.toString()
+                        size = 10
+                    )
+                }
+
+                FriendReviewCursor.STAR -> {
+                    binding.updateReviewTextView.text = getString(R.string.by_star_rating)
+                    viewModel.getFollowerShopReview(
+                        placeId = "ChIJBahxzkWjfDUR7iD24mIMTHU",
+                        // placeId = viewModel.placeId.value.toString()
+                        sort = "rate",
+                        size = 10
+                    )
+                }
+            }
+        }
     }
 }

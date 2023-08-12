@@ -1,10 +1,11 @@
 package com.jjbaksa.jjbaksa.ui.pin.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.jjbaksa.domain.enums.FriendReviewCursor
 import com.jjbaksa.domain.enums.MyReviewCursor
+import com.jjbaksa.domain.resp.follower.FollowerShopReview
 import com.jjbaksa.domain.resp.map.ShopDetail
 import com.jjbaksa.domain.resp.map.ShopMyReview
 import com.jjbaksa.domain.resp.map.ShopReviewLastDate
@@ -12,6 +13,7 @@ import com.jjbaksa.domain.usecase.map.GetMapShopUseCase
 import com.jjbaksa.jjbaksa.base.BaseViewModel
 import com.jjbaksa.jjbaksa.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,6 +24,7 @@ class PinViewModel @Inject constructor(
     val placeId = SingleLiveEvent<String>()
     val showProgress = SingleLiveEvent<Boolean>()
     val myReviewUpdateCursor = SingleLiveEvent<MyReviewCursor>()
+    val friendReviewUpdateCursor = SingleLiveEvent<FriendReviewCursor>()
 
     private val _reviewLastDate = MutableLiveData<ShopReviewLastDate>()
     val reviewLastDate: LiveData<ShopReviewLastDate> get() = _reviewLastDate
@@ -37,6 +40,9 @@ class PinViewModel @Inject constructor(
 
     private val _myReview = SingleLiveEvent<ShopMyReview>()
     val myReview: SingleLiveEvent<ShopMyReview> get() = _myReview
+
+    private val _friendReview = SingleLiveEvent<FollowerShopReview>()
+    val friendReview: SingleLiveEvent<FollowerShopReview> get() = _friendReview
 
     fun setImageList(images: List<String>) {
         _imageList.value = images.toMutableList()
@@ -106,6 +112,28 @@ class PinViewModel @Inject constructor(
                     _isReview.value = false
                 }
             }
+        }
+    }
+
+    fun getFollowerShopReview(
+        placeId: String,
+        idCursor: Int? = null,
+        dateCursor: String? = null,
+        rateCursor: Int? = null,
+        size: Int? = null,
+        direction: String? = null,
+        sort: String? = null
+    ) {
+        viewModelScope.launch(ceh) {
+            useCase.getFollowerShopReview(placeId, idCursor, dateCursor, rateCursor, size, direction, sort)
+                .collect {
+                    it.onSuccess {
+                        _friendReview.value = it
+                    }.onFailure {
+                        it.printStackTrace()
+                        _friendReview.value = FollowerShopReview()
+                    }
+                }
         }
     }
 }
