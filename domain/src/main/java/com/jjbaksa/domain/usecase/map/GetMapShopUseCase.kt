@@ -51,6 +51,9 @@ class GetMapShopUseCase @Inject constructor(
     suspend fun getShopReviewLastDate(placeId: String): Flow<Result<ShopReviewLastDate>> {
         return mapShopRepository.getShopReviewLastDate(placeId)
     }
+    suspend fun getShopFollowerReviewLastDate(placeId: String): Flow<Result<ShopReviewLastDate>> {
+        return mapShopRepository.getShopFollowerReviewLastDate(placeId)
+    }
 
     suspend fun getFollowerShopReview(
         placeId: String,

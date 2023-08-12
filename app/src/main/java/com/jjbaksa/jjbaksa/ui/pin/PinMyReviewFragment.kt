@@ -1,9 +1,13 @@
 package com.jjbaksa.jjbaksa.ui.pin
 
+import android.os.Bundle
+import android.util.Log
+import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jjbaksa.domain.enums.MyReviewCursor
+import com.jjbaksa.domain.enums.PinReviewCursor
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseFragment
 import com.jjbaksa.jjbaksa.databinding.FragmentPinMyReviewBinding
@@ -26,6 +30,7 @@ class PinMyReviewFragment : BaseFragment<FragmentPinMyReviewBinding>() {
             itemAnimator = null
         }
         viewModel.myReviewUpdateCursor.value = MyReviewCursor.LATEST
+        viewModel.pinReviewCursor.value = PinReviewCursor.MY_REVIEW
     }
 
     override fun initEvent() {
@@ -75,5 +80,10 @@ class PinMyReviewFragment : BaseFragment<FragmentPinMyReviewBinding>() {
                 }
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.pinReviewCursor.value = PinReviewCursor.MY_REVIEW
     }
 }

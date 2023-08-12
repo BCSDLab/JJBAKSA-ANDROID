@@ -121,9 +121,20 @@ class MapRepositoryImpl @Inject constructor(
 
     override suspend fun getShopReviewLastDate(placeId: String): Flow<Result<ShopReviewLastDate>> {
         return apiCall(
-            call = {
-                   mapRemoteDataSource.getShopReviewLastDate(placeId)
-            },
+            call = { mapRemoteDataSource.getShopReviewLastDate(placeId) },
+            mapper = {
+                if (it.isSuccessful) {
+                    it.body()!!.toShopReviewLastDate()
+                } else {
+                    ShopReviewLastDate()
+                }
+            }
+        )
+    }
+
+    override suspend fun getShopFollowerReviewLastDate(placeId: String): Flow<Result<ShopReviewLastDate>> {
+        return apiCall(
+            call = { mapRemoteDataSource.getShopFollowerReviewLastDate(placeId) },
             mapper = {
                 if (it.isSuccessful) {
                     it.body()!!.toShopReviewLastDate()

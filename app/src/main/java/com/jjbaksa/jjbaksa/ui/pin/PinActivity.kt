@@ -1,12 +1,12 @@
 package com.jjbaksa.jjbaksa.ui.pin
 
 import android.content.Intent
-import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import com.google.android.material.tabs.TabLayoutMediator
 import com.jjbaksa.domain.enums.MyReviewCursor
+import com.jjbaksa.domain.enums.PinReviewCursor
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseActivity
 import com.jjbaksa.jjbaksa.databinding.ActivityPinBinding
@@ -27,8 +27,18 @@ class PinActivity : BaseActivity<ActivityPinBinding>() {
     private val reviewWriteResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == RESULT_OK) {
             viewModel.getShopDetail(viewModel.placeId.value.toString())
-            // viewModel.getShopReviewLastDate(viewModel.placeId.value.toString())
-            viewModel.getShopReviewLastDate("ChIJBahxzkWjfDUR7iD24mIMTHU")
+            when (viewModel.pinReviewCursor.value) {
+                PinReviewCursor.MY_REVIEW -> {
+                    viewModel.getShopReviewLastDate("ChIJBahxzkWjfDUR7iD24mIMTHU")
+                    // viewModel.getShopReviewLastDate(viewModel.placeId.value.toString())
+                }
+                PinReviewCursor.FOLLOWER_REVIEW -> {
+                    viewModel.getShopFollowerReviewLastDate("ChIJBahxzkWjfDUR7iD24mIMTHU")
+                    // viewModel.getShopReviewLastDate(it)
+                }
+                else -> {}
+            }
+
             if (viewModel.myReviewUpdateCursor.value == MyReviewCursor.LATEST) {
                 viewModel.getMyReview(
                     placeId = "ChIJBahxzkWjfDUR7iD24mIMTHU",
@@ -50,8 +60,7 @@ class PinActivity : BaseActivity<ActivityPinBinding>() {
         intent.getStringExtra("place_id")?.let {
             viewModel.placeId.value = it
             viewModel.getShopDetail(it)
-            viewModel.getShopReviewLastDate("ChIJBahxzkWjfDUR7iD24mIMTHU")
-            // viewModel.getShopReviewLastDate(it)
+
         }
         initViewPagerWithTabLayout()
         initShopImageViewPagerWithTabLayout()
@@ -91,10 +100,27 @@ class PinActivity : BaseActivity<ActivityPinBinding>() {
             }
             imageFrameAdapter.submitList(it.photos)
         }
-        viewModel.reviewLastDate.observe(this) {
+        viewModel.myReviewLastDate.observe(this) {
             binding.lastReviewCountTextView.text = getString(
                 R.string.last_register_date, it.lastDate
             )
+        }
+        viewModel.friendReviewLastDate.observe(this) {
+            binding.lastReviewCountTextView.text = getString(
+                R.string.last_register_date, it.lastDate
+            )
+        }
+        viewModel.pinReviewCursor.observe(this) {
+            when (it) {
+                PinReviewCursor.MY_REVIEW -> {
+                    viewModel.getShopReviewLastDate("ChIJBahxzkWjfDUR7iD24mIMTHU")
+                    // viewModel.getShopReviewLastDate(it)
+                }
+                PinReviewCursor.FOLLOWER_REVIEW -> {
+                    viewModel.getShopFollowerReviewLastDate("ChIJBahxzkWjfDUR7iD24mIMTHU")
+                    // viewModel.getShopReviewLastDate(it)
+                }
+            }
         }
     }
 

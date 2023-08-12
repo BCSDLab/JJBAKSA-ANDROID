@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.jjbaksa.domain.enums.FriendReviewCursor
 import com.jjbaksa.domain.enums.MyReviewCursor
+import com.jjbaksa.domain.enums.PinReviewCursor
 import com.jjbaksa.domain.resp.follower.FollowerShopReview
 import com.jjbaksa.domain.resp.map.ShopDetail
 import com.jjbaksa.domain.resp.map.ShopMyReview
@@ -13,7 +14,6 @@ import com.jjbaksa.domain.usecase.map.GetMapShopUseCase
 import com.jjbaksa.jjbaksa.base.BaseViewModel
 import com.jjbaksa.jjbaksa.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -25,9 +25,13 @@ class PinViewModel @Inject constructor(
     val showProgress = SingleLiveEvent<Boolean>()
     val myReviewUpdateCursor = SingleLiveEvent<MyReviewCursor>()
     val friendReviewUpdateCursor = SingleLiveEvent<FriendReviewCursor>()
+    val pinReviewCursor = SingleLiveEvent<PinReviewCursor>()
 
-    private val _reviewLastDate = MutableLiveData<ShopReviewLastDate>()
-    val reviewLastDate: LiveData<ShopReviewLastDate> get() = _reviewLastDate
+    private val _myReviewLastDate = MutableLiveData<ShopReviewLastDate>()
+    val myReviewLastDate: LiveData<ShopReviewLastDate> get() = _myReviewLastDate
+
+    private val _friendReviewLastDate = MutableLiveData<ShopReviewLastDate>()
+    val friendReviewLastDate: LiveData<ShopReviewLastDate> get() = _friendReviewLastDate
 
     private val _imageList = MutableLiveData<MutableList<String>>()
     val imageList: LiveData<MutableList<String>> get() = _imageList
@@ -71,10 +75,23 @@ class PinViewModel @Inject constructor(
         viewModelScope.launch(ceh) {
             useCase.getShopReviewLastDate(placeId).collect {
                 it.onSuccess {
-                    _reviewLastDate.value = it
+                    _myReviewLastDate.value = it
                 }.onFailure {
                     it.printStackTrace()
-                    _reviewLastDate.value = ShopReviewLastDate()
+                    _myReviewLastDate.value = ShopReviewLastDate()
+                }
+            }
+        }
+    }
+
+    fun getShopFollowerReviewLastDate(placeId: String) {
+        viewModelScope.launch(ceh) {
+            useCase.getShopFollowerReviewLastDate(placeId).collect {
+                it.onSuccess {
+                    _myReviewLastDate.value = it
+                }.onFailure {
+                    it.printStackTrace()
+                    _myReviewLastDate.value = ShopReviewLastDate()
                 }
             }
         }

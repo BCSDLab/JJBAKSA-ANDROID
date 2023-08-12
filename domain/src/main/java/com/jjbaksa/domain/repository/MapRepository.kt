@@ -35,6 +35,7 @@ interface MapRepository {
         sort: String?
     ): Flow<Result<ShopMyReview>>
     suspend fun getShopReviewLastDate(placeId: String): Flow<Result<ShopReviewLastDate>>
+    suspend fun getShopFollowerReviewLastDate(placeId: String): Flow<Result<ShopReviewLastDate>>
     suspend fun getFollowerShopReview(
         placeId: String,
         idCursor: Int?,

@@ -59,6 +59,10 @@ interface AuthApi {
     suspend fun getShopReviewLastDate(
         @Path("place-id") placeId: String
     ): Response<ShopReviewLastDateResp>
+    @GET("review/followers/last-date/shop/{place-id}")
+    suspend fun getShopFollowerReviewLastDate(
+        @Path("place-id") placeId: String
+    ): Response<ShopReviewLastDateResp>
     @GET("review/followers/shop/{place-id}")
     suspend fun getFollowerShopReview(
         @Path("place-id") placeId: String,

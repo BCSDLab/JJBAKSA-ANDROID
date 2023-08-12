@@ -36,6 +36,7 @@ interface MapDataSource {
         sort: String?
     ): Response<MyReviewResp>
     suspend fun getShopReviewLastDate(placeId: String): Response<ShopReviewLastDateResp>
+    suspend fun getShopFollowerReviewLastDate(placeId: String): Response<ShopReviewLastDateResp>
     suspend fun getFollowerShopReview(
         placeId: String,
         idCursor: Int?,

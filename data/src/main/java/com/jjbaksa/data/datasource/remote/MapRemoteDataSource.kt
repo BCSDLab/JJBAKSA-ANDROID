@@ -58,6 +58,10 @@ class MapRemoteDataSource @Inject constructor(
         return authApi.getShopReviewLastDate(placeId)
     }
 
+    override suspend fun getShopFollowerReviewLastDate(placeId: String): Response<ShopReviewLastDateResp> {
+        return authApi.getShopFollowerReviewLastDate(placeId)
+    }
+
     override suspend fun getFollowerShopReview(
         placeId: String,
         idCursor: Int?,
