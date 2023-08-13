@@ -49,7 +49,6 @@ class MapRepositoryImpl @Inject constructor(
             }
         )
     }
-
     override suspend fun getShopDetail(placeId: String): Flow<Result<ShopDetail>> {
         return apiCall(
             call = {

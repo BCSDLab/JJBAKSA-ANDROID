@@ -135,7 +135,6 @@ fun ShopDetailResp.toShopDetail() = ShopDetail(
     shopId = shopId ?: 0,
     placeId = placeId ?: "",
     category = category ?: "",
-//    lastReviewDate = lastReviewDate ?: "",
     name = name ?: "",
     totalRating = totalRating ?: 0,
     ratingCount = ratingCount ?: 0,

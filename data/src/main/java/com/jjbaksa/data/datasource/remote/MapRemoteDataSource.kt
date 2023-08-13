@@ -28,6 +28,7 @@ class MapRemoteDataSource @Inject constructor(
     ): Response<List<MapShopResp>> {
         return noAuthApi.getMapShop(optionsFriend, optionsNearby, optionsScrap, location)
     }
+
     override suspend fun getShopDetail(placeId: String): Response<ShopDetailResp> {
         return authApi.getShopDetail(placeId)
     }
@@ -70,6 +71,14 @@ class MapRemoteDataSource @Inject constructor(
         direction: String?,
         sort: String?
     ): Response<FollowerShopReviewResp> {
-        return authApi.getFollowerShopReview(placeId, idCursor, dateCursor, rateCursor, size, direction, sort)
+        return authApi.getFollowerShopReview(
+            placeId,
+            idCursor,
+            dateCursor,
+            rateCursor,
+            size,
+            direction,
+            sort
+        )
     }
 }

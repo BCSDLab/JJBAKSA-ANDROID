@@ -164,7 +164,7 @@ class UserRepositoryImpl @Inject constructor(
         return if (response.isSuccessful) {
             userLocalDataSource.saveNickname(response.body()?.nickname ?: "")
             userLocalDataSource.saveFollowers(response.body()?.userCountResponse?.friendCount ?: 0)
-            userLocalDataSource.saveProfileImage(response.body()?.profileImage?.path ?: "")
+            userLocalDataSource.saveProfileImage(response.body()?.profileImage?.url ?: "")
             RespResult.Success(response.isSuccessful)
         } else {
             val errorBodyJson = response.errorBody()!!.string()
@@ -174,12 +174,13 @@ class UserRepositoryImpl @Inject constructor(
     }
 
     override suspend fun editUserProfileImage(profile: String): RespResult<Boolean> {
-        val fileBody = FormDataUtil.getImageBody("multipartFile", Uri.parse(profile))
+        val fileBody = FormDataUtil.getImageBody("profile", Uri.parse(profile))
         val response = userRemoteDataSource.editUserProfileImage(fileBody)
-        if (response.isSuccessful) {
-            return RespResult.Success(true)
+        return if (response.isSuccessful) {
+            userLocalDataSource.saveProfileImage(response.body()?.profileImage?.url ?: "")
+            RespResult.Success(true)
         } else {
-            return RespResult.Success(false)
+            RespResult.Success(false)
         }
     }
 
