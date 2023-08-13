@@ -4,7 +4,7 @@ import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseActivity
 import com.jjbaksa.jjbaksa.databinding.ActivityPinMyFriendReviewReportBinding
 
-class PinMyFriendReviewReportActivity: BaseActivity<ActivityPinMyFriendReviewReportBinding>() {
+class PinMyFriendReviewReportActivity : BaseActivity<ActivityPinMyFriendReviewReportBinding>() {
     override val layoutId: Int
         get() = R.layout.activity_pin_my_friend_review_report
 
