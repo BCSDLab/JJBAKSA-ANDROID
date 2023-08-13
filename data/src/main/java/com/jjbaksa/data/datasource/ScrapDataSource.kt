@@ -9,7 +9,7 @@ interface ScrapDataSource {
         scrapId: Int
     ): Response<ShopScrapResp>
     suspend fun addShopScrap(
-        directoryId:Int,
+        directoryId: Int,
         placeId: String
     ): Response<AddShopScrapResp>
 }
