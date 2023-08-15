@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/marker_image_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_location_marker"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ImageView
+            android:id="@+id/shop_image_view"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            tools:background="@drawable/shape_circ_222222_solid"
+            android:scaleType="centerCrop"
+            app:layout_constraintVertical_bias="0.4"
+            app:layout_constraintTop_toTopOf="@id/marker_image_view"
+            app:layout_constraintStart_toStartOf="@id/marker_image_view"
+            app:layout_constraintEnd_toEndOf="@id/marker_image_view"
+            app:layout_constraintBottom_toBottomOf="@id/marker_image_view"/>
+
+        <TextView
+            android:id="@+id/marker_count_text_view"
+            tools:text="11"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="@color/color_ffffff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintVertical_bias="0.4"
+            app:layout_constraintTop_toTopOf="@id/marker_image_view"
+            app:layout_constraintStart_toStartOf="@id/marker_image_view"
+            app:layout_constraintEnd_toEndOf="@id/marker_image_view"
+            app:layout_constraintBottom_toBottomOf="@id/marker_image_view"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

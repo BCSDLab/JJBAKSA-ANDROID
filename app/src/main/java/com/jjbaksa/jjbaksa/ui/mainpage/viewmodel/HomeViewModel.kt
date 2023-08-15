@@ -12,7 +12,6 @@ import com.jjbaksa.domain.usecase.map.GetMapShopUseCase
 import com.jjbaksa.jjbaksa.base.BaseViewModel
 import com.jjbaksa.jjbaksa.util.MyInfo
 import com.jjbaksa.jjbaksa.util.SingleLiveEvent
-import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.overlay.Marker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -30,9 +29,6 @@ class HomeViewModel @Inject constructor(
     val moveCamera = MutableLiveData<Boolean>(true)
     val searchCurrentPosition = MutableLiveData<Boolean>()
     val lastMapMarkers = SingleLiveEvent<List<Marker>>()
-
-    private val _mapMarkers = SingleLiveEvent<List<Marker>>()
-    val mapMarkers: SingleLiveEvent<List<Marker>> get() = _mapMarkers
 
     private val _mapShops = SingleLiveEvent<List<MapShopContent>>()
     val mapShops: SingleLiveEvent<List<MapShopContent>> get() = _mapShops
@@ -61,9 +57,6 @@ class HomeViewModel @Inject constructor(
                 .collect {
                     it.onSuccess {
                         _mapShops.value = it.mapShopContent
-                        _mapMarkers.value = it.mapShopContent.map { shop ->
-                            Marker(LatLng(shop.lat, shop.lng))
-                        }
                     }
                         .onFailure { it.printStackTrace() }
                 }

@@ -2,6 +2,8 @@ package com.jjbaksa.jjbaksa.ui.mainpage
 
 import android.Manifest
 import android.content.Intent
+import android.net.Uri
+import android.provider.Settings
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -11,12 +13,14 @@ import com.jjbaksa.domain.model.mainpage.JjCategory
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseFragment
 import com.jjbaksa.jjbaksa.databinding.FragmentNaviHomeBinding
-import com.jjbaksa.jjbaksa.dialog.PermissionDialog
+import com.jjbaksa.jjbaksa.dialog.BasicDialog
 import com.jjbaksa.jjbaksa.ui.mainpage.viewmodel.HomeViewModel
 import com.jjbaksa.jjbaksa.ui.pin.PinActivity
 import com.jjbaksa.jjbaksa.ui.search.SearchActivity
 import com.jjbaksa.jjbaksa.util.FusedLocationUtil
 import com.jjbaksa.jjbaksa.util.hasPermission
+import com.jjbaksa.jjbaksa.util.mock.readData
+import com.jjbaksa.jjbaksa.view.JjMarker
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraAnimation
 import com.naver.maps.map.CameraUpdate
@@ -25,8 +29,12 @@ import com.naver.maps.map.NaverMap
 import com.naver.maps.map.NaverMapOptions
 import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.overlay.LocationOverlay
+import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
 import dagger.hilt.android.AndroidEntryPoint
+import ted.gun0912.clustering.clustering.TedClusterItem
+import ted.gun0912.clustering.geometry.TedLatLng
+import ted.gun0912.clustering.naver.TedNaverClustering
 
 @AndroidEntryPoint
 class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCallback {
@@ -38,6 +46,9 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
     private lateinit var mapOptions: NaverMapOptions
     private lateinit var cameraUpdate: CameraUpdate
     private var locationOverlay: LocationOverlay? = null
+    private lateinit var tedNaverClusteringBuilder: TedNaverClustering<MockShopItem>
+
+    private lateinit var shop: MockShops
 
     private val fusedLocationUtil: FusedLocationUtil by lazy {
         FusedLocationUtil(
@@ -59,8 +70,18 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
             }
 
             else -> {
-                // TODO : 위치 권한 거부 시 설정으로 이동 또는 교육용 팝업 띄우기
-                PermissionDialog().show(parentFragmentManager, LOCATION_PERM_DIALOG)
+                BasicDialog(
+                    getString(R.string.location_service_term_text),
+                    getString(R.string.cancel),
+                    getString(R.string.move_setting)
+                ) {
+                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                        data = Uri.fromParts("package", requireContext().packageName, null)
+                    }
+                    if (intent.resolveActivity(requireContext().packageManager) != null) {
+                        startActivity(intent)
+                    }
+                }.show(parentFragmentManager, LOCATION_PERM_DIALOG)
             }
         }
     }
@@ -105,6 +126,10 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
             currentCameraPosition(it.latitude, it.longitude)
             initLocationOverlay(it.latitude, it.longitude)
         }
+        viewModel.mapShops.observe(viewLifecycleOwner) {
+            // TODO: 지도에 음식점 마커 찍기
+            // addTedNaverClusteringMarkers(it)
+        }
         viewModel.location.observe(viewLifecycleOwner) {
             if (locationOverlay == null) return@observe
             initLocationOverlay(it.latitude, it.longitude)
@@ -122,30 +147,6 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
                 JjCategory.BOOKMARK -> {
                     updateCategoryColorState(binding.categoryFriendTextView, false)
                     updateCategoryColorState(binding.categoryBookmarkTextView, true)
-                }
-            }
-        }
-        viewModel.mapMarkers.observe(viewLifecycleOwner) {
-            if (!viewModel.lastMapMarkers.value.isNullOrEmpty()) {
-                viewModel.lastMapMarkers.value!!.forEach { marker ->
-                    marker.map = null
-                }
-            }
-
-            if (it.isNotEmpty()) {
-                viewModel.lastMapMarkers.value = it
-
-                it.forEachIndexed { index, marker ->
-                    marker.map = currentMap
-                    marker.captionText = viewModel.mapShops.value?.get(index)?.name ?: ""
-
-                    marker.setOnClickListener {
-                        val intent = Intent(requireContext(), PinActivity::class.java).apply {
-                            putExtra("place_id", viewModel.mapShops.value?.get(index)?.placeId)
-                        }
-                        startActivity(intent)
-                        false
-                    }
                 }
             }
         }
@@ -189,8 +190,13 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
             .mapType(NaverMap.MapType.Basic)
             .enabledLayerGroups(NaverMap.LAYER_GROUP_BUILDING)
         initUiSettings()
+        initTedNaverClustering()
 
-        getShops()
+        if (requireContext().hasPermission(locationPermissions)) {
+            // getShops()
+            shop = requireContext().readData("shops.json", MockShops::class.java) ?: return
+            addTedNaverClusteringMarkers(shop.shops)
+        }
 
         fusedLocationUtil.getLastLocation()?.addOnSuccessListener {
             if (it == null) return@addOnSuccessListener
@@ -205,8 +211,53 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
         }
     }
 
+    /**
+     * Mock 테스트로 MockShopItem 데이터 클래스 사용
+     * 테스트가 아닌 환경에서는 MockShopItem -> MapShopContent 으로 변경되어야 한다.
+     */
+    private fun initTedNaverClustering() {
+        tedNaverClusteringBuilder =
+            TedNaverClustering.with<MockShopItem>(requireContext(), currentMap)
+                .customCluster { clusterItem ->
+                    JjMarker(requireContext()).apply {
+                        setMarkerCount(clusterItem.items.size.toString())
+                    }
+                }
+                .customMarker { item ->
+                    Marker().apply {
+                        captionHaloColor =
+                            ContextCompat.getColor(requireContext(), R.color.color_ffffff)
+                        captionTextSize = 12f
+                        captionText = item.name
+                        icon = OverlayImage.fromView(
+                            JjMarker(requireContext()).apply {
+                                setImageUrl(item.photo)
+                            }
+                        )
+                    }
+                }
+                .markerClickListener {
+                    val intent = Intent(requireContext(), PinActivity::class.java).apply {
+                        putExtra("place_id", it.placeId)
+                    }
+                    startActivity(intent)
+                }
+                .make()
+    }
+
+    private fun addTedNaverClusteringMarkers(shopList: List<MockShopItem>) {
+        if (shopList.isNotEmpty()) {
+            initTedNaverClustering()
+            tedNaverClusteringBuilder.addItems(shopList)
+        }
+    }
+
+    private fun clearTedNaverClusteringMarkers() {
+        tedNaverClusteringBuilder.clearItems()
+    }
+
     private fun currentCameraPosition(lat: Double, lon: Double) {
-        cameraUpdate = CameraUpdate.scrollAndZoomTo(LatLng(lat, lon), 18.0)
+        cameraUpdate = CameraUpdate.scrollAndZoomTo(LatLng(lat, lon), 17.0)
             .animate(CameraAnimation.Easing)
         currentMap.moveCamera(cameraUpdate)
     }
@@ -267,7 +318,10 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
         viewModel.searchCurrentPosition.value = false
         viewModel.moveCamera.value = true
         if (requireContext().hasPermission(locationPermissions)) {
-            getShops()
+            clearTedNaverClusteringMarkers()
+            // getShops()
+            shop = requireContext().readData("shops.json", MockShops::class.java) ?: return
+            addTedNaverClusteringMarkers(shop.shops)
         } else {
             locationPermissionsResult.launch(locationPermissions)
         }
@@ -297,5 +351,21 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
             Manifest.permission.ACCESS_FINE_LOCATION
         )
         const val LOCATION_PERM_DIALOG = "LOCATION_PERM_DIALOG"
+    }
+}
+
+data class MockShops(
+    val shops: List<MockShopItem>
+)
+
+data class MockShopItem(
+    val placeId: String = "",
+    val name: String = "",
+    val lat: Double = 0.0,
+    val lng: Double = 0.0,
+    val photo: String = ""
+) : TedClusterItem {
+    override fun getTedLatLng(): TedLatLng {
+        return TedLatLng(this.lat, this.lng)
     }
 }

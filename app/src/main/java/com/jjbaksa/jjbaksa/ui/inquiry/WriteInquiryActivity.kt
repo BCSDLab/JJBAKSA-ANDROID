@@ -20,7 +20,7 @@ class WriteInquiryActivity : BaseActivity<ActivityWriteInquiryBinding>() {
     override val layoutId: Int
         get() = R.layout.activity_write_inquiry
     private val viewModel: WriteInquiryViewModel by viewModels()
-    private val adapter: InquiryPhotoAdapter by lazy {
+    private val inquiryPhotoAdapter: InquiryPhotoAdapter by lazy {
         InquiryPhotoAdapter(this::deletePhoto)
     }
 
@@ -30,7 +30,7 @@ class WriteInquiryActivity : BaseActivity<ActivityWriteInquiryBinding>() {
                 val images = it.data!!.getStringArrayListExtra("images")!!
                 viewModel.isExtraPhoto.value = !images.isNullOrEmpty()
                 viewModel.setPhotoList(images)
-                adapter.submitList(viewModel.photoList.value)
+                inquiryPhotoAdapter.submitList(viewModel.photoList.value)
             }
         }
 
@@ -39,7 +39,10 @@ class WriteInquiryActivity : BaseActivity<ActivityWriteInquiryBinding>() {
         binding.view = this
         binding.vm = viewModel
         KeyboardProvider(this).inputKeyboardResize(window, binding.root)
-        binding.inquiryPhotoRecyclerView.adapter = adapter
+        binding.inquiryPhotoRecyclerView.apply {
+            this.adapter = inquiryPhotoAdapter
+            this.itemAnimator = null
+        }
     }
 
     override fun subscribe() {
@@ -82,7 +85,7 @@ class WriteInquiryActivity : BaseActivity<ActivityWriteInquiryBinding>() {
 
     private fun deletePhoto(position: Int) {
         viewModel.removePhotoListItem(position)
-        adapter.notifyItemRemoved(position)
-        adapter.notifyItemRangeChanged(position, viewModel.photoList.value?.size!!)
+        inquiryPhotoAdapter.notifyItemRemoved(position)
+        inquiryPhotoAdapter.notifyItemRangeChanged(position, viewModel.photoList.value?.size!!)
     }
 }

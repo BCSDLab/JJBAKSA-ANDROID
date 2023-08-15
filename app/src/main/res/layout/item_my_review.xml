@@ -9,15 +9,14 @@
 
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/my_review_title_text_view"
+        android:id="@+id/my_review_content_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/color_222222"
         android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="학교 주변에 숨겨진 맛집. 주인 아주머니가 친절하시고 가 격도 싸다. 자주 방문할 것 같다." />
+        tools:text="학교 주변에 숨겨진 맛집. 주인 아주머니가d 친절하시고 가 격도 싸다. 자주 방문할 것 같다." />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/my_review_created_date_text_view"
@@ -26,8 +25,8 @@
         android:layout_marginTop="6dp"
         android:textColor="@color/color_666666"
         android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="@id/my_review_title_text_view"
-        app:layout_constraintTop_toBottomOf="@id/my_review_title_text_view"
+        app:layout_constraintStart_toStartOf="@id/my_review_content_text_view"
+        app:layout_constraintTop_toBottomOf="@id/my_review_content_text_view"
         tools:text="01/03" />
 
     <View
@@ -51,6 +50,7 @@
         app:layout_constraintBottom_toBottomOf="@id/my_review_created_date_text_view"
         app:layout_constraintStart_toEndOf="@id/my_review_line_view"
         app:layout_constraintTop_toTopOf="@id/my_review_created_date_text_view"
+        android:drawableStart="@drawable/ic_review_star"
         tools:drawableStart="@drawable/ic_review_star"
         tools:text="4.0" />
 

@@ -1,0 +1,81 @@
+{
+  "shops": [
+    {
+      "placeId": "ChIJBahxzkWjfDUR7iD24mIMTHU",
+      "name": "스타벅스 무교로점",
+      "lng": 126.9789,
+      "lat": 37.5672459,
+      "photo": "https://picsum.photos/200"
+    },
+    {
+      "placeId": "2",
+      "name": "맥도날드",
+      "lng": 126.9789,
+      "lat": 37.5662459,
+      "photo": "https://picsum.photos/200"
+    },
+    {
+      "placeId": "3",
+      "name": "롯데리아",
+      "lng": 126.9789,
+      "lat": 37.5673459,
+      "photo": "https://picsum.photos/200"
+    },
+    {
+      "placeId": "4",
+      "name": "신전떡볶이",
+      "lng": 126.9789,
+      "lat": 37.5677449,
+      "photo": "https://picsum.photos/200"
+    },
+    {
+      "placeId": "5",
+      "name": "엽떡",
+      "lng": 126.9779,
+      "lat": 37.5672459,
+      "photo": "https://picsum.photos/200"
+    },
+    {
+      "placeId": "5",
+      "name": "엽떡",
+      "lng": 126.9779,
+      "lat": 37.5672459,
+      "photo": "https://picsum.photos/200"
+    },
+    {
+      "placeId": "6",
+      "name": "된장국",
+      "lng": 126.97689,
+      "lat": 37.5672459,
+      "photo": "https://picsum.photos/200"
+    },
+    {
+      "placeId": "7",
+      "name": "소고기",
+      "lng": 126.9779,
+      "lat": 37.5472459,
+      "photo": "https://picsum.photos/200"
+    },
+    {
+      "placeId": "8",
+      "name": "돼지고기",
+      "lng": 126.9779,
+      "lat": 37.5676485,
+      "photo": "https://picsum.photos/200"
+    },
+    {
+      "placeId": "9",
+      "name": "김치찌개",
+      "lng": 126.9779,
+      "lat": 37.55482,
+      "photo": "https://picsum.photos/200"
+    },
+    {
+      "placeId": "10",
+      "name": "아이스크림",
+      "lng": 126.974875,
+      "lat": 37.5672459,
+      "photo": "https://picsum.photos/200"
+    }
+  ]
+}

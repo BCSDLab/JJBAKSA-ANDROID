@@ -49,6 +49,7 @@ class UserRepositoryImpl @Inject constructor(
 
         if (response != null) {
             if (response.isSuccessful) {
+                userLocalDataSource.clearDataStore()
                 if (response.body()?.code == SUCCESS) {
                     userLocalDataSource.saveAccessToken(response.body()!!.accessToken)
                     userLocalDataSource.saveRefreshToken(response.body()!!.refreshToken)

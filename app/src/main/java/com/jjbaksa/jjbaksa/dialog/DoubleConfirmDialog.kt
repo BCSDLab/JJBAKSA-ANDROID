@@ -6,7 +6,7 @@ import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseDialogFragment
 import com.jjbaksa.jjbaksa.databinding.DialogSignOutBinding
 
-class SignOutDialog(
+class DoubleConfirmDialog(
     val title: String,
     val msg: String,
     val confirmClick: (Dialog) -> Unit,

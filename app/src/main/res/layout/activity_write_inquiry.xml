@@ -221,7 +221,7 @@
                                     app:layout_constraintEnd_toEndOf="parent"
                                     android:orientation="horizontal"
                                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                                    tools:listitem="@layout/item_inquiry_photo"
+                                    tools:listitem="@layout/item_photo"
                                     tools:itemCount="3"/>
 
                             </androidx.constraintlayout.widget.ConstraintLayout>
