@@ -10,7 +10,7 @@ import com.jjbaksa.domain.enums.PinReviewCursor
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseActivity
 import com.jjbaksa.jjbaksa.databinding.ActivityPinBinding
-import com.jjbaksa.jjbaksa.dialog.BasicDialog
+import com.jjbaksa.jjbaksa.dialog.DoubleConfirmDialog
 import com.jjbaksa.jjbaksa.ui.pin.adapter.ImageFrameAdapter
 import com.jjbaksa.jjbaksa.ui.pin.adapter.PinAdapter
 import com.jjbaksa.jjbaksa.ui.pin.viewmodel.PinViewModel
@@ -137,21 +137,22 @@ class PinActivity : BaseActivity<ActivityPinBinding>() {
         binding.jjAppBar.setOnClickListener { finish() }
         binding.bookmarkLayer.setOnClickListener {
             if (binding.bookmarkImageView.isSelected) {
-                BasicDialog(
-                    "${viewModel.shopInfo.value?.name} 북마크를 취소하시겠습니까?",
-                    "닫기",
-                    "북마크 취소"
-                ) {
-                    // TODO : 스크랩 삭제 API 연동
-                }.show(supportFragmentManager, "북마크 다이어로그")
+                DoubleConfirmDialog(
+                    title = "북마크 삭제",
+                    msg = "해당 음식점을 삭제하시겠습니까?",
+                    confirmClick = {
+                        // TODO : 스크랩 삭제 API 연동
+                    }
+                ).show(supportFragmentManager, SCRAP_REMOVE_DIALOG)
             } else {
-                BasicDialog(
-                    "${viewModel.shopInfo.value?.name} 북마크를 등록하시겠습니까?",
-                    "닫기",
-                    "북마크 등록"
-                ) {
-                    viewModel.addShopScrap(0, viewModel.placeId.value.toString())
-                }.show(supportFragmentManager, "북마크 다이어로그")
+                DoubleConfirmDialog(
+                    title = "북마크 추가",
+                    msg = "해당 음식점을 추가하시겠습니까?",
+                    confirmClick = {
+                        // TODO : 스크랩 추가 API 연동
+                        viewModel.addShopScrap(0, viewModel.placeId.value.toString())
+                    }
+                ).show(supportFragmentManager, SCRAP_ADD_DIALOG)
             }
         }
         binding.reviewButton.setOnClickListener {
@@ -161,5 +162,10 @@ class PinActivity : BaseActivity<ActivityPinBinding>() {
             }
             reviewWriteResult.launch(intent)
         }
+    }
+
+    companion object {
+        const val SCRAP_ADD_DIALOG = "SCRAP_ADD_DIALOG"
+        const val SCRAP_REMOVE_DIALOG = "SCRAP_REMOVE_DIALOG"
     }
 }

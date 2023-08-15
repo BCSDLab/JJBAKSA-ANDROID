@@ -6,7 +6,7 @@ import androidx.core.app.ActivityCompat
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseActivity
 import com.jjbaksa.jjbaksa.databinding.ActivitySettingBinding
-import com.jjbaksa.jjbaksa.dialog.SignOutDialog
+import com.jjbaksa.jjbaksa.dialog.DoubleConfirmDialog
 import com.jjbaksa.jjbaksa.ui.changepassword.ChangePasswordActivity
 import com.jjbaksa.jjbaksa.ui.inquiry.InquiryActivity
 import com.jjbaksa.jjbaksa.ui.post.PostActivity
@@ -48,7 +48,7 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
         startActivity(Intent(this, PostActivity::class.java))
     }
     fun logout() {
-        SignOutDialog(
+        DoubleConfirmDialog(
             title = getString(R.string.sign_out_title_text),
             msg = getString(R.string.sign_out_content_text),
             confirmClick = {
