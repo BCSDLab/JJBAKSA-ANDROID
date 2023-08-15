@@ -5,6 +5,7 @@ import android.content.Intent
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.core.widget.addTextChangedListener
 import com.example.imageselector.gallery.GalleryActivity
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseActivity
@@ -62,17 +63,7 @@ class PinReviewWriteActivity : BaseActivity<ActivityPinReviewWriteBinding>() {
     override fun initEvent() {
         binding.jjAppBar.setOnClickListener { finish() }
         binding.saveButton.setOnClickListener {
-            binding.saveButton.isSelected = !binding.saveButton.isSelected
             if (binding.saveButton.isSelected) {
-                binding.saveButton.setTextColor(getColor(R.color.color_ffffff))
-            } else {
-                binding.saveButton.setTextColor(getColor(R.color.color_ff7f23))
-            }
-
-            if (binding.contentEditText.text.isNotEmpty() &&
-                binding.ratingBar.rating != 0.0f &&
-                !viewModel.imageList.value.isNullOrEmpty()
-            ) {
                 viewModel.setReview(
                     viewModel.placeId.value.toString(),
                     binding.contentEditText.text.toString(),
@@ -92,6 +83,15 @@ class PinReviewWriteActivity : BaseActivity<ActivityPinReviewWriteBinding>() {
                 putExtra("limit", 10)
             }
             galleryResult.launch(intent)
+        }
+        binding.contentEditText.addTextChangedListener {
+            if (it?.isNotEmpty()!! && binding.ratingBar.rating != 0.0f) {
+                binding.saveButton.isSelected = true
+                binding.saveButton.setTextColor(getColor(R.color.color_ffffff))
+            } else {
+                binding.saveButton.isSelected = false
+                binding.saveButton.setTextColor(getColor(R.color.color_ff7f23))
+            }
         }
     }
 
