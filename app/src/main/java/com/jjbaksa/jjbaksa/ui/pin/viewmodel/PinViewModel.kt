@@ -3,6 +3,8 @@ package com.jjbaksa.jjbaksa.ui.pin.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.jjbaksa.domain.base.ErrorType
+import com.jjbaksa.domain.base.RespResult
 import com.jjbaksa.domain.enums.FriendReviewCursor
 import com.jjbaksa.domain.enums.MyReviewCursor
 import com.jjbaksa.domain.enums.PinReviewCursor
@@ -30,6 +32,9 @@ class PinViewModel @Inject constructor(
     val friendReviewUpdateCursor = SingleLiveEvent<FriendReviewCursor>()
     val pinReviewCursor = SingleLiveEvent<PinReviewCursor>()
 
+    private val _errorHandler = SingleLiveEvent<ErrorType>()
+    val errorHandler: SingleLiveEvent<ErrorType> get() = _errorHandler
+
     private val _myReviewLastDate = MutableLiveData<ShopReviewLastDate>()
     val myReviewLastDate: LiveData<ShopReviewLastDate> get() = _myReviewLastDate
 
@@ -53,8 +58,16 @@ class PinViewModel @Inject constructor(
         viewModelScope.launch(ceh) {
             useCase.getShopDetail(placeId).collect {
                 it.onSuccess {
-                    _shopInfo.value = it
-                    showProgress.value = false
+                    when (it) {
+                        is RespResult.Success -> {
+                            _shopInfo.value = it.data!!
+                            showProgress.value = false
+                        }
+                        is RespResult.Error -> {
+                            showProgress.value = false
+                            _errorHandler.value = it.errorType
+                        }
+                    }
                 }.onFailure {
                     it.printStackTrace()
                     _shopInfo.value = ShopDetail()

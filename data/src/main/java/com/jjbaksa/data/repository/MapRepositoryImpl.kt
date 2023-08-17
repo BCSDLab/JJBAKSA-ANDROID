@@ -3,6 +3,7 @@ package com.jjbaksa.data.repository
 import android.net.Uri
 import com.jjbaksa.data.datasource.remote.MapRemoteDataSource
 import com.jjbaksa.data.mapper.FormDataUtil
+import com.jjbaksa.data.mapper.RespMapper
 import com.jjbaksa.data.mapper.toFollowerShopReview
 import com.jjbaksa.data.mapper.toMapShopData
 import com.jjbaksa.data.mapper.toShopDetail
@@ -11,6 +12,8 @@ import com.jjbaksa.data.mapper.toShopReview
 import com.jjbaksa.data.mapper.toShopReviewLastDate
 import com.jjbaksa.data.model.apiCall
 import com.jjbaksa.data.model.search.LocationBody
+import com.jjbaksa.domain.base.ErrorType
+import com.jjbaksa.domain.base.RespResult
 import com.jjbaksa.domain.repository.MapRepository
 import com.jjbaksa.domain.resp.follower.FollowerShopReview
 import com.jjbaksa.domain.resp.map.MapShopData
@@ -49,7 +52,7 @@ class MapRepositoryImpl @Inject constructor(
             }
         )
     }
-    override suspend fun getShopDetail(placeId: String): Flow<Result<ShopDetail>> {
+    override suspend fun getShopDetail(placeId: String): Flow<Result<RespResult<ShopDetail>>> {
         return apiCall(
             call = {
                 mapRemoteDataSource.getShopDetail(placeId)
@@ -57,8 +60,10 @@ class MapRepositoryImpl @Inject constructor(
             mapper = {
                 if (it.isSuccessful) {
                     it.body()!!.toShopDetail()
+                    RespResult.Success(it.body()!!.toShopDetail())
                 } else {
-                    ShopDetail()
+                    val errorResult = RespMapper.errorMapper(it.errorBody()?.string()!!)
+                    RespResult.Error(ErrorType(errorResult.errorMessage, errorResult.code))
                 }
             }
         )

@@ -125,6 +125,9 @@ class PinActivity : BaseActivity<ActivityPinBinding>() {
                 binding.bookmarkImageView.isSelected = true
             }
         }
+        viewModel.errorHandler.observe(this) {
+            showSnackBar(it.errorMessage)
+        }
     }
 
     private fun observeData() {

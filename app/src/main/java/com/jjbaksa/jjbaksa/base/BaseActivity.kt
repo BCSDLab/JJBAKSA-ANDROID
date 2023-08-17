@@ -8,6 +8,7 @@ import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.google.android.material.snackbar.Snackbar
+import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.dialog.LoadingDialog
 
 abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
@@ -50,7 +51,7 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
         loadingDialog = null
     }
 
-    fun showSnackBar(msg: String, actionMsg: String) {
+    fun showSnackBar(msg: String, actionMsg: String = getString(R.string.close)) {
         Snackbar.make(binding.root, msg, Snackbar.LENGTH_SHORT).also {
             it.setAction(
                 actionMsg,

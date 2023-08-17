@@ -1,5 +1,6 @@
 package com.jjbaksa.domain.usecase.map
 
+import com.jjbaksa.domain.base.RespResult
 import com.jjbaksa.domain.repository.MapRepository
 import com.jjbaksa.domain.resp.follower.FollowerShopReview
 import com.jjbaksa.domain.resp.map.MapShopData
@@ -23,7 +24,7 @@ class GetMapShopUseCase @Inject constructor(
         return mapShopRepository.getMapShop(optionsFriend, optionsNearby, optionsScrap, lat, lng)
     }
 
-    suspend fun getShopDetail(placeId: String): Flow<Result<ShopDetail>> {
+    suspend fun getShopDetail(placeId: String): Flow<Result<RespResult<ShopDetail>>> {
         return mapShopRepository.getShopDetail(placeId)
     }
 
