@@ -77,8 +77,11 @@ class MapRepositoryImpl @Inject constructor(
     ): Flow<Result<ShopReview>> {
         return apiCall(
             call = {
-                val filesBody = reviewImages.map {
+                var filesBody = reviewImages.map {
                     FormDataUtil.getImageBody("reviewImages", Uri.parse(it))
+                }
+                if (filesBody.isNullOrEmpty()) {
+                    filesBody = listOf(FormDataUtil.getEmptyBody())
                 }
                 mapRemoteDataSource.setReview(placeId, content, rate, filesBody)
             },

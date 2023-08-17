@@ -71,7 +71,7 @@ class PinReviewWriteActivity : BaseActivity<ActivityPinReviewWriteBinding>() {
                     viewModel.imageList.value?.toList().orEmpty()
                 )
             } else {
-                Toast.makeText(this, "리뷰 & 별점 & 이미지를 추가해주세요.", Toast.LENGTH_SHORT).show()
+                showSnackBar("리뷰 & 별점을 추가해주세요.")
                 KeyboardProvider(this).hideKeyboard(binding.contentEditText)
             }
         }
