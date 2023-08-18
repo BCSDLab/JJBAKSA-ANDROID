@@ -1,6 +1,7 @@
 package com.jjbaksa.jjbaksa.ui.mainpage
 
 import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
@@ -83,6 +84,12 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
                     }
                 }.show(parentFragmentManager, LOCATION_PERM_DIALOG)
             }
+        }
+    }
+
+    private val pinActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == Activity.RESULT_CANCELED) {
+            showSnackBar(it.data?.getStringExtra("msg") ?: return@registerForActivityResult)
         }
     }
 
@@ -240,7 +247,7 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
                     val intent = Intent(requireContext(), PinActivity::class.java).apply {
                         putExtra("place_id", it.placeId)
                     }
-                    startActivity(intent)
+                    pinActivityResult.launch(intent)
                 }
                 .make()
     }

@@ -12,8 +12,6 @@ import com.jjbaksa.data.mapper.toShopReview
 import com.jjbaksa.data.mapper.toShopReviewLastDate
 import com.jjbaksa.data.model.apiCall
 import com.jjbaksa.data.model.search.LocationBody
-import com.jjbaksa.domain.base.ErrorType
-import com.jjbaksa.domain.base.RespResult
 import com.jjbaksa.domain.repository.MapRepository
 import com.jjbaksa.domain.resp.follower.FollowerShopReview
 import com.jjbaksa.domain.resp.map.MapShopData
@@ -52,18 +50,18 @@ class MapRepositoryImpl @Inject constructor(
             }
         )
     }
-    override suspend fun getShopDetail(placeId: String): Flow<Result<RespResult<ShopDetail>>> {
+    override suspend fun getShopDetail(placeId: String, onError: (String) -> Unit): Flow<Result<ShopDetail>> {
         return apiCall(
             call = {
                 mapRemoteDataSource.getShopDetail(placeId)
             },
             mapper = {
                 if (it.isSuccessful) {
-                    it.body()!!.toShopDetail()
-                    RespResult.Success(it.body()!!.toShopDetail())
+                    it.body()?.toShopDetail() ?: ShopDetail()
                 } else {
-                    val errorResult = RespMapper.errorMapper(it.errorBody()?.string()!!)
-                    RespResult.Error(ErrorType(errorResult.errorMessage, errorResult.code))
+                    val errorResult = RespMapper.errorMapper(it.errorBody()?.string() ?: "")
+                    onError(errorResult.errorMessage)
+                    ShopDetail()
                 }
             }
         )
