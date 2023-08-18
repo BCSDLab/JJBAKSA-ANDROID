@@ -30,6 +30,7 @@ class DoubleConfirmDialog(
         binding.signOutConfirmButton.setOnClickListener {
             dialog?.let {
                 confirmClick(it)
+                dismiss()
             }
         }
     }

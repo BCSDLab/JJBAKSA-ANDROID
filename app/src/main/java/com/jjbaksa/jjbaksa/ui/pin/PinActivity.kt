@@ -86,7 +86,9 @@ class PinActivity : BaseActivity<ActivityPinBinding>() {
     }
 
     override fun subscribe() {
-        observeData()
+        viewModel.showProgress.observe(this) {
+            binding.progressBarContainer.isVisible = it
+        }
         viewModel.shopInfo.observe(this) {
             binding.shopTitleTextView.text = it.name
             binding.shopTypeTextView.text = it.category
@@ -125,11 +127,12 @@ class PinActivity : BaseActivity<ActivityPinBinding>() {
                 binding.bookmarkImageView.isSelected = true
             }
         }
-    }
-
-    private fun observeData() {
-        viewModel.showProgress.observe(this) {
-            binding.progressBarContainer.isVisible = it
+        viewModel.toastMsg.observe(this) { msg ->
+            val intent = Intent().apply {
+                putExtra("msg", msg)
+            }
+            setResult(RESULT_CANCELED, intent)
+            finish()
         }
     }
 

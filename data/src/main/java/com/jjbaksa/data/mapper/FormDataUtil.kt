@@ -20,6 +20,12 @@ object FormDataUtil {
     val secUnit = 60L
     val milliSec = 1000L
 
+    fun getEmptyBody(): MultipartBody.Part {
+        return MultipartBody.Builder().setType(MultipartBody.FORM)
+            .addFormDataPart("", "")
+            .build().part(0)
+    }
+
     fun getBody(key: String, value: Any): MultipartBody.Part {
         return MultipartBody.Part.createFormData(key, value.toString())
     }

@@ -3,6 +3,7 @@ package com.jjbaksa.data.repository
 import android.net.Uri
 import com.jjbaksa.data.datasource.remote.MapRemoteDataSource
 import com.jjbaksa.data.mapper.FormDataUtil
+import com.jjbaksa.data.mapper.RespMapper
 import com.jjbaksa.data.mapper.toFollowerShopReview
 import com.jjbaksa.data.mapper.toMapShopData
 import com.jjbaksa.data.mapper.toShopDetail
@@ -29,7 +30,8 @@ class MapRepositoryImpl @Inject constructor(
         optionsNearby: Int,
         optionsScrap: Int,
         lat: Double,
-        lng: Double
+        lng: Double,
+        onError: (String) -> Unit
     ): Flow<Result<MapShopData>> {
         return apiCall(
             call = {
@@ -42,22 +44,26 @@ class MapRepositoryImpl @Inject constructor(
             },
             mapper = {
                 if (it.isSuccessful) {
-                    it.body()!!.toMapShopData()
+                    it.body()?.toMapShopData() ?: MapShopData()
                 } else {
+                    val errorResult = RespMapper.errorMapper(it.errorBody()?.string() ?: "")
+                    onError(errorResult.errorMessage)
                     MapShopData()
                 }
             }
         )
     }
-    override suspend fun getShopDetail(placeId: String): Flow<Result<ShopDetail>> {
+    override suspend fun getShopDetail(placeId: String, onError: (String) -> Unit): Flow<Result<ShopDetail>> {
         return apiCall(
             call = {
                 mapRemoteDataSource.getShopDetail(placeId)
             },
             mapper = {
                 if (it.isSuccessful) {
-                    it.body()!!.toShopDetail()
+                    it.body()?.toShopDetail() ?: ShopDetail()
                 } else {
+                    val errorResult = RespMapper.errorMapper(it.errorBody()?.string() ?: "")
+                    onError(errorResult.errorMessage)
                     ShopDetail()
                 }
             }
@@ -72,8 +78,11 @@ class MapRepositoryImpl @Inject constructor(
     ): Flow<Result<ShopReview>> {
         return apiCall(
             call = {
-                val filesBody = reviewImages.map {
+                var filesBody = reviewImages.map {
                     FormDataUtil.getImageBody("reviewImages", Uri.parse(it))
+                }
+                if (filesBody.isNullOrEmpty()) {
+                    filesBody = listOf(FormDataUtil.getEmptyBody())
                 }
                 mapRemoteDataSource.setReview(placeId, content, rate, filesBody)
             },

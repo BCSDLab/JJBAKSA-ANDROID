@@ -51,13 +51,12 @@ class PinViewModel @Inject constructor(
     fun getShopDetail(placeId: String) {
         showProgress.value = true
         viewModelScope.launch(ceh) {
-            useCase.getShopDetail(placeId).collect {
+            useCase.getShopDetail(placeId) { msg ->
+                toastMsg.postValue(msg)
+            }.collect {
                 it.onSuccess {
-                    _shopInfo.value = it
                     showProgress.value = false
-                }.onFailure {
-                    it.printStackTrace()
-                    _shopInfo.value = ShopDetail()
+                    _shopInfo.value = it
                 }
             }
         }
