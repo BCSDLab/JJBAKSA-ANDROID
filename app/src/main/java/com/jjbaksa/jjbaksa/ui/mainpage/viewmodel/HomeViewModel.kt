@@ -7,12 +7,12 @@ import com.jjbaksa.domain.model.mainpage.JjCategory
 import com.jjbaksa.domain.model.mainpage.UserLocation
 import com.jjbaksa.domain.repository.HomeRepository
 import com.jjbaksa.domain.repository.UserRepository
-import com.jjbaksa.domain.resp.map.MapShopContent
 import com.jjbaksa.domain.usecase.map.GetMapShopUseCase
 import com.jjbaksa.jjbaksa.base.BaseViewModel
+import com.jjbaksa.jjbaksa.model.ShopContent
 import com.jjbaksa.jjbaksa.util.MyInfo
 import com.jjbaksa.jjbaksa.util.SingleLiveEvent
-import com.naver.maps.map.overlay.Marker
+import com.jjbaksa.jjbaksa.util.toShopContent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -28,10 +28,9 @@ class HomeViewModel @Inject constructor(
     val category = SingleLiveEvent<JjCategory>()
     val moveCamera = MutableLiveData<Boolean>(true)
     val searchCurrentPosition = MutableLiveData<Boolean>()
-    val lastMapMarkers = SingleLiveEvent<List<Marker>>()
 
-    private val _mapShops = SingleLiveEvent<List<MapShopContent>>()
-    val mapShops: SingleLiveEvent<List<MapShopContent>> get() = _mapShops
+    private val _mapShops = SingleLiveEvent<List<ShopContent>>()
+    val mapShops: SingleLiveEvent<List<ShopContent>> get() = _mapShops
 
     fun setLatLng(lat: Double, lng: Double) {
         location.value = UserLocation(lat, lng)
@@ -53,13 +52,13 @@ class HomeViewModel @Inject constructor(
         lng: Double
     ) {
         viewModelScope.launch(ceh) {
-            getMapShopUseCase.invoke(optionsFriend, optionsNearby, optionsScrap, lat, lng)
-                .collect {
-                    it.onSuccess {
-                        _mapShops.value = it.mapShopContent
-                    }
-                        .onFailure { it.printStackTrace() }
+            getMapShopUseCase.invoke(optionsFriend, optionsNearby, optionsScrap, lat, lng) { msg ->
+                toastMsg.postValue(msg)
+            }.collect {
+                it.onSuccess {
+                    _mapShops.value = it.mapShopContent.map { it.toShopContent() }
                 }
+            }
         }
     }
 

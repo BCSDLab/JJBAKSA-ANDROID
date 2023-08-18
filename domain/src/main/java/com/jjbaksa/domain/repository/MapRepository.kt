@@ -14,7 +14,8 @@ interface MapRepository {
         optionsNearby: Int,
         optionsScrap: Int,
         lat: Double,
-        lng: Double
+        lng: Double,
+        onError: (String) -> Unit
     ): Flow<Result<MapShopData>>
     suspend fun getShopDetail(
         placeId: String,

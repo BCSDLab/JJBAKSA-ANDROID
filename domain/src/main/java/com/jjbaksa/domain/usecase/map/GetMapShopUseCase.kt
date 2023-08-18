@@ -18,9 +18,10 @@ class GetMapShopUseCase @Inject constructor(
         optionsNearby: Int,
         optionsScrap: Int,
         lat: Double,
-        lng: Double
+        lng: Double,
+        onError: (String) -> Unit
     ): Flow<Result<MapShopData>> {
-        return mapShopRepository.getMapShop(optionsFriend, optionsNearby, optionsScrap, lat, lng)
+        return mapShopRepository.getMapShop(optionsFriend, optionsNearby, optionsScrap, lat, lng, onError)
     }
 
     suspend fun getShopDetail(placeId: String, onError: (String) -> Unit): Flow<Result<ShopDetail>> {

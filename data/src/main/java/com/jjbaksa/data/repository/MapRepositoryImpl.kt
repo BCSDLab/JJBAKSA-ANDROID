@@ -30,7 +30,8 @@ class MapRepositoryImpl @Inject constructor(
         optionsNearby: Int,
         optionsScrap: Int,
         lat: Double,
-        lng: Double
+        lng: Double,
+        onError: (String) -> Unit
     ): Flow<Result<MapShopData>> {
         return apiCall(
             call = {
@@ -43,8 +44,10 @@ class MapRepositoryImpl @Inject constructor(
             },
             mapper = {
                 if (it.isSuccessful) {
-                    it.body()!!.toMapShopData()
+                    it.body()?.toMapShopData() ?: MapShopData()
                 } else {
+                    val errorResult = RespMapper.errorMapper(it.errorBody()?.string() ?: "")
+                    onError(errorResult.errorMessage)
                     MapShopData()
                 }
             }
