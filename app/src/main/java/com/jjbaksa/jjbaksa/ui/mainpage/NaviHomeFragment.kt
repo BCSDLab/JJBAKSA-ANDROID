@@ -138,7 +138,10 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
         }
         viewModel.mapShops.observe(viewLifecycleOwner) {
             // TODO: 지도에 음식점 마커 찍기
-            if (it.isEmpty()) clearTedNaverClusteringMarkers()
+            if (it.isEmpty()) {
+                showSnackBar("해당 위치에서 검색된 상점이 없습니다.")
+                clearTedNaverClusteringMarkers()
+            }
             addTedNaverClusteringMarkers(it)
         }
         viewModel.location.observe(viewLifecycleOwner) {
