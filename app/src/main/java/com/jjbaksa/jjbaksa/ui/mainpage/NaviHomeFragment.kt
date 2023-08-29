@@ -33,8 +33,6 @@ import com.naver.maps.map.overlay.LocationOverlay
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
 import dagger.hilt.android.AndroidEntryPoint
-import ted.gun0912.clustering.clustering.TedClusterItem
-import ted.gun0912.clustering.geometry.TedLatLng
 import ted.gun0912.clustering.naver.TedNaverClustering
 
 @AndroidEntryPoint
