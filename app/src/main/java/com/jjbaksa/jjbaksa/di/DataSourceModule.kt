@@ -58,7 +58,8 @@ object DataSourceModule {
     @Singleton
     fun provideRemoteSearchDataSource(
         authApi: AuthApi,
-        noAuthApi: NoAuthApi
+        noAuthApi: NoAuthApi,
+        testNoAuthApi: TestNoAuthApi
     ): SearchRemoteDataSource {
         return SearchRemoteDataSource(authApi, noAuthApi)
     }
@@ -87,9 +88,14 @@ object DataSourceModule {
     ): MapRemoteDataSource {
         return MapRemoteDataSource(authApi, noAuthApi, testNoAuthApi)
     }
+
     @Provides
     @Singleton
-    fun provideRemoteScrapDataSource(authApi: AuthApi, noAuthApi: NoAuthApi): ScrapRemoteDataSource {
-        return ScrapRemoteDataSource(authApi, noAuthApi)
+    fun provideRemoteScrapDataSource(
+        authApi: AuthApi,
+        noAuthApi: NoAuthApi,
+        testNoAuthApi: TestNoAuthApi
+    ): ScrapRemoteDataSource {
+        return ScrapRemoteDataSource(authApi, noAuthApi, testNoAuthApi)
     }
 }

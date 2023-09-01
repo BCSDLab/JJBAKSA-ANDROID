@@ -2,10 +2,12 @@ package com.jjbaksa.data.repository
 
 import com.jjbaksa.data.datasource.remote.ScrapRemoteDataSource
 import com.jjbaksa.data.mapper.toAddShopScrap
+import com.jjbaksa.data.mapper.toGetScraps
 import com.jjbaksa.data.mapper.toShopScrap
 import com.jjbaksa.data.model.apiCall
 import com.jjbaksa.domain.repository.ScrapRepository
 import com.jjbaksa.domain.resp.scrap.AddShopScrap
+import com.jjbaksa.domain.resp.scrap.GetScraps
 import com.jjbaksa.domain.resp.scrap.ShopScrap
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -37,6 +39,23 @@ class ScrapRepositoryImpl @Inject constructor(
                     it.body()!!.toAddShopScrap()
                 } else {
                     AddShopScrap()
+                }
+            }
+        )
+    }
+
+    override suspend fun getScraps(
+        user: Int?,
+        cursor: Int?,
+        size: Int
+    ): Flow<Result<GetScraps>> {
+        return apiCall(
+            call = { scrapRemoteDataSource.getScraps(user, cursor, size) },
+            mapper = {
+                if (it.isSuccessful) {
+                    it.body()!!.toGetScraps()
+                } else {
+                    GetScraps()
                 }
             }
         )

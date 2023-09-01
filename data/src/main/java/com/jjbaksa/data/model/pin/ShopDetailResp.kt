@@ -16,7 +16,7 @@ data class ShopDetailResp(
     @SerializedName("ratingCount")
     val ratingCount: Int? = 0,
     @SerializedName("scrap")
-    val scrap: Boolean? = false,
+    val scrap: Int? = 0,
     @SerializedName("photos")
     val photos: List<String>? = emptyList(),
 )

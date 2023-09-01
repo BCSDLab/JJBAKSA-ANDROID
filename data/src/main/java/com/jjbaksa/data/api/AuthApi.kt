@@ -7,6 +7,7 @@ import com.jjbaksa.data.model.map.ShopReviewResp
 import com.jjbaksa.data.model.pin.ShopDetailResp
 import com.jjbaksa.data.model.scrap.AddShopScrapBodyReq
 import com.jjbaksa.data.model.scrap.AddShopScrapResp
+import com.jjbaksa.data.model.scrap.GetScrapsResp
 import com.jjbaksa.data.model.scrap.ShopScrapResp
 import retrofit2.http.GET
 import com.jjbaksa.data.model.user.UserResp
@@ -53,6 +54,12 @@ interface AuthApi {
     suspend fun postShopScrap(
         @Body addShopScrapBody: AddShopScrapBodyReq
     ): Response<AddShopScrapResp>
+    @GET("scraps")
+    suspend fun getScraps(
+        @Query("user") user: Int?,
+        @Query("cursor") cursor: Int?,
+        @Query("size") size: Int
+    ): Response<GetScrapsResp>
     @Multipart
     @POST("review")
     suspend fun setReview(
