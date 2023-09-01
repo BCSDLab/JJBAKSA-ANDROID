@@ -1,6 +1,7 @@
 package com.jjbaksa.data.datasource
 
 import com.jjbaksa.data.model.scrap.AddShopScrapResp
+import com.jjbaksa.data.model.scrap.GetScrapsResp
 import com.jjbaksa.data.model.scrap.ShopScrapResp
 import retrofit2.Response
 
@@ -12,4 +13,9 @@ interface ScrapDataSource {
         directoryId: Int,
         placeId: String
     ): Response<AddShopScrapResp>
+    suspend fun getScraps(
+        user: Int?,
+        cursor: Int?,
+        size: Int
+    ): Response<GetScrapsResp>
 }

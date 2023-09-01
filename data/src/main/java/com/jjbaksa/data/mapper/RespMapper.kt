@@ -18,7 +18,9 @@ import com.jjbaksa.data.model.post.PostDetailResp
 import com.jjbaksa.data.model.post.PostResp
 import com.jjbaksa.data.model.post.dto.PostContentDTO
 import com.jjbaksa.data.model.scrap.AddShopScrapResp
+import com.jjbaksa.data.model.scrap.GetScrapsResp
 import com.jjbaksa.data.model.scrap.ShopScrapResp
+import com.jjbaksa.data.model.scrap.UserScrapsShopResp
 import com.jjbaksa.data.model.search.AutoKeywordResp
 import com.jjbaksa.data.model.search.SearchShopResp
 import com.jjbaksa.data.model.search.ShopResp
@@ -40,7 +42,9 @@ import com.jjbaksa.domain.resp.post.Post
 import com.jjbaksa.domain.resp.post.PostData
 import com.jjbaksa.domain.resp.post.PostDetail
 import com.jjbaksa.domain.resp.scrap.AddShopScrap
+import com.jjbaksa.domain.resp.scrap.GetScraps
 import com.jjbaksa.domain.resp.scrap.ShopScrap
+import com.jjbaksa.domain.resp.scrap.UserScrapsShop
 import com.jjbaksa.domain.resp.search.AutoKeyword
 import com.jjbaksa.domain.resp.search.Shop
 import com.jjbaksa.domain.resp.search.ShopData
@@ -159,6 +163,24 @@ fun AddShopScrapResp.toAddShopScrap() = AddShopScrap(
     updatedAt = updatedAt ?: 0,
     directory = directory ?: 0,
     shopId = shopId ?: 0
+)
+
+fun GetScrapsResp.toGetScraps() = GetScraps(
+    content = content?.map { it.toUserScrapsShop() }.orEmpty()
+)
+
+fun UserScrapsShopResp.toUserScrapsShop() = UserScrapsShop(
+    placeId = placeId ?: "",
+    name = name ?: "",
+    photo = photo ?: "",
+    category = category ?: "",
+    totalRating = totalRating ?: 0,
+    ratingCount = ratingCount ?: 0,
+    address = address ?: "",
+    scrapId = scrapId ?: 0,
+    createdAt = createdAt ?: 0,
+    updatedAt = updatedAt ?: 0,
+    directory = directory ?: 0
 )
 
 fun ShopReviewResp.toShopReview() = ShopReview(
