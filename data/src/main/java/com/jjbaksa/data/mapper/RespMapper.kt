@@ -138,7 +138,7 @@ fun ShopDetailResp.toShopDetail() = ShopDetail(
     name = name ?: "",
     totalRating = totalRating ?: 0,
     ratingCount = ratingCount ?: 0,
-    scrap = scrap ?: false,
+    scrap = scrap ?: 0,
     photos = photos ?: emptyList(),
 )
 
