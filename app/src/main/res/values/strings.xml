@@ -105,6 +105,10 @@
         <item>내 리뷰</item>
         <item>친구 리뷰</item>
     </string-array>
+    <string-array name="my_page_tab">
+        <item>리뷰</item>
+        <item>북마크</item>
+    </string-array>
     <string name="write_review">리뷰 작성하기</string>
     <string name="my_review_empty_description">오늘 다녀오셨나요?\n리뷰를 한 번 작성해보아요!</string>
     <string name="friend_review_empty_description">작성한 리뷰가 없어요!</string>

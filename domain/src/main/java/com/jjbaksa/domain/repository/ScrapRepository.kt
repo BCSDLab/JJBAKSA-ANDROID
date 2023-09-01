@@ -1,6 +1,7 @@
 package com.jjbaksa.domain.repository
 
 import com.jjbaksa.domain.resp.scrap.AddShopScrap
+import com.jjbaksa.domain.resp.scrap.GetScraps
 import com.jjbaksa.domain.resp.scrap.ShopScrap
 import kotlinx.coroutines.flow.Flow
 
@@ -10,4 +11,9 @@ interface ScrapRepository {
     ): Flow<Result<ShopScrap>>
 
     suspend fun addShopScrap(directoryId: Int, placeId: String): Flow<Result<AddShopScrap>>
+    suspend fun getScraps(
+        user: Int?,
+        cursor: Int?,
+        size: Int
+    ): Flow<Result<GetScraps>>
 }

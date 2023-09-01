@@ -94,7 +94,7 @@ class PinActivity : BaseActivity<ActivityPinBinding>() {
             binding.shopTypeTextView.text = it.category
             binding.reviewStarCountTextView.text =
                 round((it.totalRating / it.ratingCount.toDouble()) * 10).div(10).toString()
-            binding.bookmarkImageView.isSelected = it.scrap
+            binding.bookmarkImageView.isSelected = it.scrap != 0
 
             it.photos.forEach {
                 binding.shopImagesTabLayout.addTab(binding.shopImagesTabLayout.newTab())

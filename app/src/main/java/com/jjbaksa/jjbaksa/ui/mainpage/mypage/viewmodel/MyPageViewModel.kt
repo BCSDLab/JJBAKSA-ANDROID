@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.jjbaksa.domain.base.RespResult
 import com.jjbaksa.domain.repository.UserRepository
+import com.jjbaksa.domain.resp.scrap.UserScrapsShop
+import com.jjbaksa.domain.usecase.scrap.GetShopScrapUseCase
 import com.jjbaksa.jjbaksa.base.BaseViewModel
 import com.jjbaksa.jjbaksa.util.MyInfo
 import com.jjbaksa.jjbaksa.util.SingleLiveEvent
@@ -14,19 +16,24 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MyPageViewModel @Inject constructor(
-    val repository: UserRepository
+    val repository: UserRepository,
+    val scrapUseCase: GetShopScrapUseCase
 ) : BaseViewModel() {
     val account = MutableLiveData<String>("")
     val nickname = MutableLiveData<String>("")
     val profileFollowers = MutableLiveData<Int>(0)
     val profileImage = MutableLiveData<String>("")
     val textLength = MutableLiveData<String>("")
+    val bookmarkHasMore = SingleLiveEvent<Boolean>()
 
     private val _loadImage = SingleLiveEvent<String>()
     val loadImage: LiveData<String> get() = _loadImage
 
     private val _isResult = SingleLiveEvent<Boolean>()
     val isResult: LiveData<Boolean> get() = _isResult
+
+    private val _scrapsShops = SingleLiveEvent<List<UserScrapsShop>>()
+    val scrapsShops: SingleLiveEvent<List<UserScrapsShop>> get() = _scrapsShops
 
     fun getUserProfile() {
         account.value = MyInfo.account
@@ -59,6 +66,17 @@ class MyPageViewModel @Inject constructor(
                         MyInfo.nickname = it
                     }
                     _isResult.value = true
+                }
+            }
+        }
+    }
+
+    fun getScraps(user: Int?, cursor: Int?, size: Int) {
+        viewModelScope.launch(ceh) {
+            scrapUseCase.getUserScrapsShop(user, cursor, size).collect {
+                it.onSuccess {
+                    _scrapsShops.value = it.content
+                    bookmarkHasMore.value = it.content.count() == 10
                 }
             }
         }

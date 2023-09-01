@@ -7,6 +7,6 @@ data class ShopDetail(
     val name: String = "",
     val totalRating: Int = 0,
     val ratingCount: Int = 0,
-    val scrap: Boolean = false,
+    val scrap: Int = 0,
     val photos: List<String> = emptyList(),
 )
