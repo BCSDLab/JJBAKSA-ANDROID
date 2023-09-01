@@ -46,6 +46,8 @@
                         app:tabBackground="@drawable/selector_tab"
                         app:tabGravity="fill"
                         app:tabIndicator="@null"
+                        app:tabPaddingStart="5dp"
+                        app:tabPaddingEnd="5dp"
                         tools:background="@color/black" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

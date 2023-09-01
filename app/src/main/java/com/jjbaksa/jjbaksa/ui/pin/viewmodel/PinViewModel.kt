@@ -29,6 +29,8 @@ class PinViewModel @Inject constructor(
     val myReviewUpdateCursor = SingleLiveEvent<MyReviewCursor>()
     val friendReviewUpdateCursor = SingleLiveEvent<FriendReviewCursor>()
     val pinReviewCursor = SingleLiveEvent<PinReviewCursor>()
+    val myReviewHasMore = SingleLiveEvent<Boolean>()
+    val friendReviewHasMore = SingleLiveEvent<Boolean>()
 
     private val _myReviewLastDate = MutableLiveData<ShopReviewLastDate>()
     val myReviewLastDate: LiveData<ShopReviewLastDate> get() = _myReviewLastDate
@@ -114,9 +116,9 @@ class PinViewModel @Inject constructor(
             useCase.getMyReview(placeId, idCursor, dateCursor, rateCursor, size, direction, sort)
                 .collect {
                     it.onSuccess {
+                        myReviewHasMore.value = it.content.count() == 10
                         _myReview.value = it
                     }.onFailure {
-                        it.printStackTrace()
                         _myReview.value = ShopMyReview()
                     }
                 }
@@ -136,9 +138,9 @@ class PinViewModel @Inject constructor(
             useCase.getFollowerShopReview(placeId, idCursor, dateCursor, rateCursor, size, direction, sort)
                 .collect {
                     it.onSuccess {
+                        friendReviewHasMore.value = it.content.count() == 10
                         _friendReview.value = it
                     }.onFailure {
-                        it.printStackTrace()
                         _friendReview.value = FollowerShopReview()
                     }
                 }
