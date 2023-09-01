@@ -17,6 +17,8 @@ import com.jjbaksa.data.model.pin.ShopDetailResp
 import com.jjbaksa.data.model.post.PostDetailResp
 import com.jjbaksa.data.model.post.PostResp
 import com.jjbaksa.data.model.post.dto.PostContentDTO
+import com.jjbaksa.data.model.review.ReviewShopContentDTO
+import com.jjbaksa.data.model.review.ReviewShopResp
 import com.jjbaksa.data.model.scrap.AddShopScrapResp
 import com.jjbaksa.data.model.scrap.GetScrapsResp
 import com.jjbaksa.data.model.scrap.ShopScrapResp
@@ -41,6 +43,8 @@ import com.jjbaksa.domain.resp.map.ShopReviewLastDate
 import com.jjbaksa.domain.resp.post.Post
 import com.jjbaksa.domain.resp.post.PostData
 import com.jjbaksa.domain.resp.post.PostDetail
+import com.jjbaksa.domain.resp.review.ReviewShop
+import com.jjbaksa.domain.resp.review.ReviewShopContent
 import com.jjbaksa.domain.resp.scrap.AddShopScrap
 import com.jjbaksa.domain.resp.scrap.GetScraps
 import com.jjbaksa.domain.resp.scrap.ShopScrap
@@ -189,6 +193,18 @@ fun ShopReviewResp.toShopReview() = ShopReview(
     rate = rate ?: 0,
     createdAt = createdAt ?: "",
     reviewImages = reviewImages?.map { it.toReviewImages() }.orEmpty()
+)
+
+fun ReviewShopResp.toReviewShop() = ReviewShop(
+    content = content?.map { it.toReviewShopContent() }.orEmpty()
+)
+
+fun ReviewShopContentDTO.toReviewShopContent() = ReviewShopContent(
+    shopId = shopId ?: 0,
+    placeId = placeId ?: "",
+    name = name ?: "",
+    category = category ?: "",
+    scrap = scrap ?: 0
 )
 
 fun ReviewImagesDTO.toReviewImages() = ReviewImages(

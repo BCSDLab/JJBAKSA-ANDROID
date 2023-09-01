@@ -19,12 +19,15 @@ import com.jjbaksa.data.repository.SearchRepositoryImpl
 import com.jjbaksa.domain.repository.HomeRepository
 import com.jjbaksa.domain.repository.InquiryRepository
 import com.jjbaksa.data.datasource.remote.PostRemoteDataSource
+import com.jjbaksa.data.datasource.remote.ReviewRemoteDataSource
 import com.jjbaksa.data.datasource.remote.ScrapRemoteDataSource
 import com.jjbaksa.data.repository.MapRepositoryImpl
 import com.jjbaksa.data.repository.PostRepositoryImpl
+import com.jjbaksa.data.repository.ReviewRepositoryImpl
 import com.jjbaksa.data.repository.ScrapRepositoryImpl
 import com.jjbaksa.domain.repository.MapRepository
 import com.jjbaksa.domain.repository.PostRepository
+import com.jjbaksa.domain.repository.ReviewRepository
 import com.jjbaksa.domain.repository.ScrapRepository
 import com.jjbaksa.domain.repository.SearchRepository
 import dagger.Module
@@ -99,5 +102,12 @@ object RepositoryModule {
         scrapRemoteDataSource: ScrapRemoteDataSource
     ): ScrapRepository {
         return ScrapRepositoryImpl(scrapRemoteDataSource)
+    }
+    @Singleton
+    @Provides
+    fun provideReviewRepository(
+        reviewRemoteDataSource: ReviewRemoteDataSource
+    ): ReviewRepository {
+        return ReviewRepositoryImpl(reviewRemoteDataSource)
     }
 }

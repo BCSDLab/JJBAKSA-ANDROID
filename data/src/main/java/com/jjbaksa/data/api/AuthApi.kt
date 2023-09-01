@@ -5,6 +5,7 @@ import com.jjbaksa.data.model.map.MyReviewResp
 import com.jjbaksa.data.model.map.ShopReviewLastDateResp
 import com.jjbaksa.data.model.map.ShopReviewResp
 import com.jjbaksa.data.model.pin.ShopDetailResp
+import com.jjbaksa.data.model.review.ReviewShopResp
 import com.jjbaksa.data.model.scrap.AddShopScrapBodyReq
 import com.jjbaksa.data.model.scrap.AddShopScrapResp
 import com.jjbaksa.data.model.scrap.GetScrapsResp
@@ -68,6 +69,11 @@ interface AuthApi {
         @Query("rate") rate: Int,
         @Part reviewImages: List<MultipartBody.Part>
     ): Response<ShopReviewResp>
+    @GET("review/shops")
+    suspend fun getReviewShop(
+        @Query("cursor") cursor: Int?,
+        @Query("size") size: Int
+    ): Response<ReviewShopResp>
     @GET("review/shop/{place-id}")
     suspend fun getMyReview(
         @Path("place-id") placeId: String,
