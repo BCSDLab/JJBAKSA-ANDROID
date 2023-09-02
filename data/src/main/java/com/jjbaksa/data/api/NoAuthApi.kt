@@ -2,7 +2,6 @@ package com.jjbaksa.data.api
 
 import com.jjbaksa.data.model.findid.FindIdResp
 import com.jjbaksa.data.model.inquiry.InquiryResp
-import com.jjbaksa.data.model.map.MapShopResp
 import com.jjbaksa.data.model.post.PostDetailResp
 import com.jjbaksa.data.model.post.PostResp
 import com.jjbaksa.data.model.search.AutoKeywordResp
@@ -84,13 +83,6 @@ interface NoAuthApi {
         @Path("page_token") pageToken: String,
         @Body locationBody: LocationBody
     ): Response<SearchShopResp>
-    @POST("shops/maps")
-    suspend fun getMapShop(
-        @Query("options_friend") optionsFriend: Int,
-        @Query("options_nearby") optionsNearby: Int,
-        @Query("options_scrap") optionsScrap: Int,
-        @Body locationBody: LocationBody
-    ): Response<List<MapShopResp>>
     @GET("inquiry")
     suspend fun getInquiry(
         @Query("idCursor") idCursor: String?,

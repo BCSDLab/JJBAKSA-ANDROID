@@ -57,10 +57,10 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
             android:backgroundTint="@color/color_ffffff"
-            app:borderWidth="0dp"
-            app:fabCustomSize="48dp"
             android:checked="true"
             android:onClick="@{() -> view.seeMoreCategory()}"
+            app:borderWidth="0dp"
+            app:fabCustomSize="48dp"
             app:layout_constraintBottom_toBottomOf="@+id/edit_text_main_page"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/edit_text_main_page"
@@ -83,6 +83,17 @@
             tools:visibility="visible">
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/category_near_store_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:drawableStart="@drawable/ic_near_store"
+                android:drawablePadding="10dp"
+                android:text="@string/nearby_restaurant"
+                android:textColor="@color/color_666666"
+                android:textSize="14sp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/category_friend_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -98,7 +109,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_bookmark"
-                android:drawablePadding="10dp"
+                android:drawablePadding="16dp"
                 android:text="@string/bookmark_restaurant"
                 android:textColor="@color/color_666666"
                 android:textSize="14sp" />
@@ -144,9 +155,9 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             android:backgroundTint="@color/color_ffffff"
+            android:onClick="@{() -> view.loadLocation()}"
             app:borderWidth="0dp"
             app:fabCustomSize="48dp"
-            android:onClick="@{() -> view.loadLocation()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:maxImageSize="32dp"
@@ -160,8 +171,8 @@
             android:background="@drawable/shape_rect_ffffff_solid_radius_20"
             android:drawableStart="@drawable/ic_research"
             android:drawablePadding="6dp"
-            android:paddingHorizontal="12dp"
             android:onClick="@{() -> view.reloadLocation()}"
+            android:paddingHorizontal="12dp"
             android:text="@string/check_the_real_location"
             android:textColor="@color/color_ff7f23"
             android:textSize="14sp"

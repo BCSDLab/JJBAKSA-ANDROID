@@ -1,6 +1,7 @@
 package com.jjbaksa.data.api
 
 import com.jjbaksa.data.model.follower.FollowerShopReviewResp
+import com.jjbaksa.data.model.map.MapShopResp
 import com.jjbaksa.data.model.map.MyReviewResp
 import com.jjbaksa.data.model.map.ShopReviewLastDateResp
 import com.jjbaksa.data.model.map.ShopReviewResp
@@ -10,6 +11,7 @@ import com.jjbaksa.data.model.scrap.AddShopScrapBodyReq
 import com.jjbaksa.data.model.scrap.AddShopScrapResp
 import com.jjbaksa.data.model.scrap.GetScrapsResp
 import com.jjbaksa.data.model.scrap.ShopScrapResp
+import com.jjbaksa.data.model.search.LocationBody
 import retrofit2.http.GET
 import com.jjbaksa.data.model.user.UserResp
 import okhttp3.MultipartBody
@@ -47,6 +49,13 @@ interface AuthApi {
     suspend fun getShopDetail(
         @Path("place_id") placeId: String
     ): Response<ShopDetailResp>
+    @POST("shops/maps")
+    suspend fun getMapShop(
+        @Query("options_friend") optionsFriend: Int,
+        @Query("options_nearby") optionsNearby: Int,
+        @Query("options_scrap") optionsScrap: Int,
+        @Body locationBody: LocationBody
+    ): Response<List<MapShopResp>>
     @GET("scraps/shops/{scrap_id}")
     suspend fun getShopScrap(
         @Path("scrap_id") scrapId: Int

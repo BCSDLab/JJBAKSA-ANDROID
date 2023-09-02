@@ -118,6 +118,9 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
     }
 
     private fun selectCategory() {
+        binding.categoryNearStoreTextView.setOnClickListener {
+            viewModel.setCategory(JjCategory.NEAR_STORE)
+        }
         binding.categoryFriendTextView.setOnClickListener {
             viewModel.setCategory(JjCategory.FRIEND)
         }
@@ -132,7 +135,10 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
             initLocationOverlay(it.latitude, it.longitude)
         }
         viewModel.mapShops.observe(viewLifecycleOwner) {
-            if (it.isEmpty()) clearTedNaverClusteringMarkers()
+            if (it.isEmpty()) {
+                clearTedNaverClusteringMarkers()
+                showSnackBar(getString(R.string.not_find_restaurant))
+            }
             addTedNaverClusteringMarkers(it)
         }
         viewModel.location.observe(viewLifecycleOwner) {
@@ -144,14 +150,25 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
         }
         viewModel.category.observe(viewLifecycleOwner) { category ->
             when (category) {
+                JjCategory.NEAR_STORE -> {
+                    updateCategoryColorState(binding.categoryNearStoreTextView, true)
+                    updateCategoryColorState(binding.categoryFriendTextView, false)
+                    updateCategoryColorState(binding.categoryBookmarkTextView, false)
+                    getShops()
+                }
+
                 JjCategory.FRIEND -> {
+                    updateCategoryColorState(binding.categoryNearStoreTextView, false)
                     updateCategoryColorState(binding.categoryFriendTextView, true)
                     updateCategoryColorState(binding.categoryBookmarkTextView, false)
+                    getShops()
                 }
 
                 JjCategory.BOOKMARK -> {
+                    updateCategoryColorState(binding.categoryNearStoreTextView, false)
                     updateCategoryColorState(binding.categoryFriendTextView, false)
                     updateCategoryColorState(binding.categoryBookmarkTextView, true)
+                    getShops()
                 }
             }
         }
@@ -199,10 +216,6 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
             .enabledLayerGroups(NaverMap.LAYER_GROUP_BUILDING)
         initUiSettings()
         initTedNaverClustering()
-
-        if (requireContext().hasPermission(locationPermissions)) {
-            getShops()
-        }
 
         fusedLocationUtil.getLastLocation()?.addOnSuccessListener {
             if (it == null) return@addOnSuccessListener
@@ -287,6 +300,7 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
     override fun onResume() {
         super.onResume()
         fusedLocationUtil.startLocationUpdate()
+        viewModel.category.postValue(null)
     }
 
     override fun onPause() {
@@ -328,11 +342,35 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
     }
 
     private fun getShops() {
-        viewModel.getMapShop(
-            0, 1, 0,
-            currentMap.cameraPosition.target.latitude,
-            currentMap.cameraPosition.target.longitude
-        )
+        when (viewModel.category.value) {
+            JjCategory.NEAR_STORE -> {
+                viewModel.getMapShop(
+                    0, 1, 0,
+                    currentMap.cameraPosition.target.latitude,
+                    currentMap.cameraPosition.target.longitude
+                )
+            }
+
+            JjCategory.FRIEND -> {
+                viewModel.getMapShop(
+                    1, 0, 0,
+                    currentMap.cameraPosition.target.latitude,
+                    currentMap.cameraPosition.target.longitude
+                )
+            }
+
+            JjCategory.BOOKMARK -> {
+                viewModel.getMapShop(
+                    0, 0, 1,
+                    currentMap.cameraPosition.target.latitude,
+                    currentMap.cameraPosition.target.longitude
+                )
+            }
+
+            else -> {
+                showSnackBar(getString(R.string.choose_restaurant_options))
+            }
+        }
     }
 
     fun zoomIn() {
