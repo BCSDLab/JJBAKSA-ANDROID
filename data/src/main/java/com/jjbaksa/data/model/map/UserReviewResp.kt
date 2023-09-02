@@ -1,6 +1,7 @@
 package com.jjbaksa.data.model.map
 
 import com.google.gson.annotations.SerializedName
+import com.jjbaksa.data.model.user.UserProfileImageResp
 
 data class UserReviewResp(
     @SerializedName("id")
@@ -8,5 +9,7 @@ data class UserReviewResp(
     @SerializedName("account")
     val account: String? = "",
     @SerializedName("nickname")
-    val nickname: String? = ""
+    val nickname: String? = "",
+    @SerializedName("profileImage")
+    val profileImage: UserProfileImageResp? = UserProfileImageResp()
 )

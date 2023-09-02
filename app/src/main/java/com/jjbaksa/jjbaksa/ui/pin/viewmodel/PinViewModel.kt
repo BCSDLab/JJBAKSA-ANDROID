@@ -140,8 +140,6 @@ class PinViewModel @Inject constructor(
                     it.onSuccess {
                         friendReviewHasMore.value = it.content.count() == 10
                         _friendReview.value = it
-                    }.onFailure {
-                        _friendReview.value = FollowerShopReview()
                     }
                 }
         }

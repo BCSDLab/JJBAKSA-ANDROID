@@ -2,13 +2,13 @@ package com.jjbaksa.data.model.user
 
 import com.google.gson.annotations.SerializedName
 
-data class UserProfileResp(
+data class UserProfileImageResp(
     @SerializedName("id")
-    var id: Int,
+    var id: Int? = 0,
     @SerializedName("originalName")
-    var originalName: String,
+    var originalName: String? = "",
     @SerializedName("path")
-    var path: String,
+    var path: String? = "",
     @SerializedName("url")
-    var url: String
+    var url: String? = ""
 )

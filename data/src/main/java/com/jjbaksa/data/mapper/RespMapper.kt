@@ -26,6 +26,7 @@ import com.jjbaksa.data.model.scrap.UserScrapsShopResp
 import com.jjbaksa.data.model.search.AutoKeywordResp
 import com.jjbaksa.data.model.search.SearchShopResp
 import com.jjbaksa.data.model.search.ShopResp
+import com.jjbaksa.data.model.user.UserProfileImageResp
 import com.jjbaksa.domain.BaseResp
 import com.jjbaksa.domain.resp.follower.FollowerShopReview
 import com.jjbaksa.domain.resp.follower.FollowerShopReviewContent
@@ -52,6 +53,7 @@ import com.jjbaksa.domain.resp.scrap.UserScrapsShop
 import com.jjbaksa.domain.resp.search.AutoKeyword
 import com.jjbaksa.domain.resp.search.Shop
 import com.jjbaksa.domain.resp.search.ShopData
+import com.jjbaksa.domain.resp.user.UserProfileImage
 import com.jjbaksa.domain.resp.user.UserReviewInfo
 
 object RespMapper {
@@ -243,5 +245,13 @@ fun FollowerShopReviewContentDTO.toFollowerShopReviewContent() = FollowerShopRev
 fun UserReviewResp.toUserReviewInfo() = UserReviewInfo(
     id = id ?: 0,
     account = account ?: "",
-    nickname = nickname ?: ""
+    nickname = nickname ?: "",
+    profileImage = profileImage?.toUserProfileImage() ?: UserProfileImage()
+)
+
+fun UserProfileImageResp.toUserProfileImage() = UserProfileImage(
+    id = id ?: 0,
+    path = path ?: "",
+    originalName = originalName ?: "",
+    url = url ?: ""
 )

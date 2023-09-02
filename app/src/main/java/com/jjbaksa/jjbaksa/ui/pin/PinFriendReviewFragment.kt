@@ -59,7 +59,6 @@ class PinFriendReviewFragment : BaseFragment<FragmentPinFriendReviewBinding>() {
 
                 if (lastPosition != -1 && lastPosition >= (itemCount - 1) && viewModel.friendReviewHasMore.value == true) {
                     viewModel.friendReviewHasMore.value = false
-                    Log.e("로그", "?")
                     when (viewModel.friendReviewUpdateCursor.value) {
                         FriendReviewCursor.LATEST -> {
                             viewModel.getFollowerShopReview(

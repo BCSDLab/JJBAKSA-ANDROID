@@ -5,6 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.jjbaksa.domain.resp.follower.FollowerShopReviewContent
 import com.jjbaksa.jjbaksa.databinding.ItemFriendReviewBinding
 
@@ -20,6 +22,11 @@ class PinFriendReviewAdapter(
             binding.friendReviewContentTextView.text = item.content
             binding.friendReviewCreatedDateTextView.text = item.createdAt
             binding.reviewStarCountTextView.text = item.rate.toFloat().toString()
+            Glide.with(binding.friendReviewProfileImageView)
+                .load(item.userReviewResponse.profileImage.url)
+                .override(40)
+                .transform(CircleCrop())
+                .into(binding.friendReviewProfileImageView)
 
             binding.myFriendReviewReportTextView.setOnClickListener {
                 onReport(item)

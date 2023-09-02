@@ -14,7 +14,7 @@ data class UserResp(
     @SerializedName("oauthType")
     var oauthType: String,
     @SerializedName("profileImage")
-    var profileImage: UserProfileResp,
+    var profileImage: UserProfileImageResp,
     @SerializedName("userCountResponse")
     var userCountResponse: UserCountResp,
     @SerializedName("userType")
