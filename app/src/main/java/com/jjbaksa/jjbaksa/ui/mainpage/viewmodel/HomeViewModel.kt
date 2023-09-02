@@ -2,12 +2,11 @@ package com.jjbaksa.jjbaksa.ui.mainpage.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.jjbaksa.domain.base.RespResult
 import com.jjbaksa.domain.model.mainpage.JjCategory
 import com.jjbaksa.domain.model.mainpage.UserLocation
 import com.jjbaksa.domain.repository.HomeRepository
-import com.jjbaksa.domain.repository.UserRepository
 import com.jjbaksa.domain.usecase.map.GetMapShopUseCase
+import com.jjbaksa.domain.usecase.user.UserUseCase
 import com.jjbaksa.jjbaksa.base.BaseViewModel
 import com.jjbaksa.jjbaksa.model.ShopContent
 import com.jjbaksa.jjbaksa.util.MyInfo
@@ -19,8 +18,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val userRepository: UserRepository,
-    private val repository: HomeRepository,
+    private val homeRepository: HomeRepository,
+    private val userUseCase: UserUseCase,
     private val getMapShopUseCase: GetMapShopUseCase
 ) : BaseViewModel() {
     val location = MutableLiveData<UserLocation>()
@@ -63,24 +62,17 @@ class HomeViewModel @Inject constructor(
     }
 
     fun getMyInfo() {
-        viewModelScope.launch {
-            runCatching {
-                userRepository.me()
-            }.onSuccess {
-                when (it) {
-                    is RespResult.Success -> {
-                        MyInfo.autoLogin = repository.getMyInfoAutoLogin()
-                        MyInfo.account = repository.getMyInfoAccount()
-                        MyInfo.nickname = repository.getMyInfoNickname()
-                        MyInfo.followers = repository.getMyInfoFollowers()
-                        MyInfo.profileImage = repository.getMyInfoProfileImage()
-                        MyInfo.token = repository.getMyInfoToken()
-                    }
-
-                    is RespResult.Error -> {
-                    }
+        viewModelScope.launch(ceh) {
+            userUseCase.getUserMe().collect {
+                it.onSuccess {
+                    MyInfo.autoLogin = homeRepository.getMyInfoAutoLogin()
+                    MyInfo.account = homeRepository.getMyInfoAccount()
+                    MyInfo.nickname = homeRepository.getMyInfoNickname()
+                    MyInfo.followers = homeRepository.getMyInfoFollowers()
+                    MyInfo.reviews = homeRepository.getMyInfoReviews()
+                    MyInfo.profileImage = homeRepository.getMyInfoProfileImage()
+                    MyInfo.token = homeRepository.getMyInfoToken()
                 }
-            }.onFailure {
             }
         }
     }

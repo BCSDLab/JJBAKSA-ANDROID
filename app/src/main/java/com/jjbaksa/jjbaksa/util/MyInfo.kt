@@ -5,6 +5,7 @@ object MyInfo {
     var account: String = ""
     var nickname: String = ""
     var followers: Int = 0
+    var reviews: Int = 0
     var profileImage: String = ""
     var token: String = ""
 }

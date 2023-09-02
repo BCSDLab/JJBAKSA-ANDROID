@@ -2,38 +2,35 @@ package com.jjbaksa.jjbaksa.ui.splash.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jjbaksa.domain.base.ErrorType
-import com.jjbaksa.domain.base.RespResult
 import com.jjbaksa.domain.repository.UserRepository
+import com.jjbaksa.domain.usecase.user.UserUseCase
+import com.jjbaksa.jjbaksa.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-    val repository: UserRepository
-) : ViewModel() {
+    private val userRepository: UserRepository,
+    private val userUseCase: UserUseCase
+) : BaseViewModel() {
     private var _autoLogin = MutableLiveData<Boolean>()
     val autoLogin: LiveData<Boolean> get() = _autoLogin
 
-    private var _authLoginState = MutableLiveData<RespResult<Boolean>>()
-    val authLoginState: LiveData<RespResult<Boolean>> get() = _authLoginState
+    private var _authLoginState = MutableLiveData<Boolean>()
+    val authLoginState: LiveData<Boolean> get() = _authLoginState
 
     fun getAutoLogin() {
-        _autoLogin.value = repository.getAutoLoginFlag()
+        _autoLogin.value = userRepository.getAutoLoginFlag()
     }
 
-    fun getAccessToken() {
-        viewModelScope.launch {
-            runCatching {
-                repository.me()
-            }.onSuccess {
-                _authLoginState.value = it
-            }.onFailure {
-                _authLoginState.value = RespResult.Error(ErrorType(it.message.toString(), -1))
-                it.printStackTrace()
+    fun getUserMe() {
+        viewModelScope.launch(ceh) {
+            userUseCase.getUserMe().collect {
+                it.onSuccess {
+                    _authLoginState.value = !it.id.equals(0)
+                }
             }
         }
     }

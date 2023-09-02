@@ -1,28 +1,82 @@
 package com.jjbaksa.data.repository
 
 import android.net.Uri
-import com.jjbaksa.data.SUCCESS
 import com.jjbaksa.data.datasource.local.UserLocalDataSource
 import com.jjbaksa.data.datasource.remote.UserRemoteDataSource
 import com.jjbaksa.data.mapper.FormDataUtil
 import com.jjbaksa.data.mapper.RespMapper
+import com.jjbaksa.data.mapper.user.toLoginResult
+import com.jjbaksa.data.mapper.user.toUser
+import com.jjbaksa.data.model.apiCall
 import com.jjbaksa.domain.base.ErrorType
 import com.jjbaksa.domain.base.RespResult
+import com.jjbaksa.domain.model.user.User
 import com.jjbaksa.domain.repository.UserRepository
 import com.jjbaksa.domain.resp.user.FormatResp
-import com.jjbaksa.domain.resp.user.LoginReq
-import com.jjbaksa.domain.resp.user.LoginResult
+import com.jjbaksa.domain.model.user.LoginReq
+import com.jjbaksa.domain.model.user.Login
 import com.jjbaksa.domain.resp.user.SignUpReq
 import com.jjbaksa.domain.resp.user.SignUpResp
 import com.jjbaksa.domain.resp.user.FindPasswordReq
 import com.jjbaksa.domain.resp.user.PasswordAndNicknameReq
 import com.jjbaksa.domain.resp.user.WithdrawalReasonReq
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
     private val userRemoteDataSource: UserRemoteDataSource,
     private val userLocalDataSource: UserLocalDataSource
 ) : UserRepository {
+    override suspend fun getUserMe(): Flow<Result<User>> {
+        return apiCall(
+            call = { userRemoteDataSource.getUserMe() },
+            remoteData = {
+                if (it.isSuccessful) {
+                    val user = it.body()?.toUser() ?: User()
+                    userLocalDataSource.saveNickname(user.nickname)
+                    userLocalDataSource.saveFollowers(user.userCountResponse.friendCount)
+                    userLocalDataSource.saveReviews(user.userCountResponse.reviewCount)
+                    userLocalDataSource.saveProfileImage(user.profileImage.url.toString())
+                }
+            },
+            mapper = {
+                if (it.isSuccessful) {
+                    it.body()?.toUser() ?: User()
+                } else {
+                    User()
+                }
+            }
+        )
+    }
+
+    override suspend fun postLogin(
+        account: String,
+        password: String,
+        isAutoLogin: Boolean
+    ): Flow<Result<Login>> {
+        return apiCall(
+            call = { userRemoteDataSource.postLogin(LoginReq(account, password)) },
+            remoteData = {
+                if (it.isSuccessful) {
+                    userLocalDataSource.clearDataStore()
+                    val loginResponse = it.body()?.toLoginResult() ?: Login()
+                    userLocalDataSource.saveAccessToken(loginResponse.accessToken)
+                    userLocalDataSource.saveRefreshToken(loginResponse.refreshToken)
+                    userLocalDataSource.saveAccount(account)
+                    userLocalDataSource.saveAutoLogin(isAutoLogin)
+                }
+            },
+            mapper = {
+                if (it.isSuccessful) {
+                    it.body()?.toLoginResult() ?: Login()
+                } else {
+                    val errorResult = RespMapper.errorMapper(it.errorBody()?.string() ?: "")
+                    Login(errorMessage = errorResult.errorMessage)
+                }
+            }
+        )
+    }
+
     override suspend fun postSignUp(signUpReq: SignUpReq): SignUpResp? {
         val resp = userRemoteDataSource.postSignUp(signUpReq)
         return resp.body()
@@ -36,35 +90,6 @@ class UserRepositoryImpl @Inject constructor(
             val errorBodyJson = result.errorBody()!!.string()
             val errorBody = RespMapper.errorMapper(errorBodyJson)
             RespResult.Error(ErrorType(errorBody.errorMessage, errorBody.code))
-        }
-    }
-
-    override suspend fun postLogin(
-        account: String,
-        password: String,
-        isAutoLogin: Boolean,
-        onResult: (LoginResult) -> Unit
-    ) {
-        val response = userRemoteDataSource.postLogin(LoginReq(account, password))
-
-        if (response != null) {
-            if (response.isSuccessful) {
-                userLocalDataSource.clearDataStore()
-                if (response.body()?.code == SUCCESS) {
-                    userLocalDataSource.saveAccessToken(response.body()!!.accessToken)
-                    userLocalDataSource.saveRefreshToken(response.body()!!.refreshToken)
-                    userLocalDataSource.saveAccount(account)
-                    userLocalDataSource.savePassword(password)
-                    userLocalDataSource.saveAutoLogin(isAutoLogin)
-                    onResult(LoginResult(isSuccess = true))
-                } else {
-                    onResult(LoginResult(errorMessage = response.body()!!.errorMessage))
-                }
-            } else {
-                var errorBodyJson = "${response.errorBody()!!.string()}"
-                val errorBody = RespMapper.errorMapper(errorBodyJson)
-                onResult(LoginResult(errorMessage = errorBody.errorMessage))
-            }
         }
     }
 
@@ -132,7 +157,8 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun setNewPassword(password: String): FormatResp {
         val item = PasswordAndNicknameReq(password, null)
-        val token = userLocalDataSource.getAuthPasswordToken().ifEmpty { userLocalDataSource.getAccessToken() }
+        val token = userLocalDataSource.getAuthPasswordToken()
+            .ifEmpty { userLocalDataSource.getAccessToken() }
         val response = userRemoteDataSource.setNewPassword(
             "Bearer $token",
             item
@@ -156,20 +182,6 @@ class UserRepositoryImpl @Inject constructor(
             val errorBodyJson = response.errorBody()!!.string()
             val errorBody = RespMapper.errorMapper(errorBodyJson)
             FormatResp(response.isSuccessful, errorBody.errorMessage, response.code())
-        }
-    }
-
-    override suspend fun me(): RespResult<Boolean> {
-        val response = userRemoteDataSource.me()
-        return if (response.isSuccessful) {
-            userLocalDataSource.saveNickname(response.body()?.nickname ?: "")
-            userLocalDataSource.saveFollowers(response.body()?.userCountResponse?.friendCount ?: 0)
-            userLocalDataSource.saveProfileImage(response.body()?.profileImage?.url ?: "")
-            RespResult.Success(response.isSuccessful)
-        } else {
-            val errorBodyJson = response.errorBody()!!.string()
-            val errorBody = RespMapper.errorMapper(errorBodyJson)
-            RespResult.Error(ErrorType(errorBody.errorMessage, errorBody.code))
         }
     }
 
@@ -229,10 +241,6 @@ class UserRepositoryImpl @Inject constructor(
 
     override fun getProfileImage(): String {
         return userLocalDataSource.getProfileImage()
-    }
-
-    override fun getPassword(): String {
-        return userLocalDataSource.getPassword()
     }
 
     override fun getAccessToken(): String {

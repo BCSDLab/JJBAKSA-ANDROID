@@ -1,6 +1,7 @@
 package com.jjbaksa.data.mapper
 
 import com.google.gson.Gson
+import com.jjbaksa.data.mapper.user.toUserProfileImage
 import com.jjbaksa.data.model.follower.FollowerShopReviewContentDTO
 import com.jjbaksa.data.model.follower.FollowerShopReviewResp
 import com.jjbaksa.data.model.inquiry.InquiryResp
@@ -26,8 +27,8 @@ import com.jjbaksa.data.model.scrap.UserScrapsShopResp
 import com.jjbaksa.data.model.search.AutoKeywordResp
 import com.jjbaksa.data.model.search.SearchShopResp
 import com.jjbaksa.data.model.search.ShopResp
-import com.jjbaksa.data.model.user.UserProfileImageResp
-import com.jjbaksa.domain.BaseResp
+import com.jjbaksa.domain.ErrorResp
+import com.jjbaksa.domain.model.user.UserProfileImage
 import com.jjbaksa.domain.resp.follower.FollowerShopReview
 import com.jjbaksa.domain.resp.follower.FollowerShopReviewContent
 import com.jjbaksa.domain.resp.inquiry.InquiryContent
@@ -53,16 +54,15 @@ import com.jjbaksa.domain.resp.scrap.UserScrapsShop
 import com.jjbaksa.domain.resp.search.AutoKeyword
 import com.jjbaksa.domain.resp.search.Shop
 import com.jjbaksa.domain.resp.search.ShopData
-import com.jjbaksa.domain.resp.user.UserProfileImage
 import com.jjbaksa.domain.resp.user.UserReviewInfo
 
 object RespMapper {
-    fun errorMapper(json: String): BaseResp {
+    fun errorMapper(json: String): ErrorResp {
         val startIdx = json.indexOf(",\"errorTrace")
         var newJson = json.substring(0, startIdx) + "}"
         val gson = Gson()
-        val baseResp = gson.fromJson(newJson, BaseResp::class.java)
-        return baseResp
+        val errorResp = gson.fromJson(newJson, ErrorResp::class.java)
+        return errorResp
     }
 }
 
@@ -247,11 +247,4 @@ fun UserReviewResp.toUserReviewInfo() = UserReviewInfo(
     account = account ?: "",
     nickname = nickname ?: "",
     profileImage = profileImage?.toUserProfileImage() ?: UserProfileImage()
-)
-
-fun UserProfileImageResp.toUserProfileImage() = UserProfileImage(
-    id = id ?: 0,
-    path = path ?: "",
-    originalName = originalName ?: "",
-    url = url ?: ""
 )

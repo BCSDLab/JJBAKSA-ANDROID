@@ -30,6 +30,7 @@ class JjbaksaApp : Application() {
             MyInfo.account = dataStore.first()[PreferenceKeys.ACCOUNT] ?: ""
             MyInfo.nickname = dataStore.first()[PreferenceKeys.NICKNAME] ?: ""
             MyInfo.followers = dataStore.first()[PreferenceKeys.FOLLOWERS] ?: 0
+            MyInfo.reviews = dataStore.first()[PreferenceKeys.REVIEWS] ?: 0
             MyInfo.profileImage = dataStore.first()[PreferenceKeys.IMAGE] ?: ""
             MyInfo.token = dataStore.first()[PreferenceKeys.ACCESS_TOKEN] ?: ""
         }

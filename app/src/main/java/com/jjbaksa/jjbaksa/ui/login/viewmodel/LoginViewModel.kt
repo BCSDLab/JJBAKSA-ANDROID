@@ -1,10 +1,10 @@
-package com.jjbaksa.jjbaksa.ui.login
+package com.jjbaksa.jjbaksa.ui.login.viewmodel
 
 import android.text.TextUtils
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.jjbaksa.domain.repository.UserRepository
-import com.jjbaksa.domain.resp.user.LoginResult
+import com.jjbaksa.domain.model.user.Login
+import com.jjbaksa.domain.usecase.user.UserUseCase
 import com.jjbaksa.jjbaksa.base.BaseViewModel
 import com.jjbaksa.jjbaksa.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,20 +13,22 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val repository: UserRepository
+    private val userUseCase: UserUseCase
 ) : BaseViewModel() {
     val account = MutableLiveData<String>("")
     val password = MutableLiveData<String>("")
     val isAutoLogin = MutableLiveData<Boolean>(false)
 
-    private val _loginState = SingleLiveEvent<LoginResult>()
-    val loginState: SingleLiveEvent<LoginResult> get() = _loginState
+    private val _loginResult = SingleLiveEvent<Login>()
+    val loginResult: SingleLiveEvent<Login> get() = _loginResult
 
     fun login(isCheckedSwitch: Boolean) {
         if (!TextUtils.isEmpty(account.value) && !TextUtils.isEmpty(password.value)) {
             viewModelScope.launch(ceh) {
-                repository.postLogin(account.value!!, password.value!!, isCheckedSwitch) {
-                    _loginState.value = it
+                userUseCase.postLogin(account.value ?: "", password.value ?: "", isCheckedSwitch).collect {
+                    it.onSuccess {
+                        _loginResult.value = it
+                    }
                 }
             }
         }

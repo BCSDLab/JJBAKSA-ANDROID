@@ -93,10 +93,10 @@ object NetworkModule {
                     var result = refreshApi.getRefreshAuth()
                     if (result.isSuccessful) {
                         dataStore.edit {
-                            it[PreferenceKeys.ACCESS_TOKEN] = result.body()!!.accessToken
+                            it[PreferenceKeys.ACCESS_TOKEN] = result.body()!!.accessToken ?: ""
                         }
                         dataStore.edit {
-                            it[PreferenceKeys.REFRESH_TOKEN] = result.body()!!.refreshToken
+                            it[PreferenceKeys.REFRESH_TOKEN] = result.body()!!.refreshToken ?: ""
                         }
                         request = response.request
                             .newBuilder()

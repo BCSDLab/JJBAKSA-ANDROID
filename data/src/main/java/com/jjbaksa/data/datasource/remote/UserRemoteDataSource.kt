@@ -7,7 +7,7 @@ import com.jjbaksa.data.model.findid.FindIdResp
 import com.jjbaksa.data.model.user.LoginResp
 import com.jjbaksa.data.model.user.UserResp
 import com.jjbaksa.domain.resp.user.FindPasswordReq
-import com.jjbaksa.domain.resp.user.LoginReq
+import com.jjbaksa.domain.model.user.LoginReq
 import com.jjbaksa.domain.resp.user.PasswordAndNicknameReq
 import com.jjbaksa.domain.resp.user.SignUpReq
 import com.jjbaksa.domain.resp.user.SignUpResp
@@ -20,11 +20,16 @@ class UserRemoteDataSource @Inject constructor(
     private val authApi: AuthApi,
     private val noAuthApi: NoAuthApi
 ) : UserDataSource {
-    override suspend fun postSignUp(signUpReq: SignUpReq): Response<SignUpResp> {
-        return noAuthApi.signUp(signUpReq)
+    override suspend fun getUserMe(): Response<UserResp> {
+        return authApi.getUserMe()
     }
 
-    override suspend fun clearDataStore() {
+    override suspend fun postLogin(loginReq: LoginReq): Response<LoginResp> {
+        return noAuthApi.postLogin(loginReq)
+    }
+
+    override suspend fun postSignUp(signUpReq: SignUpReq): Response<SignUpResp> {
+        return noAuthApi.signUp(signUpReq)
     }
 
     override suspend fun checkAccountAvailable(account: String): Response<Unit> {
@@ -33,10 +38,6 @@ class UserRemoteDataSource @Inject constructor(
 
     override suspend fun checkPassword(token: String, password: String): Response<Unit> {
         return noAuthApi.checkPassword(token, password)
-    }
-
-    override suspend fun postLogin(loginReq: LoginReq): Response<LoginResp>? {
-        return noAuthApi.login(loginReq)
     }
 
     override suspend fun checkAuthEmail(email: String): Response<Unit> {
@@ -74,36 +75,17 @@ class UserRemoteDataSource @Inject constructor(
         return authApi.deleteUser()
     }
 
-    override suspend fun saveAccessToken(accessToken: String) {
-    }
+    override suspend fun saveAccessToken(accessToken: String) {}
+    override suspend fun saveAccount(account: String) {}
+    override suspend fun saveNickname(nickname: String) {}
+    override suspend fun saveFollowers(followers: Int) {}
+    override suspend fun saveReviews(reviews: Int) {}
+    override suspend fun saveProfileImage(image: String) {}
+    override suspend fun saveRefreshToken(refreshToken: String) {}
+    override suspend fun saveAutoLogin(isAutoLogin: Boolean) {}
+    override suspend fun saveAuthPasswordToken(passwordToken: String) {}
+    override suspend fun clearDataStore() {}
 
-    override suspend fun saveAccount(account: String) {
-    }
-
-    override suspend fun saveNickname(nickname: String) {
-    }
-
-    override suspend fun saveFollowers(followers: Int) {
-    }
-
-    override suspend fun saveProfileImage(image: String) {
-    }
-
-    override suspend fun savePassword(password: String) {
-    }
-
-    override suspend fun saveRefreshToken(refreshToken: String) {
-    }
-
-    override suspend fun saveAutoLogin(isAutoLogin: Boolean) {
-    }
-
-    override suspend fun saveAuthPasswordToken(passwordToken: String) {
-    }
-
-    suspend fun me(): Response<UserResp> {
-        return authApi.userMe()
-    }
     suspend fun editUserProfileImage(profile: MultipartBody.Part): Response<UserResp> {
         return authApi.editUserProfileImage(profile)
     }
@@ -124,11 +106,11 @@ class UserRemoteDataSource @Inject constructor(
         return 0
     }
 
-    override fun getProfileImage(): String {
-        return ""
+    override fun getReviews(): Int {
+        return 0
     }
 
-    override fun getPassword(): String {
+    override fun getProfileImage(): String {
         return ""
     }
 

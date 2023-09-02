@@ -3,7 +3,6 @@ package com.jjbaksa.jjbaksa.ui.splash
 import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import com.jjbaksa.domain.base.RespResult
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseActivity
 import com.jjbaksa.jjbaksa.databinding.ActivitySplashBinding
@@ -36,35 +35,21 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     }
 
     override fun subscribe() {
-        observeData()
-    }
-
-    private fun observeData() {
         viewModel.autoLogin.observe(this) { isLogin ->
             if (isLogin) {
-                viewModel.getAccessToken()
+                viewModel.getUserMe()
             } else {
                 goToLoginActivity()
                 finish()
             }
         }
         viewModel.authLoginState.observe(this) {
-            when (it) {
-                is RespResult.Success -> {
-                    if (it.data) {
-                        goToMainActivity()
-                        finish()
-                    } else {
-                        goToLoginActivity()
-                        finish()
-                    }
-                }
-
-                is RespResult.Error -> {
-                    showSnackBar(it.errorType.errorMessage, getString(R.string.cancel))
-                    goToLoginActivity()
-                    finish()
-                }
+            try {
+                if (it) goToMainActivity() else goToLoginActivity()
+            } catch (e: Exception) {
+                goToLoginActivity()
+            } finally {
+                finish()
             }
         }
     }

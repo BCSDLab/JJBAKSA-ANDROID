@@ -10,7 +10,7 @@ import com.jjbaksa.data.model.findid.FindIdResp
 import com.jjbaksa.data.model.user.LoginResp
 import com.jjbaksa.data.model.user.UserResp
 import com.jjbaksa.domain.resp.user.FindPasswordReq
-import com.jjbaksa.domain.resp.user.LoginReq
+import com.jjbaksa.domain.model.user.LoginReq
 import com.jjbaksa.domain.resp.user.PasswordAndNicknameReq
 import com.jjbaksa.domain.resp.user.SignUpReq
 import com.jjbaksa.domain.resp.user.SignUpResp
@@ -26,6 +26,10 @@ class UserLocalDataSource @Inject constructor(
     private val userDao: UserDao
 ) : UserDataSource {
     private val dataStore = context.userDataStore
+    override suspend fun getUserMe(): Response<UserResp> {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun postSignUp(signUpReq: SignUpReq): Response<SignUpResp>? {
         return null
     }
@@ -104,15 +108,15 @@ class UserLocalDataSource @Inject constructor(
         }
     }
 
-    override suspend fun saveProfileImage(image: String) {
+    override suspend fun saveReviews(reviews: Int) {
         dataStore.edit {
-            it[PreferenceKeys.IMAGE] = image
+            it[PreferenceKeys.REVIEWS] = reviews
         }
     }
 
-    override suspend fun savePassword(password: String) {
+    override suspend fun saveProfileImage(image: String) {
         dataStore.edit {
-            it[PreferenceKeys.PASSWORD] = password
+            it[PreferenceKeys.IMAGE] = image
         }
     }
 
@@ -158,15 +162,15 @@ class UserLocalDataSource @Inject constructor(
         }
     }
 
-    override fun getProfileImage(): String {
+    override fun getReviews(): Int {
         return runBlocking {
-            dataStore.data.first()[PreferenceKeys.IMAGE] ?: ""
+            dataStore.data.first()[PreferenceKeys.REVIEWS] ?: 0
         }
     }
 
-    override fun getPassword(): String {
+    override fun getProfileImage(): String {
         return runBlocking {
-            dataStore.data.first()[PreferenceKeys.PASSWORD] ?: ""
+            dataStore.data.first()[PreferenceKeys.IMAGE] ?: ""
         }
     }
 

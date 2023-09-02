@@ -1,23 +1,25 @@
 package com.jjbaksa.domain.repository
 
 import com.jjbaksa.domain.base.RespResult
+import com.jjbaksa.domain.model.user.User
 import com.jjbaksa.domain.resp.user.FindPasswordReq
 import com.jjbaksa.domain.resp.user.FormatResp
-import com.jjbaksa.domain.resp.user.LoginResult
+import com.jjbaksa.domain.model.user.Login
 import com.jjbaksa.domain.resp.user.SignUpReq
 import com.jjbaksa.domain.resp.user.SignUpResp
 import com.jjbaksa.domain.resp.user.WithdrawalReasonReq
+import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
-    suspend fun postSignUp(signUpReq: SignUpReq): SignUpResp?
-    suspend fun checkAccountAvailable(account: String): RespResult<Boolean>
+    suspend fun getUserMe(): Flow<Result<User>>
     suspend fun postLogin(
         account: String,
         password: String,
-        isAutoLogin: Boolean,
-        onResult: (LoginResult) -> Unit
-    )
+        isAutoLogin: Boolean
+    ): Flow<Result<Login>>
 
+    suspend fun postSignUp(signUpReq: SignUpReq): SignUpResp?
+    suspend fun checkAccountAvailable(account: String): RespResult<Boolean>
     suspend fun checkAuthEmail(email: String): FormatResp
     suspend fun checkPassword(password: String): FormatResp
     suspend fun getPasswordVerificationCode(id: String, email: String): FormatResp
@@ -25,7 +27,6 @@ interface UserRepository {
     suspend fun findPassword(user: FindPasswordReq): FormatResp
     suspend fun setNewPassword(password: String): FormatResp
     suspend fun setNewNickname(nickname: String): FormatResp
-    suspend fun me(): RespResult<Boolean>
     suspend fun editUserProfileImage(photo: String): RespResult<Boolean>
     suspend fun saveWithdrawalReason(withdrawalReason: WithdrawalReasonReq): RespResult<Boolean>
     suspend fun deleteUser(): RespResult<Boolean>
@@ -35,6 +36,5 @@ interface UserRepository {
     fun getNickname(): String
     fun getFollowers(): Int
     fun getProfileImage(): String
-    fun getPassword(): String
     fun getAccessToken(): String
 }

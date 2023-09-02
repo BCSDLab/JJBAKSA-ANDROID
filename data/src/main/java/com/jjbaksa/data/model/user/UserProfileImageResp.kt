@@ -4,11 +4,11 @@ import com.google.gson.annotations.SerializedName
 
 data class UserProfileImageResp(
     @SerializedName("id")
-    var id: Int? = 0,
+    val id: Long? = 0,
     @SerializedName("originalName")
-    var originalName: String? = "",
+    val originalName: String? = "",
     @SerializedName("path")
-    var path: String? = "",
+    val path: String? = "",
     @SerializedName("url")
-    var url: String? = ""
+    val url: String? = ""
 )

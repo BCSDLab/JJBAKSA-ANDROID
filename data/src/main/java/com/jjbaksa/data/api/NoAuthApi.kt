@@ -8,7 +8,7 @@ import com.jjbaksa.data.model.search.AutoKeywordResp
 import com.jjbaksa.data.model.search.LocationBody
 import com.jjbaksa.data.model.search.SearchShopResp
 import com.jjbaksa.data.model.search.TrendResp
-import com.jjbaksa.domain.resp.user.LoginReq
+import com.jjbaksa.domain.model.user.LoginReq
 import com.jjbaksa.data.model.user.LoginResp
 import com.jjbaksa.data.model.user.UserResp
 import com.jjbaksa.domain.resp.user.FindPasswordReq
@@ -25,6 +25,11 @@ import retrofit2.http.PATCH
 import retrofit2.http.Path
 
 interface NoAuthApi {
+    @POST("user/login")
+    suspend fun postLogin(
+        @Body loginReq: LoginReq
+    ): Response<LoginResp>
+
     @POST("user")
     suspend fun signUp(
         @Body signUpReq: SignUpReq
@@ -34,21 +39,18 @@ interface NoAuthApi {
     suspend fun checkIdAvailable(
         @Query("account") page: String
     ): Response<Unit>
+
     @POST("user/check-password")
     suspend fun checkPassword(
         @Header("Authorization") token: String,
         @Query("password") password: String
     ): Response<Unit>
 
-    @POST("user/login")
-    suspend fun login(
-        @Body loginReq: LoginReq
-    ): Response<LoginResp>
-
     @POST("user/email/account")
     suspend fun getEmailCodeNumber(
         @Query("email") userEmail: String
     ): Response<Unit>
+
     @POST("user/email/password")
     suspend fun getPasswordVerificationCode(
         @Query("account") id: String,
@@ -71,30 +73,39 @@ interface NoAuthApi {
         @Header("Authorization") token: String,
         @Body passwordAndNicknameReq: PasswordAndNicknameReq
     ): Response<UserResp>
+
     @GET("trending")
     suspend fun getTrending(): Response<TrendResp>
 
     @GET("auto-complete/{word}")
     suspend fun getSearchKeyword(@Path("word") word: String): Response<AutoKeywordResp>
+
     @POST("shops")
-    suspend fun getShops(@Query("keyword") keyword: String, @Body locationBody: LocationBody): Response<SearchShopResp>
+    suspend fun getShops(
+        @Query("keyword") keyword: String,
+        @Body locationBody: LocationBody
+    ): Response<SearchShopResp>
+
     @POST("shops/page/{page_token}")
     suspend fun getShopsPage(
         @Path("page_token") pageToken: String,
         @Body locationBody: LocationBody
     ): Response<SearchShopResp>
+
     @GET("inquiry")
     suspend fun getInquiry(
         @Query("idCursor") idCursor: String?,
         @Query("dateCursor") dateCursor: String?,
         @Query("size") size: Int,
     ): Response<InquiryResp>
+
     @GET("post")
     suspend fun getPost(
         @Query("idCursor") idCursor: String,
         @Query("dateCursor") dateCursor: String,
         @Query("size") size: Int
     ): Response<PostResp>
+
     @GET("post/{post-id}")
     suspend fun getPostDetail(
         @Path("post-id") postId: Int

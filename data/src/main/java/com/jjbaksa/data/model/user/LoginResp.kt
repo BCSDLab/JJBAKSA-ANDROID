@@ -1,8 +1,11 @@
 package com.jjbaksa.data.model.user
 
-import com.jjbaksa.domain.BaseResp
+import com.google.gson.annotations.SerializedName
+import com.jjbaksa.domain.ErrorResp
 
 data class LoginResp(
-    val accessToken: String,
-    val refreshToken: String
-) : BaseResp()
+    @SerializedName("accessToken")
+    val accessToken: String? = "",
+    @SerializedName("refreshToken")
+    val refreshToken: String? = ""
+) : ErrorResp()

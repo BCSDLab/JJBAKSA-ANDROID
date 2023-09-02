@@ -1,7 +1,7 @@
 package com.jjbaksa.data.model.map
 
 import com.google.gson.annotations.SerializedName
-import com.jjbaksa.domain.BaseResp
+import com.jjbaksa.domain.ErrorResp
 
 data class MapShopResp(
     @SerializedName("placeId")
@@ -12,4 +12,4 @@ data class MapShopResp(
     val geometry: GeometryDTO,
     @SerializedName("photo")
     val photo: String? = ""
-) : BaseResp()
+) : ErrorResp()

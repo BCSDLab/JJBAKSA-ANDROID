@@ -5,6 +5,7 @@ interface HomeDataSource {
     fun getUserAccount(): String
     fun getUserNickname(): String
     fun getUserFollowers(): Int
+    fun getUserReviews(): Int
     fun getUserProfileImage(): String
     fun getUserToken(): String
 }

@@ -29,7 +29,7 @@ import retrofit2.http.Query
 
 interface AuthApi {
     @GET("user/me")
-    suspend fun userMe(): Response<UserResp>
+    suspend fun getUserMe(): Response<UserResp>
     @PATCH("user/me")
     suspend fun setUserNickname(
         @Body item: PasswordAndNicknameReq
