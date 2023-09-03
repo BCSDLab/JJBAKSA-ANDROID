@@ -1,7 +1,7 @@
 package com.jjbaksa.domain.usecase.inquiry
 
 import com.jjbaksa.domain.repository.InquiryRepository
-import com.jjbaksa.domain.resp.inquiry.InquiryData
+import com.jjbaksa.domain.model.inquiry.InquiryData
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

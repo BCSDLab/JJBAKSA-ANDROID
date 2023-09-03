@@ -6,7 +6,7 @@ import com.jjbaksa.data.api.TestNoAuthApi
 import com.jjbaksa.data.datasource.ScrapDataSource
 import com.jjbaksa.data.model.scrap.AddShopScrapBodyReq
 import com.jjbaksa.data.model.scrap.AddShopScrapResp
-import com.jjbaksa.data.model.scrap.GetScrapsResp
+import com.jjbaksa.data.model.scrap.ScrapsResp
 import com.jjbaksa.data.model.scrap.ShopScrapResp
 import retrofit2.Response
 import javax.inject.Inject
@@ -27,7 +27,7 @@ class ScrapRemoteDataSource @Inject constructor(
         return authApi.postShopScrap(AddShopScrapBodyReq(directoryId, placeId))
     }
 
-    override suspend fun getScraps(user: Int?, cursor: Int?, size: Int): Response<GetScrapsResp> {
+    override suspend fun getScraps(user: Int?, cursor: Int?, size: Int): Response<ScrapsResp> {
 //        return testNoAuthApi.getScraps()
         return authApi.getScraps(user, cursor, size)
     }

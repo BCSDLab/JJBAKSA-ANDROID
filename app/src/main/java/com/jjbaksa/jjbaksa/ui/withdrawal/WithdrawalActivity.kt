@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.widget.addTextChangedListener
-import com.jjbaksa.domain.resp.user.WithdrawalReasonReq
+import com.jjbaksa.domain.model.user.WithdrawalReasonReq
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseActivity
 import com.jjbaksa.jjbaksa.databinding.ActivityWithdrawalBinding

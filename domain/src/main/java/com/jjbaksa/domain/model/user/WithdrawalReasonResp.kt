@@ -1,4 +1,4 @@
-package com.jjbaksa.domain.resp.user
+package com.jjbaksa.domain.model.user
 
 data class WithdrawalReasonResp(
     val isSuccess: Boolean,

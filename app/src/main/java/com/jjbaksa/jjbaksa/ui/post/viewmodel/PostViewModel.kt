@@ -1,8 +1,8 @@
 package com.jjbaksa.jjbaksa.ui.post.viewmodel
 
 import androidx.lifecycle.viewModelScope
-import com.jjbaksa.domain.resp.post.PostData
-import com.jjbaksa.domain.resp.post.PostDetail
+import com.jjbaksa.domain.model.post.PostData
+import com.jjbaksa.domain.model.post.PostDetail
 import com.jjbaksa.domain.usecase.post.GetPostUseCase
 import com.jjbaksa.jjbaksa.base.BaseViewModel
 import com.jjbaksa.jjbaksa.util.SingleLiveEvent

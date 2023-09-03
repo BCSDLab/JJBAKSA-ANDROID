@@ -22,15 +22,16 @@ class MyPageBottomSheetDialog : BaseBottomSheetDialogFragment<DialogMypageBindin
         get() = R.layout.dialog_mypage
     private val viewModel: MyPageViewModel by activityViewModels()
 
-    private val galleryActivityLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (it.resultCode == Activity.RESULT_OK) {
-            val images = it.data!!.getStringArrayListExtra("images")!!
-            viewModel.setLoadImage(images[0])
-            binding.profileImageView.load(images[0]) {
-                transformations(CircleCropTransformation())
+    private val galleryActivityLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                val images = it.data!!.getStringArrayListExtra("images")!!
+                viewModel.setLoadImage(images[0])
+                binding.profileImageView.load(images[0]) {
+                    transformations(CircleCropTransformation())
+                }
             }
         }
-    }
 
     override fun initView(view: View) {
         binding.vm = viewModel
@@ -48,9 +49,11 @@ class MyPageBottomSheetDialog : BaseBottomSheetDialogFragment<DialogMypageBindin
 
     private fun confirmProfile() {
         binding.confirmButton.setOnClickListener {
-            if (viewModel.loadImage.value.isNullOrEmpty() || viewModel.textLength.value == "0") {
-                Toast.makeText(requireContext(), "닉네임 또는 프로필 이미지를 변경하지 않았습니다.", Toast.LENGTH_SHORT).show()
-            } else {
+            if (viewModel.textLength.value == "0") {
+                Toast.makeText(requireContext(), "닉네임을 입력하시오.", Toast.LENGTH_SHORT).show()
+            } else if (viewModel.loadImage.value.isNullOrEmpty() && viewModel.textLength.value != "0") {
+                viewModel.setNewNickname(binding.profileNicknameEditText.text.toString())
+            } else if (viewModel.loadImage.value != null && viewModel.textLength.value != "0") {
                 viewModel.uploadProfileImgAndNickname(
                     viewModel.loadImage.value.toString(),
                     binding.profileNicknameEditText.text.toString()

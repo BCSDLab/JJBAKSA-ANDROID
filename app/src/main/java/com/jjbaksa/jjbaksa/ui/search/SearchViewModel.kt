@@ -1,7 +1,7 @@
 package com.jjbaksa.jjbaksa.ui.search
 
 import androidx.lifecycle.viewModelScope
-import com.jjbaksa.domain.resp.search.ShopData
+import com.jjbaksa.domain.model.search.ShopData
 import com.jjbaksa.domain.usecase.GetAutoCompleteKeywordUseCase
 import com.jjbaksa.domain.usecase.GetSearchShopUseCase
 import com.jjbaksa.domain.usecase.GetTrendingSearchKeyword

@@ -1,6 +1,6 @@
 package com.jjbaksa.domain.repository
 
-import com.jjbaksa.domain.resp.search.ShopData
+import com.jjbaksa.domain.model.search.ShopData
 import kotlinx.coroutines.flow.Flow
 
 interface SearchRepository {

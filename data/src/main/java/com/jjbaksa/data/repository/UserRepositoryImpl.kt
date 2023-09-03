@@ -12,14 +12,14 @@ import com.jjbaksa.domain.base.ErrorType
 import com.jjbaksa.domain.base.RespResult
 import com.jjbaksa.domain.model.user.User
 import com.jjbaksa.domain.repository.UserRepository
-import com.jjbaksa.domain.resp.user.FormatResp
+import com.jjbaksa.domain.model.user.FormatResp
 import com.jjbaksa.domain.model.user.LoginReq
 import com.jjbaksa.domain.model.user.Login
-import com.jjbaksa.domain.resp.user.SignUpReq
-import com.jjbaksa.domain.resp.user.SignUpResp
+import com.jjbaksa.domain.model.user.SignUpReq
+import com.jjbaksa.domain.model.user.SignUpResp
 import com.jjbaksa.domain.model.user.FindPasswordReq
 import com.jjbaksa.domain.model.user.PasswordAndNicknameReq
-import com.jjbaksa.domain.resp.user.WithdrawalReasonReq
+import com.jjbaksa.domain.model.user.WithdrawalReasonReq
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -210,28 +210,42 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun setNewNickname(nickname: String): FormatResp {
-        val item = PasswordAndNicknameReq(null, nickname)
-        val response = userRemoteDataSource.setNewNickname(item)
-        return if (response.isSuccessful && response.code() == 200) {
-            userLocalDataSource.saveNickname(nickname)
-            FormatResp(response.isSuccessful, "", response.code())
-        } else {
-            val errorBodyJson = response.errorBody()!!.string()
-            val errorBody = RespMapper.errorMapper(errorBodyJson)
-            FormatResp(response.isSuccessful, errorBody.errorMessage, response.code())
-        }
+    override suspend fun setNewNickname(nickname: String): Flow<Result<User>> {
+        return apiCall(
+            call = { userRemoteDataSource.setNewNickname(PasswordAndNicknameReq(nickname = nickname)) },
+            remoteData = {
+                if (it.isSuccessful) {
+                    userLocalDataSource.saveNickname(nickname)
+                }
+            },
+            mapper = {
+                if (it.isSuccessful) {
+                    it.body()?.toUser() ?: User()
+                } else {
+                    User()
+                }
+            }
+        )
     }
 
-    override suspend fun editUserProfileImage(profile: String): RespResult<Boolean> {
-        val fileBody = FormDataUtil.getImageBody("profile", Uri.parse(profile))
-        val response = userRemoteDataSource.editUserProfileImage(fileBody)
-        return if (response.isSuccessful) {
-            userLocalDataSource.saveProfileImage(response.body()?.profileImage?.url ?: "")
-            RespResult.Success(true)
-        } else {
-            RespResult.Success(false)
-        }
+    override suspend fun editUserProfile(profile: String): Flow<Result<User>> {
+        return apiCall(
+            call = {
+                val fileBody = FormDataUtil.getImageBody("profile", Uri.parse(profile))
+                userRemoteDataSource.editUserProfile(fileBody)
+            },
+            remoteData = {
+                if (it.isSuccessful)
+                    userLocalDataSource.saveProfileImage(it.body()?.profileImage?.url ?: "")
+            },
+            mapper = {
+                if (it.isSuccessful) {
+                    it.body()?.toUser() ?: User()
+                } else {
+                    User()
+                }
+            }
+        )
     }
 
     override suspend fun saveWithdrawalReason(withdrawalReason: WithdrawalReasonReq): RespResult<Boolean> {

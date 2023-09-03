@@ -9,7 +9,7 @@ import com.jjbaksa.data.model.review.ReviewShopDetailResp
 import com.jjbaksa.data.model.review.ReviewShopResp
 import com.jjbaksa.data.model.scrap.AddShopScrapBodyReq
 import com.jjbaksa.data.model.scrap.AddShopScrapResp
-import com.jjbaksa.data.model.scrap.GetScrapsResp
+import com.jjbaksa.data.model.scrap.ScrapsResp
 import com.jjbaksa.data.model.scrap.ShopScrapResp
 import com.jjbaksa.data.model.search.LocationBody
 import retrofit2.http.GET
@@ -17,7 +17,7 @@ import com.jjbaksa.data.model.user.UserResp
 import okhttp3.MultipartBody
 import retrofit2.Response
 import com.jjbaksa.domain.model.user.PasswordAndNicknameReq
-import com.jjbaksa.domain.resp.user.WithdrawalReasonReq
+import com.jjbaksa.domain.model.user.WithdrawalReasonReq
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.Multipart
@@ -32,13 +32,13 @@ interface AuthApi {
     suspend fun getUserMe(): Response<UserResp>
     @PATCH("user/me")
     suspend fun setUserNickname(
-        @Body item: PasswordAndNicknameReq
+        @Body passwordAndNicknameReq: PasswordAndNicknameReq
     ): Response<UserResp>
     @DELETE("user/me")
     suspend fun deleteUser(): Response<Unit>
     @Multipart
     @PATCH("user/profile")
-    suspend fun editUserProfileImage(
+    suspend fun patchUserProfile(
         @Part profile: MultipartBody.Part
     ): Response<UserResp>
     @POST("user/withdraw-reason")
@@ -69,7 +69,7 @@ interface AuthApi {
         @Query("user") user: Int?,
         @Query("cursor") cursor: Int?,
         @Query("size") size: Int
-    ): Response<GetScrapsResp>
+    ): Response<ScrapsResp>
     @Multipart
     @POST("review")
     suspend fun postReview(

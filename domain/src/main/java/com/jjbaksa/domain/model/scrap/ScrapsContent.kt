@@ -1,6 +1,6 @@
-package com.jjbaksa.domain.resp.scrap
+package com.jjbaksa.domain.model.scrap
 
-data class UserScrapsShop(
+data class ScrapsContent(
     val placeId: String = "",
     val name: String = "",
     val photo: String = "",

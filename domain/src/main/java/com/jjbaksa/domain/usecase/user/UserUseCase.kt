@@ -52,4 +52,12 @@ class UserUseCase @Inject constructor(
     ): Flow<Result<Boolean>> {
         return userRepository.setNewPassword(password, onError)
     }
+    suspend fun setNewNickname(
+        nickname: String
+    ): Flow<Result<User>> {
+        return userRepository.setNewNickname(nickname)
+    }
+    suspend fun editUserProfile(profile: String): Flow<Result<User>> {
+        return userRepository.editUserProfile(profile)
+    }
 }

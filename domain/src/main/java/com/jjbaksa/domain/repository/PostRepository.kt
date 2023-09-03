@@ -1,7 +1,7 @@
 package com.jjbaksa.domain.repository
 
-import com.jjbaksa.domain.resp.post.PostData
-import com.jjbaksa.domain.resp.post.PostDetail
+import com.jjbaksa.domain.model.post.PostData
+import com.jjbaksa.domain.model.post.PostDetail
 import kotlinx.coroutines.flow.Flow
 
 interface PostRepository {

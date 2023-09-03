@@ -1,6 +1,6 @@
 package com.jjbaksa.domain.repository
 
-import com.jjbaksa.domain.resp.inquiry.InquiryData
+import com.jjbaksa.domain.model.inquiry.InquiryData
 import kotlinx.coroutines.flow.Flow
 
 interface InquiryRepository {

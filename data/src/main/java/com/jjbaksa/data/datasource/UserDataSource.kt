@@ -5,9 +5,9 @@ import com.jjbaksa.data.model.user.UserResp
 import com.jjbaksa.domain.model.user.FindPasswordReq
 import com.jjbaksa.domain.model.user.LoginReq
 import com.jjbaksa.domain.model.user.PasswordAndNicknameReq
-import com.jjbaksa.domain.resp.user.SignUpReq
-import com.jjbaksa.domain.resp.user.SignUpResp
-import com.jjbaksa.domain.resp.user.WithdrawalReasonReq
+import com.jjbaksa.domain.model.user.SignUpReq
+import com.jjbaksa.domain.model.user.SignUpResp
+import com.jjbaksa.domain.model.user.WithdrawalReasonReq
 import retrofit2.Response
 
 interface UserDataSource {

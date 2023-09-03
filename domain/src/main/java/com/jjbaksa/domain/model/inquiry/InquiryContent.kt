@@ -1,4 +1,4 @@
-package com.jjbaksa.domain.resp.inquiry
+package com.jjbaksa.domain.model.inquiry
 
 data class InquiryContent(
     val id: Int,

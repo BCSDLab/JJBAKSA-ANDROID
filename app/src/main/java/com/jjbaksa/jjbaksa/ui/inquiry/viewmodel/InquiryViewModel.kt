@@ -1,7 +1,7 @@
 package com.jjbaksa.jjbaksa.ui.inquiry.viewmodel
 
 import androidx.lifecycle.viewModelScope
-import com.jjbaksa.domain.resp.inquiry.InquiryData
+import com.jjbaksa.domain.model.inquiry.InquiryData
 import com.jjbaksa.domain.usecase.inquiry.GetAllInquiryUseCase
 import com.jjbaksa.jjbaksa.base.BaseViewModel
 import com.jjbaksa.jjbaksa.util.SingleLiveEvent

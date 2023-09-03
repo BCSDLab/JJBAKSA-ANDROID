@@ -8,9 +8,9 @@ import com.jjbaksa.data.model.user.UserResp
 import com.jjbaksa.domain.model.user.FindPasswordReq
 import com.jjbaksa.domain.model.user.LoginReq
 import com.jjbaksa.domain.model.user.PasswordAndNicknameReq
-import com.jjbaksa.domain.resp.user.SignUpReq
-import com.jjbaksa.domain.resp.user.SignUpResp
-import com.jjbaksa.domain.resp.user.WithdrawalReasonReq
+import com.jjbaksa.domain.model.user.SignUpReq
+import com.jjbaksa.domain.model.user.SignUpResp
+import com.jjbaksa.domain.model.user.WithdrawalReasonReq
 import okhttp3.MultipartBody
 import retrofit2.Response
 import javax.inject.Inject
@@ -62,8 +62,8 @@ class UserRemoteDataSource @Inject constructor(
         return noAuthApi.patchUserMe(token, passwordAndNicknameReq)
     }
 
-    override suspend fun setNewNickname(item: PasswordAndNicknameReq): Response<UserResp> {
-        return authApi.setUserNickname(item)
+    override suspend fun setNewNickname(passwordAndNicknameReq: PasswordAndNicknameReq): Response<UserResp> {
+        return authApi.setUserNickname(passwordAndNicknameReq)
     }
 
     override suspend fun saveWithdrawalReason(withdrawalReason: WithdrawalReasonReq): Response<Unit> {
@@ -85,8 +85,8 @@ class UserRemoteDataSource @Inject constructor(
     override suspend fun saveAuthPasswordToken(passwordToken: String) {}
     override suspend fun clearDataStore() {}
 
-    suspend fun editUserProfileImage(profile: MultipartBody.Part): Response<UserResp> {
-        return authApi.editUserProfileImage(profile)
+    suspend fun editUserProfile(profile: MultipartBody.Part): Response<UserResp> {
+        return authApi.patchUserProfile(profile)
     }
 
     override fun getAutoLoginFlag(): Boolean {

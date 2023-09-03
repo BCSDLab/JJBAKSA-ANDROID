@@ -1,4 +1,4 @@
-package com.jjbaksa.domain.resp.scrap
+package com.jjbaksa.domain.model.scrap
 
 data class AddShopScrap(
     val id: Int = 0,

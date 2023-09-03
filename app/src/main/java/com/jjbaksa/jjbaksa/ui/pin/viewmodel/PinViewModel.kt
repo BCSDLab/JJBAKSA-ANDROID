@@ -10,7 +10,7 @@ import com.jjbaksa.domain.model.review.FollowerReviewShops
 import com.jjbaksa.domain.model.shop.ShopDetail
 import com.jjbaksa.domain.model.review.MyReviewShops
 import com.jjbaksa.domain.model.review.ReviewShopLastDate
-import com.jjbaksa.domain.resp.scrap.AddShopScrap
+import com.jjbaksa.domain.model.scrap.AddShopScrap
 import com.jjbaksa.domain.usecase.shop.ShopUseCase
 import com.jjbaksa.domain.usecase.review.ReviewUseCase
 import com.jjbaksa.domain.usecase.scrap.GetShopScrapUseCase

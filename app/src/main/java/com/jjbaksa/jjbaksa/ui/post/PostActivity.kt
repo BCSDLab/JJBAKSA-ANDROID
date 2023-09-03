@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.jjbaksa.domain.resp.post.Post
+import com.jjbaksa.domain.model.post.Post
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseActivity
 import com.jjbaksa.jjbaksa.databinding.ActivityPostBinding

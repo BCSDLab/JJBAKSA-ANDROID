@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jjbaksa.domain.base.RespResult
 import com.jjbaksa.domain.repository.UserRepository
-import com.jjbaksa.domain.resp.user.WithdrawalReasonReq
-import com.jjbaksa.domain.resp.user.WithdrawalReasonResp
+import com.jjbaksa.domain.model.user.WithdrawalReasonReq
+import com.jjbaksa.domain.model.user.WithdrawalReasonResp
 import com.jjbaksa.jjbaksa.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

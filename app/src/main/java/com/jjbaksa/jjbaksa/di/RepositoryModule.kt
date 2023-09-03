@@ -106,8 +106,9 @@ object RepositoryModule {
     @Singleton
     @Provides
     fun provideReviewRepository(
-        reviewRemoteDataSource: ReviewRemoteDataSource
+        reviewRemoteDataSource: ReviewRemoteDataSource,
+        userLocalDataSource: UserLocalDataSource,
     ): ReviewRepository {
-        return ReviewRepositoryImpl(reviewRemoteDataSource)
+        return ReviewRepositoryImpl(reviewRemoteDataSource, userLocalDataSource)
     }
 }

@@ -9,30 +9,22 @@ import com.jjbaksa.data.model.pin.ShopDetailResp
 import com.jjbaksa.data.model.post.PostDetailResp
 import com.jjbaksa.data.model.post.PostResp
 import com.jjbaksa.data.model.post.dto.PostContentDTO
-import com.jjbaksa.data.model.scrap.AddShopScrapResp
-import com.jjbaksa.data.model.scrap.GetScrapsResp
-import com.jjbaksa.data.model.scrap.ShopScrapResp
-import com.jjbaksa.data.model.scrap.UserScrapsShopResp
 import com.jjbaksa.data.model.search.AutoKeywordResp
 import com.jjbaksa.data.model.search.SearchShopResp
 import com.jjbaksa.data.model.search.ShopResp
 import com.jjbaksa.domain.ErrorResp
-import com.jjbaksa.domain.resp.inquiry.InquiryContent
-import com.jjbaksa.domain.resp.inquiry.InquiryData
-import com.jjbaksa.domain.resp.inquiry.InquiryImages
+import com.jjbaksa.domain.model.inquiry.InquiryContent
+import com.jjbaksa.domain.model.inquiry.InquiryData
+import com.jjbaksa.domain.model.inquiry.InquiryImages
 import com.jjbaksa.domain.model.shop.ShopsMapsContent
 import com.jjbaksa.domain.model.shop.ShopsMaps
 import com.jjbaksa.domain.model.shop.ShopDetail
-import com.jjbaksa.domain.resp.post.Post
-import com.jjbaksa.domain.resp.post.PostData
-import com.jjbaksa.domain.resp.post.PostDetail
-import com.jjbaksa.domain.resp.scrap.AddShopScrap
-import com.jjbaksa.domain.resp.scrap.GetScraps
-import com.jjbaksa.domain.resp.scrap.ShopScrap
-import com.jjbaksa.domain.resp.scrap.UserScrapsShop
-import com.jjbaksa.domain.resp.search.AutoKeyword
-import com.jjbaksa.domain.resp.search.Shop
-import com.jjbaksa.domain.resp.search.ShopData
+import com.jjbaksa.domain.model.post.Post
+import com.jjbaksa.domain.model.post.PostData
+import com.jjbaksa.domain.model.post.PostDetail
+import com.jjbaksa.domain.model.search.AutoKeyword
+import com.jjbaksa.domain.model.search.Shop
+import com.jjbaksa.domain.model.search.ShopData
 
 object RespMapper {
     fun errorMapper(json: String): ErrorResp {
@@ -128,41 +120,4 @@ fun ShopDetailResp.toShopDetail() = ShopDetail(
     ratingCount = ratingCount ?: 0,
     scrap = scrap ?: 0,
     photos = photos ?: emptyList(),
-)
-
-fun ShopScrapResp.toShopScrap() = ShopScrap(
-    scrapId = scrapId ?: 0,
-    placeId = placeId ?: "",
-    category = category ?: "",
-    name = name ?: "",
-    totalRating = totalRating ?: 0,
-    ratingCount = ratingCount ?: 0,
-    address = address ?: "",
-    photo = photo ?: emptyList(),
-)
-
-fun AddShopScrapResp.toAddShopScrap() = AddShopScrap(
-    id = id ?: 0,
-    createdAt = createdAt ?: 0,
-    updatedAt = updatedAt ?: 0,
-    directory = directory ?: 0,
-    shopId = shopId ?: 0
-)
-
-fun GetScrapsResp.toGetScraps() = GetScraps(
-    content = content?.map { it.toUserScrapsShop() }.orEmpty()
-)
-
-fun UserScrapsShopResp.toUserScrapsShop() = UserScrapsShop(
-    placeId = placeId ?: "",
-    name = name ?: "",
-    photo = photo ?: "",
-    category = category ?: "",
-    totalRating = totalRating ?: 0,
-    ratingCount = ratingCount ?: 0,
-    address = address ?: "",
-    scrapId = scrapId ?: 0,
-    createdAt = createdAt ?: 0,
-    updatedAt = updatedAt ?: 0,
-    directory = directory ?: 0
 )

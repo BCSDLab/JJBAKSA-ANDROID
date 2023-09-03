@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jjbaksa.domain.base.RespResult
 import com.jjbaksa.domain.enums.SignUpAlertEnum
-import com.jjbaksa.domain.resp.user.SignUpReq
+import com.jjbaksa.domain.model.user.SignUpReq
 import com.jjbaksa.domain.usecase.CheckAccountAvailableUseCase
 import com.jjbaksa.domain.usecase.SignUpUseCase
 import com.jjbaksa.jjbaksa.ui.signup.viewmodel.state.SignUpUIState

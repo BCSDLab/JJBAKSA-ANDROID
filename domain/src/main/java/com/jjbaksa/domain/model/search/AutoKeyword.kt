@@ -1,4 +1,4 @@
-package com.jjbaksa.domain.resp.search
+package com.jjbaksa.domain.model.search
 
 data class AutoKeyword(
     val autoCompletes: List<String>

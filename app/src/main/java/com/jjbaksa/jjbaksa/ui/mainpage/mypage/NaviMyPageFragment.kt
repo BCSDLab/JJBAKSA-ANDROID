@@ -61,10 +61,6 @@ class NaviMyPageFragment : BaseFragment<FragmentNaviMyPageBinding>() {
     }
 
     override fun subscribe() {
-        observeData()
-    }
-
-    private fun observeData() {
         viewModel.nickname.observe(viewLifecycleOwner) {
             binding.profileNameTextView.text = it
         }

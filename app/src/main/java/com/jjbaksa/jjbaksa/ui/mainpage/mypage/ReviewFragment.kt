@@ -8,6 +8,7 @@ import com.jjbaksa.jjbaksa.base.BaseFragment
 import com.jjbaksa.jjbaksa.databinding.FragmentReviewBinding
 import com.jjbaksa.jjbaksa.ui.mainpage.mypage.adapter.ReviewAdapter
 import com.jjbaksa.jjbaksa.ui.mainpage.mypage.viewmodel.MyPageViewModel
+import com.jjbaksa.jjbaksa.util.MyInfo
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,8 +32,7 @@ class ReviewFragment : BaseFragment<FragmentReviewBinding>() {
         }
     }
 
-    override fun initEvent() {
-    }
+    override fun initEvent() {}
 
     override fun subscribe() {
         viewModel.reviewShops.observe(viewLifecycleOwner) {
@@ -42,6 +42,7 @@ class ReviewFragment : BaseFragment<FragmentReviewBinding>() {
             } else {
                 binding.jjNoContentView.isVisible = false
                 reviewAdapter.submitList(it.content)
+                binding.totalReviewTextView.text = getString(R.string.total_review, MyInfo.reviews.toString())
             }
         }
     }

@@ -1,6 +1,7 @@
 package com.jjbaksa.data.repository
 
 import android.net.Uri
+import com.jjbaksa.data.datasource.local.UserLocalDataSource
 import com.jjbaksa.data.datasource.remote.ReviewRemoteDataSource
 import com.jjbaksa.data.mapper.FormDataUtil
 import com.jjbaksa.data.mapper.review.toFollowerShopReview
@@ -18,7 +19,8 @@ import com.jjbaksa.domain.model.review.ReviewShopDetail
 import kotlinx.coroutines.flow.Flow
 
 class ReviewRepositoryImpl(
-    private val reviewRemoteDataSource: ReviewRemoteDataSource
+    private val reviewRemoteDataSource: ReviewRemoteDataSource,
+    private val userLocalDataSource: UserLocalDataSource
 ) : ReviewRepository {
     override suspend fun getReviewShop(cursor: Int?, size: Int): Flow<Result<ReviewShop>> {
         return apiCall(
@@ -130,6 +132,11 @@ class ReviewRepositoryImpl(
                     filesBody = listOf(FormDataUtil.getEmptyBody())
                 }
                 reviewRemoteDataSource.setReview(placeId, content, rate, filesBody)
+            },
+            remoteData = {
+                if (it.isSuccessful) userLocalDataSource.saveReviews(
+                    userLocalDataSource.getReviews().plus(1)
+                )
             },
             mapper = {
                 if (it.isSuccessful) {

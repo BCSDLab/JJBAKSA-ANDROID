@@ -2,7 +2,7 @@ package com.jjbaksa.data.model.scrap
 
 import com.google.gson.annotations.SerializedName
 
-data class UserScrapsShopResp(
+data class ScrapsContentResp(
     @SerializedName("placeId")
     val placeId: String? = "",
     @SerializedName("name")

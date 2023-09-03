@@ -1,9 +1,9 @@
 package com.jjbaksa.domain.usecase.scrap
 
 import com.jjbaksa.domain.repository.ScrapRepository
-import com.jjbaksa.domain.resp.scrap.AddShopScrap
-import com.jjbaksa.domain.resp.scrap.GetScraps
-import com.jjbaksa.domain.resp.scrap.ShopScrap
+import com.jjbaksa.domain.model.scrap.AddShopScrap
+import com.jjbaksa.domain.model.scrap.Scraps
+import com.jjbaksa.domain.model.scrap.ShopScrap
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -17,7 +17,7 @@ class GetShopScrapUseCase @Inject constructor(
     suspend fun addShopScrap(directoryId: Int, placeId: String): Flow<Result<AddShopScrap>> {
         return scrapRepository.addShopScrap(directoryId, placeId)
     }
-    suspend fun getUserScrapsShop(user: Int?, cursor: Int?, size: Int): Flow<Result<GetScraps>> {
+    suspend fun getUserScrapsShop(user: Int?, cursor: Int?, size: Int): Flow<Result<Scraps>> {
         return scrapRepository.getScraps(user, cursor, size)
     }
 }

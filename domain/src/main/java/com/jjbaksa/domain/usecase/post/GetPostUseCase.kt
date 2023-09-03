@@ -1,8 +1,8 @@
 package com.jjbaksa.domain.usecase.post
 
 import com.jjbaksa.domain.repository.PostRepository
-import com.jjbaksa.domain.resp.post.PostData
-import com.jjbaksa.domain.resp.post.PostDetail
+import com.jjbaksa.domain.model.post.PostData
+import com.jjbaksa.domain.model.post.PostDetail
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

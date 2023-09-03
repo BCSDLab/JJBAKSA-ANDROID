@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil.ItemCallback
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.jjbaksa.domain.resp.post.Post
+import com.jjbaksa.domain.model.post.Post
 import com.jjbaksa.jjbaksa.databinding.ItemPostBinding
 import com.jjbaksa.jjbaksa.util.setCalculateDate
 

@@ -1,4 +1,4 @@
-package com.jjbaksa.domain.resp.search
+package com.jjbaksa.domain.model.search
 
 data class ShopData(
     val shopQueryResponseList: MutableList<Shop> = mutableListOf<Shop>(),

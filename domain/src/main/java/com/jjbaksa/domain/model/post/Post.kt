@@ -1,4 +1,4 @@
-package com.jjbaksa.domain.resp.post
+package com.jjbaksa.domain.model.post
 
 data class Post(
     val id: Int = 0,

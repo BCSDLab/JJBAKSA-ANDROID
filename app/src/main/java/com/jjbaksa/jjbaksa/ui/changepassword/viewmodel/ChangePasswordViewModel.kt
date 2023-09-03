@@ -3,12 +3,11 @@ package com.jjbaksa.jjbaksa.ui.changepassword.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.jjbaksa.domain.repository.UserRepository
-import com.jjbaksa.domain.resp.user.FormatResp
+import com.jjbaksa.domain.model.user.FormatResp
 import com.jjbaksa.domain.usecase.user.UserUseCase
 import com.jjbaksa.jjbaksa.base.BaseViewModel
 import com.jjbaksa.jjbaksa.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
