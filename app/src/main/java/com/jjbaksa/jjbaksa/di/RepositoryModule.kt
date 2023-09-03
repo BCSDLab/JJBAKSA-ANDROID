@@ -12,7 +12,7 @@ import com.jjbaksa.domain.repository.UserRepository
 import com.jjbaksa.data.repository.UserRepositoryImpl
 import com.example.imageselector.repository.ImageRepository
 import com.jjbaksa.data.datasource.remote.InquiryRemoteDataSource
-import com.jjbaksa.data.datasource.remote.MapRemoteDataSource
+import com.jjbaksa.data.datasource.remote.ShopRemoteDataSource
 import com.jjbaksa.data.datasource.remote.SearchRemoteDataSource
 import com.jjbaksa.data.repository.InquiryRepositoryImpl
 import com.jjbaksa.data.repository.SearchRepositoryImpl
@@ -21,11 +21,11 @@ import com.jjbaksa.domain.repository.InquiryRepository
 import com.jjbaksa.data.datasource.remote.PostRemoteDataSource
 import com.jjbaksa.data.datasource.remote.ReviewRemoteDataSource
 import com.jjbaksa.data.datasource.remote.ScrapRemoteDataSource
-import com.jjbaksa.data.repository.MapRepositoryImpl
+import com.jjbaksa.data.repository.ShopRepositoryImpl
 import com.jjbaksa.data.repository.PostRepositoryImpl
 import com.jjbaksa.data.repository.ReviewRepositoryImpl
 import com.jjbaksa.data.repository.ScrapRepositoryImpl
-import com.jjbaksa.domain.repository.MapRepository
+import com.jjbaksa.domain.repository.ShopRepository
 import com.jjbaksa.domain.repository.PostRepository
 import com.jjbaksa.domain.repository.ReviewRepository
 import com.jjbaksa.domain.repository.ScrapRepository
@@ -91,10 +91,10 @@ object RepositoryModule {
     }
     @Singleton
     @Provides
-    fun provideMapRepository(
-        mapRemoteDataSource: MapRemoteDataSource
-    ): MapRepository {
-        return MapRepositoryImpl(mapRemoteDataSource)
+    fun provideShopRepository(
+        mapRemoteDataSource: ShopRemoteDataSource
+    ): ShopRepository {
+        return ShopRepositoryImpl(mapRemoteDataSource)
     }
     @Singleton
     @Provides

@@ -7,7 +7,7 @@
 
         <variable
             name="view"
-            type="com.jjbaksa.jjbaksa.ui.mainpage.NaviHomeFragment" />
+            type="com.jjbaksa.jjbaksa.ui.mainpage.home.NaviHomeFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -1,11 +1,11 @@
 package com.jjbaksa.data.api
 
-import com.jjbaksa.data.model.follower.FollowerShopReviewResp
-import com.jjbaksa.data.model.map.MapShopResp
-import com.jjbaksa.data.model.map.MyReviewResp
-import com.jjbaksa.data.model.map.ShopReviewLastDateResp
-import com.jjbaksa.data.model.map.ShopReviewResp
+import com.jjbaksa.data.model.follower.FollowerReviewShopsResp
+import com.jjbaksa.data.model.shop.ShopsMapsResp
+import com.jjbaksa.data.model.review.MyReviewShopsResp
+import com.jjbaksa.data.model.review.ReviewShopLastDateResp
 import com.jjbaksa.data.model.pin.ShopDetailResp
+import com.jjbaksa.data.model.review.ReviewShopDetailResp
 import com.jjbaksa.data.model.review.ReviewShopResp
 import com.jjbaksa.data.model.scrap.AddShopScrapBodyReq
 import com.jjbaksa.data.model.scrap.AddShopScrapResp
@@ -50,12 +50,12 @@ interface AuthApi {
         @Path("place_id") placeId: String
     ): Response<ShopDetailResp>
     @POST("shops/maps")
-    suspend fun getMapShop(
+    suspend fun getShopsMaps(
         @Query("options_friend") optionsFriend: Int,
         @Query("options_nearby") optionsNearby: Int,
         @Query("options_scrap") optionsScrap: Int,
         @Body locationBody: LocationBody
-    ): Response<List<MapShopResp>>
+    ): Response<List<ShopsMapsResp>>
     @GET("scraps/shops/{scrap_id}")
     suspend fun getShopScrap(
         @Path("scrap_id") scrapId: Int
@@ -72,19 +72,19 @@ interface AuthApi {
     ): Response<GetScrapsResp>
     @Multipart
     @POST("review")
-    suspend fun setReview(
+    suspend fun postReview(
         @Query("placeId") placeId: String,
         @Query("content") content: String,
         @Query("rate") rate: Int,
         @Part reviewImages: List<MultipartBody.Part>
-    ): Response<ShopReviewResp>
+    ): Response<ReviewShopDetailResp>
     @GET("review/shops")
-    suspend fun getReviewShop(
+    suspend fun getMyReviewShops(
         @Query("cursor") cursor: Int?,
         @Query("size") size: Int
     ): Response<ReviewShopResp>
     @GET("review/shop/{place-id}")
-    suspend fun getMyReview(
+    suspend fun getMyReviewShops(
         @Path("place-id") placeId: String,
         @Query("idCursor") idCursor: Int?,
         @Query("dateCursor") dateCursor: String?,
@@ -92,17 +92,17 @@ interface AuthApi {
         @Query("size") size: Int?,
         @Query("direction") direction: String?,
         @Query("sort") sort: String?,
-    ): Response<MyReviewResp>
+    ): Response<MyReviewShopsResp>
     @GET("review/last-date/shop/{place-id}")
-    suspend fun getShopReviewLastDate(
+    suspend fun getMyReviewShopLastDate(
         @Path("place-id") placeId: String
-    ): Response<ShopReviewLastDateResp>
+    ): Response<ReviewShopLastDateResp>
     @GET("review/followers/last-date/shop/{place-id}")
-    suspend fun getShopFollowerReviewLastDate(
+    suspend fun getFollowerReviewShopsLastDate(
         @Path("place-id") placeId: String
-    ): Response<ShopReviewLastDateResp>
+    ): Response<ReviewShopLastDateResp>
     @GET("review/followers/shop/{place-id}")
-    suspend fun getFollowerShopReview(
+    suspend fun getFollowerReviewShops(
         @Path("place-id") placeId: String,
         @Query("idCursor") idCursor: Int?,
         @Query("dateCursor") dateCursor: String?,
@@ -110,5 +110,5 @@ interface AuthApi {
         @Query("size") size: Int?,
         @Query("direction") direction: String?,
         @Query("sort") sort: String?
-    ): Response<FollowerShopReviewResp>
+    ): Response<FollowerReviewShopsResp>
 }

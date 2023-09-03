@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.jjbaksa.domain.base.RespResult
 import com.jjbaksa.domain.repository.UserRepository
-import com.jjbaksa.domain.resp.review.ReviewShop
+import com.jjbaksa.domain.model.review.ReviewShop
 import com.jjbaksa.domain.resp.scrap.UserScrapsShop
 import com.jjbaksa.domain.usecase.review.ReviewUseCase
 import com.jjbaksa.domain.usecase.scrap.GetShopScrapUseCase
@@ -13,7 +13,6 @@ import com.jjbaksa.jjbaksa.base.BaseViewModel
 import com.jjbaksa.jjbaksa.util.MyInfo
 import com.jjbaksa.jjbaksa.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

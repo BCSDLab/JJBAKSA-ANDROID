@@ -36,7 +36,7 @@ class ScrapRepositoryImpl @Inject constructor(
             call = { scrapRemoteDataSource.addShopScrap(directoryId, placeId) },
             mapper = {
                 if (it.isSuccessful) {
-                    it.body()!!.toAddShopScrap()
+                    it.body()?.toAddShopScrap() ?: AddShopScrap()
                 } else {
                     AddShopScrap()
                 }

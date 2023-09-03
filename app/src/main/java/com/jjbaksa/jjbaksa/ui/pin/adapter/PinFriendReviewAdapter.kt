@@ -7,16 +7,16 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
-import com.jjbaksa.domain.resp.follower.FollowerShopReviewContent
+import com.jjbaksa.domain.model.review.FollowerReviewShopsContent
 import com.jjbaksa.jjbaksa.databinding.ItemFriendReviewBinding
 
 class PinFriendReviewAdapter(
-    private val onReport: (FollowerShopReviewContent) -> Unit
+    private val onReport: (FollowerReviewShopsContent) -> Unit
 ) :
-    ListAdapter<FollowerShopReviewContent, PinFriendReviewAdapter.ViewHolder>(diffUtil) {
+    ListAdapter<FollowerReviewShopsContent, PinFriendReviewAdapter.ViewHolder>(diffUtil) {
     inner class ViewHolder(private val binding: ItemFriendReviewBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: FollowerShopReviewContent) {
+        fun bind(item: FollowerReviewShopsContent) {
             binding.friendReviewNameTextView.text = item.userReviewResponse.nickname
             binding.friendReviewAccountTextView.text = item.userReviewResponse.account
             binding.friendReviewContentTextView.text = item.content
@@ -49,17 +49,17 @@ class PinFriendReviewAdapter(
     }
 
     companion object {
-        val diffUtil = object : DiffUtil.ItemCallback<FollowerShopReviewContent>() {
+        val diffUtil = object : DiffUtil.ItemCallback<FollowerReviewShopsContent>() {
             override fun areItemsTheSame(
-                oldItem: FollowerShopReviewContent,
-                newItem: FollowerShopReviewContent
+                oldItem: FollowerReviewShopsContent,
+                newItem: FollowerReviewShopsContent
             ): Boolean {
                 return oldItem.id == newItem.id
             }
 
             override fun areContentsTheSame(
-                oldItem: FollowerShopReviewContent,
-                newItem: FollowerShopReviewContent
+                oldItem: FollowerReviewShopsContent,
+                newItem: FollowerReviewShopsContent
             ): Boolean {
                 return oldItem == newItem
             }

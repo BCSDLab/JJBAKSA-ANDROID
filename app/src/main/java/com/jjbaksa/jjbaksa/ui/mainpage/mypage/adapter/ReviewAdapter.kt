@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.jjbaksa.domain.resp.review.ReviewShopContent
+import com.jjbaksa.domain.model.review.ReviewShopContent
 import com.jjbaksa.jjbaksa.databinding.ItemMyPageReviewBinding
 
 class ReviewAdapter : ListAdapter<ReviewShopContent, ReviewAdapter.ViewHolder>(diffUtil) {

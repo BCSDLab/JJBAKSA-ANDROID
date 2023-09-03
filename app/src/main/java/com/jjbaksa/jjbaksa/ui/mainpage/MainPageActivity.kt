@@ -9,7 +9,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseActivity
 import com.jjbaksa.jjbaksa.databinding.ActivityMainPageBinding
-import com.jjbaksa.jjbaksa.ui.mainpage.viewmodel.HomeViewModel
+import com.jjbaksa.jjbaksa.ui.mainpage.home.viewmodel.HomeViewModel
 import com.jjbaksa.jjbaksa.util.FusedLocationUtil
 import com.jjbaksa.jjbaksa.util.checkPermissionsAndRequest
 import com.jjbaksa.jjbaksa.util.setStatusBarTransparent

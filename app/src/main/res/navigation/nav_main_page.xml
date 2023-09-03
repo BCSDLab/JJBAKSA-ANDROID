@@ -6,13 +6,13 @@
     app:startDestination="@id/home">
     <fragment
         android:id="@+id/home"
-        android:name="com.jjbaksa.jjbaksa.ui.mainpage.NaviHomeFragment"
+        android:name="com.jjbaksa.jjbaksa.ui.mainpage.home.NaviHomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_navi_home">
     </fragment>
     <fragment
         android:id="@+id/write"
-        android:name="com.jjbaksa.jjbaksa.ui.mainpage.NaviWriteFragment"
+        android:name="com.jjbaksa.jjbaksa.ui.mainpage.write.NaviWriteFragment"
         android:label="Write"
         tools:layout="@layout/fragment_navi_write">
     </fragment>

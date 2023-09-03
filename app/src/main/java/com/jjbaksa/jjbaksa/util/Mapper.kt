@@ -1,8 +1,8 @@
 package com.jjbaksa.jjbaksa.util
 
-import com.jjbaksa.domain.resp.map.MapShopContent
+import com.jjbaksa.domain.model.shop.ShopsMapsContent
 import com.jjbaksa.jjbaksa.model.ShopContent
 
-fun MapShopContent.toShopContent() = ShopContent(
+fun ShopsMapsContent.toShopContent() = ShopContent(
     placeId = placeId, name = name, lat = lat, lng = lng, photo = photo
 )
