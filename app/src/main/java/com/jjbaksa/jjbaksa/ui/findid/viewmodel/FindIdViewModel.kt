@@ -3,7 +3,7 @@ package com.jjbaksa.jjbaksa.ui.findid.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.jjbaksa.domain.repository.UserRepository
-import com.jjbaksa.domain.resp.user.FormatResp
+import com.jjbaksa.domain.usecase.user.UserUseCase
 import com.jjbaksa.jjbaksa.base.BaseViewModel
 import com.jjbaksa.jjbaksa.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FindIdViewModel @Inject constructor(
-    private val repository: UserRepository
+    private val userUseCase: UserUseCase,
 ) : BaseViewModel() {
     val userEmail = MutableLiveData<String>("")
 
@@ -21,11 +21,11 @@ class FindIdViewModel @Inject constructor(
     private val _stateBoxNumber = SingleLiveEvent<MutableList<Int?>>()
     val stateBoxNumber: SingleLiveEvent<MutableList<Int?>> get() = _stateBoxNumber
 
-    private val _authEmailState = SingleLiveEvent<FormatResp>()
-    val authEmailState: SingleLiveEvent<FormatResp> get() = _authEmailState
+    private val _userEmailIdState = SingleLiveEvent<Boolean>()
+    val userEmailIdState: SingleLiveEvent<Boolean> get() = _userEmailIdState
 
-    private val _userIdInfo = SingleLiveEvent<FormatResp>()
-    val userIdInfo: SingleLiveEvent<FormatResp> get() = _userIdInfo
+    private val _userId = SingleLiveEvent<String>()
+    val userId: SingleLiveEvent<String> get() = _userId
 
     fun setStateBox(box: MutableList<Boolean>) {
         _stateBox.value = box
@@ -39,19 +39,27 @@ class FindIdViewModel @Inject constructor(
         return emailLength > 0
     }
 
-    fun getAuthEmail(email: String) {
+    fun postUserEmailId(email: String) {
         userEmail.value = email
         viewModelScope.launch(ceh) {
-            repository.checkAuthEmail(email).let {
-                _authEmailState.value = it
+            userUseCase.postUserEmailId(email) { errorMsg ->
+                toastMsg.postValue(errorMsg)
+            }.collect {
+                it.onSuccess {
+                    _userEmailIdState.value = it
+                }
             }
         }
     }
 
-    fun getUserAccount(code: String) {
+    fun getUserId(code: String) {
         viewModelScope.launch(ceh) {
-            repository.findAccount(userEmail.value.toString(), code).let {
-                _userIdInfo.value = it
+            userUseCase.getUserId(userEmail.value.toString(), code) { errorMsg ->
+                toastMsg.postValue(errorMsg)
+            }.collect {
+                it.onSuccess {
+                    _userId.value = it
+                }
             }
         }
     }

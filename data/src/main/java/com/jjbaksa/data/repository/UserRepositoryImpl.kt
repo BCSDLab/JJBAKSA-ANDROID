@@ -77,6 +77,43 @@ class UserRepositoryImpl @Inject constructor(
         )
     }
 
+    override suspend fun postUserEmailId(
+        email: String,
+        onError: (String) -> Unit
+    ): Flow<Result<Boolean>> {
+        return apiCall(
+            call = { userRemoteDataSource.postUserEmailId(email) },
+            mapper = {
+                if (it.isSuccessful) {
+                    true
+                } else {
+                    val errorResult = RespMapper.errorMapper(it.errorBody()?.string() ?: "")
+                    onError(errorResult.errorMessage)
+                    false
+                }
+            }
+        )
+    }
+
+    override suspend fun getUserId(
+        email: String,
+        code: String,
+        onError: (String) -> Unit
+    ): Flow<Result<String>> {
+        return apiCall(
+            call = { userRemoteDataSource.getUserId(email, code) },
+            mapper = {
+                if (it.isSuccessful) {
+                    it.body()?.account ?: ""
+                } else {
+                    val errorResult = RespMapper.errorMapper(it.errorBody()?.string() ?: "")
+                    onError(errorResult.errorMessage)
+                    ""
+                }
+            }
+        )
+    }
+
     override suspend fun postSignUp(signUpReq: SignUpReq): SignUpResp? {
         val resp = userRemoteDataSource.postSignUp(signUpReq)
         return resp.body()
@@ -90,17 +127,6 @@ class UserRepositoryImpl @Inject constructor(
             val errorBodyJson = result.errorBody()!!.string()
             val errorBody = RespMapper.errorMapper(errorBodyJson)
             RespResult.Error(ErrorType(errorBody.errorMessage, errorBody.code))
-        }
-    }
-
-    override suspend fun checkAuthEmail(email: String): FormatResp {
-        val result = userRemoteDataSource.checkAuthEmail(email)
-        return if (result.isSuccessful) {
-            FormatResp(result.isSuccessful, "", result.code())
-        } else {
-            val errorBodyJson = result.errorBody()!!.string()
-            val errorBody = RespMapper.errorMapper(errorBodyJson)
-            FormatResp(result.isSuccessful, errorBody.errorMessage, result.code())
         }
     }
 
@@ -125,17 +151,6 @@ class UserRepositoryImpl @Inject constructor(
         val response = userRemoteDataSource.getPasswordVerificationCode(id, email)
         return if (response.isSuccessful && response.code() == 200) {
             FormatResp(response.isSuccessful, "", response.code())
-        } else {
-            val errorBodyJson = response.errorBody()!!.string()
-            val errorBody = RespMapper.errorMapper(errorBodyJson)
-            FormatResp(response.isSuccessful, errorBody.errorMessage, response.code())
-        }
-    }
-
-    override suspend fun findAccount(email: String, code: String): FormatResp {
-        val response = userRemoteDataSource.findAccount(email, code)
-        return if (response.isSuccessful && response.code() == 200) {
-            FormatResp(response.isSuccessful, response.body()?.account.toString(), response.code())
         } else {
             val errorBodyJson = response.errorBody()!!.string()
             val errorBody = RespMapper.errorMapper(errorBodyJson)

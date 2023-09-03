@@ -11,11 +11,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import com.jjbaksa.jjbaksa.dialog.LoadingDialog
-import androidx.fragment.app.FragmentActivity
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.jjbaksa.jjbaksa.R
-import com.jjbaksa.jjbaksa.view.JjAppbar
 
 abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
     @get:LayoutRes
@@ -84,12 +81,5 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
                 }
             )
         }.show()
-    }
-    fun backPressed(backBtn: JjAppbar, context: FragmentActivity, pop: Boolean) {
-        if (pop) {
-            backBtn.setOnClickListener { findNavController().popBackStack() }
-        } else {
-            backBtn.setOnClickListener { context.finish() }
-        }
     }
 }

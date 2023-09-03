@@ -17,13 +17,12 @@ interface UserRepository {
         password: String,
         isAutoLogin: Boolean
     ): Flow<Result<Login>>
-
+    suspend fun postUserEmailId(email: String, onError: (String) -> Unit): Flow<Result<Boolean>>
+    suspend fun getUserId(email: String, code: String, onError: (String) -> Unit): Flow<Result<String>>
     suspend fun postSignUp(signUpReq: SignUpReq): SignUpResp?
     suspend fun checkAccountAvailable(account: String): RespResult<Boolean>
-    suspend fun checkAuthEmail(email: String): FormatResp
     suspend fun checkPassword(password: String): FormatResp
     suspend fun getPasswordVerificationCode(id: String, email: String): FormatResp
-    suspend fun findAccount(email: String, code: String): FormatResp
     suspend fun findPassword(user: FindPasswordReq): FormatResp
     suspend fun setNewPassword(password: String): FormatResp
     suspend fun setNewNickname(nickname: String): FormatResp

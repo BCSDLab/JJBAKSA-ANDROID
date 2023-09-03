@@ -24,7 +24,9 @@ class FindPasswordInputCodeFragment : BaseFragment<FragmentFindPasswordInputCode
     }
 
     override fun initEvent() {
-        backPressed(binding.jjAppBarContainer, requireActivity(), true)
+        binding.jjAppBarContainer.setOnClickListener {
+            findNavController().popBackStack()
+        }
         setEditText()
         completedResult()
         resendVerificationCode()

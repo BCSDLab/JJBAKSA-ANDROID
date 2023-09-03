@@ -1,6 +1,5 @@
 package com.jjbaksa.data.api
 
-import com.jjbaksa.data.model.findid.FindIdResp
 import com.jjbaksa.data.model.inquiry.InquiryResp
 import com.jjbaksa.data.model.post.PostDetailResp
 import com.jjbaksa.data.model.post.PostResp
@@ -30,6 +29,17 @@ interface NoAuthApi {
         @Body loginReq: LoginReq
     ): Response<LoginResp>
 
+    @POST("user/email/account")
+    suspend fun postUserEmailId(
+        @Query("email") userEmail: String
+    ): Response<Unit>
+
+    @GET("user/account")
+    suspend fun getUserId(
+        @Query("email") userEmail: String,
+        @Query("code") codeNumber: String
+    ): Response<UserResp>
+
     @POST("user")
     suspend fun signUp(
         @Body signUpReq: SignUpReq
@@ -46,22 +56,11 @@ interface NoAuthApi {
         @Query("password") password: String
     ): Response<Unit>
 
-    @POST("user/email/account")
-    suspend fun getEmailCodeNumber(
-        @Query("email") userEmail: String
-    ): Response<Unit>
-
     @POST("user/email/password")
     suspend fun getPasswordVerificationCode(
         @Query("account") id: String,
         @Query("email") email: String
     ): Response<Unit>
-
-    @GET("user/account")
-    suspend fun findId(
-        @Query("email") userEmail: String,
-        @Query("code") codeNumber: String
-    ): Response<FindIdResp>
 
     @POST("user/password")
     suspend fun findPassword(

@@ -6,7 +6,6 @@ import com.jjbaksa.data.database.PreferenceKeys
 import com.jjbaksa.data.database.UserDao
 import com.jjbaksa.data.database.userDataStore
 import com.jjbaksa.data.datasource.UserDataSource
-import com.jjbaksa.data.model.findid.FindIdResp
 import com.jjbaksa.data.model.user.LoginResp
 import com.jjbaksa.data.model.user.UserResp
 import com.jjbaksa.domain.resp.user.FindPasswordReq
@@ -29,6 +28,17 @@ class UserLocalDataSource @Inject constructor(
     override suspend fun getUserMe(): Response<UserResp> {
         TODO("Not yet implemented")
     }
+    override suspend fun postLogin(loginReq: LoginReq): Response<LoginResp> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun postUserEmailId(email: String): Response<Unit> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getUserId(email: String, code: String): Response<UserResp> {
+        TODO("Not yet implemented")
+    }
 
     override suspend fun postSignUp(signUpReq: SignUpReq): Response<SignUpResp>? {
         return null
@@ -44,21 +54,11 @@ class UserLocalDataSource @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun postLogin(loginReq: LoginReq): Response<LoginResp>? {
-        return null
-    }
-
-    override suspend fun checkAuthEmail(email: String): Response<Unit> {
-        TODO("Not yet implemented")
-    }
-
     override suspend fun checkPassword(password: String, token: String): Response<Unit> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun findAccount(email: String, code: String): Response<FindIdResp> {
-        TODO("Not yet implemented")
-    }
+
 
     override suspend fun getPasswordVerificationCode(id: String, email: String): Response<Unit> {
         TODO("Not yet implemented")

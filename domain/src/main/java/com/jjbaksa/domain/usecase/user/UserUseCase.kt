@@ -19,4 +19,17 @@ class UserUseCase @Inject constructor(
     ): Flow<Result<Login>> {
         return userRepository.postLogin(account, password, isAutoLogin)
     }
+    suspend fun postUserEmailId(
+        email: String,
+        onError: (String) -> Unit
+    ): Flow<Result<Boolean>> {
+        return userRepository.postUserEmailId(email, onError)
+    }
+    suspend fun getUserId(
+        email: String,
+        code: String,
+        onError: (String) -> Unit
+    ): Flow<Result<String>> {
+        return userRepository.getUserId(email, code, onError)
+    }
 }

@@ -2,6 +2,7 @@ package com.jjbaksa.jjbaksa.ui.findpassword
 
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseFragment
 import com.jjbaksa.jjbaksa.databinding.FragmentFindPasswordResetBinding
@@ -26,7 +27,9 @@ class FindPasswordResetFragment : BaseFragment<FragmentFindPasswordResetBinding>
     }
 
     override fun initEvent() {
-        backPressed(binding.jjAppBarContainer, requireActivity(), true)
+        binding.jjAppBarContainer.setOnClickListener {
+            findNavController().popBackStack()
+        }
         setNewPassword()
         setCheckPassword()
         completedResult()

@@ -87,7 +87,9 @@ class FindPasswordFragment() : BaseFragment<FragmentFindPasswordBinding>() {
         id.isNotEmpty() && email.isNotEmpty()
 
     override fun initEvent() {
-        backPressed(binding.jjAppBarContainer, requireActivity(), false)
+        binding.jjAppBarContainer.setOnClickListener {
+            requireActivity().finish()
+        }
         sendVerificationCode()
         observeData()
     }

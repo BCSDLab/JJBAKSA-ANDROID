@@ -1,6 +1,5 @@
 package com.jjbaksa.data.datasource
 
-import com.jjbaksa.data.model.findid.FindIdResp
 import com.jjbaksa.data.model.user.LoginResp
 import com.jjbaksa.data.model.user.UserResp
 import com.jjbaksa.domain.resp.user.FindPasswordReq
@@ -13,14 +12,14 @@ import retrofit2.Response
 
 interface UserDataSource {
     suspend fun getUserMe(): Response<UserResp>
+    suspend fun postLogin(loginReq: LoginReq): Response<LoginResp>
+    suspend fun postUserEmailId(email: String): Response<Unit>
+    suspend fun getUserId(email: String, code: String): Response<UserResp>
     suspend fun postSignUp(signUpReq: SignUpReq): Response<SignUpResp>?
     suspend fun clearDataStore()
     suspend fun checkAccountAvailable(account: String): Response<Unit>
-    suspend fun postLogin(loginReq: LoginReq): Response<LoginResp>?
-    suspend fun checkAuthEmail(email: String): Response<Unit>
     suspend fun checkPassword(password: String, token: String): Response<Unit>
     suspend fun getPasswordVerificationCode(id: String, email: String): Response<Unit>
-    suspend fun findAccount(email: String, code: String): Response<FindIdResp>
     suspend fun findPassword(findPasswordReq: FindPasswordReq): Response<String>
     suspend fun saveWithdrawalReason(withdrawalReason: WithdrawalReasonReq): Response<Unit>
     suspend fun deleteUser(): Response<Unit>
