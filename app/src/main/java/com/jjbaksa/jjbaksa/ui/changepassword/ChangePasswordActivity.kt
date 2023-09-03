@@ -47,11 +47,13 @@ class ChangePasswordActivity : BaseActivity<ActivityChangePasswordBinding>() {
                 }
             }
         }
-        viewModel.newPasswordState.observe(this) {
-            if (it?.isSuccess!!) {
-                setConfirmDialog()
+        viewModel.toastMsg.observe(this) {
+            showSnackBar(it, getString(R.string.cancel))
+        }
+        viewModel.newPasswordResult.observe(this) {
+            if (it) {
+                setConfirmButton()
             } else {
-                showSnackBar(it.msg.toString(), getString(R.string.cancel))
                 binding.newPasswordEditText.editTextBackground = failButtonBackground()
                 binding.checkNewPasswordEditText.editTextBackground = failButtonBackground()
                 isFailedNewPassword = true

@@ -33,7 +33,6 @@ class FindPasswordResetFragment : BaseFragment<FragmentFindPasswordResetBinding>
         setNewPassword()
         setCheckPassword()
         completedResult()
-        observeDate()
     }
 
     private fun setNewPassword() {
@@ -94,13 +93,12 @@ class FindPasswordResetFragment : BaseFragment<FragmentFindPasswordResetBinding>
             }
         }
     }
-    override fun subscribe() {}
-
-    private fun observeDate() {
-        viewModel.newPasswordResult.observe(
-            viewLifecycleOwner
-        ) {
-            if (it.isSuccess) {
+    override fun subscribe() {
+        viewModel.toastMsg.observe(viewLifecycleOwner) {
+            showSnackBar(it)
+        }
+        viewModel.newPasswordResult.observe(viewLifecycleOwner) {
+            if (it) {
                 ConfirmDialog(
                     getString(R.string.complete_find_password),
                     getString(R.string.retry_password),
@@ -109,7 +107,6 @@ class FindPasswordResetFragment : BaseFragment<FragmentFindPasswordResetBinding>
                 ).show(parentFragmentManager, DIALOG_TAG)
             } else {
                 failedPassword()
-                showSnackBar(getString(R.string.password_rule_not_match))
             }
         }
     }

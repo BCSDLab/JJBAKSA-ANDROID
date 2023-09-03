@@ -5,9 +5,9 @@ import com.jjbaksa.data.api.NoAuthApi
 import com.jjbaksa.data.datasource.UserDataSource
 import com.jjbaksa.data.model.user.LoginResp
 import com.jjbaksa.data.model.user.UserResp
-import com.jjbaksa.domain.resp.user.FindPasswordReq
+import com.jjbaksa.domain.model.user.FindPasswordReq
 import com.jjbaksa.domain.model.user.LoginReq
-import com.jjbaksa.domain.resp.user.PasswordAndNicknameReq
+import com.jjbaksa.domain.model.user.PasswordAndNicknameReq
 import com.jjbaksa.domain.resp.user.SignUpReq
 import com.jjbaksa.domain.resp.user.SignUpResp
 import com.jjbaksa.domain.resp.user.WithdrawalReasonReq
@@ -35,6 +35,14 @@ class UserRemoteDataSource @Inject constructor(
         return noAuthApi.getUserId(email, code)
     }
 
+    override suspend fun postUserEmailPassword(id: String, email: String): Response<Unit> {
+        return noAuthApi.postUserEmailPassword(id, email)
+    }
+
+    override suspend fun postUserPassword(findPasswordReq: FindPasswordReq): Response<String> {
+        return noAuthApi.postUserPassword(findPasswordReq)
+    }
+
     override suspend fun postSignUp(signUpReq: SignUpReq): Response<SignUpResp> {
         return noAuthApi.signUp(signUpReq)
     }
@@ -47,19 +55,11 @@ class UserRemoteDataSource @Inject constructor(
         return noAuthApi.checkPassword(token, password)
     }
 
-    override suspend fun findPassword(findPasswordReq: FindPasswordReq): Response<String> {
-        return noAuthApi.findPassword(findPasswordReq)
-    }
-
-    override suspend fun getPasswordVerificationCode(id: String, email: String): Response<Unit> {
-        return noAuthApi.getPasswordVerificationCode(id, email)
-    }
-
-    override suspend fun setNewPassword(
+    override suspend fun patchUserMe(
         token: String,
-        item: PasswordAndNicknameReq
+        passwordAndNicknameReq: PasswordAndNicknameReq
     ): Response<UserResp> {
-        return noAuthApi.setNewPassword(token, item)
+        return noAuthApi.patchUserMe(token, passwordAndNicknameReq)
     }
 
     override suspend fun setNewNickname(item: PasswordAndNicknameReq): Response<UserResp> {

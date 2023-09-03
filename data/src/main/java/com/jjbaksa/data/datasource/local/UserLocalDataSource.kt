@@ -8,9 +8,9 @@ import com.jjbaksa.data.database.userDataStore
 import com.jjbaksa.data.datasource.UserDataSource
 import com.jjbaksa.data.model.user.LoginResp
 import com.jjbaksa.data.model.user.UserResp
-import com.jjbaksa.domain.resp.user.FindPasswordReq
+import com.jjbaksa.domain.model.user.FindPasswordReq
 import com.jjbaksa.domain.model.user.LoginReq
-import com.jjbaksa.domain.resp.user.PasswordAndNicknameReq
+import com.jjbaksa.domain.model.user.PasswordAndNicknameReq
 import com.jjbaksa.domain.resp.user.SignUpReq
 import com.jjbaksa.domain.resp.user.SignUpResp
 import com.jjbaksa.domain.resp.user.WithdrawalReasonReq
@@ -28,6 +28,7 @@ class UserLocalDataSource @Inject constructor(
     override suspend fun getUserMe(): Response<UserResp> {
         TODO("Not yet implemented")
     }
+
     override suspend fun postLogin(loginReq: LoginReq): Response<LoginResp> {
         TODO("Not yet implemented")
     }
@@ -37,6 +38,21 @@ class UserLocalDataSource @Inject constructor(
     }
 
     override suspend fun getUserId(email: String, code: String): Response<UserResp> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun postUserEmailPassword(id: String, email: String): Response<Unit> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun postUserPassword(findPasswordReq: FindPasswordReq): Response<String> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun patchUserMe(
+        token: String,
+        passwordAndNicknameReq: PasswordAndNicknameReq
+    ): Response<UserResp> {
         TODO("Not yet implemented")
     }
 
@@ -55,20 +71,6 @@ class UserLocalDataSource @Inject constructor(
     }
 
     override suspend fun checkPassword(password: String, token: String): Response<Unit> {
-        TODO("Not yet implemented")
-    }
-
-
-
-    override suspend fun getPasswordVerificationCode(id: String, email: String): Response<Unit> {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun findPassword(findPasswordReq: FindPasswordReq): Response<String> {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun setNewPassword(token: String, item: PasswordAndNicknameReq): Response<UserResp> {
         TODO("Not yet implemented")
     }
 

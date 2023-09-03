@@ -16,7 +16,7 @@ import retrofit2.http.GET
 import com.jjbaksa.data.model.user.UserResp
 import okhttp3.MultipartBody
 import retrofit2.Response
-import com.jjbaksa.domain.resp.user.PasswordAndNicknameReq
+import com.jjbaksa.domain.model.user.PasswordAndNicknameReq
 import com.jjbaksa.domain.resp.user.WithdrawalReasonReq
 import retrofit2.http.Body
 import retrofit2.http.DELETE

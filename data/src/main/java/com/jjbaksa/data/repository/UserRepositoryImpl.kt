@@ -17,8 +17,8 @@ import com.jjbaksa.domain.model.user.LoginReq
 import com.jjbaksa.domain.model.user.Login
 import com.jjbaksa.domain.resp.user.SignUpReq
 import com.jjbaksa.domain.resp.user.SignUpResp
-import com.jjbaksa.domain.resp.user.FindPasswordReq
-import com.jjbaksa.domain.resp.user.PasswordAndNicknameReq
+import com.jjbaksa.domain.model.user.FindPasswordReq
+import com.jjbaksa.domain.model.user.PasswordAndNicknameReq
 import com.jjbaksa.domain.resp.user.WithdrawalReasonReq
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -114,6 +114,72 @@ class UserRepositoryImpl @Inject constructor(
         )
     }
 
+    override suspend fun postUserEmailPassword(
+        id: String,
+        email: String,
+        onError: (String) -> Unit
+    ): Flow<Result<Boolean>> {
+        return apiCall(
+            call = { userRemoteDataSource.postUserEmailPassword(id, email) },
+            mapper = {
+                if (it.isSuccessful) {
+                    true
+                } else {
+                    val errorResult = RespMapper.errorMapper(it.errorBody()?.string() ?: "")
+                    onError(errorResult.errorMessage)
+                    false
+                }
+            }
+        )
+    }
+
+    override suspend fun postUserPassword(
+        findPasswordReq: FindPasswordReq,
+        onError: (String) -> Unit
+    ): Flow<Result<Boolean>> {
+        return apiCall(
+            call = { userRemoteDataSource.postUserPassword(findPasswordReq) },
+            remoteData = {
+                userLocalDataSource.saveAuthPasswordToken(it.body().toString())
+            },
+            mapper = {
+                if (it.isSuccessful) {
+                    true
+                } else {
+                    val errorResult = RespMapper.errorMapper(it.errorBody()?.string() ?: "")
+                    onError(errorResult.errorMessage)
+                    false
+                }
+            }
+        )
+    }
+
+    override suspend fun setNewPassword(
+        password: String,
+        onError: (String) -> Unit
+    ): Flow<Result<Boolean>> {
+        return apiCall(
+            call = {
+                val token = userLocalDataSource.getAuthPasswordToken().ifEmpty {
+                    userLocalDataSource.getAccessToken()
+                }
+                userRemoteDataSource.patchUserMe(
+                    "Bearer $token",
+                    PasswordAndNicknameReq(password = password)
+                )
+            },
+            mapper = {
+                if (it.isSuccessful) {
+                    true
+                } else {
+                    val errorResult = RespMapper.errorMapper(it.errorBody()?.string() ?: "")
+                    onError(errorResult.errorMessage)
+                    false
+                }
+            }
+        )
+    }
+
     override suspend fun postSignUp(signUpReq: SignUpReq): SignUpResp? {
         val resp = userRemoteDataSource.postSignUp(signUpReq)
         return resp.body()
@@ -141,49 +207,6 @@ class UserRepositoryImpl @Inject constructor(
             val errorBodyJson = response.errorBody()!!.string()
             val errorBody = RespMapper.errorMapper(errorBodyJson)
             FormatResp(response.isSuccessful, errorBody.errorMessage, errorBody.code)
-        }
-    }
-
-    override suspend fun getPasswordVerificationCode(
-        id: String,
-        email: String
-    ): FormatResp {
-        val response = userRemoteDataSource.getPasswordVerificationCode(id, email)
-        return if (response.isSuccessful && response.code() == 200) {
-            FormatResp(response.isSuccessful, "", response.code())
-        } else {
-            val errorBodyJson = response.errorBody()!!.string()
-            val errorBody = RespMapper.errorMapper(errorBodyJson)
-            FormatResp(response.isSuccessful, errorBody.errorMessage, response.code())
-        }
-    }
-
-    override suspend fun findPassword(user: FindPasswordReq): FormatResp {
-        val response = userRemoteDataSource.findPassword(user)
-        return if (response.isSuccessful && response.code() == 200) {
-            userLocalDataSource.saveAuthPasswordToken(response.body().toString())
-            FormatResp(response.isSuccessful, "", response.code())
-        } else {
-            val errorBodyJson = response.errorBody()!!.string()
-            val errorBody = RespMapper.errorMapper(errorBodyJson)
-            FormatResp(response.isSuccessful, errorBody.errorMessage, response.code())
-        }
-    }
-
-    override suspend fun setNewPassword(password: String): FormatResp {
-        val item = PasswordAndNicknameReq(password, null)
-        val token = userLocalDataSource.getAuthPasswordToken()
-            .ifEmpty { userLocalDataSource.getAccessToken() }
-        val response = userRemoteDataSource.setNewPassword(
-            "Bearer $token",
-            item
-        )
-        return if (response.isSuccessful && response.code() == 200) {
-            FormatResp(response.isSuccessful, "", response.code())
-        } else {
-            val errorBodyJson = response.errorBody()!!.string()
-            val errorBody = RespMapper.errorMapper(errorBodyJson)
-            FormatResp(response.isSuccessful, errorBody.errorMessage, response.code())
         }
     }
 

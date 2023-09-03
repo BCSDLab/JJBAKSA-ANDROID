@@ -10,8 +10,8 @@ import com.jjbaksa.data.model.search.TrendResp
 import com.jjbaksa.domain.model.user.LoginReq
 import com.jjbaksa.data.model.user.LoginResp
 import com.jjbaksa.data.model.user.UserResp
-import com.jjbaksa.domain.resp.user.FindPasswordReq
-import com.jjbaksa.domain.resp.user.PasswordAndNicknameReq
+import com.jjbaksa.domain.model.user.FindPasswordReq
+import com.jjbaksa.domain.model.user.PasswordAndNicknameReq
 import com.jjbaksa.domain.resp.user.SignUpReq
 import com.jjbaksa.domain.resp.user.SignUpResp
 import retrofit2.Response
@@ -40,6 +40,23 @@ interface NoAuthApi {
         @Query("code") codeNumber: String
     ): Response<UserResp>
 
+    @POST("user/email/password")
+    suspend fun postUserEmailPassword(
+        @Query("account") id: String,
+        @Query("email") email: String
+    ): Response<Unit>
+
+    @PATCH("user/me")
+    suspend fun patchUserMe(
+        @Header("Authorization") token: String,
+        @Body passwordAndNicknameReq: PasswordAndNicknameReq
+    ): Response<UserResp>
+
+    @POST("user/password")
+    suspend fun postUserPassword(
+        @Body findPasswordReq: FindPasswordReq
+    ): Response<String>
+
     @POST("user")
     suspend fun signUp(
         @Body signUpReq: SignUpReq
@@ -55,23 +72,6 @@ interface NoAuthApi {
         @Header("Authorization") token: String,
         @Query("password") password: String
     ): Response<Unit>
-
-    @POST("user/email/password")
-    suspend fun getPasswordVerificationCode(
-        @Query("account") id: String,
-        @Query("email") email: String
-    ): Response<Unit>
-
-    @POST("user/password")
-    suspend fun findPassword(
-        @Body findPasswordReq: FindPasswordReq
-    ): Response<String>
-
-    @PATCH("user/me")
-    suspend fun setNewPassword(
-        @Header("Authorization") token: String,
-        @Body passwordAndNicknameReq: PasswordAndNicknameReq
-    ): Response<UserResp>
 
     @GET("trending")
     suspend fun getTrending(): Response<TrendResp>

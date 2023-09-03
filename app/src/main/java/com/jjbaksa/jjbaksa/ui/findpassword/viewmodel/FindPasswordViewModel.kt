@@ -1,12 +1,9 @@
 package com.jjbaksa.jjbaksa.ui.findpassword.viewmodel
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.jjbaksa.domain.repository.UserRepository
-import com.jjbaksa.domain.resp.user.FindPasswordReq
-import com.jjbaksa.domain.resp.user.FormatResp
-import com.jjbaksa.domain.resp.user.UserInfo
+import com.jjbaksa.domain.model.user.FindPasswordReq
+import com.jjbaksa.domain.usecase.user.UserUseCase
 import com.jjbaksa.jjbaksa.base.BaseViewModel
 import com.jjbaksa.jjbaksa.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,30 +12,36 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FindPasswordViewModel @Inject constructor(
-    private val repository: UserRepository
+    private val userUseCase: UserUseCase,
 ) : BaseViewModel() {
-    private val _userInfo = MutableLiveData<UserInfo>()
-    val userInfo: LiveData<UserInfo> get() = _userInfo
-    private val _isPasswordVerificationCode = SingleLiveEvent<FormatResp>()
-    val isPasswordVerificationCode: SingleLiveEvent<FormatResp> get() = _isPasswordVerificationCode
-    private val _verificationCodeResult = SingleLiveEvent<FormatResp>()
-    val verificationCodeResult: SingleLiveEvent<FormatResp> get() = _verificationCodeResult
+    val userId = MutableLiveData<String>()
+    val userEmail = MutableLiveData<String>()
+
+    private val _isSuccess = SingleLiveEvent<Boolean>()
+    val isSuccess: SingleLiveEvent<Boolean> get() = _isSuccess
+    private val _verifyResult = SingleLiveEvent<Boolean>()
+    val verifyResult: SingleLiveEvent<Boolean> get() = _verifyResult
+    private val _newPasswordResult = SingleLiveEvent<Boolean>()
+    val newPasswordResult: SingleLiveEvent<Boolean> get() = _newPasswordResult
 
     private val _stateBox = SingleLiveEvent<MutableList<Boolean>>()
     val stateBox: SingleLiveEvent<MutableList<Boolean>> get() = _stateBox
     private val _stateBoxNumber = SingleLiveEvent<MutableList<Int?>>()
     val stateBoxNumber: SingleLiveEvent<MutableList<Int?>> get() = _stateBoxNumber
-    private val _newPasswordResult = SingleLiveEvent<FormatResp>()
-    val newPasswordResult: SingleLiveEvent<FormatResp> get() = _newPasswordResult
 
     fun getUserInfo(id: String, email: String) {
-        _userInfo.value = UserInfo(id, email)
+        userId.value = id
+        userEmail.value = email
     }
 
-    fun getPasswordVerificationCode(id: String, email: String) {
+    fun postUserEmailPassword(id: String, email: String) {
         viewModelScope.launch(ceh) {
-            repository.getPasswordVerificationCode(id, email).let {
-                _isPasswordVerificationCode.value = it
+            userUseCase.postUserEmailPassword(id, email) { errorMsg ->
+                toastMsg.postValue(errorMsg)
+            }.collect {
+                it.onSuccess {
+                    _isSuccess.value = it
+                }
             }
         }
     }
@@ -51,24 +54,33 @@ class FindPasswordViewModel @Inject constructor(
         _stateBoxNumber.value = boxNumber
     }
 
-    fun findPassword(code: String) {
+    fun postUserPassword(code: String) {
         viewModelScope.launch(ceh) {
-            repository.findPassword(
+            userUseCase.postUserPassword(
                 FindPasswordReq(
-                    userInfo.value?.id!!,
-                    userInfo.value?.email!!,
+                    userId.value.toString(),
+                    userEmail.value.toString(),
                     code
                 )
-            ).let {
-                _verificationCodeResult.value = it
+            ) { errorMsg ->
+                toastMsg.postValue(errorMsg)
+            }.collect {
+                it.onSuccess {
+                    _verifyResult.value = it
+                }
             }
+
         }
     }
 
     fun setNewPassword(newPassword: String) {
         viewModelScope.launch(ceh) {
-            repository.setNewPassword(newPassword).let {
-                _newPasswordResult.value = it
+            userUseCase.setNewPassword(newPassword) { errorMsg ->
+                toastMsg.postValue(errorMsg)
+            }.collect {
+                it.onSuccess {
+                    _newPasswordResult.value = it
+                }
             }
         }
     }

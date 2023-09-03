@@ -2,9 +2,9 @@ package com.jjbaksa.data.datasource
 
 import com.jjbaksa.data.model.user.LoginResp
 import com.jjbaksa.data.model.user.UserResp
-import com.jjbaksa.domain.resp.user.FindPasswordReq
+import com.jjbaksa.domain.model.user.FindPasswordReq
 import com.jjbaksa.domain.model.user.LoginReq
-import com.jjbaksa.domain.resp.user.PasswordAndNicknameReq
+import com.jjbaksa.domain.model.user.PasswordAndNicknameReq
 import com.jjbaksa.domain.resp.user.SignUpReq
 import com.jjbaksa.domain.resp.user.SignUpResp
 import com.jjbaksa.domain.resp.user.WithdrawalReasonReq
@@ -15,15 +15,19 @@ interface UserDataSource {
     suspend fun postLogin(loginReq: LoginReq): Response<LoginResp>
     suspend fun postUserEmailId(email: String): Response<Unit>
     suspend fun getUserId(email: String, code: String): Response<UserResp>
+    suspend fun postUserEmailPassword(id: String, email: String): Response<Unit>
+    suspend fun postUserPassword(findPasswordReq: FindPasswordReq): Response<String>
+    suspend fun patchUserMe(
+        token: String,
+        passwordAndNicknameReq: PasswordAndNicknameReq
+    ): Response<UserResp>
+
     suspend fun postSignUp(signUpReq: SignUpReq): Response<SignUpResp>?
     suspend fun clearDataStore()
     suspend fun checkAccountAvailable(account: String): Response<Unit>
     suspend fun checkPassword(password: String, token: String): Response<Unit>
-    suspend fun getPasswordVerificationCode(id: String, email: String): Response<Unit>
-    suspend fun findPassword(findPasswordReq: FindPasswordReq): Response<String>
     suspend fun saveWithdrawalReason(withdrawalReason: WithdrawalReasonReq): Response<Unit>
     suspend fun deleteUser(): Response<Unit>
-    suspend fun setNewPassword(token: String, item: PasswordAndNicknameReq): Response<UserResp>
     suspend fun setNewNickname(item: PasswordAndNicknameReq): Response<UserResp>
     suspend fun saveAccessToken(accessToken: String)
     suspend fun saveAccount(account: String)

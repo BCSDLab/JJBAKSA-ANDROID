@@ -1,5 +1,6 @@
 package com.jjbaksa.domain.usecase.user
 
+import com.jjbaksa.domain.model.user.FindPasswordReq
 import com.jjbaksa.domain.model.user.User
 import com.jjbaksa.domain.repository.UserRepository
 import com.jjbaksa.domain.model.user.Login
@@ -31,5 +32,24 @@ class UserUseCase @Inject constructor(
         onError: (String) -> Unit
     ): Flow<Result<String>> {
         return userRepository.getUserId(email, code, onError)
+    }
+    suspend fun postUserEmailPassword(
+        id: String,
+        email: String,
+        onError: (String) -> Unit
+    ): Flow<Result<Boolean>> {
+        return userRepository.postUserEmailPassword(id, email, onError)
+    }
+    suspend fun postUserPassword(
+        findPasswordReq: FindPasswordReq,
+        onError: (String) -> Unit
+    ): Flow<Result<Boolean>> {
+        return userRepository.postUserPassword(findPasswordReq, onError)
+    }
+    suspend fun setNewPassword(
+        password: String,
+        onError: (String) -> Unit
+    ): Flow<Result<Boolean>> {
+        return userRepository.setNewPassword(password, onError)
     }
 }

@@ -8,7 +8,9 @@ import com.jjbaksa.jjbaksa.base.BaseFragment
 import com.jjbaksa.jjbaksa.databinding.FragmentFindPasswordInputCodeBinding
 import com.jjbaksa.jjbaksa.ui.findpassword.viewmodel.FindPasswordViewModel
 import com.jjbaksa.jjbaksa.util.KeyboardProvider
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FindPasswordInputCodeFragment : BaseFragment<FragmentFindPasswordInputCodeBinding>() {
     override val layoutId: Int
         get() = R.layout.fragment_find_password_input_code
@@ -30,7 +32,6 @@ class FindPasswordInputCodeFragment : BaseFragment<FragmentFindPasswordInputCode
         setEditText()
         completedResult()
         resendVerificationCode()
-        observeData()
     }
 
     private fun setEditText() {
@@ -62,29 +63,23 @@ class FindPasswordInputCodeFragment : BaseFragment<FragmentFindPasswordInputCode
         binding.completeButton.setOnClickListener {
             KeyboardProvider(requireContext()).hideKeyboard(binding.editTextContainer)
             if (viewModel.stateBoxNumber.value?.contains(null) == false) {
-                viewModel.findPassword(stateBoxNumber.joinToString(""))
+                viewModel.postUserPassword(stateBoxNumber.joinToString(""))
             }
         }
     }
 
     private fun resendVerificationCode() {
         binding.resendVerificationCodeTextView.setOnClickListener {
-            KeyboardProvider(requireContext()).hideKeyboard(
-                binding.resendVerificationCodeTextView
-            )
-            viewModel.getPasswordVerificationCode(
-                viewModel.userInfo.value?.id!!,
-                viewModel.userInfo.value?.email!!
+            KeyboardProvider(requireContext()).hideKeyboard(binding.editTextContainer)
+            viewModel.postUserEmailPassword(
+                viewModel.userId.value.toString(),
+                viewModel.userEmail.value.toString()
             )
         }
     }
 
-    override fun subscribe() {}
-
-    private fun observeData() {
-        viewModel.stateBox.observe(
-            viewLifecycleOwner
-        ) {
+    override fun subscribe() {
+        viewModel.stateBox.observe(viewLifecycleOwner) {
             if (!it.contains(false)) {
                 binding.completeButton.isSelected = true
                 binding.completeButton.isEnabled = true
@@ -93,19 +88,18 @@ class FindPasswordInputCodeFragment : BaseFragment<FragmentFindPasswordInputCode
                 binding.completeButton.isEnabled = false
             }
         }
-        viewModel.isPasswordVerificationCode.observe(
-            viewLifecycleOwner
-        ) {
-            if (it.isSuccess) {
+        viewModel.toastMsg.observe(viewLifecycleOwner) {
+            showSnackBar(it)
+        }
+        viewModel.isSuccess.observe(viewLifecycleOwner) {
+            if (it) {
                 showSnackBar(getString(R.string.resend_verification_code))
             } else {
-                showSnackBar(it.msg.toString())
+                KeyboardProvider(requireContext()).hideKeyboard(binding.editTextContainer)
             }
         }
-        viewModel.verificationCodeResult.observe(
-            viewLifecycleOwner
-        ) {
-            if (it.isSuccess) {
+        viewModel.verifyResult.observe(viewLifecycleOwner) {
+            if (it) {
                 findNavController().navigate(R.id.action_nav_find_password_input_code_to_nav_find_password_reset)
             } else {
                 outlineState = true
@@ -115,7 +109,6 @@ class FindPasswordInputCodeFragment : BaseFragment<FragmentFindPasswordInputCode
                         R.drawable.shape_rect_eeeeee_solid_radius_8_stroke_ff7f23
                     )
                 )
-                showSnackBar(it.msg.toString())
             }
         }
     }
