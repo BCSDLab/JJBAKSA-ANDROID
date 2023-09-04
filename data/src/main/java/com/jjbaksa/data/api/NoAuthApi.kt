@@ -67,12 +67,6 @@ interface NoAuthApi {
         @Query("account") page: String
     ): Response<Unit>
 
-    @POST("user/check-password")
-    suspend fun checkPassword(
-        @Header("Authorization") token: String,
-        @Query("password") password: String
-    ): Response<Unit>
-
     @GET("trending")
     suspend fun getTrending(): Response<TrendResp>
 

@@ -51,8 +51,8 @@ class UserRemoteDataSource @Inject constructor(
         return noAuthApi.checkIdAvailable(account)
     }
 
-    override suspend fun checkPassword(token: String, password: String): Response<Unit> {
-        return noAuthApi.checkPassword(token, password)
+    override suspend fun postUserCheckPassword(password: String): Response<UserResp> {
+        return authApi.postUserCheckPassword(password)
     }
 
     override suspend fun patchUserMe(

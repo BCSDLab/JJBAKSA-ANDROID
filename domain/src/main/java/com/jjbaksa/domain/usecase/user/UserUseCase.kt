@@ -60,4 +60,10 @@ class UserUseCase @Inject constructor(
     suspend fun editUserProfile(profile: String): Flow<Result<User>> {
         return userRepository.editUserProfile(profile)
     }
+    suspend fun postUserCheckPassword(password: String, onError: (String) -> Unit): Flow<Result<Boolean>> {
+        return userRepository.postUserCheckPassword(password, onError)
+    }
+    suspend fun logout() {
+        return userRepository.logout()
+    }
 }

@@ -70,7 +70,7 @@ class UserLocalDataSource @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun checkPassword(password: String, token: String): Response<Unit> {
+    override suspend fun postUserCheckPassword(password: String): Response<UserResp> {
         TODO("Not yet implemented")
     }
 

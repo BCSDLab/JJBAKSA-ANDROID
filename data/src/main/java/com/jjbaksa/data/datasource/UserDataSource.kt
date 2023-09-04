@@ -22,10 +22,10 @@ interface UserDataSource {
         passwordAndNicknameReq: PasswordAndNicknameReq
     ): Response<UserResp>
 
+    suspend fun postUserCheckPassword(password: String): Response<UserResp>
     suspend fun postSignUp(signUpReq: SignUpReq): Response<SignUpResp>?
     suspend fun clearDataStore()
     suspend fun checkAccountAvailable(account: String): Response<Unit>
-    suspend fun checkPassword(password: String, token: String): Response<Unit>
     suspend fun saveWithdrawalReason(withdrawalReason: WithdrawalReasonReq): Response<Unit>
     suspend fun deleteUser(): Response<Unit>
     suspend fun setNewNickname(item: PasswordAndNicknameReq): Response<UserResp>

@@ -24,15 +24,14 @@ class ChangePasswordActivity : BaseActivity<ActivityChangePasswordBinding>() {
 
     override fun initView() {
         binding.jjAppBarContainer.setOnClickListener { finish() }
-        observeData()
     }
 
-    private fun observeData() {
-        viewModel.currentPasswordState.observe(this) {
-            isFailedCurrentPassword = !it?.isSuccess!!
-            if (isFailedCurrentPassword) {
+    override fun subscribe() {
+        viewModel.passwordResult.observe(this) {
+            isFailedCurrentPassword = it
+
+            if (!it) {
                 binding.currentPasswordEditText.editTextBackground = failButtonBackground()
-                showSnackBar(it?.msg.toString(), getString(R.string.cancel))
             } else {
                 if (newPasswordText != checkPasswordText) {
                     showSnackBar(
@@ -52,7 +51,7 @@ class ChangePasswordActivity : BaseActivity<ActivityChangePasswordBinding>() {
         }
         viewModel.newPasswordResult.observe(this) {
             if (it) {
-                setConfirmButton()
+                setConfirmDialog()
             } else {
                 binding.newPasswordEditText.editTextBackground = failButtonBackground()
                 binding.checkNewPasswordEditText.editTextBackground = failButtonBackground()
@@ -63,9 +62,6 @@ class ChangePasswordActivity : BaseActivity<ActivityChangePasswordBinding>() {
             binding.changePasswordButton.isEnabled = it
             binding.changePasswordButton.isSelected = it
         }
-    }
-
-    override fun subscribe() {
     }
 
     override fun initEvent() {

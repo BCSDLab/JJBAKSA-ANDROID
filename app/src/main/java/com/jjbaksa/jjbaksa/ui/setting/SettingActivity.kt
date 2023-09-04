@@ -23,14 +23,10 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
     private val viewModel: SettingViewModel by viewModels()
 
     override fun initView() {
-        binding.also {
-            it.lifecycleOwner = this
-            it.view = this
-        }
+        binding.view = this
     }
 
-    override fun subscribe() {
-    }
+    override fun subscribe() {}
 
     override fun initEvent() {
         binding.jjAppBarContainer.setOnClickListener { finish() }
@@ -52,7 +48,7 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
             title = getString(R.string.sign_out_title_text),
             msg = getString(R.string.sign_out_content_text),
             confirmClick = {
-                viewModel.signOut()
+                viewModel.logout()
                 ActivityCompat.finishAffinity(this)
                 startActivity(Intent(this, LoginActivity::class.java))
             }

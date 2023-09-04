@@ -12,7 +12,6 @@ import com.jjbaksa.domain.base.ErrorType
 import com.jjbaksa.domain.base.RespResult
 import com.jjbaksa.domain.model.user.User
 import com.jjbaksa.domain.repository.UserRepository
-import com.jjbaksa.domain.model.user.FormatResp
 import com.jjbaksa.domain.model.user.LoginReq
 import com.jjbaksa.domain.model.user.Login
 import com.jjbaksa.domain.model.user.SignUpReq
@@ -180,6 +179,21 @@ class UserRepositoryImpl @Inject constructor(
         )
     }
 
+    override suspend fun postUserCheckPassword(password: String, onError: (String) -> Unit): Flow<Result<Boolean>> {
+        return apiCall(
+            call = { userRemoteDataSource.postUserCheckPassword(password) },
+            mapper = {
+                if (it.isSuccessful) {
+                    true
+                } else {
+                    val errorResult = RespMapper.errorMapper(it.errorBody()?.string() ?: "")
+                    onError(errorResult.errorMessage)
+                    false
+                }
+            }
+        )
+    }
+
     override suspend fun postSignUp(signUpReq: SignUpReq): SignUpResp? {
         val resp = userRemoteDataSource.postSignUp(signUpReq)
         return resp.body()
@@ -193,20 +207,6 @@ class UserRepositoryImpl @Inject constructor(
             val errorBodyJson = result.errorBody()!!.string()
             val errorBody = RespMapper.errorMapper(errorBodyJson)
             RespResult.Error(ErrorType(errorBody.errorMessage, errorBody.code))
-        }
-    }
-
-    override suspend fun checkPassword(password: String): FormatResp {
-        val response = userRemoteDataSource.checkPassword(
-            "Bearer " + userLocalDataSource.getAccessToken(),
-            password
-        )
-        return if (response.isSuccessful && response.code() == 200) {
-            FormatResp(response.isSuccessful, "", response.code())
-        } else {
-            val errorBodyJson = response.errorBody()!!.string()
-            val errorBody = RespMapper.errorMapper(errorBodyJson)
-            FormatResp(response.isSuccessful, errorBody.errorMessage, errorBody.code)
         }
     }
 
@@ -271,7 +271,7 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun singOut() {
+    override suspend fun logout() {
         userLocalDataSource.clearDataStore()
     }
 

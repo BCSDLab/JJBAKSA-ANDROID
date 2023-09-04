@@ -45,6 +45,10 @@ interface AuthApi {
     suspend fun saveWithdrawalReason(
         @Body withdrawalReason: WithdrawalReasonReq
     ): Response<Unit>
+    @POST("user/check-password")
+    suspend fun postUserCheckPassword(
+        @Query("password") password: String
+    ): Response<UserResp>
     @GET("shops/pin/{place_id}")
     suspend fun getShopDetail(
         @Path("place_id") placeId: String
