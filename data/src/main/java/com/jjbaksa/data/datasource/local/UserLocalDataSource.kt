@@ -78,11 +78,11 @@ class UserLocalDataSource @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun saveWithdrawalReason(withdrawalReason: WithdrawalReasonReq): Response<Unit> {
+    override suspend fun postUserWithdrawReason(withdrawalReason: WithdrawalReasonReq): Response<Unit> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun deleteUser(): Response<Unit> {
+    override suspend fun deleteUserMe(): Response<Unit> {
         TODO("Not yet implemented")
     }
 

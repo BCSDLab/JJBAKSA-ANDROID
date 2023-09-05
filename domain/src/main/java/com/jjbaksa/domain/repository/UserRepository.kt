@@ -38,11 +38,19 @@ interface UserRepository {
     suspend fun setNewPassword(password: String, onError: (String) -> Unit): Flow<Result<Boolean>>
     suspend fun setNewNickname(nickname: String): Flow<Result<User>>
     suspend fun editUserProfile(profile: String): Flow<Result<User>>
-    suspend fun postUserCheckPassword(password: String, onError: (String) -> Unit): Flow<Result<Boolean>>
+    suspend fun postUserCheckPassword(
+        password: String,
+        onError: (String) -> Unit
+    ): Flow<Result<Boolean>>
+
     suspend fun postSignUp(signUpReq: SignUpReq): SignUpResp?
     suspend fun checkAccountAvailable(account: String): RespResult<Boolean>
-    suspend fun saveWithdrawalReason(withdrawalReason: WithdrawalReasonReq): RespResult<Boolean>
-    suspend fun deleteUser(): RespResult<Boolean>
+    suspend fun postUserWithdrawReason(
+        withdrawalReason: WithdrawalReasonReq,
+        onError: (String) -> Unit
+    ): Flow<Result<Boolean>>
+
+    suspend fun deleteUserMe(onError: (String) -> Unit): Flow<Result<Boolean>>
     suspend fun logout()
     fun getAutoLoginFlag(): Boolean
     fun getAccount(): String

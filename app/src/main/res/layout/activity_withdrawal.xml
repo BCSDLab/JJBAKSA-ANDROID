@@ -8,11 +8,10 @@
             type="com.jjbaksa.jjbaksa.ui.withdrawal.viewmodel.WithdrawalViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/withdrawal_constraint_layout_container"
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/withdrawal_constraint_layout_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.withdrawal.WithdrawalActivity">
@@ -152,29 +151,25 @@
                     app:layout_constraintTop_toBottomOf="@id/withdrawal_opinion_text_view" />
 
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/outlinedTextField"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/content_edit_text"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="32dp"
                     android:layout_marginTop="14dp"
                     android:layout_marginEnd="32dp"
-                    app:boxStrokeColor="@color/color_c4c4c4"
+                    android:background="@drawable/bg_inquiry_edit_text"
+                    android:gravity="top"
+                    android:hint="@string/free_write"
+                    android:minHeight="87dp"
+                    android:maxLength="150"
+                    android:padding="12dp"
+                    android:textColor="@color/color_666666"
+                    android:textColorHint="@color/color_c4c4c4"
+                    android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/withdrawal_improve_text_view">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/input_edit_text_field"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="top|start"
-                        android:maxLength="150"
-                        android:text="@string/free_write"
-                        android:textColor="@{vm.isEnabled ? @color/color_666666 : @color/color_c4c4c4}"
-                        android:textColorHint="@color/color_c4c4c4" />
-                </com.google.android.material.textfield.TextInputLayout>
+                    app:layout_constraintTop_toBottomOf="@+id/withdrawal_improve_text_view" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/text_length_count_text_view"
@@ -183,8 +178,8 @@
                     android:text="@{@string/text_length150(vm.inputTextLength)}"
                     android:textColor="@{vm.maxInputTextLength ? @color/color_ff7f23 : @color/color_c4c4c4}"
                     android:textSize="12sp"
-                    app:layout_constraintEnd_toEndOf="@id/outlinedTextField"
-                    app:layout_constraintTop_toBottomOf="@+id/outlinedTextField"
+                    app:layout_constraintEnd_toEndOf="@id/content_edit_text"
+                    app:layout_constraintTop_toBottomOf="@+id/content_edit_text"
                     tools:text="0/150" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -197,14 +192,14 @@
                     android:textColor="@color/color_c4c4c4"
                     android:textSize="10sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/outlinedTextField" />
+                    app:layout_constraintTop_toBottomOf="@id/content_edit_text" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/withdrawal_button"
                     android:layout_width="0dp"
                     android:layout_height="39dp"
                     android:layout_marginStart="60dp"
-                    android:layout_marginTop="74dp"
+                    android:layout_marginTop="55dp"
                     android:layout_marginEnd="60dp"
                     android:background="@drawable/bg_withdrawal_button"
                     android:enabled="@{vm.isEnabled}"

@@ -179,7 +179,10 @@ class UserRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun postUserCheckPassword(password: String, onError: (String) -> Unit): Flow<Result<Boolean>> {
+    override suspend fun postUserCheckPassword(
+        password: String,
+        onError: (String) -> Unit
+    ): Flow<Result<Boolean>> {
         return apiCall(
             call = { userRemoteDataSource.postUserCheckPassword(password) },
             mapper = {
@@ -248,27 +251,38 @@ class UserRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun saveWithdrawalReason(withdrawalReason: WithdrawalReasonReq): RespResult<Boolean> {
-        val response = userRemoteDataSource.saveWithdrawalReason(withdrawalReason)
-        return if (response.isSuccessful) {
-            RespResult.Success(true)
-        } else {
-            val errorBodyJson = response.errorBody()!!.string()
-            val errorBody = RespMapper.errorMapper(errorBodyJson)
-            RespResult.Error(ErrorType(errorBody.errorMessage, errorBody.code))
-        }
+    override suspend fun postUserWithdrawReason(
+        withdrawalReasonReq: WithdrawalReasonReq,
+        onError: (String) -> Unit
+    ): Flow<Result<Boolean>> {
+        return apiCall(
+            call = { userRemoteDataSource.postUserWithdrawReason(withdrawalReasonReq) },
+            mapper = {
+                if (it.isSuccessful) {
+                    true
+                } else {
+                    val errorResult = RespMapper.errorMapper(it.errorBody()?.string() ?: "")
+                    onError(errorResult.errorMessage)
+                    false
+                }
+            }
+        )
     }
 
-    override suspend fun deleteUser(): RespResult<Boolean> {
-        val response = userRemoteDataSource.deleteUser()
-        return if (response.isSuccessful && response.code() == 204) {
-            userLocalDataSource.clearDataStore()
-            RespResult.Success(response.isSuccessful)
-        } else {
-            val errorBodyJson = response.errorBody()!!.string()
-            val errorBody = RespMapper.errorMapper(errorBodyJson)
-            RespResult.Error(ErrorType(errorBody.errorMessage, errorBody.code))
-        }
+    override suspend fun deleteUserMe(onError: (String) -> Unit): Flow<Result<Boolean>> {
+        return apiCall(
+            call = { userRemoteDataSource.deleteUserMe() },
+            remoteData = { userLocalDataSource.clearDataStore() },
+            mapper = {
+                if (it.isSuccessful) {
+                    true
+                } else {
+                    val errorResult = RespMapper.errorMapper(it.errorBody()?.string() ?: "")
+                    onError(errorResult.errorMessage)
+                    false
+                }
+            }
+        )
     }
 
     override suspend fun logout() {

@@ -35,14 +35,14 @@ interface AuthApi {
         @Body passwordAndNicknameReq: PasswordAndNicknameReq
     ): Response<UserResp>
     @DELETE("user/me")
-    suspend fun deleteUser(): Response<Unit>
+    suspend fun deleteUserMe(): Response<Unit>
     @Multipart
     @PATCH("user/profile")
     suspend fun patchUserProfile(
         @Part profile: MultipartBody.Part
     ): Response<UserResp>
     @POST("user/withdraw-reason")
-    suspend fun saveWithdrawalReason(
+    suspend fun postUserWithdrawReason(
         @Body withdrawalReason: WithdrawalReasonReq
     ): Response<Unit>
     @POST("user/check-password")

@@ -26,8 +26,8 @@ interface UserDataSource {
     suspend fun postSignUp(signUpReq: SignUpReq): Response<SignUpResp>?
     suspend fun clearDataStore()
     suspend fun checkAccountAvailable(account: String): Response<Unit>
-    suspend fun saveWithdrawalReason(withdrawalReason: WithdrawalReasonReq): Response<Unit>
-    suspend fun deleteUser(): Response<Unit>
+    suspend fun postUserWithdrawReason(withdrawalReason: WithdrawalReasonReq): Response<Unit>
+    suspend fun deleteUserMe(): Response<Unit>
     suspend fun setNewNickname(item: PasswordAndNicknameReq): Response<UserResp>
     suspend fun saveAccessToken(accessToken: String)
     suspend fun saveAccount(account: String)

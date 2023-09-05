@@ -66,12 +66,12 @@ class UserRemoteDataSource @Inject constructor(
         return authApi.setUserNickname(passwordAndNicknameReq)
     }
 
-    override suspend fun saveWithdrawalReason(withdrawalReason: WithdrawalReasonReq): Response<Unit> {
-        return authApi.saveWithdrawalReason(withdrawalReason)
+    override suspend fun postUserWithdrawReason(withdrawalReason: WithdrawalReasonReq): Response<Unit> {
+        return authApi.postUserWithdrawReason(withdrawalReason)
     }
 
-    override suspend fun deleteUser(): Response<Unit> {
-        return authApi.deleteUser()
+    override suspend fun deleteUserMe(): Response<Unit> {
+        return authApi.deleteUserMe()
     }
 
     override suspend fun saveAccessToken(accessToken: String) {}
