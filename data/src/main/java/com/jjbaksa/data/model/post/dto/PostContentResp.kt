@@ -2,7 +2,7 @@ package com.jjbaksa.data.model.post.dto
 
 import com.google.gson.annotations.SerializedName
 
-data class PostContentDTO(
+data class PostContentResp(
     @SerializedName("id")
     val id: Int? = 0,
     @SerializedName("title")

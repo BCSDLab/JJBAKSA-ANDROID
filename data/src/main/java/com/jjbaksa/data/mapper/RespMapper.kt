@@ -6,9 +6,6 @@ import com.jjbaksa.data.model.inquiry.dto.InquiryContentDTO
 import com.jjbaksa.data.model.inquiry.dto.InquiryImagesDTO
 import com.jjbaksa.data.model.shop.ShopsMapsResp
 import com.jjbaksa.data.model.pin.ShopDetailResp
-import com.jjbaksa.data.model.post.PostDetailResp
-import com.jjbaksa.data.model.post.PostResp
-import com.jjbaksa.data.model.post.dto.PostContentDTO
 import com.jjbaksa.data.model.search.AutoKeywordResp
 import com.jjbaksa.data.model.search.SearchShopResp
 import com.jjbaksa.data.model.search.ShopResp
@@ -19,9 +16,6 @@ import com.jjbaksa.domain.model.inquiry.InquiryImages
 import com.jjbaksa.domain.model.shop.ShopsMapsContent
 import com.jjbaksa.domain.model.shop.ShopsMaps
 import com.jjbaksa.domain.model.shop.ShopDetail
-import com.jjbaksa.domain.model.post.Post
-import com.jjbaksa.domain.model.post.PostData
-import com.jjbaksa.domain.model.post.PostDetail
 import com.jjbaksa.domain.model.search.AutoKeyword
 import com.jjbaksa.domain.model.search.Shop
 import com.jjbaksa.domain.model.search.ShopData
@@ -80,23 +74,6 @@ fun InquiryImagesDTO.toInquiryImages() = InquiryImages(
     imageUrl = imageUrl ?: "",
     originalName = originalName ?: "",
     path = path ?: ""
-)
-
-fun PostResp.toPostData() = PostData(
-    content = content?.map { it.toPost() }.orEmpty()
-)
-
-fun PostContentDTO.toPost() = Post(
-    id = id ?: 0,
-    title = title ?: "",
-    createdAt = createdAt ?: ""
-)
-
-fun PostDetailResp.toPostDetail() = PostDetail(
-    id = id ?: 0,
-    title = title ?: "",
-    content = content ?: "",
-    createdAt = createdAt ?: ""
 )
 
 fun List<ShopsMapsResp>?.toMapShopData() = ShopsMaps(

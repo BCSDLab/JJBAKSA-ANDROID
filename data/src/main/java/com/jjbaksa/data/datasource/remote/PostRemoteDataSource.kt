@@ -12,9 +12,10 @@ class PostRemoteDataSource @Inject constructor(
     private val authApi: AuthApi,
     private val noAuthApi: NoAuthApi
 ) : PostDataSource {
+
     override suspend fun getPost(
-        idCursor: String,
-        dateCursor: String,
+        idCursor: Int?,
+        dateCursor: String?,
         size: Int
     ): Response<PostResp> {
         return noAuthApi.getPost(idCursor, dateCursor, size)

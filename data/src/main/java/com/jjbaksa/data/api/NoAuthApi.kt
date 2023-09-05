@@ -94,8 +94,8 @@ interface NoAuthApi {
 
     @GET("post")
     suspend fun getPost(
-        @Query("idCursor") idCursor: String,
-        @Query("dateCursor") dateCursor: String,
+        @Query("idCursor") idCursor: Int?,
+        @Query("dateCursor") dateCursor: String?,
         @Query("size") size: Int
     ): Response<PostResp>
 
