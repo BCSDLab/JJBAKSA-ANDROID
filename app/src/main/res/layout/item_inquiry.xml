@@ -6,18 +6,20 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:paddingHorizontal="16dp"
+        android:paddingTop="16dp">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/inquiry_title_text_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:drawableEnd="@drawable/ic_lock_closed"
+            android:layout_marginEnd="16dp"
+            android:bufferType="spannable"
             android:ellipsize="end"
             android:maxLines="3"
             android:textColor="@color/color_000000"
             android:textSize="16sp"
-            android:layout_marginEnd="16dp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@id/dropdown_image_view"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -65,17 +67,29 @@
             tools:text="이병건이올씨다" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:padding="16dp"
+            android:id="@+id/answer_text_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:background="@drawable/bg_inquiry_answer"
-            app:layout_constraintTop_toBottomOf="@id/inquiry_create_time_text_view"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:padding="16dp"
             android:textColor="@color/color_666666"
             android:textSize="14sp"
-            tools:text="아직 답변이 없네요. 조금만 기다려주세요!"/>
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/inquiry_create_time_text_view"
+            tools:text="아직 답변이 없네요. 조금만 기다려주세요!" />
+
+        <View
+            android:id="@+id/divider_view"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/color_eeeeee"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/answer_text_view" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

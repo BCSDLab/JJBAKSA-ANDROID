@@ -12,7 +12,7 @@ class InquiryRemoteDataSource @Inject constructor(
     private val noAuthApi: NoAuthApi
 ) : InquiryDataSource {
     override suspend fun getInquiry(
-        idCursor: String?,
+        idCursor: Int?,
         dateCursor: String?,
         size: Int
     ): Response<InquiryResp> {

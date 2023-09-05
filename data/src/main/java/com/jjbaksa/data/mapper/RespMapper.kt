@@ -1,18 +1,12 @@
 package com.jjbaksa.data.mapper
 
 import com.google.gson.Gson
-import com.jjbaksa.data.model.inquiry.InquiryResp
-import com.jjbaksa.data.model.inquiry.dto.InquiryContentDTO
-import com.jjbaksa.data.model.inquiry.dto.InquiryImagesDTO
 import com.jjbaksa.data.model.shop.ShopsMapsResp
 import com.jjbaksa.data.model.pin.ShopDetailResp
 import com.jjbaksa.data.model.search.AutoKeywordResp
 import com.jjbaksa.data.model.search.SearchShopResp
 import com.jjbaksa.data.model.search.ShopResp
 import com.jjbaksa.domain.ErrorResp
-import com.jjbaksa.domain.model.inquiry.InquiryContent
-import com.jjbaksa.domain.model.inquiry.InquiryData
-import com.jjbaksa.domain.model.inquiry.InquiryImages
 import com.jjbaksa.domain.model.shop.ShopsMapsContent
 import com.jjbaksa.domain.model.shop.ShopsMaps
 import com.jjbaksa.domain.model.shop.ShopDetail
@@ -52,28 +46,6 @@ fun ShopResp.toShop() = Shop(
     placeId = placeId ?: "",
     ratingCount = ratingCount ?: 0,
     totalRating = totalRating ?: 0
-)
-
-fun InquiryResp.toInquiryData() = InquiryData(
-    content = content?.map { it.toInquiryContent() }.orEmpty(),
-    size = size ?: 0
-)
-
-fun InquiryContentDTO.toInquiryContent() = InquiryContent(
-    id = id ?: 0,
-    answer = answer ?: "",
-    content = content ?: "",
-    createdAt = createdAt ?: "",
-    createdBy = createdBy ?: "",
-    inquiryImages = inquiryImages?.map { it.toInquiryImages() }.orEmpty(),
-    isSecreted = isSecreted ?: 0,
-    title = title ?: ""
-)
-
-fun InquiryImagesDTO.toInquiryImages() = InquiryImages(
-    imageUrl = imageUrl ?: "",
-    originalName = originalName ?: "",
-    path = path ?: ""
 )
 
 fun List<ShopsMapsResp>?.toMapShopData() = ShopsMaps(

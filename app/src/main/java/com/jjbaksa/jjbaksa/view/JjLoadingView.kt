@@ -43,7 +43,12 @@ class JjLoadingView @JvmOverloads constructor(
         )
 
         loading?.let {
-            binding.loadingContainer.isVisible = it
+            setLoading(it)
         }
+    }
+
+    fun setLoading(loading: Boolean) {
+        this.loading = loading
+        binding.loadingContainer.isVisible = loading
     }
 }

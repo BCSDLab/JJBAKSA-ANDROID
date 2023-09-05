@@ -69,7 +69,6 @@ class FindPasswordViewModel @Inject constructor(
                     _verifyResult.value = it
                 }
             }
-
         }
     }
 

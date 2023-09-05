@@ -1,7 +1,7 @@
 package com.jjbaksa.domain.model.inquiry
 
 data class InquiryContent(
-    val id: Int,
+    val id: Long = 0,
     val answer: String = "",
     val content: String = "",
     val createdAt: String = "",
