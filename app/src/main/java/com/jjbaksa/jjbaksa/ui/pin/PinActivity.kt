@@ -30,7 +30,7 @@ class PinActivity : BaseActivity<ActivityPinBinding>() {
                 viewModel.getShopDetail(viewModel.placeId.value.toString())
                 when (viewModel.pinReviewCursor.value) {
                     PinReviewCursor.MY_REVIEW -> {
-                        viewModel.getShopReviewLastDate(viewModel.placeId.value.toString())
+                        viewModel.getMyReviewShopLastDate(viewModel.placeId.value.toString())
                     }
 
                     PinReviewCursor.FOLLOWER_REVIEW -> {
@@ -45,12 +45,14 @@ class PinActivity : BaseActivity<ActivityPinBinding>() {
                         placeId = viewModel.placeId.value.toString(),
                         size = 10
                     )
+                    viewModel.setWriteNewMyReview(true)
                 } else if (viewModel.myReviewUpdateCursor.value == MyReviewCursor.STAR) {
                     viewModel.getMyReview(
                         placeId = viewModel.placeId.value.toString(),
                         sort = "rate",
                         size = 10
                     )
+                    viewModel.setWriteNewMyReview(true)
                 }
             }
         }
@@ -114,7 +116,7 @@ class PinActivity : BaseActivity<ActivityPinBinding>() {
         viewModel.pinReviewCursor.observe(this) {
             when (it) {
                 PinReviewCursor.MY_REVIEW -> {
-                    viewModel.getShopReviewLastDate(viewModel.placeId.value.toString())
+                    viewModel.getMyReviewShopLastDate(viewModel.placeId.value.toString())
                 }
 
                 PinReviewCursor.FOLLOWER_REVIEW -> {

@@ -5,6 +5,7 @@ interface HomeRepository {
     fun getMyInfoAccount(): String
     fun getMyInfoNickname(): String
     fun getMyInfoFollowers(): Int
+    fun getMyInfoReviews(): Int
     fun getMyInfoProfileImage(): String
     fun getMyInfoToken(): String
 }

@@ -1,8 +1,8 @@
 package com.jjbaksa.jjbaksa.ui.post.viewmodel
 
 import androidx.lifecycle.viewModelScope
-import com.jjbaksa.domain.resp.post.PostData
-import com.jjbaksa.domain.resp.post.PostDetail
+import com.jjbaksa.domain.model.post.Post
+import com.jjbaksa.domain.model.post.PostDetail
 import com.jjbaksa.domain.usecase.post.GetPostUseCase
 import com.jjbaksa.jjbaksa.base.BaseViewModel
 import com.jjbaksa.jjbaksa.util.SingleLiveEvent
@@ -14,13 +14,13 @@ import javax.inject.Inject
 class PostViewModel @Inject constructor(
     private val getPostUseCase: GetPostUseCase
 ) : BaseViewModel() {
-    private val _post = SingleLiveEvent<PostData>()
-    val post: SingleLiveEvent<PostData> get() = _post
+    private val _post = SingleLiveEvent<Post>()
+    val post: SingleLiveEvent<Post> get() = _post
 
     private val _postDetail = SingleLiveEvent<PostDetail>()
     val postDetail: SingleLiveEvent<PostDetail> get() = _postDetail
 
-    fun getPost(idCursor: String, dateCursor: String, size: Int) {
+    fun getPost(idCursor: Int?, dateCursor: String?, size: Int) {
         viewModelScope.launch(ceh) {
             getPostUseCase.invoke(idCursor, dateCursor, size)
                 .collect {

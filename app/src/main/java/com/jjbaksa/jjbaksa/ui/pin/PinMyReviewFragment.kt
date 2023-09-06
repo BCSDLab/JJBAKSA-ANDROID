@@ -87,7 +87,12 @@ class PinMyReviewFragment : BaseFragment<FragmentPinMyReviewBinding>() {
                 binding.myReviewEmptyContainer.isVisible = true
             } else {
                 binding.myReviewEmptyContainer.isVisible = false
-                myReviewAdapter.submitList(myReviewAdapter.currentList + it.content)
+                if (viewModel.writeNewMyReview.value == true) {
+                    myReviewAdapter.submitList(it.content)
+                    viewModel.setWriteNewMyReview(false)
+                } else {
+                    myReviewAdapter.submitList(myReviewAdapter.currentList + it.content)
+                }
             }
         }
         viewModel.myReviewUpdateCursor.observe(viewLifecycleOwner) {

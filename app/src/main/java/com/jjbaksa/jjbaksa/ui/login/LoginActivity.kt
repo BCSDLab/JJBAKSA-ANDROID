@@ -4,15 +4,18 @@ import android.content.Intent
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseActivity
 import com.jjbaksa.jjbaksa.databinding.ActivityLoginBinding
 import com.jjbaksa.jjbaksa.ui.findid.FindIdActivity
 import com.jjbaksa.jjbaksa.ui.findpassword.FindPasswordActivity
+import com.jjbaksa.jjbaksa.ui.login.viewmodel.LoginViewModel
 import com.jjbaksa.jjbaksa.ui.mainpage.MainPageActivity
 import com.jjbaksa.jjbaksa.ui.signup.SignUpActivity
 import com.jjbaksa.jjbaksa.ui.social.SocialLoginActivity
+import com.jjbaksa.jjbaksa.util.KeyboardProvider
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -27,17 +30,14 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
     override fun subscribe() {
         with(viewModel) {
-            loginState.observe(this@LoginActivity) {
-                if (it != null) {
-                    if (it.isSuccess) {
-                        goToMainActivity()
-                        finish()
-                    } else {
-                        if (it.errorMessage.isNotEmpty()) {
-                            showSnackBar(it.errorMessage, getString(R.string.cancel))
-                            setEditTextErrorUI()
-                        }
-                    }
+            loginResult.observe(this@LoginActivity) {
+                if (it.isSuccess) {
+                    goToActivity(MainPageActivity::class.java)
+                    finish()
+                } else {
+                    showSnackBar(it.errorMessage, getString(R.string.cancel))
+                    setEditTextErrorUI()
+                    KeyboardProvider(this@LoginActivity).hideKeyboard(binding.editTextId)
                 }
             }
         }
@@ -46,9 +46,15 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     private fun setEditTextErrorUI() {
         with(binding) {
             editTextId.background =
-                getDrawable(R.drawable.shape_rectf6bf54_solid_radius_100_stroke_ff7f23)
+                ContextCompat.getDrawable(
+                    this@LoginActivity,
+                    R.drawable.shape_rectf6bf54_solid_radius_100_stroke_ff7f23
+                )
             editTextPassword.background =
-                getDrawable(R.drawable.shape_rectf6bf54_solid_radius_100_stroke_ff7f23)
+                ContextCompat.getDrawable(
+                    this@LoginActivity,
+                    R.drawable.shape_rectf6bf54_solid_radius_100_stroke_ff7f23
+                )
         }
     }
 
@@ -56,28 +62,33 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
         setVisiblePassword()
         with(binding) {
             buttonSocialLogin.setOnClickListener {
-                goToSocialLoginActivity()
+                goToActivity(SocialLoginActivity::class.java)
             }
             textViewSignUp.setOnClickListener {
-                goToSignUpActivity()
+                goToActivity(SignUpActivity::class.java)
             }
             textViewFindId.setOnClickListener {
-                goToFindIdActivity()
+                goToActivity(FindIdActivity::class.java)
             }
             textViewFindPassword.setOnClickListener {
-                goToFindPasswordActivity()
+                goToActivity(FindPasswordActivity::class.java)
             }
             buttonLogin.setOnClickListener {
                 viewModel.login(binding.switchAutoLogin.isChecked)
             }
             editTextId.addTextChangedListener {
-                editTextId.background = getDrawable(R.drawable.shape_rect_eeeeee_solid_radius_100)
+                editTextId.background = ContextCompat.getDrawable(
+                    this@LoginActivity,
+                    R.drawable.shape_rect_eeeeee_solid_radius_100
+                )
                 buttonLogin.isSelected =
                     it.toString().isNotEmpty() && editTextPassword.text.toString().isNotEmpty()
             }
             editTextPassword.addTextChangedListener {
-                editTextPassword.background =
-                    getDrawable(R.drawable.shape_rect_eeeeee_solid_radius_100)
+                editTextPassword.background = ContextCompat.getDrawable(
+                    this@LoginActivity,
+                    R.drawable.shape_rect_eeeeee_solid_radius_100
+                )
                 buttonLogin.isSelected =
                     it.toString().isNotEmpty() && editTextId.text.toString().isNotEmpty()
             }
@@ -85,18 +96,30 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     }
 
     private fun setVisiblePassword() {
-        binding.imageViewVisiblePassword.setImageDrawable(getDrawable(R.drawable.sel_jj_edit_text_password_show_unchecked))
+        binding.imageViewVisiblePassword.setImageDrawable(
+            ContextCompat.getDrawable(this, R.drawable.sel_jj_edit_text_password_show_unchecked)
+        )
         binding.imageViewVisiblePassword.apply {
             setOnClickListener {
                 isVisiblePasswordIcon = !isVisiblePasswordIcon
                 if (isVisiblePasswordIcon) {
-                    setImageDrawable(getDrawable(R.drawable.sel_jj_edit_text_password_show_unchecked))
+                    setImageDrawable(
+                        ContextCompat.getDrawable(
+                            this@LoginActivity,
+                            R.drawable.sel_jj_edit_text_password_show_unchecked
+                        )
+                    )
                     binding.editTextPassword.apply {
                         transformationMethod = PasswordTransformationMethod.getInstance()
                         setSelection(this.length())
                     }
                 } else {
-                    setImageDrawable(getDrawable(R.drawable.sel_jj_edit_text_password_show_checked))
+                    setImageDrawable(
+                        ContextCompat.getDrawable(
+                            this@LoginActivity,
+                            R.drawable.sel_jj_edit_text_password_show_checked
+                        )
+                    )
                     binding.editTextPassword.apply {
                         transformationMethod = HideReturnsTransformationMethod.getInstance()
                         setSelection(this.length())
@@ -106,23 +129,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
         }
     }
 
-    fun goToSocialLoginActivity() {
-        Intent(this, SocialLoginActivity::class.java).also { startActivity(it) }
-    }
-
-    fun goToSignUpActivity() {
-        Intent(this, SignUpActivity::class.java).also { startActivity(it) }
-    }
-
-    fun goToFindIdActivity() {
-        Intent(this, FindIdActivity::class.java).also { startActivity(it) }
-    }
-
-    fun goToFindPasswordActivity() {
-        Intent(this, FindPasswordActivity::class.java).also { startActivity(it) }
-    }
-
-    fun goToMainActivity() {
-        Intent(this, MainPageActivity::class.java).also { startActivity(it) }
+    private fun goToActivity(classActivity: Class<*>) {
+        Intent(this, classActivity).also { startActivity(it) }
     }
 }

@@ -6,25 +6,25 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil.ItemCallback
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.jjbaksa.domain.resp.post.Post
+import com.jjbaksa.domain.model.post.PostContent
 import com.jjbaksa.jjbaksa.databinding.ItemPostBinding
 import com.jjbaksa.jjbaksa.util.setCalculateDate
 
 class PostAdapter(
-    val onClickItem: (Post) -> Unit
-) : ListAdapter<Post, PostAdapter.ViewHolder>(diffUtil) {
+    val onClickItem: (PostContent) -> Unit
+) : ListAdapter<PostContent, PostAdapter.ViewHolder>(diffUtil) {
     inner class ViewHolder(private val binding: ItemPostBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(post: Post) {
-            binding.postTitleTextView.text = post.title
-            binding.postCreateTimeTextView.text = post.createdAt
+        fun bind(postContent: PostContent) {
+            binding.postTitleTextView.text = postContent.title
+            binding.postCreateTimeTextView.text = postContent.createdAt
 
-            if (post.createdAt.setCalculateDate() >= 1) {
+            if (postContent.createdAt.setCalculateDate() >= 1) {
                 binding.recentPostImageView.visibility = View.GONE
             }
 
             binding.root.setOnClickListener {
-                onClickItem(post)
+                onClickItem(postContent)
             }
         }
     }
@@ -44,12 +44,12 @@ class PostAdapter(
     }
 
     companion object {
-        val diffUtil = object : ItemCallback<Post>() {
-            override fun areItemsTheSame(oldItem: Post, newItem: Post): Boolean {
+        val diffUtil = object : ItemCallback<PostContent>() {
+            override fun areItemsTheSame(oldItem: PostContent, newItem: PostContent): Boolean {
                 return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: Post, newItem: Post): Boolean {
+            override fun areContentsTheSame(oldItem: PostContent, newItem: PostContent): Boolean {
                 return oldItem == newItem
             }
         }

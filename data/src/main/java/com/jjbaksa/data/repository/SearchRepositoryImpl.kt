@@ -6,7 +6,7 @@ import com.jjbaksa.data.mapper.toShopData
 import com.jjbaksa.data.model.apiCall
 import com.jjbaksa.data.model.search.LocationBody
 import com.jjbaksa.domain.repository.SearchRepository
-import com.jjbaksa.domain.resp.search.ShopData
+import com.jjbaksa.domain.model.search.ShopData
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

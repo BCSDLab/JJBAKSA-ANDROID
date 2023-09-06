@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.widget.addTextChangedListener
-import com.jjbaksa.domain.resp.user.WithdrawalReasonReq
+import com.jjbaksa.domain.model.user.WithdrawalReasonReq
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseActivity
 import com.jjbaksa.jjbaksa.databinding.ActivityWithdrawalBinding
@@ -34,18 +34,15 @@ class WithdrawalActivity : BaseActivity<ActivityWithdrawalBinding>() {
     }
 
     override fun subscribe() {
-        observeData()
-    }
-
-    private fun observeData() {
-        viewModel.saveWithdrawalReasonState.observe(this) {
-            if (it.isSuccess) {
+        viewModel.toastMsg.observe(this) {
+            showSnackBar(it, getString(R.string.close))
+        }
+        viewModel.withdrawalReasonResult.observe(this) {
+            if (it) {
                 viewModel.withdraw()
-            } else {
-                showSnackBar(it.message.toString(), getString(R.string.close))
             }
         }
-        viewModel.isWithdrawUser.observe(this) {
+        viewModel.withdrawalResult.observe(this) {
             if (it) {
                 showCompleteWithdrawalDialog()
             }
@@ -65,15 +62,15 @@ class WithdrawalActivity : BaseActivity<ActivityWithdrawalBinding>() {
             if (viewModel.reason.value.isNullOrEmpty()) {
                 showSnackBar("계정을 삭제하려는 이유를 선택해주세요.", getString(R.string.close))
                 KeyboardProvider(this).hideKeyboard(binding.root)
-            } else if (binding.inputEditTextField.text.isNullOrEmpty()) {
+            } else if (binding.contentEditText.text.isNullOrEmpty()) {
                 showSnackBar("개선해야 될 사항을 적어주세요.", getString(R.string.close))
-                KeyboardProvider(this).hideKeyboard(binding.inputEditTextField)
+                KeyboardProvider(this).hideKeyboard(binding.contentEditText)
             } else {
                 val withdrawalReasonReq = WithdrawalReasonReq(
                     viewModel.reason.value.toString(),
-                    binding.inputEditTextField.text.toString()
+                    binding.contentEditText.text.toString()
                 )
-                viewModel.saveWithdrawalReason(withdrawalReasonReq)
+                viewModel.postUserWithdrawalReason(withdrawalReasonReq)
             }
         }
     }
@@ -105,17 +102,17 @@ class WithdrawalActivity : BaseActivity<ActivityWithdrawalBinding>() {
     }
 
     private fun setFocusInputField() {
-        binding.inputEditTextField.setOnFocusChangeListener { _, hasFocus ->
+        binding.contentEditText.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
-                if (binding.inputEditTextField.text.toString() == getString(R.string.free_write)) {
-                    binding.inputEditTextField.text?.clear()
+                if (binding.contentEditText.text.toString() == getString(R.string.free_write)) {
+                    binding.contentEditText.text?.clear()
                 }
             }
         }
     }
 
     private fun setInputField() {
-        binding.inputEditTextField.addTextChangedListener {
+        binding.contentEditText.addTextChangedListener {
             viewModel.setInputTextLength(it?.length.toString())
 
             if (it?.length == 150) {

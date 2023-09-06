@@ -1,7 +1,7 @@
 package com.jjbaksa.domain.usecase
 
 import com.jjbaksa.domain.repository.SearchRepository
-import com.jjbaksa.domain.resp.search.ShopData
+import com.jjbaksa.domain.model.search.ShopData
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

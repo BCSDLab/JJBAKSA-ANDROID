@@ -2,6 +2,7 @@ package com.jjbaksa.jjbaksa.ui.findid
 
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseFragment
 import com.jjbaksa.jjbaksa.databinding.FragmentFindIdInputVerificationCodeBinding
@@ -11,7 +12,8 @@ import com.jjbaksa.jjbaksa.util.KeyboardProvider
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FindIdInputVerificationCodeFragment : BaseFragment<FragmentFindIdInputVerificationCodeBinding>() {
+class FindIdInputVerificationCodeFragment :
+    BaseFragment<FragmentFindIdInputVerificationCodeBinding>() {
     override val layoutId: Int
         get() = R.layout.fragment_find_id_input_verification_code
 
@@ -32,14 +34,13 @@ class FindIdInputVerificationCodeFragment : BaseFragment<FragmentFindIdInputVeri
     }
 
     override fun initEvent() {
-        backPressed(binding.jjAppBarContainer, requireActivity(), true)
+        binding.jjAppBarContainer.setOnClickListener {
+            findNavController().popBackStack()
+        }
         setEditText()
         reSendVerificationCode()
         findId()
-        observeData()
     }
-
-    override fun subscribe() {}
 
     private fun setEditText() {
         binding.editTextContainer.addTextChangedListener { it, position ->
@@ -69,7 +70,7 @@ class FindIdInputVerificationCodeFragment : BaseFragment<FragmentFindIdInputVeri
     private fun reSendVerificationCode() {
         binding.textViewFindIdResendVerificationCode.setOnClickListener {
             KeyboardProvider(requireContext()).hideKeyboard(binding.editTextContainer)
-            viewModel.getAuthEmail(viewModel.userEmail.value.toString())
+            viewModel.postUserEmailId(viewModel.userEmail.value.toString())
         }
     }
 
@@ -77,12 +78,22 @@ class FindIdInputVerificationCodeFragment : BaseFragment<FragmentFindIdInputVeri
         binding.buttonFindIdVerificationCode.setOnClickListener {
             KeyboardProvider(requireContext()).hideKeyboard(binding.editTextContainer)
             if (viewModel.stateBoxNumber.value?.contains(null) == false) {
-                viewModel.getUserAccount(stateBoxNumber.joinToString(""))
+                viewModel.getUserId(stateBoxNumber.joinToString(""))
             }
         }
     }
 
-    private fun observeData() {
+    override fun subscribe() {
+        viewModel.userEmailIdState.observe(
+            viewLifecycleOwner
+        ) {
+            if (it) showSnackBar(getString(R.string.resend_verification_code_content))
+            KeyboardProvider(requireContext()).hideKeyboard(binding.editTextContainer)
+        }
+        viewModel.toastMsg.observe(viewLifecycleOwner) {
+            showSnackBar(it)
+            KeyboardProvider(requireContext()).hideKeyboard(binding.editTextContainer)
+        }
         viewModel.stateBox.observe(
             viewLifecycleOwner
         ) {
@@ -94,23 +105,11 @@ class FindIdInputVerificationCodeFragment : BaseFragment<FragmentFindIdInputVeri
                 binding.buttonFindIdVerificationCode.isEnabled = false
             }
         }
-        viewModel.authEmailState.observe(
-            viewLifecycleOwner
-        ) {
-            if (it.isSuccess) {
-                showSnackBar(getString(R.string.resend_verification_code_content))
-            } else {
-                showSnackBar(it.msg.toString())
-            }
-        }
-
-        viewModel.userIdInfo.observe(
-            viewLifecycleOwner
-        ) {
-            if (it.isSuccess) {
+        viewModel.userId.observe(viewLifecycleOwner) {
+            if (it.isNotEmpty()) {
                 ConfirmDialog(
                     getString(R.string.success_find_account),
-                    "${viewModel.userEmail.value}으로 가입된 아이디는 ${viewModel.userIdInfo.value?.msg}입니다.",
+                    "${viewModel.userEmail.value}으로 가입된 아이디는 ${it}입니다.",
                     getString(R.string.complete),
                     { activity?.finish() }
                 ).show(parentFragmentManager, FIND_ID_DIALOG_TAG)
@@ -122,7 +121,6 @@ class FindIdInputVerificationCodeFragment : BaseFragment<FragmentFindIdInputVeri
                         R.drawable.shape_rect_eeeeee_solid_radius_8_stroke_ff7f23
                     )
                 )
-                showSnackBar(it.msg.toString())
             }
         }
     }

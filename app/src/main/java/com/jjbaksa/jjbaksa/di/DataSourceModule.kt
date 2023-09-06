@@ -9,8 +9,9 @@ import com.jjbaksa.data.datasource.local.HomeLocalDataSource
 import com.jjbaksa.data.datasource.local.UserLocalDataSource
 import com.jjbaksa.data.datasource.remote.HomeRemoteDataSource
 import com.jjbaksa.data.datasource.remote.InquiryRemoteDataSource
-import com.jjbaksa.data.datasource.remote.MapRemoteDataSource
+import com.jjbaksa.data.datasource.remote.ShopRemoteDataSource
 import com.jjbaksa.data.datasource.remote.PostRemoteDataSource
+import com.jjbaksa.data.datasource.remote.ReviewRemoteDataSource
 import com.jjbaksa.data.datasource.remote.ScrapRemoteDataSource
 import com.jjbaksa.data.datasource.remote.SearchRemoteDataSource
 import com.jjbaksa.data.datasource.remote.UserRemoteDataSource
@@ -81,12 +82,12 @@ object DataSourceModule {
 
     @Provides
     @Singleton
-    fun provideRemoteMapDataSource(
+    fun provideRemoteShopDataSource(
         authApi: AuthApi,
         noAuthApi: NoAuthApi,
         testNoAuthApi: TestNoAuthApi
-    ): MapRemoteDataSource {
-        return MapRemoteDataSource(authApi, noAuthApi, testNoAuthApi)
+    ): ShopRemoteDataSource {
+        return ShopRemoteDataSource(authApi, noAuthApi, testNoAuthApi)
     }
 
     @Provides
@@ -97,5 +98,14 @@ object DataSourceModule {
         testNoAuthApi: TestNoAuthApi
     ): ScrapRemoteDataSource {
         return ScrapRemoteDataSource(authApi, noAuthApi, testNoAuthApi)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRemoteReviewDataSource(
+        authApi: AuthApi,
+        noAuthApi: NoAuthApi
+    ): ReviewRemoteDataSource {
+        return ReviewRemoteDataSource(authApi, noAuthApi)
     }
 }

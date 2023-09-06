@@ -5,14 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.jjbaksa.domain.resp.map.ShopMyReviewContent
+import com.jjbaksa.domain.model.review.MyReviewShopsContent
 import com.jjbaksa.jjbaksa.databinding.ItemMyReviewBinding
 
 class PinMyReviewAdapter :
-    ListAdapter<ShopMyReviewContent, PinMyReviewAdapter.ViewHolder>(diffUtil) {
+    ListAdapter<MyReviewShopsContent, PinMyReviewAdapter.ViewHolder>(diffUtil) {
     inner class ViewHolder(private val binding: ItemMyReviewBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: ShopMyReviewContent) {
+        fun bind(item: MyReviewShopsContent) {
             binding.myReviewContentTextView.text = item.content
             binding.myReviewCreatedDateTextView.text = item.createdAt
             binding.reviewStarCountTextView.text = item.rate.toFloat().toString()
@@ -34,17 +34,17 @@ class PinMyReviewAdapter :
     }
 
     companion object {
-        val diffUtil = object : DiffUtil.ItemCallback<ShopMyReviewContent>() {
+        val diffUtil = object : DiffUtil.ItemCallback<MyReviewShopsContent>() {
             override fun areItemsTheSame(
-                oldItem: ShopMyReviewContent,
-                newItem: ShopMyReviewContent
+                oldItem: MyReviewShopsContent,
+                newItem: MyReviewShopsContent
             ): Boolean {
                 return oldItem.id == newItem.id
             }
 
             override fun areContentsTheSame(
-                oldItem: ShopMyReviewContent,
-                newItem: ShopMyReviewContent
+                oldItem: MyReviewShopsContent,
+                newItem: MyReviewShopsContent
             ): Boolean {
                 return oldItem == newItem
             }

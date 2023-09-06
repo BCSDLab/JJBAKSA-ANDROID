@@ -1,7 +1,7 @@
 package com.jjbaksa.data.datasource
 
 import com.jjbaksa.data.model.scrap.AddShopScrapResp
-import com.jjbaksa.data.model.scrap.GetScrapsResp
+import com.jjbaksa.data.model.scrap.ScrapsResp
 import com.jjbaksa.data.model.scrap.ShopScrapResp
 import retrofit2.Response
 
@@ -17,5 +17,5 @@ interface ScrapDataSource {
         user: Int?,
         cursor: Int?,
         size: Int
-    ): Response<GetScrapsResp>
+    ): Response<ScrapsResp>
 }

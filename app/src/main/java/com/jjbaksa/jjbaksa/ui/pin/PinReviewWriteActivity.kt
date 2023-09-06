@@ -63,7 +63,7 @@ class PinReviewWriteActivity : BaseActivity<ActivityPinReviewWriteBinding>() {
     override fun initEvent() {
         binding.jjAppBar.setOnClickListener { finish() }
         binding.saveButton.setOnClickListener {
-            if (binding.saveButton.isSelected) {
+            if (binding.contentEditText.text.isNotEmpty() && binding.ratingBar.rating != 0.0f) {
                 viewModel.setReview(
                     viewModel.placeId.value.toString(),
                     binding.contentEditText.text.toString(),

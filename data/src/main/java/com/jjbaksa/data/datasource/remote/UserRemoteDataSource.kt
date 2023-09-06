@@ -3,15 +3,14 @@ package com.jjbaksa.data.datasource.remote
 import com.jjbaksa.data.api.AuthApi
 import com.jjbaksa.data.api.NoAuthApi
 import com.jjbaksa.data.datasource.UserDataSource
-import com.jjbaksa.data.model.findid.FindIdResp
 import com.jjbaksa.data.model.user.LoginResp
 import com.jjbaksa.data.model.user.UserResp
-import com.jjbaksa.domain.resp.user.FindPasswordReq
-import com.jjbaksa.domain.resp.user.LoginReq
-import com.jjbaksa.domain.resp.user.PasswordAndNicknameReq
-import com.jjbaksa.domain.resp.user.SignUpReq
-import com.jjbaksa.domain.resp.user.SignUpResp
-import com.jjbaksa.domain.resp.user.WithdrawalReasonReq
+import com.jjbaksa.domain.model.user.FindPasswordReq
+import com.jjbaksa.domain.model.user.LoginReq
+import com.jjbaksa.domain.model.user.PasswordAndNicknameReq
+import com.jjbaksa.domain.model.user.SignUpReq
+import com.jjbaksa.domain.model.user.SignUpResp
+import com.jjbaksa.domain.model.user.WithdrawalReasonReq
 import okhttp3.MultipartBody
 import retrofit2.Response
 import javax.inject.Inject
@@ -20,92 +19,74 @@ class UserRemoteDataSource @Inject constructor(
     private val authApi: AuthApi,
     private val noAuthApi: NoAuthApi
 ) : UserDataSource {
-    override suspend fun postSignUp(signUpReq: SignUpReq): Response<SignUpResp> {
-        return noAuthApi.signUp(signUpReq)
+    override suspend fun getUserMe(): Response<UserResp> {
+        return authApi.getUserMe()
     }
 
-    override suspend fun clearDataStore() {
+    override suspend fun postLogin(loginReq: LoginReq): Response<LoginResp> {
+        return noAuthApi.postLogin(loginReq)
+    }
+
+    override suspend fun postUserEmailId(email: String): Response<Unit> {
+        return noAuthApi.postUserEmailId(email)
+    }
+
+    override suspend fun getUserId(email: String, code: String): Response<UserResp> {
+        return noAuthApi.getUserId(email, code)
+    }
+
+    override suspend fun postUserEmailPassword(id: String, email: String): Response<Unit> {
+        return noAuthApi.postUserEmailPassword(id, email)
+    }
+
+    override suspend fun postUserPassword(findPasswordReq: FindPasswordReq): Response<String> {
+        return noAuthApi.postUserPassword(findPasswordReq)
+    }
+
+    override suspend fun postSignUp(signUpReq: SignUpReq): Response<SignUpResp> {
+        return noAuthApi.signUp(signUpReq)
     }
 
     override suspend fun checkAccountAvailable(account: String): Response<Unit> {
         return noAuthApi.checkIdAvailable(account)
     }
 
-    override suspend fun checkPassword(token: String, password: String): Response<Unit> {
-        return noAuthApi.checkPassword(token, password)
+    override suspend fun postUserCheckPassword(password: String): Response<UserResp> {
+        return authApi.postUserCheckPassword(password)
     }
 
-    override suspend fun postLogin(loginReq: LoginReq): Response<LoginResp>? {
-        return noAuthApi.login(loginReq)
-    }
-
-    override suspend fun checkAuthEmail(email: String): Response<Unit> {
-        return noAuthApi.getEmailCodeNumber(email)
-    }
-
-    override suspend fun findAccount(email: String, code: String): Response<FindIdResp> {
-        return noAuthApi.findId(email, code)
-    }
-
-    override suspend fun findPassword(findPasswordReq: FindPasswordReq): Response<String> {
-        return noAuthApi.findPassword(findPasswordReq)
-    }
-
-    override suspend fun getPasswordVerificationCode(id: String, email: String): Response<Unit> {
-        return noAuthApi.getPasswordVerificationCode(id, email)
-    }
-
-    override suspend fun setNewPassword(
+    override suspend fun patchUserMe(
         token: String,
-        item: PasswordAndNicknameReq
+        passwordAndNicknameReq: PasswordAndNicknameReq
     ): Response<UserResp> {
-        return noAuthApi.setNewPassword(token, item)
+        return noAuthApi.patchUserMe(token, passwordAndNicknameReq)
     }
 
-    override suspend fun setNewNickname(item: PasswordAndNicknameReq): Response<UserResp> {
-        return authApi.setUserNickname(item)
+    override suspend fun setNewNickname(passwordAndNicknameReq: PasswordAndNicknameReq): Response<UserResp> {
+        return authApi.setUserNickname(passwordAndNicknameReq)
     }
 
-    override suspend fun saveWithdrawalReason(withdrawalReason: WithdrawalReasonReq): Response<Unit> {
-        return authApi.saveWithdrawalReason(withdrawalReason)
+    override suspend fun postUserWithdrawReason(withdrawalReason: WithdrawalReasonReq): Response<Unit> {
+        return authApi.postUserWithdrawReason(withdrawalReason)
     }
 
-    override suspend fun deleteUser(): Response<Unit> {
-        return authApi.deleteUser()
+    override suspend fun deleteUserMe(): Response<Unit> {
+        return authApi.deleteUserMe()
     }
 
-    override suspend fun saveAccessToken(accessToken: String) {
-    }
+    override suspend fun saveAccessToken(accessToken: String) {}
+    override suspend fun saveAccount(account: String) {}
+    override suspend fun saveNickname(nickname: String) {}
+    override suspend fun saveFollowers(followers: Int) {}
+    override suspend fun saveReviews(reviews: Int) {}
+    override suspend fun saveProfileImage(image: String) {}
+    override suspend fun saveRefreshToken(refreshToken: String) {}
+    override suspend fun saveAutoLogin(isAutoLogin: Boolean) {}
+    override suspend fun saveAuthPasswordToken(passwordToken: String) {}
+    override suspend fun clearDataStore() {}
 
-    override suspend fun saveAccount(account: String) {
-    }
-
-    override suspend fun saveNickname(nickname: String) {
-    }
-
-    override suspend fun saveFollowers(followers: Int) {
-    }
-
-    override suspend fun saveProfileImage(image: String) {
-    }
-
-    override suspend fun savePassword(password: String) {
-    }
-
-    override suspend fun saveRefreshToken(refreshToken: String) {
-    }
-
-    override suspend fun saveAutoLogin(isAutoLogin: Boolean) {
-    }
-
-    override suspend fun saveAuthPasswordToken(passwordToken: String) {
-    }
-
-    suspend fun me(): Response<UserResp> {
-        return authApi.userMe()
-    }
-    suspend fun editUserProfileImage(profile: MultipartBody.Part): Response<UserResp> {
-        return authApi.editUserProfileImage(profile)
+    suspend fun editUserProfile(profile: MultipartBody.Part): Response<UserResp> {
+        return authApi.patchUserProfile(profile)
     }
 
     override fun getAutoLoginFlag(): Boolean {
@@ -124,11 +105,11 @@ class UserRemoteDataSource @Inject constructor(
         return 0
     }
 
-    override fun getProfileImage(): String {
-        return ""
+    override fun getReviews(): Int {
+        return 0
     }
 
-    override fun getPassword(): String {
+    override fun getProfileImage(): String {
         return ""
     }
 

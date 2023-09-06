@@ -1,12 +1,12 @@
 package com.jjbaksa.domain.repository
 
-import com.jjbaksa.domain.resp.inquiry.InquiryData
+import com.jjbaksa.domain.model.inquiry.Inquiry
 import kotlinx.coroutines.flow.Flow
 
 interface InquiryRepository {
     suspend fun getInquiry(
-        idCursor: String,
-        dateCursor: String,
+        idCursor: Int?,
+        dateCursor: String?,
         size: Int
-    ): Flow<Result<InquiryData>>
+    ): Flow<Result<Inquiry>>
 }

@@ -2,6 +2,7 @@ package com.jjbaksa.jjbaksa.ui.findpassword
 
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseFragment
 import com.jjbaksa.jjbaksa.databinding.FragmentFindPasswordResetBinding
@@ -26,11 +27,12 @@ class FindPasswordResetFragment : BaseFragment<FragmentFindPasswordResetBinding>
     }
 
     override fun initEvent() {
-        backPressed(binding.jjAppBarContainer, requireActivity(), true)
+        binding.jjAppBarContainer.setOnClickListener {
+            findNavController().popBackStack()
+        }
         setNewPassword()
         setCheckPassword()
         completedResult()
-        observeDate()
     }
 
     private fun setNewPassword() {
@@ -91,13 +93,12 @@ class FindPasswordResetFragment : BaseFragment<FragmentFindPasswordResetBinding>
             }
         }
     }
-    override fun subscribe() {}
-
-    private fun observeDate() {
-        viewModel.newPasswordResult.observe(
-            viewLifecycleOwner
-        ) {
-            if (it.isSuccess) {
+    override fun subscribe() {
+        viewModel.toastMsg.observe(viewLifecycleOwner) {
+            showSnackBar(it)
+        }
+        viewModel.newPasswordResult.observe(viewLifecycleOwner) {
+            if (it) {
                 ConfirmDialog(
                     getString(R.string.complete_find_password),
                     getString(R.string.retry_password),
@@ -106,7 +107,6 @@ class FindPasswordResetFragment : BaseFragment<FragmentFindPasswordResetBinding>
                 ).show(parentFragmentManager, DIALOG_TAG)
             } else {
                 failedPassword()
-                showSnackBar(getString(R.string.password_rule_not_match))
             }
         }
     }

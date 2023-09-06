@@ -16,7 +16,16 @@ class FindIdFragment : BaseFragment<FragmentFindIdBinding>() {
 
     private val viewModel: FindIdViewModel by activityViewModels()
 
-    override fun initView() {
+    override fun initView() {}
+
+    override fun initEvent() {
+        binding.jjAppBarContainer.setOnClickListener {
+            requireActivity().finish()
+        }
+        binding.buttonFindIdSendToVerificationCode.setOnClickListener {
+            KeyboardProvider(requireContext()).hideKeyboard(binding.editTextFindIdToEmail)
+            viewModel.postUserEmailId(binding.editTextFindIdToEmail.text.toString())
+        }
         binding.editTextFindIdToEmail.addTextChangedListener {
             binding.editTextFindIdToEmail.background = ContextCompat.getDrawable(
                 requireContext(),
@@ -27,34 +36,11 @@ class FindIdFragment : BaseFragment<FragmentFindIdBinding>() {
         }
     }
 
-    override fun initEvent() {
-        backPressed(binding.jjAppBarContainer, requireActivity(), false)
-        sendVerificationCode()
-        observeData()
-    }
-
-    override fun subscribe() {}
-
-    override fun onStart() {
-        super.onStart()
-        binding.editTextFindIdToEmail.setText(null)
-    }
-
-    private fun sendVerificationCode() {
-        binding.buttonFindIdSendToVerificationCode.setOnClickListener {
-            KeyboardProvider(requireContext()).hideKeyboard(binding.editTextFindIdToEmail)
-            viewModel.getAuthEmail(binding.editTextFindIdToEmail.text.toString())
-        }
-    }
-
-    private fun observeData() {
-        viewModel.authEmailState.observe(
-            viewLifecycleOwner
-        ) {
-            if (it.isSuccess) {
+    override fun subscribe() {
+        viewModel.userEmailIdState.observe(viewLifecycleOwner) {
+            if (it) {
                 findNavController().navigate(R.id.action_find_id_to_input_id_verification_code)
             } else {
-                showSnackBar(it.msg.toString())
                 binding.buttonFindIdSendToVerificationCode.isEnabled = false
                 binding.editTextFindIdToEmail.background = ContextCompat.getDrawable(
                     requireContext(),
@@ -62,5 +48,14 @@ class FindIdFragment : BaseFragment<FragmentFindIdBinding>() {
                 )
             }
         }
+        viewModel.toastMsg.observe(viewLifecycleOwner) {
+            showSnackBar(it)
+            KeyboardProvider(requireContext()).hideKeyboard(binding.editTextFindIdToEmail)
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        binding.editTextFindIdToEmail.setText(null)
     }
 }

@@ -19,10 +19,6 @@ class PostDetailActivity : BaseActivity<ActivityPostDetailBinding>() {
     }
 
     override fun subscribe() {
-        observeData()
-    }
-
-    private fun observeData() {
         viewModel.postDetail.observe(this) {
             binding.postDetailTitleTextView.text = it.title
             binding.postDetailCreateTimeTextView.text = it.createdAt

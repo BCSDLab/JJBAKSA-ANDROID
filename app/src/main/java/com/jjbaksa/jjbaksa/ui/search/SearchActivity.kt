@@ -4,7 +4,7 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.jjbaksa.domain.resp.search.Shop
+import com.jjbaksa.domain.model.search.Shop
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseActivity
 import com.jjbaksa.jjbaksa.databinding.ActivitySearchBinding

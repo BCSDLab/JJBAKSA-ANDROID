@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jjbaksa.domain.enums.FriendReviewCursor
 import com.jjbaksa.domain.enums.PinReviewCursor
-import com.jjbaksa.domain.resp.follower.FollowerShopReviewContent
+import com.jjbaksa.domain.model.review.FollowerReviewShopsContent
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseFragment
 import com.jjbaksa.jjbaksa.databinding.FragmentPinFriendReviewBinding
@@ -59,7 +59,6 @@ class PinFriendReviewFragment : BaseFragment<FragmentPinFriendReviewBinding>() {
 
                 if (lastPosition != -1 && lastPosition >= (itemCount - 1) && viewModel.friendReviewHasMore.value == true) {
                     viewModel.friendReviewHasMore.value = false
-                    Log.e("로그", "?")
                     when (viewModel.friendReviewUpdateCursor.value) {
                         FriendReviewCursor.LATEST -> {
                             viewModel.getFollowerShopReview(
@@ -123,7 +122,7 @@ class PinFriendReviewFragment : BaseFragment<FragmentPinFriendReviewBinding>() {
         viewModel.pinReviewCursor.value = PinReviewCursor.FOLLOWER_REVIEW
     }
 
-    private fun onReport(followerReviewInfo: FollowerShopReviewContent) {
+    private fun onReport(followerReviewInfo: FollowerReviewShopsContent) {
         Log.e("로그", "$followerReviewInfo")
         val intent = Intent(requireContext(), PinMyFriendReviewReportActivity::class.java).apply {
             putExtra("name", viewModel.shopInfo.value?.name)

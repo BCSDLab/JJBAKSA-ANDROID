@@ -39,6 +39,12 @@ class HomeLocalDataSource @Inject constructor(
         }
     }
 
+    override fun getUserReviews(): Int {
+        return runBlocking {
+            dataStore.data.first()[PreferenceKeys.REVIEWS] ?: 0
+        }
+    }
+
     override fun getUserProfileImage(): String {
         return runBlocking {
             dataStore.data.first()[PreferenceKeys.IMAGE] ?: ""

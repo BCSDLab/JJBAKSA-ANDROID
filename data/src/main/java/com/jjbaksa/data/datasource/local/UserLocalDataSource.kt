@@ -6,15 +6,14 @@ import com.jjbaksa.data.database.PreferenceKeys
 import com.jjbaksa.data.database.UserDao
 import com.jjbaksa.data.database.userDataStore
 import com.jjbaksa.data.datasource.UserDataSource
-import com.jjbaksa.data.model.findid.FindIdResp
 import com.jjbaksa.data.model.user.LoginResp
 import com.jjbaksa.data.model.user.UserResp
-import com.jjbaksa.domain.resp.user.FindPasswordReq
-import com.jjbaksa.domain.resp.user.LoginReq
-import com.jjbaksa.domain.resp.user.PasswordAndNicknameReq
-import com.jjbaksa.domain.resp.user.SignUpReq
-import com.jjbaksa.domain.resp.user.SignUpResp
-import com.jjbaksa.domain.resp.user.WithdrawalReasonReq
+import com.jjbaksa.domain.model.user.FindPasswordReq
+import com.jjbaksa.domain.model.user.LoginReq
+import com.jjbaksa.domain.model.user.PasswordAndNicknameReq
+import com.jjbaksa.domain.model.user.SignUpReq
+import com.jjbaksa.domain.model.user.SignUpResp
+import com.jjbaksa.domain.model.user.WithdrawalReasonReq
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -26,6 +25,37 @@ class UserLocalDataSource @Inject constructor(
     private val userDao: UserDao
 ) : UserDataSource {
     private val dataStore = context.userDataStore
+    override suspend fun getUserMe(): Response<UserResp> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun postLogin(loginReq: LoginReq): Response<LoginResp> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun postUserEmailId(email: String): Response<Unit> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getUserId(email: String, code: String): Response<UserResp> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun postUserEmailPassword(id: String, email: String): Response<Unit> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun postUserPassword(findPasswordReq: FindPasswordReq): Response<String> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun patchUserMe(
+        token: String,
+        passwordAndNicknameReq: PasswordAndNicknameReq
+    ): Response<UserResp> {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun postSignUp(signUpReq: SignUpReq): Response<SignUpResp>? {
         return null
     }
@@ -40,31 +70,7 @@ class UserLocalDataSource @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun postLogin(loginReq: LoginReq): Response<LoginResp>? {
-        return null
-    }
-
-    override suspend fun checkAuthEmail(email: String): Response<Unit> {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun checkPassword(password: String, token: String): Response<Unit> {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun findAccount(email: String, code: String): Response<FindIdResp> {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun getPasswordVerificationCode(id: String, email: String): Response<Unit> {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun findPassword(findPasswordReq: FindPasswordReq): Response<String> {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun setNewPassword(token: String, item: PasswordAndNicknameReq): Response<UserResp> {
+    override suspend fun postUserCheckPassword(password: String): Response<UserResp> {
         TODO("Not yet implemented")
     }
 
@@ -72,11 +78,11 @@ class UserLocalDataSource @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun saveWithdrawalReason(withdrawalReason: WithdrawalReasonReq): Response<Unit> {
+    override suspend fun postUserWithdrawReason(withdrawalReason: WithdrawalReasonReq): Response<Unit> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun deleteUser(): Response<Unit> {
+    override suspend fun deleteUserMe(): Response<Unit> {
         TODO("Not yet implemented")
     }
 
@@ -104,15 +110,15 @@ class UserLocalDataSource @Inject constructor(
         }
     }
 
-    override suspend fun saveProfileImage(image: String) {
+    override suspend fun saveReviews(reviews: Int) {
         dataStore.edit {
-            it[PreferenceKeys.IMAGE] = image
+            it[PreferenceKeys.REVIEWS] = reviews
         }
     }
 
-    override suspend fun savePassword(password: String) {
+    override suspend fun saveProfileImage(image: String) {
         dataStore.edit {
-            it[PreferenceKeys.PASSWORD] = password
+            it[PreferenceKeys.IMAGE] = image
         }
     }
 
@@ -158,15 +164,15 @@ class UserLocalDataSource @Inject constructor(
         }
     }
 
-    override fun getProfileImage(): String {
+    override fun getReviews(): Int {
         return runBlocking {
-            dataStore.data.first()[PreferenceKeys.IMAGE] ?: ""
+            dataStore.data.first()[PreferenceKeys.REVIEWS] ?: 0
         }
     }
 
-    override fun getPassword(): String {
+    override fun getProfileImage(): String {
         return runBlocking {
-            dataStore.data.first()[PreferenceKeys.PASSWORD] ?: ""
+            dataStore.data.first()[PreferenceKeys.IMAGE] ?: ""
         }
     }
 

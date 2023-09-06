@@ -3,20 +3,18 @@ package com.jjbaksa.data.model.user
 import com.google.gson.annotations.SerializedName
 
 data class UserResp(
-    @SerializedName("account")
-    var account: String,
-    @SerializedName("email")
-    var email: String,
     @SerializedName("id")
-    var id: Long,
+    val id: Long? = 0,
+    @SerializedName("account")
+    val account: String? = "",
     @SerializedName("nickname")
-    var nickname: String,
-    @SerializedName("oauthType")
-    var oauthType: String,
+    val nickname: String? = "",
+    @SerializedName("email")
+    val email: String? = "",
     @SerializedName("profileImage")
-    var profileImage: UserProfileResp,
+    val profileImage: UserProfileImageResp? = UserProfileImageResp(),
     @SerializedName("userCountResponse")
-    var userCountResponse: UserCountResp,
+    val userCountResponse: UserCountResp? = UserCountResp(),
     @SerializedName("userType")
-    var userType: String
+    val userType: String? = ""
 )

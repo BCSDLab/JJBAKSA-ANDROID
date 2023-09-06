@@ -9,17 +9,25 @@ import com.jjbaksa.jjbaksa.databinding.FragmentFindPasswordBinding
 import com.jjbaksa.jjbaksa.ui.findpassword.viewmodel.FindPasswordViewModel
 import com.jjbaksa.jjbaksa.util.KeyboardProvider
 import com.jjbaksa.jjbaksa.view.JjEditText
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FindPasswordFragment() : BaseFragment<FragmentFindPasswordBinding>() {
     override val layoutId: Int
         get() = R.layout.fragment_find_password
 
-    private val findPasswordViewModel: FindPasswordViewModel by activityViewModels()
+    private val viewModel: FindPasswordViewModel by activityViewModels()
 
     private var outlineState = false
 
-    override fun initView() {
+    override fun initView() {}
+
+    override fun initEvent() {
+        binding.jjAppBarContainer.setOnClickListener {
+            requireActivity().finish()
+        }
         changeButtonUI()
+        sendVerificationCode()
     }
 
     private fun changeButtonUI() {
@@ -86,29 +94,30 @@ class FindPasswordFragment() : BaseFragment<FragmentFindPasswordBinding>() {
     private fun isVisibleButton(id: String, email: String): Boolean =
         id.isNotEmpty() && email.isNotEmpty()
 
-    override fun initEvent() {
-        backPressed(binding.jjAppBarContainer, requireActivity(), false)
-        sendVerificationCode()
-        observeData()
-    }
-
     private fun sendVerificationCode() {
         binding.buttonFindPasswordSendToInputCode.setOnClickListener {
-            findPasswordViewModel.getPasswordVerificationCode(
+            viewModel.postUserEmailPassword(
                 binding.inputIdEditText.editTextText,
                 binding.inputEmailEditText.editTextText
             )
         }
     }
 
-    override fun subscribe() {}
-
-    private fun observeData() {
-        findPasswordViewModel.isPasswordVerificationCode.observe(
-            viewLifecycleOwner
-        ) {
-            if (it.isSuccess) {
-                findPasswordViewModel.getUserInfo(
+    override fun subscribe() {
+        viewModel.toastMsg.observe(viewLifecycleOwner) {
+            if (it.contains(USER)) {
+                showSnackBar(getString(R.string.fail_id))
+                changeEditTextOutlineColor(binding.inputIdEditText)
+            } else if (it.contains(EMAIL)) {
+                showSnackBar(getString(R.string.fail_email))
+                changeEditTextOutlineColor(binding.inputEmailEditText)
+            } else {
+                showSnackBar(it)
+            }
+        }
+        viewModel.isSuccess.observe(viewLifecycleOwner) {
+            if (it) {
+                viewModel.getUserInfo(
                     binding.inputIdEditText.editTextText,
                     binding.inputEmailEditText.editTextText
                 )
@@ -116,15 +125,6 @@ class FindPasswordFragment() : BaseFragment<FragmentFindPasswordBinding>() {
             } else {
                 outlineState = true
                 KeyboardProvider(requireContext()).hideKeyboard(binding.inputEmailEditText)
-                if (it.msg.toString().contains(USER)) {
-                    showSnackBar(getString(R.string.fail_id))
-                    changeEditTextOutlineColor(binding.inputIdEditText)
-                } else if (it.msg.toString().contains(EMAIL)) {
-                    showSnackBar(getString(R.string.fail_email))
-                    changeEditTextOutlineColor(binding.inputEmailEditText)
-                } else {
-                    showSnackBar(it.msg.toString())
-                }
             }
         }
     }

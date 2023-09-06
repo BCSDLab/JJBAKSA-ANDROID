@@ -8,17 +8,17 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.jjbaksa.domain.resp.scrap.UserScrapsShop
+import com.jjbaksa.domain.model.scrap.ScrapsContent
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.databinding.ItemMypageScrapShopBinding
 import kotlin.math.round
 
 class BookmarkAdapter(
     private val context: Context
-) : ListAdapter<UserScrapsShop, BookmarkAdapter.ViewHolder>(diffUtil) {
+) : ListAdapter<ScrapsContent, BookmarkAdapter.ViewHolder>(diffUtil) {
     inner class ViewHolder(private val binding: ItemMypageScrapShopBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: UserScrapsShop) {
+        fun bind(item: ScrapsContent) {
             binding.titleTextView.text = item.name
             binding.categoryTextView.text = item.category
             binding.starTextView.text =
@@ -53,17 +53,17 @@ class BookmarkAdapter(
     }
 
     companion object {
-        val diffUtil = object : DiffUtil.ItemCallback<UserScrapsShop>() {
+        val diffUtil = object : DiffUtil.ItemCallback<ScrapsContent>() {
             override fun areItemsTheSame(
-                oldItem: UserScrapsShop,
-                newItem: UserScrapsShop
+                oldItem: ScrapsContent,
+                newItem: ScrapsContent
             ): Boolean {
                 return oldItem.placeId == newItem.placeId
             }
 
             override fun areContentsTheSame(
-                oldItem: UserScrapsShop,
-                newItem: UserScrapsShop
+                oldItem: ScrapsContent,
+                newItem: ScrapsContent
             ): Boolean {
                 return oldItem == newItem
             }

@@ -1,5 +1,5 @@
 package com.jjbaksa.domain.model.mainpage
 
 enum class JjCategory {
-    FRIEND, BOOKMARK
+    NEAR_STORE, FRIEND, BOOKMARK
 }

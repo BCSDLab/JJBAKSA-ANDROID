@@ -25,6 +25,10 @@ class HomeRemoteDataSource @Inject constructor(
         TODO("Not yet implemented")
     }
 
+    override fun getUserReviews(): Int {
+        TODO("Not yet implemented")
+    }
+
     override fun getUserProfileImage(): String {
         TODO("Not yet implemented")
     }

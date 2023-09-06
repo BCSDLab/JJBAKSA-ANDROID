@@ -49,8 +49,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text_view_find_id_verification_code"/>
 
-
-
                 <TextView
                     android:id="@+id/text_view_find_id_resend_verification_code"
                     android:layout_width="wrap_content"

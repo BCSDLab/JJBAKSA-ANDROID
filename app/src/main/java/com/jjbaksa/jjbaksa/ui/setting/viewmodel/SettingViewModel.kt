@@ -1,7 +1,7 @@
 package com.jjbaksa.jjbaksa.ui.setting.viewmodel
 
 import androidx.lifecycle.viewModelScope
-import com.jjbaksa.domain.repository.UserRepository
+import com.jjbaksa.domain.usecase.user.UserUseCase
 import com.jjbaksa.jjbaksa.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -9,11 +9,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SettingViewModel @Inject constructor(
-    private val repository: UserRepository
+    private val userUseCase: UserUseCase
 ) : BaseViewModel() {
-    fun signOut() {
+    fun logout() {
         viewModelScope.launch(ceh) {
-            repository.singOut()
+            userUseCase.logout()
         }
     }
 }

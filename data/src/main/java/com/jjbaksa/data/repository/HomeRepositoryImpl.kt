@@ -25,6 +25,10 @@ class HomeRepositoryImpl @Inject constructor(
         return homeLocalDataSource.getUserFollowers()
     }
 
+    override fun getMyInfoReviews(): Int {
+        return homeLocalDataSource.getUserReviews()
+    }
+
     override fun getMyInfoProfileImage(): String {
         return homeLocalDataSource.getUserProfileImage()
     }

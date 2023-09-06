@@ -8,5 +8,11 @@
         android:layout_height="match_parent"
         tools:context=".ui.splash.SplashActivity">
 
+        <com.jjbaksa.jjbaksa.view.JjLoadingView
+            android:id="@+id/loading_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:loading="true"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

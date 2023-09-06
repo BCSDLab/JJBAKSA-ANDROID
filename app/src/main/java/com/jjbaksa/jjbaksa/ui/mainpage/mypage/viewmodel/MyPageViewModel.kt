@@ -3,10 +3,12 @@ package com.jjbaksa.jjbaksa.ui.mainpage.mypage.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.jjbaksa.domain.base.RespResult
 import com.jjbaksa.domain.repository.UserRepository
-import com.jjbaksa.domain.resp.scrap.UserScrapsShop
+import com.jjbaksa.domain.model.review.ReviewShop
+import com.jjbaksa.domain.model.scrap.ScrapsContent
+import com.jjbaksa.domain.usecase.review.ReviewUseCase
 import com.jjbaksa.domain.usecase.scrap.GetShopScrapUseCase
+import com.jjbaksa.domain.usecase.user.UserUseCase
 import com.jjbaksa.jjbaksa.base.BaseViewModel
 import com.jjbaksa.jjbaksa.util.MyInfo
 import com.jjbaksa.jjbaksa.util.SingleLiveEvent
@@ -17,7 +19,9 @@ import javax.inject.Inject
 @HiltViewModel
 class MyPageViewModel @Inject constructor(
     val repository: UserRepository,
-    val scrapUseCase: GetShopScrapUseCase
+    private val scrapUseCase: GetShopScrapUseCase,
+    private val reviewUseCase: ReviewUseCase,
+    private val userUseCase: UserUseCase
 ) : BaseViewModel() {
     val account = MutableLiveData<String>("")
     val nickname = MutableLiveData<String>("")
@@ -32,8 +36,11 @@ class MyPageViewModel @Inject constructor(
     private val _isResult = SingleLiveEvent<Boolean>()
     val isResult: LiveData<Boolean> get() = _isResult
 
-    private val _scrapsShops = SingleLiveEvent<List<UserScrapsShop>>()
-    val scrapsShops: SingleLiveEvent<List<UserScrapsShop>> get() = _scrapsShops
+    private val _scrapsShops = SingleLiveEvent<List<ScrapsContent>>()
+    val scrapsShops: SingleLiveEvent<List<ScrapsContent>> get() = _scrapsShops
+
+    private val _reviewShops = SingleLiveEvent<ReviewShop>()
+    val reviewShops: SingleLiveEvent<ReviewShop> get() = _reviewShops
 
     fun getUserProfile() {
         account.value = MyInfo.account
@@ -51,21 +58,31 @@ class MyPageViewModel @Inject constructor(
         _loadImage.value = image
     }
 
+    fun setNewNickname(newNickname: String) {
+        viewModelScope.launch(ceh) {
+            userUseCase.setNewNickname(newNickname).collect {
+                it.onSuccess {
+                    nickname.value = it.nickname
+                    MyInfo.nickname = it.nickname
+                    _isResult.value = true
+                }
+            }
+        }
+    }
+
     fun uploadProfileImgAndNickname(image: String, newNickname: String) {
         viewModelScope.launch(ceh) {
-            val response = repository.editUserProfileImage(image)
-            if (response == RespResult.Success(true)) {
-                repository.getProfileImage().also {
-                    profileImage.value = it
-                    MyInfo.profileImage = it
-                }
-                val nicknameResponse = repository.setNewNickname(newNickname)
-                if (nicknameResponse.isSuccess) {
-                    repository.getNickname().also {
-                        nickname.value = it
-                        MyInfo.nickname = it
+            userUseCase.editUserProfile(image).collect {
+                it.onSuccess {
+                    profileImage.value = it.profileImage.url.toString()
+                    MyInfo.profileImage = it.profileImage.url.toString()
+                    userUseCase.setNewNickname(newNickname).collect {
+                        it.onSuccess {
+                            nickname.value = it.nickname
+                            MyInfo.nickname = it.nickname
+                            _isResult.value = true
+                        }
                     }
-                    _isResult.value = true
                 }
             }
         }
@@ -77,6 +94,16 @@ class MyPageViewModel @Inject constructor(
                 it.onSuccess {
                     _scrapsShops.value = it.content
                     bookmarkHasMore.value = it.content.count() == 10
+                }
+            }
+        }
+    }
+
+    fun getReviewShop(cursor: Int?, size: Int) {
+        viewModelScope.launch(ceh) {
+            reviewUseCase.getReviewShop(cursor, size).collect {
+                it.onSuccess {
+                    _reviewShops.value = it
                 }
             }
         }

@@ -3,10 +3,10 @@ package com.jjbaksa.data.model.user
 import com.google.gson.annotations.SerializedName
 
 data class UserCountResp(
-    @SerializedName("friendCount")
-    var friendCount: Int,
     @SerializedName("id")
-    var id: Long,
+    val id: Long? = 0,
+    @SerializedName("friendCount")
+    val friendCount: Int? = 0,
     @SerializedName("reviewCount")
-    var reviewCount: Int
+    val reviewCount: Int? = 0
 )
