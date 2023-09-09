@@ -5,5 +5,6 @@ data class ReviewShopContent(
     val placeId: String = "",
     val name: String = "",
     val category: String = "",
-    val scrap: Int = 0
+    val scrap: Int = 0,
+    val photos: List<String> = emptyList()
 )

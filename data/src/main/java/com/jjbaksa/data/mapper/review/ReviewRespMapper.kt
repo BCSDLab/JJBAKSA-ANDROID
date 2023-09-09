@@ -32,7 +32,8 @@ fun ReviewShopContentDTO.toReviewShopContent() = ReviewShopContent(
     placeId = placeId ?: "",
     name = name ?: "",
     category = category ?: "",
-    scrap = scrap ?: 0
+    scrap = scrap ?: 0,
+    photos = photos ?: emptyList()
 )
 
 fun FollowerReviewShopsResp.toFollowerShopReview() = FollowerReviewShops(

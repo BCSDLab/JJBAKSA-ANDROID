@@ -12,5 +12,7 @@ data class ReviewShopContentDTO(
     @SerializedName("category")
     val category: String? = "",
     @SerializedName("scrap")
-    val scrap: Int? = 0
+    val scrap: Int? = 0,
+    @SerializedName("photos")
+    val photos: List<String>? = emptyList()
 )
