@@ -1,6 +1,5 @@
 package com.jjbaksa.jjbaksa.ui.mainpage.mypage.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -12,7 +11,9 @@ import com.jjbaksa.domain.model.review.ReviewShopContent
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.databinding.ItemMyPageReviewBinding
 
-class ReviewAdapter : ListAdapter<ReviewShopContent, ReviewAdapter.ViewHolder>(diffUtil) {
+class ReviewAdapter(
+    private val onClick: (ReviewShopContent) -> Unit
+) : ListAdapter<ReviewShopContent, ReviewAdapter.ViewHolder>(diffUtil) {
     inner class ViewHolder(private val binding: ItemMyPageReviewBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ReviewShopContent) {
@@ -28,6 +29,9 @@ class ReviewAdapter : ListAdapter<ReviewShopContent, ReviewAdapter.ViewHolder>(d
                 Glide.with(binding.shopImageView)
                     .load(item.photos[0])
                     .into(binding.shopImageView)
+                binding.reviewContainer.setOnClickListener {
+                    onClick(item)
+                }
             }
         }
     }

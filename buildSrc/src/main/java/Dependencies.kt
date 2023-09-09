@@ -10,6 +10,7 @@ object AndroidXDependencies {
     const val constraintLayout =
         "androidx.constraintlayout:constraintlayout:${Versions.constraintLayoutVersion}"
     const val hilt = "com.google.dagger:hilt-android:${Versions.hiltVersion}"
+    const val fragment = "androidx.fragment:fragment:${Versions.fragmentKTXVersion}"
 }
 
 object KTXDependencies {

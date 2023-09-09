@@ -29,6 +29,7 @@ class MyPageViewModel @Inject constructor(
     val profileImage = MutableLiveData<String>("")
     val textLength = MutableLiveData<String>("")
     val bookmarkHasMore = SingleLiveEvent<Boolean>()
+    val placeId = SingleLiveEvent<String>()
 
     private val _loadImage = SingleLiveEvent<String>()
     val loadImage: LiveData<String> get() = _loadImage

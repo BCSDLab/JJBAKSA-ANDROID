@@ -1,11 +1,13 @@
 package com.jjbaksa.jjbaksa.ui.mainpage.mypage
 
 import android.graphics.Rect
+import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.jjbaksa.domain.model.review.ReviewShopContent
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseFragment
 import com.jjbaksa.jjbaksa.databinding.FragmentReviewBinding
@@ -20,9 +22,12 @@ import dagger.hilt.android.AndroidEntryPoint
 class ReviewFragment : BaseFragment<FragmentReviewBinding>() {
     override val layoutId: Int
         get() = R.layout.fragment_review
+    private val reviewDetailFragment by lazy {
+        ReviewDetailFragment.newInstance()
+    }
 
     private val reviewAdapter: ReviewAdapter by lazy {
-        ReviewAdapter()
+        ReviewAdapter(::goToShopDetail)
     }
     private lateinit var gridLayoutManager: GridLayoutManager
     private val viewModel: MyPageViewModel by activityViewModels()
@@ -71,5 +76,14 @@ class ReviewFragment : BaseFragment<FragmentReviewBinding>() {
                     getString(R.string.total_review, MyInfo.reviews.toString())
             }
         }
+    }
+
+    private fun goToShopDetail(reviewShopContent: ReviewShopContent) {
+        val bundle = Bundle()
+        bundle.putString("placeId", reviewShopContent.placeId)
+        reviewDetailFragment.arguments = bundle
+        parentFragmentManager.beginTransaction()
+            .add(R.id.fragment_container, reviewDetailFragment, "ReviewDetailFragment")
+            .commit()
     }
 }
