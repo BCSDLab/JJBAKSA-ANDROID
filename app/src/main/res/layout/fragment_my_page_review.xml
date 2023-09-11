@@ -59,5 +59,23 @@
             app:layout_constraintBottom_toBottomOf="parent"
             tools:listitem="@layout/item_my_review"/>
 
+        <com.jjbaksa.jjbaksa.view.JjLoadingView
+            android:id="@+id/loading_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:loading="true"/>
+
+        <com.jjbaksa.jjbaksa.view.JjNoContentView
+            android:id="@+id/jj_no_content_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="149dp"
+            android:visibility="invisible"
+            app:content="@string/no_review_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="@string/no_review_title" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

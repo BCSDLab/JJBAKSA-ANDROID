@@ -3,6 +3,7 @@ package com.jjbaksa.jjbaksa.ui.mainpage.mypage.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.jjbaksa.domain.model.review.MyReviewShops
 import com.jjbaksa.domain.repository.UserRepository
 import com.jjbaksa.domain.model.review.ReviewShop
 import com.jjbaksa.domain.model.scrap.ScrapsContent
@@ -30,6 +31,7 @@ class MyPageViewModel @Inject constructor(
     val textLength = MutableLiveData<String>("")
     val bookmarkHasMore = SingleLiveEvent<Boolean>()
     val placeId = SingleLiveEvent<String>()
+    val myReviewHasMore = SingleLiveEvent<Boolean>()
 
     private val _loadImage = SingleLiveEvent<String>()
     val loadImage: LiveData<String> get() = _loadImage
@@ -42,6 +44,9 @@ class MyPageViewModel @Inject constructor(
 
     private val _reviewShops = SingleLiveEvent<ReviewShop>()
     val reviewShops: SingleLiveEvent<ReviewShop> get() = _reviewShops
+
+    private val _reviewShopDetail = SingleLiveEvent<MyReviewShops>()
+    val reviewShopDetail: SingleLiveEvent<MyReviewShops> get() = _reviewShopDetail
 
     fun getUserProfile() {
         account.value = MyInfo.account
@@ -107,6 +112,28 @@ class MyPageViewModel @Inject constructor(
                     _reviewShops.value = it
                 }
             }
+        }
+    }
+
+    fun getReviewShopDetail(
+        placeId: String,
+        idCursor: Int? = null,
+        dateCursor: String? = null,
+        rateCursor: Int? = null,
+        size: Int? = null, // 1~10
+        direction: String? = null, // asc / desc
+        sort: String? = null // createdAt / rate
+    ) {
+        viewModelScope.launch(ceh) {
+            reviewUseCase.getMyReview(placeId, idCursor, dateCursor, rateCursor, size, direction, sort)
+                .collect {
+                    it.onSuccess {
+                        myReviewHasMore.value = it.content.count() == 10
+                        _reviewShopDetail.value = it
+                    }.onFailure {
+                        _reviewShopDetail.value = MyReviewShops()
+                    }
+                }
         }
     }
 }

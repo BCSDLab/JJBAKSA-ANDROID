@@ -81,6 +81,8 @@ class ReviewFragment : BaseFragment<FragmentReviewBinding>() {
     private fun goToShopDetail(reviewShopContent: ReviewShopContent) {
         val bundle = Bundle()
         bundle.putString("placeId", reviewShopContent.placeId)
+        bundle.putString("name", reviewShopContent.name)
+        bundle.putString("category", reviewShopContent.category)
         reviewDetailFragment.arguments = bundle
         parentFragmentManager.beginTransaction()
             .add(R.id.fragment_container, reviewDetailFragment, "ReviewDetailFragment")

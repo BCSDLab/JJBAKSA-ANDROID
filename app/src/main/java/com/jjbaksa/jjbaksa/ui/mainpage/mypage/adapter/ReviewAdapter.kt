@@ -29,9 +29,9 @@ class ReviewAdapter(
                 Glide.with(binding.shopImageView)
                     .load(item.photos[0])
                     .into(binding.shopImageView)
-                binding.reviewContainer.setOnClickListener {
-                    onClick(item)
-                }
+            }
+            binding.reviewContainer.setOnClickListener {
+                onClick(item)
             }
         }
     }
