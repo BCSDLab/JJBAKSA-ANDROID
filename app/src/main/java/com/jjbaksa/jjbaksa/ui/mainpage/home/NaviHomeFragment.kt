@@ -149,31 +149,33 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
             binding.searchCurrentLocationButton.isVisible = it
         }
         viewModel.category.observe(viewLifecycleOwner) { category ->
-            when (category) {
-                JjCategory.NEAR_STORE -> {
-                    updateCategoryColorState(binding.categoryNearStoreTextView, true)
-                    updateCategoryColorState(binding.categoryFriendTextView, false)
-                    updateCategoryColorState(binding.categoryBookmarkTextView, false)
-                    getShops()
-                }
-
-                JjCategory.FRIEND -> {
-                    updateCategoryColorState(binding.categoryNearStoreTextView, false)
-                    updateCategoryColorState(binding.categoryFriendTextView, true)
-                    updateCategoryColorState(binding.categoryBookmarkTextView, false)
-                    getShops()
-                }
-
-                JjCategory.BOOKMARK -> {
-                    updateCategoryColorState(binding.categoryNearStoreTextView, false)
-                    updateCategoryColorState(binding.categoryFriendTextView, false)
-                    updateCategoryColorState(binding.categoryBookmarkTextView, true)
-                    getShops()
-                }
-            }
+            setCategoryOptionSelected(category)
+            getShops()
         }
         viewModel.toastMsg.observe(viewLifecycleOwner) { msg ->
             showSnackBar(msg)
+        }
+    }
+
+    private fun setCategoryOptionSelected(option: JjCategory) {
+        when (option) {
+            JjCategory.NEAR_STORE -> {
+                updateCategoryColorState(binding.categoryNearStoreTextView, true)
+                updateCategoryColorState(binding.categoryFriendTextView, false)
+                updateCategoryColorState(binding.categoryBookmarkTextView, false)
+            }
+
+            JjCategory.FRIEND -> {
+                updateCategoryColorState(binding.categoryNearStoreTextView, false)
+                updateCategoryColorState(binding.categoryFriendTextView, true)
+                updateCategoryColorState(binding.categoryBookmarkTextView, false)
+            }
+
+            JjCategory.BOOKMARK -> {
+                updateCategoryColorState(binding.categoryNearStoreTextView, false)
+                updateCategoryColorState(binding.categoryFriendTextView, false)
+                updateCategoryColorState(binding.categoryBookmarkTextView, true)
+            }
         }
     }
 
@@ -299,7 +301,9 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
     override fun onResume() {
         super.onResume()
         fusedLocationUtil.startLocationUpdate()
-        viewModel.category.postValue(null)
+        viewModel.category.value?.let {
+            setCategoryOptionSelected(it)
+        }
     }
 
     override fun onPause() {
