@@ -17,9 +17,7 @@ class ReviewDetailFragment : BaseFragment<FragmentMyPageReviewBinding>() {
         get() = R.layout.fragment_my_page_review
     private val viewModel: MyPageViewModel by activityViewModels()
     private lateinit var linearLayoutManager: LinearLayoutManager
-    private val reviewDetailAdapter by lazy {
-        ReviewDetailAdapter()
-    }
+    private lateinit var reviewDetailAdapter: ReviewDetailAdapter
 
     override fun initView() {
         viewModel.placeId.value = requireArguments().getString("placeId")
@@ -27,7 +25,8 @@ class ReviewDetailFragment : BaseFragment<FragmentMyPageReviewBinding>() {
             titleTextView.text = requireArguments().getString("name")
             categoryTextView.text = requireArguments().getString("category")
         }
-        linearLayoutManager = LinearLayoutManager(requireContext())
+        reviewDetailAdapter = ReviewDetailAdapter()
+        linearLayoutManager = LinearLayoutManager(context)
         binding.recyclerView.apply {
             layoutManager = linearLayoutManager
             adapter = reviewDetailAdapter
@@ -49,6 +48,7 @@ class ReviewDetailFragment : BaseFragment<FragmentMyPageReviewBinding>() {
         }
         binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
                 val itemCount = linearLayoutManager.itemCount
                 val lastPosition = linearLayoutManager.findLastVisibleItemPosition()
 
