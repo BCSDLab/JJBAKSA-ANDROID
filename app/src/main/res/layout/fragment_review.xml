@@ -5,19 +5,19 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        
+
         <TextView
             android:id="@+id/total_review_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:textStyle="bold"
             android:layout_marginStart="16dp"
             android:layout_marginTop="20dp"
             android:textColor="@color/color_ff7f23"
-            tools:text="총 120개의 리뷰"
+            android:textSize="16sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="총 120개의 리뷰" />
 
         <com.jjbaksa.jjbaksa.view.JjNoContentView
             android:id="@+id/jj_no_content_view"
@@ -25,21 +25,24 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="149dp"
             android:visibility="invisible"
-            app:title="@string/no_review_title"
             app:content="@string/no_review_content"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="@string/no_review_title" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/review_recycler_view"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:paddingTop="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/total_review_text_view"
+            tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             tools:listitem="@layout/item_my_page_review"
-            app:layout_constraintTop_toBottomOf="@id/total_review_text_view"/>
+            tools:spanCount="3" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/progress_container"
@@ -63,8 +66,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/progress_bar" />
 
-
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

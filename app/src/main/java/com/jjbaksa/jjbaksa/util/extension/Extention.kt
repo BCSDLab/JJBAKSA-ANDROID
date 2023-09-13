@@ -2,6 +2,7 @@ package com.jjbaksa.jjbaksa.util
 
 import android.content.Context
 import android.content.pm.PackageManager
+import android.content.res.Resources
 import android.graphics.Typeface
 import android.text.SpannableStringBuilder
 import android.text.Spanned
@@ -38,6 +39,9 @@ fun Context.setTextProperties(text: String, range: Int): SpannableStringBuilder 
 
     return builder
 }
+
+fun Float.fromDpToPx(): Int =
+    (this * Resources.getSystem().displayMetrics.density).toInt()
 
 /**
  * 예시 비교 날짜 : "2023-03-15"

@@ -86,6 +86,7 @@ dependencies {
         implementation(appCompat)
         implementation(constraintLayout)
         implementation(hilt)
+        implementation(fragment)
     }
 
     MaterialDependencies.run {
