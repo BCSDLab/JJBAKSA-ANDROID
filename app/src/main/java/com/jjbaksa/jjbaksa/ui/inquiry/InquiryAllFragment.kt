@@ -3,6 +3,7 @@ package com.jjbaksa.jjbaksa.ui.inquiry
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.jjbaksa.domain.enums.InquiryCursor
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseFragment
 import com.jjbaksa.jjbaksa.databinding.FragmentInquiryAllBinding
@@ -21,7 +22,8 @@ class InquiryAllFragment : BaseFragment<FragmentInquiryAllBinding>() {
     private val viewModel: InquiryViewModel by activityViewModels()
 
     override fun initView() {
-        viewModel.getInquiry(null, null, 20)
+        viewModel.inquiryCursor.value = InquiryCursor.ALL
+        viewModel.getInquiry(null, null, 10)
         linearLayoutManager = LinearLayoutManager(requireContext())
         binding.inquiryAllRecyclerView.apply {
             layoutManager = linearLayoutManager
@@ -41,5 +43,10 @@ class InquiryAllFragment : BaseFragment<FragmentInquiryAllBinding>() {
                 binding.emptyContainer.isVisible = true
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.inquiryCursor.value = InquiryCursor.ALL
     }
 }

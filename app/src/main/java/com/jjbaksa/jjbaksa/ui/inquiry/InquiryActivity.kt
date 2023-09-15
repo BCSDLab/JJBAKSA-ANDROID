@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import com.google.android.material.tabs.TabLayoutMediator
+import com.jjbaksa.domain.enums.InquiryCursor
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseActivity
 import com.jjbaksa.jjbaksa.databinding.ActivityInquiryBinding
@@ -17,6 +18,16 @@ class InquiryActivity : BaseActivity<ActivityInquiryBinding>() {
     private val viewModel: InquiryViewModel by viewModels()
 
     private val startWriteInquiry = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == RESULT_OK) {
+            when (viewModel.inquiryCursor.value) {
+                InquiryCursor.ALL -> {
+                    viewModel.getInquiry(null, null, 10)
+                }
+                InquiryCursor.MY -> {
+                }
+                else -> {}
+            }
+        }
     }
 
     override fun initView() {
