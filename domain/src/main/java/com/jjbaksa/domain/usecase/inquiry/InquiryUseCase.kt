@@ -15,4 +15,5 @@ class GetAllInquiryUseCase @Inject constructor(
     ): Flow<Result<Inquiry>> {
         return inquiryRepository.getInquiry(idCursor, dateCursor, size)
     }
+    suspend fun 
 }
