@@ -1,5 +1,6 @@
 package com.jjbaksa.jjbaksa.ui.inquiry
 
+import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jjbaksa.jjbaksa.R
@@ -34,7 +35,10 @@ class InquiryAllFragment : BaseFragment<FragmentInquiryAllBinding>() {
         viewModel.inquiry.observe(viewLifecycleOwner) {
             binding.loadingView.setLoading(false)
             if (it.content.isNotEmpty()) {
+                binding.emptyContainer.isVisible = false
                 inquiryAllAdapter.submitList(it.content)
+            } else {
+                binding.emptyContainer.isVisible = true
             }
         }
     }
