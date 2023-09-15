@@ -16,6 +16,13 @@ class InquiryUseCase @Inject constructor(
     ): Flow<Result<Inquiry>> {
         return inquiryRepository.getInquiry(idCursor, dateCursor, size)
     }
+    suspend fun getInquiryMe(
+        idCursor: Int?,
+        dateCursor: String?,
+        size: Int
+    ): Flow<Result<Inquiry>> {
+        return inquiryRepository.getInquiryMe(idCursor, dateCursor, size)
+    }
     suspend fun setInquiry(
         title: String,
         content: String,

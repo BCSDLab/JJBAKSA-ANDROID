@@ -23,7 +23,7 @@
             app:layout_constraintEnd_toStartOf="@id/dropdown_image_view"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="이거 왜 이러죠? 이거 왜 이러죠?  이러죠? 이거 왜 이러죠?dddddddddddddddddddddddd" />
+            tools:text="이거 왜 이러죠?" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/dropdown_image_view"

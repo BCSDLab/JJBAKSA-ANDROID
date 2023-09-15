@@ -17,9 +17,9 @@ import com.jjbaksa.domain.model.inquiry.InquiryContent
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.databinding.ItemInquiryBinding
 
-class InquiryAllAdapter(
+class InquiryMyAdapter(
     private val context: Context
-) : ListAdapter<InquiryContent, InquiryAllAdapter.ViewHolder>(diffUtil) {
+) : ListAdapter<InquiryContent, InquiryMyAdapter.ViewHolder>(diffUtil) {
     inner class ViewHolder(private val binding: ItemInquiryBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: InquiryContent) {
@@ -41,7 +41,7 @@ class InquiryAllAdapter(
                         lockImage?.let { ImageSpan(it, DynamicDrawableSpan.ALIGN_BOTTOM) },
                         item.title.length - 1,
                         item.title.length,
-                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                        Spanned.SPAN_INCLUSIVE_INCLUSIVE
                     )
                 }
                 binding.inquiryTitleTextView.text = titleSpanText

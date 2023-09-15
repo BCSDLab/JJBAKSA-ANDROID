@@ -17,18 +17,22 @@ class InquiryActivity : BaseActivity<ActivityInquiryBinding>() {
         get() = R.layout.activity_inquiry
     private val viewModel: InquiryViewModel by viewModels()
 
-    private val startWriteInquiry = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (it.resultCode == RESULT_OK) {
-            when (viewModel.inquiryCursor.value) {
-                InquiryCursor.ALL -> {
-                    viewModel.getInquiry(null, null, 10)
+    private val startWriteInquiry =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == RESULT_OK) {
+                when (viewModel.inquiryCursor.value) {
+                    InquiryCursor.ALL -> {
+                        viewModel.getInquiry(null, null, 10)
+                    }
+
+                    InquiryCursor.MY -> {
+                        viewModel.getInquiryMe(null, null, 10)
+                    }
+
+                    else -> {}
                 }
-                InquiryCursor.MY -> {
-                }
-                else -> {}
             }
         }
-    }
 
     override fun initView() {
         binding.view = this

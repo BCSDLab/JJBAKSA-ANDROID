@@ -32,6 +32,23 @@ class InquiryRepositoryImpl @Inject constructor(
         )
     }
 
+    override suspend fun getInquiryMe(
+        idCursor: Int?,
+        dateCursor: String?,
+        size: Int
+    ): Flow<Result<Inquiry>> {
+        return apiCall(
+            call = { inquiryRemoteDataSource.getInquiryMe(idCursor, dateCursor, size) },
+            mapper = {
+                if (it.isSuccessful) {
+                    it.body()?.toInquiry() ?: Inquiry()
+                } else {
+                    Inquiry()
+                }
+            }
+        )
+    }
+
     override suspend fun setInquiry(
         title: String,
         content: String,

@@ -15,15 +15,14 @@ import dagger.hilt.android.AndroidEntryPoint
 class InquiryAllFragment : BaseFragment<FragmentInquiryAllBinding>() {
     override val layoutId: Int
         get() = R.layout.fragment_inquiry_all
-    private val inquiryAllAdapter: InquiryAllAdapter by lazy {
-        InquiryAllAdapter(requireContext())
-    }
+    private lateinit var inquiryAllAdapter: InquiryAllAdapter
     private lateinit var linearLayoutManager: LinearLayoutManager
     private val viewModel: InquiryViewModel by activityViewModels()
 
     override fun initView() {
         viewModel.inquiryCursor.value = InquiryCursor.ALL
         viewModel.getInquiry(null, null, 10)
+        inquiryAllAdapter = InquiryAllAdapter(requireContext())
         linearLayoutManager = LinearLayoutManager(requireContext())
         binding.inquiryAllRecyclerView.apply {
             layoutManager = linearLayoutManager

@@ -10,6 +10,11 @@ interface InquiryRepository {
         dateCursor: String?,
         size: Int
     ): Flow<Result<Inquiry>>
+    suspend fun getInquiryMe(
+        idCursor: Int?,
+        dateCursor: String?,
+        size: Int
+    ): Flow<Result<Inquiry>>
     suspend fun setInquiry(
         title: String,
         content: String,

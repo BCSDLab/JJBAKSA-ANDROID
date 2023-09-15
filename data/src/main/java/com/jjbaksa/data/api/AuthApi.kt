@@ -123,6 +123,12 @@ interface AuthApi {
         @Query("dateCursor") dateCursor: String?,
         @Query("size") size: Int,
     ): Response<InquiryResp>
+    @GET("inquiry/me")
+    suspend fun getInquiryMe(
+        @Query("idCursor") idCursor: Int?,
+        @Query("dateCursor") dateCursor: String?,
+        @Query("size") size: Int,
+    ): Response<InquiryResp>
     @Multipart
     @POST("inquiry")
     suspend fun postInquiry(

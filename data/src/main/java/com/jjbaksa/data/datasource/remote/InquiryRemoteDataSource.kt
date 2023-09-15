@@ -21,6 +21,14 @@ class InquiryRemoteDataSource @Inject constructor(
         return authApi.getInquiry(idCursor, dateCursor, size)
     }
 
+    override suspend fun getInquiryMe(
+        idCursor: Int?,
+        dateCursor: String?,
+        size: Int
+    ): Response<InquiryResp> {
+        return authApi.getInquiryMe(idCursor, dateCursor, size)
+    }
+
     override suspend fun postInquiry(
         title: String,
         content: String,

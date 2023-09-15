@@ -20,11 +20,24 @@ class InquiryViewModel @Inject constructor(
     private val _inquiry = SingleLiveEvent<Inquiry>()
     val inquiry: SingleLiveEvent<Inquiry> get() = _inquiry
 
+    private val _inquiryMe = SingleLiveEvent<Inquiry>()
+    val inquiryMe: SingleLiveEvent<Inquiry> get() = _inquiryMe
+
     fun getInquiry(idCursor: Int?, dateCursor: String?, size: Int) {
         viewModelScope.launch(ceh) {
             inquiryUseCase.getInquiry(idCursor, dateCursor, size).collect {
                 it.onSuccess {
                     _inquiry.value = it
+                }
+            }
+        }
+    }
+
+    fun getInquiryMe(idCursor: Int?, dateCursor: String?, size: Int) {
+        viewModelScope.launch(ceh) {
+            inquiryUseCase.getInquiryMe(idCursor, dateCursor, size).collect {
+                it.onSuccess {
+                    _inquiryMe.value = it
                 }
             }
         }

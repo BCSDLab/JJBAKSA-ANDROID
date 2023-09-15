@@ -11,6 +11,11 @@ interface InquiryDataSource {
         dateCursor: String?,
         size: Int
     ): Response<InquiryResp>
+    suspend fun getInquiryMe(
+        idCursor: Int?,
+        dateCursor: String?,
+        size: Int
+    ): Response<InquiryResp>
     suspend fun postInquiry(
         title: String,
         content: String,
