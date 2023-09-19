@@ -7,12 +7,12 @@ import retrofit2.Response
 
 interface InquiryDataSource {
     suspend fun getInquiry(
-        idCursor: Int?,
+        idCursor: Long?,
         dateCursor: String?,
         size: Int
     ): Response<InquiryResp>
     suspend fun getInquiryMe(
-        idCursor: Int?,
+        idCursor: Long?,
         dateCursor: String?,
         size: Int
     ): Response<InquiryResp>

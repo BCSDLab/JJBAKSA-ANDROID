@@ -16,7 +16,7 @@ class InquiryRepositoryImpl @Inject constructor(
     private val inquiryRemoteDataSource: InquiryRemoteDataSource
 ) : InquiryRepository {
     override suspend fun getInquiry(
-        idCursor: Int?,
+        idCursor: Long?,
         dateCursor: String?,
         size: Int
     ): Flow<Result<Inquiry>> {
@@ -33,7 +33,7 @@ class InquiryRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getInquiryMe(
-        idCursor: Int?,
+        idCursor: Long?,
         dateCursor: String?,
         size: Int
     ): Flow<Result<Inquiry>> {

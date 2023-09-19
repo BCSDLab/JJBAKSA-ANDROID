@@ -6,12 +6,12 @@ import kotlinx.coroutines.flow.Flow
 
 interface InquiryRepository {
     suspend fun getInquiry(
-        idCursor: Int?,
+        idCursor: Long?,
         dateCursor: String?,
         size: Int
     ): Flow<Result<Inquiry>>
     suspend fun getInquiryMe(
-        idCursor: Int?,
+        idCursor: Long?,
         dateCursor: String?,
         size: Int
     ): Flow<Result<Inquiry>>

@@ -14,6 +14,9 @@ import javax.inject.Inject
 class InquiryViewModel @Inject constructor(
     private val inquiryUseCase: InquiryUseCase
 ) : BaseViewModel() {
+    val inquiryHasMore = SingleLiveEvent<Boolean>()
+    val inquiryMeHasMore = SingleLiveEvent<Boolean>()
+
     private val _inquiryCursor = SingleLiveEvent<InquiryCursor>()
     val inquiryCursor: SingleLiveEvent<InquiryCursor> get() = _inquiryCursor
 
@@ -23,21 +26,23 @@ class InquiryViewModel @Inject constructor(
     private val _inquiryMe = SingleLiveEvent<Inquiry>()
     val inquiryMe: SingleLiveEvent<Inquiry> get() = _inquiryMe
 
-    fun getInquiry(idCursor: Int?, dateCursor: String?, size: Int) {
+    fun getInquiry(idCursor: Long?, dateCursor: String?, size: Int) {
         viewModelScope.launch(ceh) {
             inquiryUseCase.getInquiry(idCursor, dateCursor, size).collect {
                 it.onSuccess {
                     _inquiry.value = it
+                    inquiryHasMore.value = it.content.count() == 10
                 }
             }
         }
     }
 
-    fun getInquiryMe(idCursor: Int?, dateCursor: String?, size: Int) {
+    fun getInquiryMe(idCursor: Long?, dateCursor: String?, size: Int) {
         viewModelScope.launch(ceh) {
             inquiryUseCase.getInquiryMe(idCursor, dateCursor, size).collect {
                 it.onSuccess {
                     _inquiryMe.value = it
+                    inquiryMeHasMore.value = it.content.count() == 10
                 }
             }
         }

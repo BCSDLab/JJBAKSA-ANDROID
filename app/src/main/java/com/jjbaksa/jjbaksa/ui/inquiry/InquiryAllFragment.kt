@@ -3,6 +3,7 @@ package com.jjbaksa.jjbaksa.ui.inquiry
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.jjbaksa.domain.enums.InquiryCursor
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseFragment
@@ -30,16 +31,35 @@ class InquiryAllFragment : BaseFragment<FragmentInquiryAllBinding>() {
         }
     }
 
-    override fun initEvent() {}
+    override fun initEvent() {
+        binding.inquiryAllRecyclerView.addOnScrollListener(object :
+            RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                val itemCount = linearLayoutManager.itemCount
+                val lastPosition =
+                    linearLayoutManager.findLastCompletelyVisibleItemPosition()
+
+                if (lastPosition != -1 && lastPosition >= (itemCount - 1) && viewModel.inquiryHasMore.value == true) {
+                    viewModel.inquiryHasMore.value = false
+                    viewModel.getInquiry(
+                        inquiryAllAdapter.currentList.get(lastPosition)?.id,
+                        inquiryAllAdapter.currentList.get(lastPosition)?.createdAt,
+                        10
+                    )
+                    binding.loadingView.setLoading(true)
+                }
+            }
+        })
+    }
 
     override fun subscribe() {
         viewModel.inquiry.observe(viewLifecycleOwner) {
             binding.loadingView.setLoading(false)
-            if (it.content.isNotEmpty()) {
-                binding.emptyContainer.isVisible = false
-                inquiryAllAdapter.submitList(it.content)
-            } else {
+            if (it.content.isEmpty() && inquiryAllAdapter.currentList.isEmpty()) {
                 binding.emptyContainer.isVisible = true
+            } else {
+                binding.emptyContainer.isVisible = false
+                inquiryAllAdapter.submitList(inquiryAllAdapter.currentList + it.content)
             }
         }
     }

@@ -10,14 +10,14 @@ class InquiryUseCase @Inject constructor(
     private val inquiryRepository: InquiryRepository
 ) {
     suspend fun getInquiry(
-        idCursor: Int?,
+        idCursor: Long?,
         dateCursor: String?,
         size: Int
     ): Flow<Result<Inquiry>> {
         return inquiryRepository.getInquiry(idCursor, dateCursor, size)
     }
     suspend fun getInquiryMe(
-        idCursor: Int?,
+        idCursor: Long?,
         dateCursor: String?,
         size: Int
     ): Flow<Result<Inquiry>> {

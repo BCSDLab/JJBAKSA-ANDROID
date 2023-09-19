@@ -119,13 +119,13 @@ interface AuthApi {
     ): Response<FollowerReviewShopsResp>
     @GET("inquiry")
     suspend fun getInquiry(
-        @Query("idCursor") idCursor: Int?,
+        @Query("idCursor") idCursor: Long?,
         @Query("dateCursor") dateCursor: String?,
         @Query("size") size: Int,
     ): Response<InquiryResp>
     @GET("inquiry/me")
     suspend fun getInquiryMe(
-        @Query("idCursor") idCursor: Int?,
+        @Query("idCursor") idCursor: Long?,
         @Query("dateCursor") dateCursor: String?,
         @Query("size") size: Int,
     ): Response<InquiryResp>
