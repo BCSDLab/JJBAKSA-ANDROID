@@ -22,7 +22,7 @@ class InquiryAllAdapter(
 ) : ListAdapter<InquiryContent, InquiryAllAdapter.ViewHolder>(diffUtil) {
     inner class ViewHolder(private val binding: ItemInquiryBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: InquiryContent, position: Int) {
+        fun bind(item: InquiryContent) {
             item.title = item.title + " "
             val titleSpanText = SpannableString(item.title)
             binding.inquiryCreateTimeTextView.text = item.createdAt
@@ -83,7 +83,7 @@ class InquiryAllAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(currentList[position], position)
+        holder.bind(currentList[position])
     }
 
     companion object {
