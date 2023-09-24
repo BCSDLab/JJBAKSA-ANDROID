@@ -54,7 +54,7 @@ class UserRepositoryImpl @Inject constructor(
         isAutoLogin: Boolean
     ): Flow<Result<Login>> {
         return apiCall(
-            call = { userRemoteDataSource.postLogin(LoginReq(account, password)) },
+            call = { userRemoteDataSource.postLogin(LoginReq(account, password))},
             remoteData = {
                 if (it.isSuccessful) {
                     userLocalDataSource.clearDataStore()

@@ -9,4 +9,8 @@ data class ShopDetail(
     val ratingCount: Int = 0,
     val scrap: Int = 0,
     val photos: List<String> = emptyList(),
+    val formattedAddress: String = "",
+    val formattedPhoneNumber: String = "",
+    val openNow: Boolean = false,
+    val period: List<Period> = emptyList(),
 )

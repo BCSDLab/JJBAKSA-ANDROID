@@ -19,4 +19,12 @@ data class ShopDetailResp(
     val scrap: Int? = 0,
     @SerializedName("photos")
     val photos: List<String>? = emptyList(),
+    @SerializedName("formattedAddress")
+    val formattedAddress: String? = "",
+    @SerializedName("formattedPhoneNumber")
+    val formattedPhoneNumber: String? = "",
+    @SerializedName("openNow")
+    val openNow: Boolean? = false,
+    @SerializedName("period")
+    val period: List<PeriodResp>? = emptyList(),
 )

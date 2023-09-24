@@ -1,5 +1,6 @@
-package com.jjbaksa.jjbaksa.ui.pin.viewmodel
+package com.jjbaksa.jjbaksa.ui.shop.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -21,24 +22,13 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PinViewModel @Inject constructor(
+class ShopViewModel @Inject constructor(
     private val shopUseCase: ShopUseCase,
     private val reviewUseCase: ReviewUseCase,
     private val scrapUseCase: GetShopScrapUseCase
 ) : BaseViewModel() {
     val placeId = SingleLiveEvent<String>()
     val showProgress = SingleLiveEvent<Boolean>()
-    val myReviewUpdateCursor = SingleLiveEvent<MyReviewCursor>()
-    val friendReviewUpdateCursor = SingleLiveEvent<FriendReviewCursor>()
-    val pinReviewCursor = SingleLiveEvent<PinReviewCursor>()
-    val myReviewHasMore = SingleLiveEvent<Boolean>()
-    val friendReviewHasMore = SingleLiveEvent<Boolean>()
-
-    private val _myReviewLastDate = MutableLiveData<ReviewShopLastDate>()
-    val myReviewLastDate: LiveData<ReviewShopLastDate> get() = _myReviewLastDate
-
-    private val _friendReviewLastDate = MutableLiveData<ReviewShopLastDate>()
-    val friendReviewLastDate: LiveData<ReviewShopLastDate> get() = _friendReviewLastDate
 
     private val _shopInfo = SingleLiveEvent<ShopDetail>()
     val shopInfo: SingleLiveEvent<ShopDetail> get() = _shopInfo
@@ -48,15 +38,10 @@ class PinViewModel @Inject constructor(
 
     private val _myReview = SingleLiveEvent<MyReviewShops>()
     val myReview: SingleLiveEvent<MyReviewShops> get() = _myReview
-    private val _writeNewMyReview = SingleLiveEvent<Boolean>()
-    val writeNewMyReview: SingleLiveEvent<Boolean> get() = _writeNewMyReview
 
     private val _friendReview = SingleLiveEvent<FollowerReviewShops>()
     val friendReview: SingleLiveEvent<FollowerReviewShops> get() = _friendReview
 
-    fun setWriteNewMyReview(isWrite: Boolean) {
-        _writeNewMyReview.value = isWrite
-    }
 
     fun getShopDetail(placeId: String) {
         showProgress.value = true
@@ -67,6 +52,7 @@ class PinViewModel @Inject constructor(
                 it.onSuccess {
                     showProgress.value = false
                     _shopInfo.value = it
+                    Log.d("ShopViewModel", "getShopDetail: $it")
                 }
             }
         }
@@ -85,32 +71,6 @@ class PinViewModel @Inject constructor(
         }
     }
 
-    fun getMyReviewShopLastDate(placeId: String) {
-        viewModelScope.launch(ceh) {
-            reviewUseCase.getMyReviewShopLastDate(placeId).collect {
-                it.onSuccess {
-                    _myReviewLastDate.value = it
-                }.onFailure {
-                    it.printStackTrace()
-                    _myReviewLastDate.value = ReviewShopLastDate()
-                }
-            }
-        }
-    }
-
-    fun getShopFollowerReviewLastDate(placeId: String) {
-        viewModelScope.launch(ceh) {
-            reviewUseCase.getFollowerReviewShopLastDate(placeId).collect {
-                it.onSuccess {
-                    _myReviewLastDate.value = it
-                }.onFailure {
-                    it.printStackTrace()
-                    _myReviewLastDate.value = ReviewShopLastDate()
-                }
-            }
-        }
-    }
-
     fun getMyReview(
         placeId: String,
         idCursor: Int? = null,
@@ -124,7 +84,6 @@ class PinViewModel @Inject constructor(
             reviewUseCase.getMyReview(placeId, idCursor, dateCursor, rateCursor, size, direction, sort)
                 .collect {
                     it.onSuccess {
-                        myReviewHasMore.value = it.content.count() == 10
                         _myReview.value = it
                     }.onFailure {
                         _myReview.value = MyReviewShops()
@@ -141,13 +100,15 @@ class PinViewModel @Inject constructor(
         size: Int? = null,
         direction: String? = null,
         sort: String? = null
-        ) {
+    ) {
         viewModelScope.launch(ceh) {
             reviewUseCase.getFollowerReviewShops(placeId, idCursor, dateCursor, rateCursor, size, direction, sort)
                 .collect {
                     it.onSuccess {
-                        friendReviewHasMore.value = it.content.count() == 10
                         _friendReview.value = it
+                    }
+                    it.onFailure {
+                        _friendReview.value = FollowerReviewShops()
                     }
                 }
         }
