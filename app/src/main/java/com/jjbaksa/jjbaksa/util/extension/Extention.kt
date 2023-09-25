@@ -7,6 +7,8 @@ import android.graphics.Typeface
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.StyleSpan
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.activity.result.ActivityResultLauncher
 import androidx.core.app.ActivityCompat
 import java.text.SimpleDateFormat
@@ -42,7 +44,7 @@ fun Context.setTextProperties(text: String, range: Int): SpannableStringBuilder 
 
 fun Float.fromDpToPx(): Int =
     (this * Resources.getSystem().displayMetrics.density).toInt()
-
+fun Int.fromDpToPx(): Float = (this * Resources.getSystem().displayMetrics.density)
 /**
  * 예시 비교 날짜 : "2023-03-15"
  * 현재 날짜 : "2023-03-16"
@@ -54,4 +56,12 @@ fun String.setCalculateDate(): Long {
     val today = SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().time)
     val todayDate = SimpleDateFormat("yyyy-MM-dd").parse(today)
     return (todayDate.time - postDate.time) / (60 * 60 * 24 * 1000)
+}
+fun Context.controlSoftKeyboard(view: View, isShow: Boolean) {
+    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    if (isShow) {
+        imm.showSoftInput(view, 0)
+    } else {
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
 }
