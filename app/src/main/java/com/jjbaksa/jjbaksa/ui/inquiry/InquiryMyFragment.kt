@@ -39,8 +39,8 @@ class InquiryMyFragment : BaseFragment<FragmentInquiryMyBinding>() {
                     val lastPosition =
                         linearLayoutManager.findLastCompletelyVisibleItemPosition()
 
-                    if (lastPosition != -1 && lastPosition >= (itemCount - 1) && viewModel.inquiryHasMore.value == true) {
-                        viewModel.inquiryHasMore.value = false
+                    if (lastPosition != -1 && lastPosition >= (itemCount - 1) && viewModel.inquiryMeHasMore.value == true) {
+                        viewModel.inquiryMeHasMore.value = false
                         viewModel.getInquiryMe(
                             inquiryMyAdapter.currentList.get(lastPosition)?.id,
                             inquiryMyAdapter.currentList.get(lastPosition)?.createdAt,
@@ -55,11 +55,11 @@ class InquiryMyFragment : BaseFragment<FragmentInquiryMyBinding>() {
     override fun subscribe() {
         viewModel.inquiryMe.observe(viewLifecycleOwner) {
             binding.loadingView.setLoading(false)
-            if (it.content.isNotEmpty()) {
-                binding.emptyContainer.isVisible = false
-                inquiryMyAdapter.submitList(it.content)
-            } else {
+            if (it.content.isEmpty() && inquiryMyAdapter.currentList.isEmpty()) {
                 binding.emptyContainer.isVisible = true
+            } else {
+                binding.emptyContainer.isVisible = false
+                inquiryMyAdapter.submitList(inquiryMyAdapter.currentList + it.content)
             }
         }
     }

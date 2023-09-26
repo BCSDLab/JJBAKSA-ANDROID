@@ -32,24 +32,24 @@ class InquiryAllFragment : BaseFragment<FragmentInquiryAllBinding>() {
     }
 
     override fun initEvent() {
-        binding.inquiryAllRecyclerView.addOnScrollListener(object :
-            RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                val itemCount = linearLayoutManager.itemCount
-                val lastPosition =
-                    linearLayoutManager.findLastCompletelyVisibleItemPosition()
+        binding.inquiryAllRecyclerView.addOnScrollListener(
+            object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    val itemCount = linearLayoutManager.itemCount
+                    val lastPosition =
+                        linearLayoutManager.findLastCompletelyVisibleItemPosition()
 
-                if (lastPosition != -1 && lastPosition >= (itemCount - 1) && viewModel.inquiryHasMore.value == true) {
-                    viewModel.inquiryHasMore.value = false
-                    viewModel.getInquiry(
-                        inquiryAllAdapter.currentList.get(lastPosition)?.id,
-                        inquiryAllAdapter.currentList.get(lastPosition)?.createdAt,
-                        10
-                    )
-                    binding.loadingView.setLoading(true)
+                    if (lastPosition != -1 && lastPosition >= (itemCount - 1) && viewModel.inquiryHasMore.value == true) {
+                        viewModel.inquiryHasMore.value = false
+                        viewModel.getInquiry(
+                            inquiryAllAdapter.currentList.get(lastPosition)?.id,
+                            inquiryAllAdapter.currentList.get(lastPosition)?.createdAt,
+                            10
+                        )
+                        binding.loadingView.setLoading(true)
+                    }
                 }
-            }
-        })
+            })
     }
 
     override fun subscribe() {

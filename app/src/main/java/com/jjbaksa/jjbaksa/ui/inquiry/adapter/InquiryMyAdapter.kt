@@ -23,8 +23,7 @@ class InquiryMyAdapter(
     inner class ViewHolder(private val binding: ItemInquiryBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: InquiryContent) {
-            item.title = item.title + " "
-            val titleSpanText = SpannableString(item.title)
+            val titleSpanText = SpannableString(item.title + " ")
             binding.inquiryCreateTimeTextView.text = item.createdAt
             binding.inquiryNicknameTextView.text = item.createdBy
             if (item.isSecreted == 1) {
@@ -39,34 +38,34 @@ class InquiryMyAdapter(
                 titleSpanText.apply {
                     setSpan(
                         lockImage?.let { ImageSpan(it, DynamicDrawableSpan.ALIGN_BOTTOM) },
-                        item.title.length - 1,
                         item.title.length,
+                        item.title.length + 1,
                         Spanned.SPAN_INCLUSIVE_INCLUSIVE
                     )
                 }
                 binding.inquiryTitleTextView.text = titleSpanText
             } else {
-                binding.answerTextView.text = item.answer
+                binding.answerTextView.text = if (item.answer == "") context.getString(R.string.empty_answer) else item.answer
                 binding.dropdownImageView.isVisible = true
                 binding.inquiryTitleTextView.text = item.title
-                binding.dropdownImageView.setOnClickListener {
-                    if (binding.answerTextView.isVisible) {
-                        binding.answerTextView.visibility = View.GONE
-                        binding.dropdownImageView.setImageDrawable(
-                            ContextCompat.getDrawable(
-                                context,
-                                R.drawable.ic_drop_down
-                            )
+            }
+            binding.dropdownImageView.setOnClickListener {
+                if (binding.answerTextView.isVisible) {
+                    binding.answerTextView.visibility = View.GONE
+                    binding.dropdownImageView.setImageDrawable(
+                        ContextCompat.getDrawable(
+                            context,
+                            R.drawable.ic_drop_down
                         )
-                    } else {
-                        binding.answerTextView.visibility = View.VISIBLE
-                        binding.dropdownImageView.setImageDrawable(
-                            ContextCompat.getDrawable(
-                                context,
-                                R.drawable.ic_chevron_up
-                            )
+                    )
+                } else {
+                    binding.answerTextView.visibility = View.VISIBLE
+                    binding.dropdownImageView.setImageDrawable(
+                        ContextCompat.getDrawable(
+                            context,
+                            R.drawable.ic_chevron_up
                         )
-                    }
+                    )
                 }
             }
         }
