@@ -21,4 +21,16 @@ interface InquiryRepository {
         isSecret: Boolean,
         inquiryImages: List<String>
     ): Flow<Result<InquiryContent>>
+    suspend fun getInquirySearch(
+        searchWord: String,
+        dateCursor: String?,
+        idCursor: Long?,
+        size: Int
+    ): Flow<Result<Inquiry>>
+    suspend fun getInquirySearchMe(
+        searchWord: String,
+        dateCursor: String?,
+        idCursor: Long?,
+        size: Int
+    ): Flow<Result<Inquiry>>
 }

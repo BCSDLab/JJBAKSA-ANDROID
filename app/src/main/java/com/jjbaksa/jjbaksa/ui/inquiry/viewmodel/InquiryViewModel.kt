@@ -47,4 +47,26 @@ class InquiryViewModel @Inject constructor(
             }
         }
     }
+
+    fun getInquirySearch(idCursor: Long?, dateCursor: String?, size: Int, searchWord: String) {
+        viewModelScope.launch(ceh) {
+            inquiryUseCase.getInquirySearch(searchWord, dateCursor, idCursor, size).collect {
+                it.onSuccess {
+                    _inquiry.value = it
+                    inquiryHasMore.value = it.content.count() == 10
+                }
+            }
+        }
+    }
+
+    fun getInquirySearchMe(idCursor: Long?, dateCursor: String?, size: Int, searchWord: String) {
+        viewModelScope.launch(ceh) {
+            inquiryUseCase.getInquirySearchMe(searchWord, dateCursor, idCursor, size).collect {
+                it.onSuccess {
+                    _inquiryMe.value = it
+                    inquiryMeHasMore.value = it.content.count() == 10
+                }
+            }
+        }
+    }
 }

@@ -74,4 +74,40 @@ class InquiryRepositoryImpl @Inject constructor(
             }
         )
     }
+
+    override suspend fun getInquirySearch(
+        searchWord: String,
+        dateCursor: String?,
+        idCursor: Long?,
+        size: Int
+    ): Flow<Result<Inquiry>> {
+        return apiCall(
+            call = { inquiryRemoteDataSource.getInquirySearch(searchWord, dateCursor, idCursor, size) },
+            mapper = {
+                if (it.isSuccessful) {
+                    it.body()?.toInquiry() ?: Inquiry()
+                } else {
+                    Inquiry()
+                }
+            }
+        )
+    }
+
+    override suspend fun getInquirySearchMe(
+        searchWord: String,
+        dateCursor: String?,
+        idCursor: Long?,
+        size: Int
+    ): Flow<Result<Inquiry>> {
+        return apiCall(
+            call = { inquiryRemoteDataSource.getInquirySearchMe(searchWord, dateCursor, idCursor, size) },
+            mapper = {
+                if (it.isSuccessful) {
+                    it.body()?.toInquiry() ?: Inquiry()
+                } else {
+                    Inquiry()
+                }
+            }
+        )
+    }
 }

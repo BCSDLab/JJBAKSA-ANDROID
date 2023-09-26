@@ -137,4 +137,18 @@ interface AuthApi {
         @Query("isSecret") isSecret: Boolean,
         @Part inquiryImages: List<MultipartBody.Part>
     ): Response<InquiryContentResp>
+    @GET("inquiry/search/{search-word}")
+    suspend fun getInquirySearch(
+        @Path("search-word") searchWord: String,
+        @Query("dateCursor") dateCursor: String?,
+        @Query("idCursor") idCursor: Long?,
+        @Query("size") size: Int
+    ): Response<InquiryResp>
+    @GET("inquiry/search/me/{search-word}")
+    suspend fun getInquirySearchMe(
+        @Path("search-word") searchWord: String,
+        @Query("dateCursor") dateCursor: String?,
+        @Query("idCursor") idCursor: Long?,
+        @Query("size") size: Int
+    ): Response<InquiryResp>
 }

@@ -22,4 +22,16 @@ interface InquiryDataSource {
         isSecret: Boolean,
         inquiryImages: List<MultipartBody.Part>
     ): Response<InquiryContentResp>
+    suspend fun getInquirySearch(
+        searchWord: String,
+        dateCursor: String?,
+        idCursor: Long?,
+        size: Int
+    ): Response<InquiryResp>
+    suspend fun getInquirySearchMe(
+        searchWord: String,
+        dateCursor: String?,
+        idCursor: Long?,
+        size: Int
+    ): Response<InquiryResp>
 }

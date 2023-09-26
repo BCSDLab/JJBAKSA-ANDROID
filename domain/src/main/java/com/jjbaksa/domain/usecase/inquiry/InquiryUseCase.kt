@@ -31,4 +31,20 @@ class InquiryUseCase @Inject constructor(
     ): Flow<Result<InquiryContent>> {
         return inquiryRepository.setInquiry(title, content, isSecret, inquiryImages)
     }
+    suspend fun getInquirySearch(
+        searchWord: String,
+        dateCursor: String?,
+        idCursor: Long?,
+        size: Int
+    ): Flow<Result<Inquiry>> {
+        return inquiryRepository.getInquirySearch(searchWord, dateCursor, idCursor, size)
+    }
+    suspend fun getInquirySearchMe(
+        searchWord: String,
+        dateCursor: String?,
+        idCursor: Long?,
+        size: Int
+    ): Flow<Result<Inquiry>> {
+        return inquiryRepository.getInquirySearchMe(searchWord, dateCursor, idCursor, size)
+    }
 }

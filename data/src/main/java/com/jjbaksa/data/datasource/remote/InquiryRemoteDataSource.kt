@@ -37,4 +37,22 @@ class InquiryRemoteDataSource @Inject constructor(
     ): Response<InquiryContentResp> {
         return authApi.postInquiry(title, content, isSecret, inquiryImages)
     }
+
+    override suspend fun getInquirySearch(
+        searchWord: String,
+        dateCursor: String?,
+        idCursor: Long?,
+        size: Int
+    ): Response<InquiryResp> {
+        return authApi.getInquirySearch(searchWord, dateCursor, idCursor, size)
+    }
+
+    override suspend fun getInquirySearchMe(
+        searchWord: String,
+        dateCursor: String?,
+        idCursor: Long?,
+        size: Int
+    ): Response<InquiryResp> {
+        return authApi.getInquirySearchMe(searchWord, dateCursor, idCursor, size)
+    }
 }
