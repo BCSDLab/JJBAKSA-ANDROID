@@ -1,12 +1,6 @@
 package com.jjbaksa.jjbaksa.ui.shop.viewmodel
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.jjbaksa.domain.enums.FriendReviewCursor
-import com.jjbaksa.domain.enums.MyReviewCursor
-import com.jjbaksa.domain.enums.PinReviewCursor
 import com.jjbaksa.domain.model.review.FollowerReviewShops
 import com.jjbaksa.domain.model.shop.ShopDetail
 import com.jjbaksa.domain.model.review.MyReviewShops
@@ -18,6 +12,7 @@ import com.jjbaksa.domain.usecase.scrap.GetShopScrapUseCase
 import com.jjbaksa.jjbaksa.base.BaseViewModel
 import com.jjbaksa.jjbaksa.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -42,6 +37,11 @@ class ShopViewModel @Inject constructor(
     private val _friendReview = SingleLiveEvent<FollowerReviewShops>()
     val friendReview: SingleLiveEvent<FollowerReviewShops> get() = _friendReview
 
+    private val _followerReviewCount = SingleLiveEvent<Int>()
+    val followerReviewCount: SingleLiveEvent<Int> get() = _followerReviewCount
+
+    private val _myLastReviewDate = SingleLiveEvent<ReviewShopLastDate>()
+    val myLastReviewDate: SingleLiveEvent<ReviewShopLastDate> get() = _myLastReviewDate
 
     fun getShopDetail(placeId: String) {
         showProgress.value = true
@@ -52,7 +52,10 @@ class ShopViewModel @Inject constructor(
                 it.onSuccess {
                     showProgress.value = false
                     _shopInfo.value = it
-                    Log.d("ShopViewModel", "getShopDetail: $it")
+                }
+                it.onFailure {
+                    showProgress.value = false
+                    _shopInfo.value = ShopDetail()
                 }
             }
         }
@@ -111,6 +114,42 @@ class ShopViewModel @Inject constructor(
                         _friendReview.value = FollowerReviewShops()
                     }
                 }
+        }
+    }
+
+    fun getMyLastReviewDate(placeId: String) {
+        viewModelScope.launch(ceh) {
+            reviewUseCase.getMyReviewShopLastDate(placeId).collect {
+                it.onSuccess {
+                    _myLastReviewDate.value = it
+                }.onFailure {
+                    _myLastReviewDate.value = ReviewShopLastDate()
+                }
+            }
+        }
+    }
+
+    fun getFollowersShopReviewCount(placeId: String) {
+        viewModelScope.launch(ceh) {
+            reviewUseCase.getFollowersShopReviewCount(placeId).collect {
+                it.onSuccess {
+                    _followerReviewCount.value = it
+                }.onFailure {
+                    _followerReviewCount.value = 0
+                }
+            }
+        }
+    }
+
+    fun deleteShopScrap(scrapId: Int) {
+        viewModelScope.launch(ceh) {
+            scrapUseCase.deleteShopScrap(scrapId).collect {
+                it.onSuccess {
+                    _addScrapInfo.value = AddShopScrap()
+                }.onFailure {
+
+                }
+            }
         }
     }
 }

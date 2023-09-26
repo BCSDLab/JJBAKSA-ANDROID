@@ -74,6 +74,11 @@ interface AuthApi {
         @Query("cursor") cursor: Int?,
         @Query("size") size: Int
     ): Response<ScrapsResp>
+    @DELETE("scraps/{scrap_id}")
+    suspend fun deleteShopScrap(
+        @Path("scrap_id") scrapId: Int
+    ): Response<Unit>
+
     @Multipart
     @POST("review")
     suspend fun postReview(
@@ -115,4 +120,8 @@ interface AuthApi {
         @Query("direction") direction: String?,
         @Query("sort") sort: String?
     ): Response<FollowerReviewShopsResp>
+    @GET("review/followers/count/shop/{place-id}")
+    suspend fun getFollowersShopReviewCount(
+        @Path("place-id") placeId: String
+    ): Response<Int>
 }

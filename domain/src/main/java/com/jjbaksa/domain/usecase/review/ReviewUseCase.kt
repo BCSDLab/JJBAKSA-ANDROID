@@ -54,4 +54,9 @@ class ReviewUseCase @Inject constructor(
     ): Flow<Result<ReviewShopDetail>> {
         return reviewRepository.setReview(placeId, content, rate, reviewImages)
     }
+
+
+    suspend fun getFollowersShopReviewCount(placeId: String): Flow<Result<Int>> {
+        return reviewRepository.getFollowersShopReviewCount(placeId)
+    }
 }

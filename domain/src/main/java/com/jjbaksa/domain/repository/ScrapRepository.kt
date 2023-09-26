@@ -16,4 +16,6 @@ interface ScrapRepository {
         cursor: Int?,
         size: Int
     ): Flow<Result<Scraps>>
+
+    suspend fun deleteShopScrap(scrapId: Int): Flow<Result<Unit>>
 }

@@ -147,4 +147,17 @@ class ReviewRepositoryImpl(
             }
         )
     }
+
+    override suspend fun getFollowersShopReviewCount(placeId: String): Flow<Result<Int>> {
+        return apiCall(
+            call = { reviewRemoteDataSource.getFollowersShopReviewCount(placeId) },
+            mapper = {
+                if (it.isSuccessful) {
+                    it.body() ?: 0
+                } else {
+                    0
+                }
+            }
+        )
+    }
 }
