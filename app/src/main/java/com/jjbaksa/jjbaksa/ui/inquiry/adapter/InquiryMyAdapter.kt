@@ -6,7 +6,6 @@ import android.text.Spanned
 import android.text.style.DynamicDrawableSpan
 import android.text.style.ImageSpan
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -49,25 +48,7 @@ class InquiryMyAdapter(
                 binding.dropdownImageView.isVisible = true
                 binding.inquiryTitleTextView.text = item.title
             }
-            binding.dropdownImageView.setOnClickListener {
-                if (binding.answerTextView.isVisible) {
-                    binding.answerTextView.visibility = View.GONE
-                    binding.dropdownImageView.setImageDrawable(
-                        ContextCompat.getDrawable(
-                            context,
-                            R.drawable.ic_drop_down
-                        )
-                    )
-                } else {
-                    binding.answerTextView.visibility = View.VISIBLE
-                    binding.dropdownImageView.setImageDrawable(
-                        ContextCompat.getDrawable(
-                            context,
-                            R.drawable.ic_chevron_up
-                        )
-                    )
-                }
-            }
+            binding.dropdownImageView.setOnClickListener { }
         }
     }
 

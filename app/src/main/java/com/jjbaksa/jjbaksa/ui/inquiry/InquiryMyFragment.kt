@@ -57,9 +57,14 @@ class InquiryMyFragment : BaseFragment<FragmentInquiryMyBinding>() {
             binding.loadingView.setLoading(false)
             if (it.content.isEmpty() && inquiryMyAdapter.currentList.isEmpty()) {
                 binding.emptyContainer.isVisible = true
+                inquiryMyAdapter.submitList(emptyList())
             } else {
                 binding.emptyContainer.isVisible = false
-                inquiryMyAdapter.submitList(inquiryMyAdapter.currentList + it.content)
+                if (viewModel.hasNewInquiry.value == true) {
+                    inquiryMyAdapter.submitList(it.content)
+                } else {
+                    inquiryMyAdapter.submitList(inquiryMyAdapter.currentList + it.content)
+                }
             }
         }
     }

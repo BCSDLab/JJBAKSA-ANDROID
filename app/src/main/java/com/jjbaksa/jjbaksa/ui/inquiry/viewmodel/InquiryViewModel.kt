@@ -16,6 +16,7 @@ class InquiryViewModel @Inject constructor(
 ) : BaseViewModel() {
     val inquiryHasMore = SingleLiveEvent<Boolean>()
     val inquiryMeHasMore = SingleLiveEvent<Boolean>()
+    val hasNewInquiry = SingleLiveEvent<Boolean>()
 
     private val _inquiryCursor = SingleLiveEvent<InquiryCursor>()
     val inquiryCursor: SingleLiveEvent<InquiryCursor> get() = _inquiryCursor

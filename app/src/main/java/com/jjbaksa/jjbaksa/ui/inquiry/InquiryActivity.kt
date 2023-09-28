@@ -20,6 +20,7 @@ class InquiryActivity : BaseActivity<ActivityInquiryBinding>() {
     private val startWriteInquiry =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == RESULT_OK) {
+                viewModel.hasNewInquiry.value = true
                 when (viewModel.inquiryCursor.value) {
                     InquiryCursor.ALL -> {
                         viewModel.getInquiry(null, null, 10)
@@ -49,6 +50,24 @@ class InquiryActivity : BaseActivity<ActivityInquiryBinding>() {
 
     override fun initEvent() {
         binding.jjAppBar.setOnClickListener { finish() }
+        binding.ivSearch.setOnClickListener {
+            binding.etSearch.text?.let {
+                if (it.isEmpty()) {
+                    showSnackBar(getString(R.string.main_page_search_edit_text_hint))
+                } else {
+                    viewModel.hasNewInquiry.value = true
+                    when (viewModel.inquiryCursor.value) {
+                        InquiryCursor.ALL -> {
+                            viewModel.getInquirySearch(null, null, 10, it.toString())
+                        }
+                        InquiryCursor.MY -> {
+                            viewModel.getInquirySearchMe(null, null, 10, it.toString())
+                        }
+                        else -> {}
+                    }
+                }
+            }
+        }
     }
 
     fun inquiry() {

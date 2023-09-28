@@ -5,12 +5,10 @@ import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.DynamicDrawableSpan
 import android.text.style.ImageSpan
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -29,7 +27,7 @@ class InquiryAllAdapter(
             binding.inquiryNicknameTextView.text = item.createdBy
 
             if (item.isSecreted == 1) {
-                binding.dropdownImageView.isVisible = false
+                binding.dropdownImageView.visibility = View.GONE
                 val lockImage = ContextCompat.getDrawable(
                     context,
                     R.drawable.ic_lock_closed
@@ -48,28 +46,10 @@ class InquiryAllAdapter(
                 binding.inquiryTitleTextView.text = titleSpanText
             } else {
                 binding.answerTextView.text = if (item.answer == "") context.getString(R.string.empty_answer) else item.answer
-                binding.dropdownImageView.isVisible = true
+                binding.dropdownImageView.visibility = View.VISIBLE
                 binding.inquiryTitleTextView.text = item.title
-            }
 
-            binding.dropdownImageView.setOnClickListener {
-                if (binding.answerTextView.isVisible) {
-                    binding.answerTextView.visibility = View.GONE
-                    binding.dropdownImageView.setImageDrawable(
-                        ContextCompat.getDrawable(
-                            context,
-                            R.drawable.ic_drop_down
-                        )
-                    )
-                } else {
-                    binding.answerTextView.visibility = View.VISIBLE
-                    binding.dropdownImageView.setImageDrawable(
-                        ContextCompat.getDrawable(
-                            context,
-                            R.drawable.ic_chevron_up
-                        )
-                    )
-                }
+                binding.dropdownImageView.setOnClickListener { }
             }
         }
     }
