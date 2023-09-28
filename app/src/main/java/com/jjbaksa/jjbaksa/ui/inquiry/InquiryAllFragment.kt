@@ -61,6 +61,7 @@ class InquiryAllFragment : BaseFragment<FragmentInquiryAllBinding>() {
             } else {
                 binding.emptyContainer.isVisible = false
                 if (viewModel.hasNewInquiry.value == true) {
+                    if (it.content.isEmpty()) binding.emptyContainer.isVisible = true
                     viewModel.hasNewInquiry.value = false
                     inquiryAllAdapter.submitList(it.content)
                 } else {
