@@ -8,18 +8,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.jjbaksa.jjbaksa.R
+import com.jjbaksa.jjbaksa.base.BaseFragment
 import com.jjbaksa.jjbaksa.databinding.FragmentTermsBinding
 
-class TermsFragment : Fragment() {
-
-    private lateinit var binding: FragmentTermsBinding
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_terms, container, false)
+class TermsFragment :  BaseFragment<FragmentTermsBinding>() {
+    override val layoutId: Int
+        get() = R.layout.fragment_terms
+    override fun initView(){}
+    override fun initEvent(){
 
         binding.jjCheckBoxTermsTermsOne.setOnClickListener {
             isAllCheckBoxChecked()
@@ -38,9 +34,9 @@ class TermsFragment : Fragment() {
             findNavController().navigate(R.id.action_nav_graph_move_to_register)
         }
 
-        return binding.root
     }
 
+    override fun subscribe(){}
     private fun isAllCheckBoxChecked() {
         val isAllCheckBoxChecked =
             binding.jjCheckBoxTermsTermsOne.isChecked && binding.jjCheckBoxTermsTermsTwo.isChecked
