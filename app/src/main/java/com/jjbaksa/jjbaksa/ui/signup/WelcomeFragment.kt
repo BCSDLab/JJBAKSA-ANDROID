@@ -8,20 +8,27 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.jjbaksa.jjbaksa.R
-import com.jjbaksa.jjbaksa.base.BaseFragment
 import com.jjbaksa.jjbaksa.databinding.FragmentWelcomeBinding
 import com.jjbaksa.jjbaksa.ui.signup.viewmodel.SignUpViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>(){
+class WelcomeFragment : Fragment() {
+
+    private lateinit var binding: FragmentWelcomeBinding
 
     private val signUpViewModel: SignUpViewModel by activityViewModels()
-    override val layoutId: Int
-        get() = R.layout.fragment_welcome
-    override fun initView() {}
 
-    override fun initEvent() {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = DataBindingUtil.inflate(
+            layoutInflater,
+            R.layout.fragment_welcome, container, false
+        )
+
         binding.jjEditTextWelcomeName.addTextChangedListener {
             binding.buttonWelcomeComplete.isEnabled = it?.isNotEmpty() == true
 
@@ -40,10 +47,9 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>(){
                 }
             }
         }
+
+        return binding.root
     }
-
-    override fun subscribe() {}
-
 
     override fun onResume() {
         super.onResume()

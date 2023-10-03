@@ -18,8 +18,6 @@ import com.jjbaksa.domain.enums.SignUpAlertEnum.NEED_ID_CHECK
 import com.jjbaksa.domain.enums.SignUpAlertEnum.PASSWORD_NOT_MATCH
 import com.jjbaksa.domain.enums.SignUpAlertEnum.PASSWORD_RULE_NOT_MATCH
 import com.jjbaksa.jjbaksa.R
-import com.jjbaksa.jjbaksa.base.BaseFragment
-import com.jjbaksa.jjbaksa.databinding.FragmentNaviMyPageBinding
 import com.jjbaksa.jjbaksa.databinding.FragmentSignUpBinding
 import com.jjbaksa.jjbaksa.util.RegexUtil.isPasswordRuleMatch
 import com.jjbaksa.jjbaksa.ui.signup.viewmodel.SignUpViewModel
@@ -27,9 +25,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SignUpFragment : BaseFragment<FragmentSignUpBinding>()  {
-    override val layoutId: Int
-        get() = R.layout.fragment_sign_up
+class SignUpFragment : Fragment() {
+
+    private lateinit var binding: FragmentSignUpBinding
 
     private val signUpViewModel: SignUpViewModel by activityViewModels()
 
@@ -38,7 +36,14 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>()  {
     private var isPasswordTyped = false
     private var isPasswordConfirmed = false
 
-    override fun initView() {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding =
+            DataBindingUtil.inflate(layoutInflater, R.layout.fragment_sign_up, container, false)
+
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 signUpViewModel.uiState.collect {
@@ -51,9 +56,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>()  {
                 }
             }
         }
-    }
 
-    override fun initEvent() {
         binding.jjEditTextSignUpId.setOnClickListener {
             signUpViewModel.checkAccountAvailable(
                 binding.jjEditTextSignUpId.editTextText
@@ -156,9 +159,8 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>()  {
             }
         }
 
+        return binding.root
     }
-
-    override fun subscribe() {}
 
     override fun onResume() {
         super.onResume()
