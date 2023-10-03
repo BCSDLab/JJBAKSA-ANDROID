@@ -18,6 +18,8 @@ import com.jjbaksa.domain.enums.SignUpAlertEnum.NEED_ID_CHECK
 import com.jjbaksa.domain.enums.SignUpAlertEnum.PASSWORD_NOT_MATCH
 import com.jjbaksa.domain.enums.SignUpAlertEnum.PASSWORD_RULE_NOT_MATCH
 import com.jjbaksa.jjbaksa.R
+import com.jjbaksa.jjbaksa.base.BaseFragment
+import com.jjbaksa.jjbaksa.databinding.FragmentNaviMyPageBinding
 import com.jjbaksa.jjbaksa.databinding.FragmentSignUpBinding
 import com.jjbaksa.jjbaksa.util.RegexUtil.isPasswordRuleMatch
 import com.jjbaksa.jjbaksa.ui.signup.viewmodel.SignUpViewModel
@@ -25,9 +27,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SignUpFragment : Fragment() {
-
-    private lateinit var binding: FragmentSignUpBinding
+class SignUpFragment : BaseFragment<FragmentSignUpBinding>()  {
+    override val layoutId: Int
+        get() = R.layout.fragment_sign_up
 
     private val signUpViewModel: SignUpViewModel by activityViewModels()
 
@@ -36,14 +38,7 @@ class SignUpFragment : Fragment() {
     private var isPasswordTyped = false
     private var isPasswordConfirmed = false
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding =
-            DataBindingUtil.inflate(layoutInflater, R.layout.fragment_sign_up, container, false)
-
+    override fun initView() {
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 signUpViewModel.uiState.collect {
@@ -56,7 +51,9 @@ class SignUpFragment : Fragment() {
                 }
             }
         }
+    }
 
+    override fun initEvent() {
         binding.jjEditTextSignUpId.setOnClickListener {
             signUpViewModel.checkAccountAvailable(
                 binding.jjEditTextSignUpId.editTextText
@@ -159,8 +156,9 @@ class SignUpFragment : Fragment() {
             }
         }
 
-        return binding.root
     }
+
+    override fun subscribe() {}
 
     override fun onResume() {
         super.onResume()
