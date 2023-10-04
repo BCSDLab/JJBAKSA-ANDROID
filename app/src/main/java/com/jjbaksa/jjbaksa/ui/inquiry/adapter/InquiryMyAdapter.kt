@@ -6,9 +6,9 @@ import android.text.Spanned
 import android.text.style.DynamicDrawableSpan
 import android.text.style.ImageSpan
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -16,18 +16,17 @@ import com.jjbaksa.domain.model.inquiry.InquiryContent
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.databinding.ItemInquiryBinding
 
-class InquiryAllAdapter(
+class InquiryMyAdapter(
     private val context: Context
-) : ListAdapter<InquiryContent, InquiryAllAdapter.ViewHolder>(diffUtil) {
+) : ListAdapter<InquiryContent, InquiryMyAdapter.ViewHolder>(diffUtil) {
     inner class ViewHolder(private val binding: ItemInquiryBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: InquiryContent) {
             val titleSpanText = SpannableString(item.title + " ")
             binding.inquiryCreateTimeTextView.text = item.createdAt
             binding.inquiryNicknameTextView.text = item.createdBy
-
             if (item.isSecreted == 1) {
-                binding.dropdownImageView.visibility = View.GONE
+                binding.dropdownImageView.isVisible = false
                 val lockImage = ContextCompat.getDrawable(
                     context,
                     R.drawable.ic_lock_closed
@@ -40,17 +39,16 @@ class InquiryAllAdapter(
                         lockImage?.let { ImageSpan(it, DynamicDrawableSpan.ALIGN_BOTTOM) },
                         item.title.length,
                         item.title.length + 1,
-                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                        Spanned.SPAN_INCLUSIVE_INCLUSIVE
                     )
                 }
                 binding.inquiryTitleTextView.text = titleSpanText
             } else {
                 binding.answerTextView.text = if (item.answer == "") context.getString(R.string.empty_answer) else item.answer
-                binding.dropdownImageView.visibility = View.VISIBLE
+                binding.dropdownImageView.isVisible = true
                 binding.inquiryTitleTextView.text = item.title
-
-                binding.dropdownImageView.setOnClickListener { }
             }
+            binding.dropdownImageView.setOnClickListener { }
         }
     }
 

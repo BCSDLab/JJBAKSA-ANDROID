@@ -1,6 +1,8 @@
 package com.jjbaksa.data.api
 
 import com.jjbaksa.data.model.follower.FollowerReviewShopsResp
+import com.jjbaksa.data.model.inquiry.InquiryContentResp
+import com.jjbaksa.data.model.inquiry.InquiryResp
 import com.jjbaksa.data.model.shop.ShopsMapsResp
 import com.jjbaksa.data.model.review.MyReviewShopsResp
 import com.jjbaksa.data.model.review.ReviewShopLastDateResp
@@ -115,4 +117,38 @@ interface AuthApi {
         @Query("direction") direction: String?,
         @Query("sort") sort: String?
     ): Response<FollowerReviewShopsResp>
+    @GET("inquiry")
+    suspend fun getInquiry(
+        @Query("idCursor") idCursor: Long?,
+        @Query("dateCursor") dateCursor: String?,
+        @Query("size") size: Int,
+    ): Response<InquiryResp>
+    @GET("inquiry/me")
+    suspend fun getInquiryMe(
+        @Query("idCursor") idCursor: Long?,
+        @Query("dateCursor") dateCursor: String?,
+        @Query("size") size: Int,
+    ): Response<InquiryResp>
+    @Multipart
+    @POST("inquiry")
+    suspend fun postInquiry(
+        @Query("title") title: String,
+        @Query("content") content: String,
+        @Query("isSecret") isSecret: Boolean,
+        @Part inquiryImages: List<MultipartBody.Part>
+    ): Response<InquiryContentResp>
+    @GET("inquiry/search/{search-word}")
+    suspend fun getInquirySearch(
+        @Path("search-word") searchWord: String,
+        @Query("dateCursor") dateCursor: String?,
+        @Query("idCursor") idCursor: Long?,
+        @Query("size") size: Int
+    ): Response<InquiryResp>
+    @GET("inquiry/search/me/{search-word}")
+    suspend fun getInquirySearchMe(
+        @Path("search-word") searchWord: String,
+        @Query("dateCursor") dateCursor: String?,
+        @Query("idCursor") idCursor: Long?,
+        @Query("size") size: Int
+    ): Response<InquiryResp>
 }
