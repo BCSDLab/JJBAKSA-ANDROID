@@ -9,8 +9,11 @@ import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseActivity
 import com.jjbaksa.jjbaksa.databinding.ActivityShopBinding
 import com.jjbaksa.jjbaksa.dialog.DoubleConfirmDialog
+import com.jjbaksa.jjbaksa.ui.pin.PinActivity
 import com.jjbaksa.jjbaksa.ui.pin.adapter.ImageFrameAdapter
 import com.jjbaksa.jjbaksa.ui.shop.viewmodel.ShopViewModel
+import com.naver.maps.map.CameraPosition
+import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,6 +40,16 @@ class ShopActivity : BaseActivity<ActivityShopBinding>(), OnMapReadyCallback {
             size = 2
         )
         initShopImageViewPagerWithTabLayout()
+        initMap()
+    }
+
+    private fun initMap() {
+        val fm = supportFragmentManager
+        val mapFragment = fm.findFragmentById(R.id.map_view) as MapFragment?
+            ?: MapFragment.newInstance().also {
+                fm.beginTransaction().add(R.id.map_view, it).commit()
+            }
+        mapFragment.getMapAsync(this)
     }
 
     private fun initShopImageViewPagerWithTabLayout() {
@@ -83,6 +96,55 @@ class ShopActivity : BaseActivity<ActivityShopBinding>(), OnMapReadyCallback {
             setResult(RESULT_CANCELED, intent)
             finish()
         }
+        observeMyReview()
+        observeFriendsReview()
+    }
+
+    override fun initEvent() {
+        binding.jjAppBar.setOnClickListener { finish() }
+        binding.bookmarkLayer.setOnClickListener {
+            if (binding.bookmarkImageView.isSelected) {
+                DoubleConfirmDialog(
+                    title = "북마크 삭제",
+                    msg = "해당 음식점을 북마크에서 삭제할까요?",
+                    confirmClick = {
+                        viewModel.deleteShopScrap(viewModel.addScrapInfo.value?.id ?: return@DoubleConfirmDialog)
+                        showSnackBar("북마크가 삭제되었어요")
+                    }
+                ).show(supportFragmentManager, SCRAP_REMOVE_DIALOG)
+            } else {
+                DoubleConfirmDialog(
+                    title = "북마크 추가",
+                    msg = "해당 음식점을 북마크에 추가할까요?",
+                    confirmClick = {
+                        viewModel.addShopScrap(0, viewModel.placeId.value.toString())
+                        showSnackBar("북마크가 추가되었어요")
+                    }
+                ).show(supportFragmentManager, SCRAP_ADD_DIALOG)
+            }
+        }
+        binding.seeAllFriendsReviewTextView.setOnClickListener {
+            val intent = Intent(this, PinActivity::class.java)
+            intent.putExtra("place_id", viewModel.placeId.value)
+            startActivity(intent)
+        }
+        binding.seeAllMyReviewTextView.setOnClickListener {
+            val intent = Intent(this, PinActivity::class.java)
+            intent.putExtra("place_id", viewModel.placeId.value)
+            startActivity(intent)
+        }
+    }
+
+    override fun onMapReady(naverMap: NaverMap) {
+
+    }
+
+    companion object {
+        const val SCRAP_ADD_DIALOG = "SCRAP_ADD_DIALOG"
+        const val SCRAP_REMOVE_DIALOG = "SCRAP_REMOVE_DIALOG"
+    }
+
+    private fun observeMyReview() {
         viewModel.myReview.observe(this) {
             if (it.content.isNotEmpty()) {
                 binding.myReviewLayout1.myReviewContentTextView.text = it.content[0].content
@@ -103,6 +165,8 @@ class ShopActivity : BaseActivity<ActivityShopBinding>(), OnMapReadyCallback {
                 binding.emptyMyReviewTextView.visibility = View.VISIBLE
             }
         }
+    }
+    private fun observeFriendsReview() {
         viewModel.friendReview.observe(this) {
             if (it.content.isNotEmpty()) {
                 binding.friendReviewLayout1.friendReviewContentTextView.text = it.content[0].content
@@ -123,48 +187,5 @@ class ShopActivity : BaseActivity<ActivityShopBinding>(), OnMapReadyCallback {
                 binding.emptyFriendReviewTextView.visibility = View.VISIBLE
             }
         }
-        viewModel.myLastReviewDate.observe(this) {
-            binding.myLatestVisitTextView.text = it.lastDate
-        }
-    }
-
-    override fun initEvent() {
-        binding.jjAppBar.setOnClickListener { finish() }
-        binding.bookmarkLayer.setOnClickListener {
-            if (binding.bookmarkImageView.isSelected) {
-                DoubleConfirmDialog(
-                    title = "북마크 삭제",
-                    msg = "해당 음식점을 삭제하시겠습니까?",
-                    confirmClick = {
-                        viewModel.deleteShopScrap(viewModel.addScrapInfo.value?.id ?: return@DoubleConfirmDialog)
-                        showSnackBar("북마크가 삭제되었어요")
-                    }
-                ).show(supportFragmentManager, SCRAP_REMOVE_DIALOG)
-            } else {
-                DoubleConfirmDialog(
-                    title = "북마크 추가",
-                    msg = "해당 음식점을 추가하시겠습니까?",
-                    confirmClick = {
-                        viewModel.addShopScrap(0, viewModel.placeId.value.toString())
-                        showSnackBar("북마크가 추가되었어요")
-                    }
-                ).show(supportFragmentManager, SCRAP_ADD_DIALOG)
-            }
-        }
-        binding.seeAllFriendsReviewTextView.setOnClickListener {
-            // TODO : 친구 리뷰 전체보기
-        }
-        binding.seeAllMyReviewTextView.setOnClickListener {
-            // TODO : 내 리뷰 전체보기
-        }
-    }
-
-    override fun onMapReady(p0: NaverMap) {
-        TODO("Not yet implemented")
-    }
-
-    companion object {
-        const val SCRAP_ADD_DIALOG = "SCRAP_ADD_DIALOG"
-        const val SCRAP_REMOVE_DIALOG = "SCRAP_REMOVE_DIALOG"
     }
 }

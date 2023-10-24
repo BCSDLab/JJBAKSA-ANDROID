@@ -471,10 +471,11 @@
                     android:textColor="@color/color_ff7f23"
                     android:text="@string/map" />
 
-                <com.naver.maps.map.MapView
+                <androidx.fragment.app.FragmentContainerView
                     android:id="@+id/map_view"
                     android:layout_width="match_parent"
                     android:layout_height="240dp"
+                    android:name="com.naver.maps.map.MapFragment"
                     app:layout_constraintTop_toBottomOf="@id/map_text_view" />
 
 
