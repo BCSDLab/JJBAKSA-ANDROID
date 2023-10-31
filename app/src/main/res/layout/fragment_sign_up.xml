@@ -14,12 +14,23 @@
             android:layout_height="match_parent"
             android:layout_marginHorizontal="72dp">
 
-            <include
+          <!--  <include
                 android:id="@+id/include_sign_up_header"
                 layout="@layout/header_sign_up"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent" /> -->
+
+            <ImageView
+                android:id="@+id/image_view_login_logo"
+                android:layout_width="133dp"
+                android:layout_height="31dp"
+                android:src="@drawable/jj_login_logo"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.1" />
 
             <ImageView
                 android:id="@+id/image_view_sign_up_alert"
@@ -31,7 +42,7 @@
                 app:layout_constraintEnd_toStartOf="@id/text_view_sign_up_alert"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/include_sign_up_header" />
+                app:layout_constraintTop_toBottomOf="@id/image_view_login_logo" />
 
             <TextView
                 android:id="@+id/text_view_sign_up_alert"
@@ -50,17 +61,18 @@
                 android:id="@+id/jj_edit_text_sign_up_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="48dp"
+                android:layout_marginTop="90dp"
                 android:paddingBottom="16dp"
                 app:button_text="@string/id_check"
-                app:button_textSize="14sp"
+                app:button_textSize="11sp"
                 app:has_button="true"
                 app:has_title="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/include_sign_up_header"
+                app:layout_constraintTop_toBottomOf="@id/image_view_login_logo"
                 app:title="@string/id"
-                app:titleSize="14sp" />
+                app:titleSize="14sp"
+                app:hintSize="14sp"/>
 
             <com.jjbaksa.jjbaksa.view.JjEditText
                 android:id="@+id/jj_edit_text_sign_up_email"
@@ -74,7 +86,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/jj_edit_text_sign_up_id"
                 app:title="@string/email"
-                app:titleSize="14sp" />
+                app:titleSize="14sp"
+                app:hintSize="14sp"/>
 
             <com.jjbaksa.jjbaksa.view.JjEditText
                 android:id="@+id/jj_edit_text_sign_up_password"
@@ -88,7 +101,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/jj_edit_text_sign_up_email"
                 app:title="@string/password"
-                app:titleSize="14sp" />
+                app:titleSize="14sp"
+                app:hintSize="14sp"/>
 
             <com.jjbaksa.jjbaksa.view.JjEditText
                 android:id="@+id/jj_edit_text_sign_up_password_confirm"
@@ -100,14 +114,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/jj_edit_text_sign_up_password"
                 app:title="@string/password_confirm"
-                app:titleSize="14sp" />
+                app:titleSize="14sp"
+                app:hintSize="14sp"/>
 
             <Button
                 android:id="@+id/button_sign_up_next"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="45dp"
-                android:layout_marginBottom="101dp"
+                android:layout_marginBottom="170dp"
                 android:background="@drawable/sel_sign_up_button"
                 android:enabled="false"
                 android:text="@string/next"
