@@ -27,4 +27,8 @@ data class ShopDetailResp(
     val openNow: Boolean? = false,
     @SerializedName("period")
     val period: List<PeriodResp>? = emptyList(),
+    @SerializedName("lat")
+    val lat: Double? = 0.0,
+    @SerializedName("lng")
+    val lng: Double? = 0.0
 )

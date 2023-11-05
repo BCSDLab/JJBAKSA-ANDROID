@@ -1,10 +1,12 @@
 package com.jjbaksa.jjbaksa.ui.shop
 
 import android.content.Intent
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import com.google.android.material.tabs.TabLayoutMediator
+import com.jjbaksa.domain.model.review.ReviewShopLastDate
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseActivity
 import com.jjbaksa.jjbaksa.databinding.ActivityShopBinding
@@ -12,7 +14,9 @@ import com.jjbaksa.jjbaksa.dialog.DoubleConfirmDialog
 import com.jjbaksa.jjbaksa.ui.pin.PinActivity
 import com.jjbaksa.jjbaksa.ui.pin.adapter.ImageFrameAdapter
 import com.jjbaksa.jjbaksa.ui.shop.viewmodel.ShopViewModel
+import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraPosition
+import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
@@ -27,6 +31,8 @@ class ShopActivity : BaseActivity<ActivityShopBinding>(), OnMapReadyCallback {
     private lateinit var imageFrameAdapter: ImageFrameAdapter
 
     override fun initView() {
+        binding.shop = viewModel
+        binding.lifecycleOwner = this
         intent.getStringExtra("place_id")?.let {
             viewModel.placeId.value = it
             viewModel.getShopDetail(it)
@@ -38,6 +44,12 @@ class ShopActivity : BaseActivity<ActivityShopBinding>(), OnMapReadyCallback {
         viewModel.getFollowerShopReview(
             placeId = viewModel.placeId.value.toString(),
             size = 2
+        )
+        viewModel.getFollowersShopReviewCount(
+            placeId = viewModel.placeId.value.toString()
+        )
+        viewModel.getMyLastReviewDate(
+            placeId = viewModel.placeId.value.toString()
         )
         initShopImageViewPagerWithTabLayout()
         initMap()
@@ -72,7 +84,10 @@ class ShopActivity : BaseActivity<ActivityShopBinding>(), OnMapReadyCallback {
         viewModel.shopInfo.observe(this) {
             binding.shopTitleTextView.text = it.name
             binding.shopTypeTextView.text = it.category
-            binding.reviewStarCountTextView.text =
+            binding.addressTextView.text = it.formattedAddress
+            binding.phoneTextView.text = it.formattedPhoneNumber
+
+            binding.reviewStarCountTextView.text = if(it.ratingCount == 0) "0.0" else
                 round((it.totalRating / it.ratingCount.toDouble()) * 10).div(10).toString()
             binding.bookmarkImageView.isSelected = it.scrap != 0
 
@@ -80,9 +95,6 @@ class ShopActivity : BaseActivity<ActivityShopBinding>(), OnMapReadyCallback {
                 binding.shopImagesTabLayout.addTab(binding.shopImagesTabLayout.newTab())
             }
             imageFrameAdapter.submitList(it.photos)
-
-            binding.addressTextView.text = it.formattedAddress
-            binding.phoneTextView.text = it.formattedPhoneNumber
         }
         viewModel.addScrapInfo.observe(this) {
             if (it.id != 0) {
@@ -136,7 +148,11 @@ class ShopActivity : BaseActivity<ActivityShopBinding>(), OnMapReadyCallback {
     }
 
     override fun onMapReady(naverMap: NaverMap) {
-
+        val cameraUpdate = CameraUpdate.scrollTo(LatLng(
+            viewModel.shopInfo.value?.lat ?: 0.0,
+            viewModel.shopInfo.value?.lng ?: 0.0
+        ))
+        naverMap.moveCamera(cameraUpdate)
     }
 
     companion object {

@@ -13,4 +13,6 @@ data class ShopDetail(
     val formattedPhoneNumber: String = "",
     val openNow: Boolean = false,
     val period: List<Period> = emptyList(),
+    val lat: Double = 0.0,
+    val lng: Double = 0.0
 )

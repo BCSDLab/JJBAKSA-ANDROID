@@ -102,6 +102,7 @@
                     android:ellipsize="end"
                     app:layout_constraintHorizontal_chainStyle="packed"
                     app:layout_constraintHorizontal_bias="0"
+                    android:text="@{shop.shopInfo.name}"
                     tools:text="비빔밥" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -117,6 +118,7 @@
                     app:layout_constraintEnd_toStartOf="@id/bookmark_image_view"
                     app:layout_constraintBottom_toBottomOf="@id/shop_title_text_view"
                     app:layout_constraintStart_toEndOf="@id/shop_title_text_view"
+                    android:text="@{shop.shopInfo.category}"
                     tools:text="일식집" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -207,6 +209,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/location_image_view"
                     app:layout_constraintStart_toEndOf="@id/location_image_view"
                     app:layout_constraintTop_toTopOf="@id/location_image_view"
+                    android:text="@{shop.shopInfo.formattedAddress}"
                     tools:text="서울특별시 강남구 역삼동 123-45" />
 
                 <androidx.appcompat.widget.AppCompatImageView
@@ -226,6 +229,7 @@
                     app:layout_constraintStart_toStartOf="@id/address_text_view"
                     app:layout_constraintTop_toTopOf="@id/phone_image_view"
                     app:layout_constraintBottom_toBottomOf="@id/phone_image_view"
+                    android:text="@{shop.shopInfo.formattedPhoneNumber}"
                     tools:text="010-0000-0000"/>
 
                 <androidx.appcompat.widget.AppCompatImageView
@@ -237,7 +241,7 @@
                     app:layout_constraintTop_toBottomOf="@id/phone_image_view"
                     app:layout_constraintStart_toStartOf="@id/phone_image_view" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/schedule_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -245,8 +249,7 @@
                     app:layout_constraintStart_toStartOf="@id/phone_text_view"
                     app:layout_constraintTop_toTopOf="@id/schedule_image_view"
                     app:layout_constraintBottom_toBottomOf="@id/schedule_image_view"
-                    android:text="@{@string/schedule(String.valueOf(shop.shopInfo.period[0].open.time),
-                        String.valueOf(shop.shopInfo.period[0].close.time))}"
+                    android:text="@{@string/schedule(String.valueOf(shop.shopInfo.period[0].open.time),String.valueOf(shop.shopInfo.period[0].close.time))}"
                     tools:text="00:00 - 23:59"/>
 
                 <androidx.appcompat.widget.AppCompatImageView
@@ -396,6 +399,7 @@
                     android:layout_marginTop="2dp"
                     app:layout_constraintStart_toStartOf="@id/my_review_text_view"
                     app:layout_constraintTop_toBottomOf="@id/my_review_text_view"
+                    android:text="@{@string/last_review_date(shop.myLastReviewDate.lastDate)}"
                     tools:text="마지막 방문 21.04.02" />
 
                 <TextView
@@ -477,10 +481,9 @@
                     android:layout_height="240dp"
                     android:name="com.naver.maps.map.MapFragment"
                     app:layout_constraintTop_toBottomOf="@id/map_text_view" />
-
-
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/progress_bar_container"

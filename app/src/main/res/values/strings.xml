@@ -161,7 +161,7 @@
     <string name="no_review_content">다녀온 음식점의 리뷰를 작성해 보세요!</string>
     <string name="no_review_yet">아직 등록된 리뷰가 없습니다.\n친구에게 추천해볼까요?</string>
     <string name="no_bookmark_title">등록된 북마크가 없어요.</string>
-    <string name="no_bookmark_content">새로운 음식점을 저장해 보세요!</string>
+    <string name="no_bookmark_content" formatted="false">새로운 음식점을 저장해 보세요!</string>
     <string name="search">검색</string>
     <string name="search_main_title">오늘은 어떤음식이 땡기나요?</string>
     <string name="sharp">#</string>
@@ -192,5 +192,6 @@
     <string name="change_profile_content">%s님,\n프로필을 변경하시겠어요?</string>
     <string name="last_register_date">마지막 일자 %s</string>
     <string name="total_review">총 %s개의 리뷰</string>
+    <string name="last_review_date">마지막 리뷰 %s</string>
     <string name="schedule">%s ~ %s</string>
 </resources>

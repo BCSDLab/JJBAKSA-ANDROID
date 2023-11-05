@@ -94,4 +94,6 @@ fun ShopDetailResp.toShopDetail() = ShopDetail(
     formattedPhoneNumber = formattedPhoneNumber ?: "",
     openNow = openNow ?: false,
     period = period?.map { it.toPeriod() } ?: listOf(Period()),
+    lat = lat ?: 0.0,
+    lng = lng ?: 0.0
 )
