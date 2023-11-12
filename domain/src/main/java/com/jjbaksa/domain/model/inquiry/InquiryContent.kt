@@ -8,5 +8,6 @@ data class InquiryContent(
     val createdBy: String = "",
     val inquiryImages: List<InquiryImages> = emptyList(),
     val isSecreted: Int = 0,
-    val title: String = ""
+    var title: String = "",
+    var expandable: Boolean = false
 )

@@ -4,6 +4,8 @@
     <attr name="title" format="reference|string" />
     <attr name="titleSize" format="reference|dimension" />
     <attr name="content" format="reference|string"/>
+    <attr name="tailText" format="string" />
+    <attr name="tailImg" format="reference" />
 
     <declare-styleable name="JjAppbar">
         <attr name="title"/>
@@ -59,5 +61,15 @@
 
     <declare-styleable name="JjLoadingView">
         <attr name="loading" format="boolean"/>
+    </declare-styleable>
+    <declare-styleable name="JEditText">
+        <attr name="android:minHeight" />
+        <attr name="android:inputType" />
+        <attr name="android:hint" />
+        <attr name="android:text" />
+        <attr name="android:textSize" />
+        <attr name="android:maxLength" />
+        <attr name="tailText" />
+        <attr name="tailImg" />
     </declare-styleable>
 </resources>
