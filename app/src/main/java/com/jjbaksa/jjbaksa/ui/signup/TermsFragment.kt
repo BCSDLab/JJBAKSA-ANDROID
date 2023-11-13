@@ -17,23 +17,21 @@ class TermsFragment :  BaseFragment<FragmentTermsBinding>() {
     override fun initView(){}
     override fun initEvent(){
 
-        binding.jjCheckBoxTermsTermsOne.setOnClickListener {
-            isAllCheckBoxChecked()
+        with(binding){
+            jjCheckBoxTermsTermsOne.setOnClickListener {
+                isAllCheckBoxChecked()
+            }
+            jjCheckBoxTermsTermsTwo.setOnClickListener {
+                isAllCheckBoxChecked()
+            }
+            jjCheckBoxTermsTermsCheckAll.setOnClickListener {
+                checkAllCheckBox(jjCheckBoxTermsTermsCheckAll.isChecked)
+                isAllCheckBoxChecked()
+            }
+            buttonTermsNext.setOnClickListener {
+                findNavController().navigate(R.id.action_nav_graph_move_to_register)
+            }
         }
-
-        binding.jjCheckBoxTermsTermsTwo.setOnClickListener {
-            isAllCheckBoxChecked()
-        }
-
-        binding.jjCheckBoxTermsTermsCheckAll.setOnClickListener {
-            checkAllCheckBox(binding.jjCheckBoxTermsTermsCheckAll.isChecked)
-            isAllCheckBoxChecked()
-        }
-
-        binding.buttonTermsNext.setOnClickListener {
-            findNavController().navigate(R.id.action_nav_graph_move_to_register)
-        }
-
     }
 
     override fun subscribe(){}

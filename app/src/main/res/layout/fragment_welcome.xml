@@ -13,6 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginHorizontal="72dp"
+            android:clickable="true"
             android:layout_marginBottom="170dp">
 
             <ImageView
@@ -47,17 +48,18 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/image_view_welcome_image" />
 
-            <com.jjbaksa.jjbaksa.view.JjEditText
-                android:id="@+id/jj_edit_text_welcome_name"
+            <com.jjbaksa.jjbaksa.view.JEditText
+                android:id="@+id/j_edit_text_welcome_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="68dp"
                 app:editText_gravity="center_horizontal"
                 app:hint="@string/type_nickname"
+                app:hintSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_view_welcome_text"
-                app:hintSize="14sp"/>
+                app:layout_constraintTop_toBottomOf="@id/text_view_welcome_text" />
 
             <Button
                 android:id="@+id/button_welcome_complete"
@@ -70,7 +72,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/jj_edit_text_welcome_name"
+                app:layout_constraintTop_toBottomOf="@id/j_edit_text_welcome_name"
                 app:layout_constraintVertical_bias="1" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
