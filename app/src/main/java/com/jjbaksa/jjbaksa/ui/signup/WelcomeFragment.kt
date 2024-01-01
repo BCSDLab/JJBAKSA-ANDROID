@@ -1,10 +1,13 @@
 package com.jjbaksa.jjbaksa.ui.signup
 
+import android.annotation.SuppressLint
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.activityViewModels
+import com.google.android.material.internal.TextWatcherAdapter
+import com.jjbaksa.domain.enums.SignUpAlertEnum
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseFragment
 import com.jjbaksa.jjbaksa.databinding.FragmentWelcomeBinding
@@ -22,36 +25,29 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>(){
     override fun initEvent() {
 
         with(binding) {
-            jEditTextWelcomeName.run {
-                addTextChangedListener(object : TextWatcher {
-                    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                        // 이전 텍스트 변경 전에 수행할 동작
+
+            binding.jEditTextWelcomeName.addTextChangedListener(@SuppressLint("RestrictedApi")
+            object : TextWatcherAdapter() {
+                override fun afterTextChanged(p0: Editable) {
+
+                    if (p0?.isNotEmpty() == true) {
+                        signUpViewModel.nickname = p0.toString()
                     }
+                    buttonWelcomeComplete.isEnabled = p0?.isNotEmpty() == true
+                }
+            })
 
-                    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                        // 텍스트가 변경될 때 수행할 동작
-                        signUpViewModel.nickname=jEditTextWelcomeName.text.toString()
-                    }
 
-                    override fun afterTextChanged(p0: Editable?) {
+            buttonWelcomeComplete.setOnClickListener {
 
-                        if (p0?.isNotEmpty() == true) {
-                            signUpViewModel.nickname = p0.toString()
-                        }
-                        buttonWelcomeComplete.isEnabled = p0?.isNotEmpty() == true
-                    }
-                })
-
-                buttonWelcomeComplete.setOnClickListener {
-
-                    signUpViewModel.signUpRequest()
-                    signUpViewModel.isSignUpSuccess.observe(viewLifecycleOwner) {
-                        if (it) {
-                            activity?.finish()
-                        }
+                signUpViewModel.signUpRequest()
+                signUpViewModel.isSignUpSuccess.observe(viewLifecycleOwner) {
+                    if (it) {
+                        activity?.finish()
                     }
                 }
             }
+
 
         }
     }

@@ -38,82 +38,87 @@
                 android:layout_height="0dp"
                 android:src="@drawable/sel_sign_up_alert_shown"
                 android:visibility="invisible"
-                app:layout_constraintBottom_toTopOf="@id/jj_edit_text_sign_up_id"
-                app:layout_constraintEnd_toStartOf="@id/text_view_sign_up_alert"
+                app:layout_constraintBottom_toTopOf="@id/j_edit_text_sign_up_id"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/image_view_login_logo" />
+                app:layout_constraintTop_toBottomOf="@id/text_view_sign_up_alert" />
 
             <TextView
                 android:id="@+id/text_view_sign_up_alert"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="33dp"
                 android:layout_marginStart="10dp"
                 android:textColor="#ff7f23"
                 android:textSize="11sp"
                 android:visibility="invisible"
-                app:layout_constraintBottom_toBottomOf="@id/image_view_sign_up_alert"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/image_view_sign_up_alert"
-                app:layout_constraintTop_toTopOf="@id/image_view_sign_up_alert" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/image_view_login_logo" />
 
-            <com.jjbaksa.jjbaksa.view.JjEditText
-                android:id="@+id/jj_edit_text_sign_up_id"
+            <com.jjbaksa.jjbaksa.view.JEditText
+                android:id="@+id/j_edit_text_sign_up_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="90dp"
                 android:paddingBottom="16dp"
-                app:button_text="@string/id_check"
+                android:hint="@string/id"
+                android:inputType="text"
+                android:maxLength="50"
                 app:button_textSize="11sp"
                 app:has_button="true"
                 app:has_title="true"
+                app:hintSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/image_view_login_logo"
-                app:title="@string/id"
+                app:layout_constraintTop_toBottomOf="@id/image_view_sign_up_alert"
+                app:tailText="@string/id_check"
                 app:titleSize="14sp"
-                app:hintSize="14sp"/>
+                />
 
-            <com.jjbaksa.jjbaksa.view.JjEditText
-                android:id="@+id/jj_edit_text_sign_up_email"
+            <com.jjbaksa.jjbaksa.view.JEditText
+                android:id="@+id/j_edit_text_sign_up_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
                 android:paddingBottom="16dp"
+                android:hint="@string/email"
+                android:inputType="textEmailAddress"
                 app:has_title="true"
                 app:is_email="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/jj_edit_text_sign_up_id"
-                app:title="@string/email"
+                app:layout_constraintTop_toBottomOf="@id/j_edit_text_sign_up_id"
                 app:titleSize="14sp"
                 app:hintSize="14sp"/>
 
-            <com.jjbaksa.jjbaksa.view.JjEditText
-                android:id="@+id/jj_edit_text_sign_up_password"
+            <com.jjbaksa.jjbaksa.view.JEditText
+                android:id="@+id/j_edit_text_sign_up_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="@string/password"
                 android:inputType="textPassword"
                 android:paddingBottom="16dp"
                 app:has_title="true"
                 app:is_password="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/jj_edit_text_sign_up_email"
-                app:title="@string/password"
+                app:layout_constraintTop_toBottomOf="@id/j_edit_text_sign_up_email"
+                app:tailImg="@drawable/sel_password_visibility"
                 app:titleSize="14sp"
                 app:hintSize="14sp"/>
 
-            <com.jjbaksa.jjbaksa.view.JjEditText
-                android:id="@+id/jj_edit_text_sign_up_password_confirm"
+            <com.jjbaksa.jjbaksa.view.JEditText
+                android:id="@+id/j_edit_text_sign_up_password_confirm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="@string/password_confirm"
+                android:inputType="textPassword"
                 app:has_title="true"
                 app:is_password="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/jj_edit_text_sign_up_password"
-                app:title="@string/password_confirm"
+                app:layout_constraintTop_toBottomOf="@id/j_edit_text_sign_up_password"
+                app:tailImg="@drawable/sel_password_visibility"
                 app:titleSize="14sp"
                 app:hintSize="14sp"/>
 
@@ -130,8 +135,9 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/jj_edit_text_sign_up_password_confirm"
+                app:layout_constraintTop_toBottomOf="@id/j_edit_text_sign_up_password_confirm"
                 app:layout_constraintVertical_bias="1" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

@@ -1,5 +1,6 @@
 package com.jjbaksa.jjbaksa.ui.signup.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,6 +11,7 @@ import com.jjbaksa.domain.model.user.SignUpReq
 import com.jjbaksa.domain.usecase.CheckAccountAvailableUseCase
 import com.jjbaksa.domain.usecase.SignUpUseCase
 import com.jjbaksa.jjbaksa.ui.signup.viewmodel.state.SignUpUIState
+import com.jjbaksa.jjbaksa.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -29,8 +31,8 @@ class SignUpViewModel @Inject constructor(
     val isSignUpSuccess: LiveData<Boolean>
         get() = _isSignUpSuccess
 
-    private val _uiState = MutableStateFlow(SignUpUIState())
-    val uiState: StateFlow<SignUpUIState> = _uiState.asStateFlow()
+    private val _uiState  = SingleLiveEvent<SignUpUIState>()
+    val uiState: SingleLiveEvent<SignUpUIState> get() = _uiState
 
     private var availableId = ""
 
@@ -39,7 +41,12 @@ class SignUpViewModel @Inject constructor(
     var password: String = ""
     var nickname: String = ""
 
+    init {
+        _uiState.value = SignUpUIState()
+    }
+
     fun checkAccountAvailable(account: String) {
+
         viewModelScope.launch {
             runCatching {
                 checkAccountAvailableUseCase(account)
@@ -66,21 +73,15 @@ class SignUpViewModel @Inject constructor(
     }
 
     fun updateIdCheckedState(newState: Boolean) {
-        _uiState.update {
-            it.copy(isIdChecked = newState)
-        }
+        _uiState.value = _uiState.value?.copy(isIdChecked =  newState)
     }
 
     fun updateAlertState(newState: Boolean) {
-        _uiState.update {
-            it.copy(isAlertShown = newState)
-        }
+        _uiState.value = _uiState.value?.copy(isAlertShown = newState)
     }
 
     fun updateAlertType(newAlertType: SignUpAlertEnum) {
-        _uiState.update {
-            it.copy(alertType = newAlertType)
-        }
+        _uiState.value = _uiState.value?.copy(alertType = newAlertType)
     }
 
     fun signUpRequest() {
