@@ -5,6 +5,8 @@ import android.content.Context
 import android.text.InputFilter
 import android.text.InputType
 import android.text.TextWatcher
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -99,6 +101,7 @@ class JEditText @JvmOverloads constructor(
             binding.tvTail.background = ContextCompat.getDrawable(context, drawableRes)
             binding.tvTail.setTextColor(ContextCompat.getColor(context, textColor))
             binding.tvTail.visibility = View.VISIBLE
+            binding.tvTail.text= text
         }
     }
     fun hideTailButtonText() {
@@ -134,6 +137,16 @@ class JEditText @JvmOverloads constructor(
     }
     fun setTailImgSelected(isSelected: Boolean) {
         binding.ivJ.isSelected = isSelected
+        binding.etJ.transformationMethod =
+            PasswordTransformationMethod.getInstance()
+
+        binding.etJ.let { editText ->
+            editText.transformationMethod =
+                HideReturnsTransformationMethod.getInstance()
+            editText.setSelection(editText.length())
+        }
+
+
     }
     fun getTailImgSelected(): Boolean {
         return binding.ivJ.isSelected
