@@ -12,7 +12,6 @@ import com.jjbaksa.domain.usecase.scrap.GetShopScrapUseCase
 import com.jjbaksa.jjbaksa.base.BaseViewModel
 import com.jjbaksa.jjbaksa.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -147,7 +146,6 @@ class ShopViewModel @Inject constructor(
                 it.onSuccess {
                     _addScrapInfo.value = AddShopScrap()
                 }.onFailure {
-
                 }
             }
         }

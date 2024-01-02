@@ -141,7 +141,7 @@ class PinViewModel @Inject constructor(
         size: Int? = null,
         direction: String? = null,
         sort: String? = null
-        ) {
+    ) {
         viewModelScope.launch(ceh) {
             reviewUseCase.getFollowerReviewShops(placeId, idCursor, dateCursor, rateCursor, size, direction, sort)
                 .collect {
