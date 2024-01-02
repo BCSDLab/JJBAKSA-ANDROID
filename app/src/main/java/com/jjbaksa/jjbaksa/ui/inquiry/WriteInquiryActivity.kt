@@ -46,10 +46,6 @@ class WriteInquiryActivity : BaseActivity<ActivityWriteInquiryBinding>() {
     }
 
     override fun subscribe() {
-        observeData()
-    }
-
-    private fun observeData() {
         viewModel.isCheckableButton.observe(this) {
             binding.registerButton.apply {
                 isSelected = it
@@ -58,6 +54,12 @@ class WriteInquiryActivity : BaseActivity<ActivityWriteInquiryBinding>() {
         }
         viewModel.isVisibleAddPhoto.observe(this) {
             binding.addPhotoImageView.isVisible = it
+        }
+        viewModel.inquiryContent.observe(this) {
+            if (it.id != 0L) {
+                setResult(RESULT_OK)
+                finish()
+            }
         }
     }
 
@@ -73,6 +75,12 @@ class WriteInquiryActivity : BaseActivity<ActivityWriteInquiryBinding>() {
                 viewModel.inquiryContentLength.value != 0 && it?.length != 0
         }
         binding.registerButton.setOnClickListener {
+            viewModel.setInquiry(
+                binding.titleEditText.text.toString(),
+                binding.contentEditText.text.toString(),
+                binding.secretSettingSwitch.isChecked,
+                viewModel.photoList.value?.toList().orEmpty()
+            )
         }
     }
 

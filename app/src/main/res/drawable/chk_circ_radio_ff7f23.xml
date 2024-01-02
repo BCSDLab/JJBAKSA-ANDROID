@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:drawable="@drawable/shape_circ_ffffff_stroke_c4c4c4"
+        android:state_checked="false"/>
+    <item
+        android:drawable="@drawable/shape_circ_ff7f23_stroke_ff7f23"
+        android:state_checked="true"/>
+</selector>

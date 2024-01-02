@@ -179,6 +179,7 @@
 
     <string name="register_inquiry_title">쩝쩝박사 이용 중에 생긴 불편한 점이나 문의사항을 등록해주세요.</string>
     <string name="register_inquiry_content">확인 후 순차적으로 답변 드리겠습니다.</string>
+    <string name="empty_answer">아직 답변이 없네요. 조금만 기다려주세요!</string>
     <string name="secret_inquiry_content_visible">비밀글은 나의 문의 내역에서만 볼 수 있어요.</string>
     <string name="attachable_max_photo">최대 3장 첨부 가능</string>
     <string name="write_inquiry_content">문의 내용을 작성해주세요.</string>
