@@ -16,6 +16,7 @@ import com.jjbaksa.jjbaksa.ui.mainpage.MainPageActivity
 import com.jjbaksa.jjbaksa.ui.signup.SignUpActivity
 import com.jjbaksa.jjbaksa.ui.social.SocialLoginActivity
 import com.jjbaksa.jjbaksa.util.KeyboardProvider
+import com.jjbaksa.jjbaksa.util.controlSoftKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -44,16 +45,20 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     }
 
     private fun setEditTextErrorUI() {
+        controlSoftKeyboard(binding.root, false)
+        showSnackBar(getString(R.string.non_exist_user), getString(R.string.do_register)) {
+            startActivity(Intent(this, SignUpActivity::class.java))
+        }
         with(binding) {
             editTextId.background =
                 ContextCompat.getDrawable(
                     this@LoginActivity,
-                    R.drawable.shape_rectf6bf54_solid_radius_100_stroke_ff7f23
+                    R.drawable.shape_rect_eeeeee_solid_radius_100_stroke_ff7f23
                 )
             editTextPassword.background =
                 ContextCompat.getDrawable(
                     this@LoginActivity,
-                    R.drawable.shape_rectf6bf54_solid_radius_100_stroke_ff7f23
+                    R.drawable.shape_rect_eeeeee_solid_radius_100_stroke_ff7f23
                 )
         }
     }

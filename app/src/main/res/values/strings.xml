@@ -27,6 +27,8 @@
     <string name="close">닫기</string>
     <string name="register">등록하기</string>
     <string name="progress_text">잠시만 기다려주세요.</string>
+    <string name="non_exist_user">가입되지 않은 정보입니다.</string>
+    <string name="do_register">가입하기</string>
 
     <string name="terms_agreement">약관 동의</string>
     <string name="privacy_term_title">개인정보 이용약관(필수)</string>
