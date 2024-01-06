@@ -96,7 +96,7 @@ class FindPasswordFragment : BaseFragment<FragmentFindPasswordBinding>() {
 
     private fun sendVerificationCode() {
         binding.buttonFindPasswordSendToInputCode.setOnClickListener {
-            if(!isEmailFormatCorrect(binding.inputEmailEditText.editTextText)) {
+            if (!isEmailFormatCorrect(binding.inputEmailEditText.editTextText)) {
                 KeyboardProvider(requireContext()).hideKeyboard(binding.inputEmailEditText)
                 showSnackBar(getString(R.string.incorrect_email_format))
                 highlightEditTextOutline(binding.inputEmailEditText)
@@ -154,10 +154,12 @@ class FindPasswordFragment : BaseFragment<FragmentFindPasswordBinding>() {
     }
 
     private fun isEmailFormatCorrect(email: String): Boolean {
-        val emailFormat = Regex("^[a-zA-Z0-9_+&*-]+(?:\\." +
+        val emailFormat = Regex(
+            "^[a-zA-Z0-9_+&*-]+(?:\\." +
                 "[a-zA-Z0-9_+&*-]+)*@" +
                 "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
-                "A-Z]{2,7}$")
+                "A-Z]{2,7}$"
+        )
         return emailFormat.matches(email)
     }
 
