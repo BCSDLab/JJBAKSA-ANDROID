@@ -12,7 +12,7 @@ import com.jjbaksa.jjbaksa.view.JjEditText
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FindPasswordFragment() : BaseFragment<FragmentFindPasswordBinding>() {
+class FindPasswordFragment : BaseFragment<FragmentFindPasswordBinding>() {
     override val layoutId: Int
         get() = R.layout.fragment_find_password
 
@@ -96,6 +96,13 @@ class FindPasswordFragment() : BaseFragment<FragmentFindPasswordBinding>() {
 
     private fun sendVerificationCode() {
         binding.buttonFindPasswordSendToInputCode.setOnClickListener {
+            if(!isEmailFormatCorrect(binding.inputEmailEditText.editTextText)) {
+                KeyboardProvider(requireContext()).hideKeyboard(binding.inputEmailEditText)
+                showSnackBar(getString(R.string.incorrect_email_format))
+                highlightEditTextOutline(binding.inputEmailEditText)
+                normalizeEditTextOutline(binding.inputIdEditText)
+                return@setOnClickListener
+            }
             viewModel.postUserEmailPassword(
                 binding.inputIdEditText.editTextText,
                 binding.inputEmailEditText.editTextText
@@ -106,11 +113,15 @@ class FindPasswordFragment() : BaseFragment<FragmentFindPasswordBinding>() {
     override fun subscribe() {
         viewModel.toastMsg.observe(viewLifecycleOwner) {
             if (it.contains(USER)) {
+                KeyboardProvider(requireContext()).hideKeyboard(binding.inputIdEditText)
                 showSnackBar(getString(R.string.fail_id))
-                changeEditTextOutlineColor(binding.inputIdEditText)
+                highlightEditTextOutline(binding.inputIdEditText)
+                normalizeEditTextOutline(binding.inputEmailEditText)
             } else if (it.contains(EMAIL)) {
+                KeyboardProvider(requireContext()).hideKeyboard(binding.inputEmailEditText)
                 showSnackBar(getString(R.string.fail_email))
-                changeEditTextOutlineColor(binding.inputEmailEditText)
+                highlightEditTextOutline(binding.inputEmailEditText)
+                normalizeEditTextOutline(binding.inputIdEditText)
             } else {
                 showSnackBar(it)
             }
@@ -129,11 +140,25 @@ class FindPasswordFragment() : BaseFragment<FragmentFindPasswordBinding>() {
         }
     }
 
-    private fun changeEditTextOutlineColor(editText: JjEditText) {
+    private fun highlightEditTextOutline(editText: JjEditText) {
         editText.editTextBackground = ContextCompat.getDrawable(
             requireContext(),
             R.drawable.shape_rectf6bf54_solid_radius_100_stroke_ff7f23
         )
+    }
+    private fun normalizeEditTextOutline(editText: JjEditText) {
+        editText.editTextBackground = ContextCompat.getDrawable(
+            requireContext(),
+            R.drawable.shape_rect_eeeeee_solid_radius_100_padding_7_11_11_8
+        )
+    }
+
+    private fun isEmailFormatCorrect(email: String): Boolean {
+        val emailFormat = Regex("^[a-zA-Z0-9_+&*-]+(?:\\." +
+                "[a-zA-Z0-9_+&*-]+)*@" +
+                "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
+                "A-Z]{2,7}$")
+        return emailFormat.matches(email)
     }
 
     companion object {

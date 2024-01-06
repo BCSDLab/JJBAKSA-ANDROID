@@ -93,7 +93,7 @@ class FindPasswordInputCodeFragment : BaseFragment<FragmentFindPasswordInputCode
         }
         viewModel.isSuccess.observe(viewLifecycleOwner) {
             if (it) {
-                showSnackBar(getString(R.string.resend_verification_code))
+                showSnackBar(getString(R.string.resend_verification_code_content))
             } else {
                 KeyboardProvider(requireContext()).hideKeyboard(binding.editTextContainer)
             }
