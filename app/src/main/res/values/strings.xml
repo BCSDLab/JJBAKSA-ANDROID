@@ -65,7 +65,7 @@
     <string name="input_email_and_verification_code_from_email">이메일과 이메일로 발송된\n인증번호를 입력해 주세요.</string>
     <string name="send_verification_code">인증번호 보내기</string>
     <string name="resend_verification_code">인증번호 재발송</string>
-    <string name="resend_verification_code_content">인증번호 재발송 되었습니다.</string>
+    <string name="resend_verification_code_content">인증번호를 재발송 했어요.</string>
     <string name="not_correct_email_format">이메일 형식이 올바르지 않습니다.</string>
     <string name="not_correct_password_format">비밀번호는 문자,숫자,특수문자를 포함한\n8~16자리로 이루어져야 합니다.</string>
     <string name="not_correct_password">비밀번호가 일치하지 않습니다.</string>
@@ -75,8 +75,9 @@
     <string name="input_verification_code">인증번호 입력</string>
 
     <string name="id_already_exist">이미 존재하는 아이디입니다.</string>
-    <string name="fail_id">아이디가 올바르지 않습니다.</string>
-    <string name="fail_email">이메일이 올바르지 않습니다.</string>
+    <string name="fail_id">아이디가 존재하지 않아요.</string>
+    <string name="fail_email">올바르지 않은 이메일이에요.</string>
+    <string name="incorrect_email_format">올바르지 않은 이메일 형식이에요.</string>
     <string name="email_not_found">존재하지 않는 도메인입니다.</string>
     <string name="password_rule_not_match">비밀번호는 문자, 숫자, 특수문자를 포함한 8~16자리로 이루어져야합니다.</string>
     <string name="password_not_match">비밀번호가 일치하지 않습니다.</string>
