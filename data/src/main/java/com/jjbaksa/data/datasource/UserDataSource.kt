@@ -14,6 +14,7 @@ interface UserDataSource {
     suspend fun getUserMe(): Response<UserResp>
     suspend fun postLogin(loginReq: LoginReq): Response<LoginResp>
     suspend fun postUserEmailId(email: String): Response<Unit>
+    suspend fun postUserEmailCheck(email: String): Response<LoginResp>
     suspend fun getUserId(email: String, code: String): Response<UserResp>
     suspend fun postUserEmailPassword(id: String, email: String): Response<Unit>
     suspend fun postUserPassword(findPasswordReq: FindPasswordReq): Response<String>

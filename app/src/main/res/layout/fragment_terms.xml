@@ -51,6 +51,17 @@
                 app:moreInfo_textSize="11sp"
                 app:title="@string/privacy_term_title" />
 
+            <View
+                android:id="@+id/view1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_centerInParent="true"
+                android:background="#EEEEEE"
+                app:layout_constraintBottom_toBottomOf="@+id/jj_check_box_terms_terms_one"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/jj_check_box_terms_terms_one" />
+
             <com.jjbaksa.jjbaksa.view.JjCheckBox
                 android:id="@+id/jj_check_box_terms_terms_two"
                 android:layout_width="match_parent"
@@ -62,6 +73,17 @@
                 app:moreInfo="@string/jjbaksa_term_text"
                 app:moreInfo_textSize="11sp"
                 app:title="@string/jjbaksa_term_title" />
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_centerInParent="true"
+                android:background="#EEEEEE"
+                app:layout_constraintBottom_toBottomOf="@+id/jj_check_box_terms_terms_two"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/jj_check_box_terms_terms_two" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraint_layout_terms_bottom_layout"

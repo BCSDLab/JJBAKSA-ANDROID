@@ -101,7 +101,7 @@ class JEditText @JvmOverloads constructor(
             binding.tvTail.background = ContextCompat.getDrawable(context, drawableRes)
             binding.tvTail.setTextColor(ContextCompat.getColor(context, textColor))
             binding.tvTail.visibility = View.VISIBLE
-            binding.tvTail.text= text
+            binding.tvTail.text = text
         }
     }
     fun hideTailButtonText() {
@@ -145,8 +145,6 @@ class JEditText @JvmOverloads constructor(
                 HideReturnsTransformationMethod.getInstance()
             editText.setSelection(editText.length())
         }
-
-
     }
     fun getTailImgSelected(): Boolean {
         return binding.ivJ.isSelected

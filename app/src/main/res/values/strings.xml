@@ -82,6 +82,9 @@
     <string name="sign_out_title_text">로그아웃을 진행하실건가요?</string>
     <string name="sign_out_content_text">쩝쩝박사 로그아웃을 진행하시면 로그인 페이지로 돌아갑니다.</string>
 
+    <string name="sign_up_title_text">마지막 한 단계!</string>
+    <string name="sign_up_content_text">입력하신 이메일로 링크를 보냈어요.\n이메일 인증을 완료해주세요.</string>
+
     <string name="welcome_text">회원가입을 축하합니다!\n당신을 어떻게 부르면 좋을까요?</string>
     <string name="complete_withdrawal_content">다음에 또 봐요! 재가입은 탈퇴 후 일주일 후 부터 가능합니다.</string>
 

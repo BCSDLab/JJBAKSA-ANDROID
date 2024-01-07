@@ -74,6 +74,10 @@ class UserRemoteDataSource @Inject constructor(
         return authApi.deleteUserMe()
     }
 
+    override suspend fun postUserEmailCheck(email: String): Response<LoginResp> {
+        return noAuthApi.postUserEmailCheck(email)
+    }
+
     override suspend fun saveAccessToken(accessToken: String) {}
     override suspend fun saveAccount(account: String) {}
     override suspend fun saveNickname(nickname: String) {}

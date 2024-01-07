@@ -2,12 +2,8 @@ package com.jjbaksa.jjbaksa.ui.signup
 
 import android.annotation.SuppressLint
 import android.text.Editable
-import android.text.InputType
-import android.text.TextWatcher
-import android.util.Log
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.internal.TextWatcherAdapter
-import com.jjbaksa.domain.enums.SignUpAlertEnum
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseFragment
 import com.jjbaksa.jjbaksa.databinding.FragmentWelcomeBinding
@@ -15,7 +11,7 @@ import com.jjbaksa.jjbaksa.ui.signup.viewmodel.SignUpViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>(){
+class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
 
     private val signUpViewModel: SignUpViewModel by activityViewModels()
     override val layoutId: Int
@@ -26,17 +22,18 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>(){
 
         with(binding) {
 
-            binding.jEditTextWelcomeName.addTextChangedListener(@SuppressLint("RestrictedApi")
-            object : TextWatcherAdapter() {
-                override fun afterTextChanged(p0: Editable) {
+            binding.jEditTextWelcomeName.addTextChangedListener(
+                @SuppressLint("RestrictedApi")
+                object : TextWatcherAdapter() {
+                    override fun afterTextChanged(p0: Editable) {
 
-                    if (p0?.isNotEmpty() == true) {
-                        signUpViewModel.nickname = p0.toString()
+                        if (p0?.isNotEmpty() == true) {
+                            signUpViewModel.nickname = p0.toString()
+                        }
+                        buttonWelcomeComplete.isEnabled = p0?.isNotEmpty() == true
                     }
-                    buttonWelcomeComplete.isEnabled = p0?.isNotEmpty() == true
                 }
-            })
-
+            )
 
             buttonWelcomeComplete.setOnClickListener {
 
@@ -47,18 +44,15 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>(){
                     }
                 }
             }
-
-
         }
     }
-
 
     override fun subscribe() {}
 
     override fun onResume() {
         super.onResume()
         if (signUpViewModel.nickname.isNotEmpty()) {
-            binding.jEditTextWelcomeName.text=signUpViewModel.id
+            binding.jEditTextWelcomeName.text = signUpViewModel.id
         }
     }
 }

@@ -76,6 +76,24 @@ class UserRepositoryImpl @Inject constructor(
         )
     }
 
+    override suspend fun postUserEmailCheck(
+        email: String
+    ): Flow<Result<Login>> {
+        return apiCall(
+            call = {
+                userRemoteDataSource.postUserEmailCheck(email)
+            },
+            mapper = {
+                if (it.isSuccessful) {
+                    it.body()?.toLoginResult() ?: Login()
+                } else {
+                    val errorResult = RespMapper.errorMapper(it.errorBody()?.string() ?: "")
+                    Login(errorMessage = errorResult.errorMessage)
+                }
+            }
+        )
+    }
+    
     override suspend fun postUserEmailId(
         email: String,
         onError: (String) -> Unit

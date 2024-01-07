@@ -1,37 +1,39 @@
 package com.jjbaksa.jjbaksa.ui.signup.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jjbaksa.domain.base.RespResult
 import com.jjbaksa.domain.enums.SignUpAlertEnum
 import com.jjbaksa.domain.model.user.SignUpReq
 import com.jjbaksa.domain.usecase.CheckAccountAvailableUseCase
 import com.jjbaksa.domain.usecase.SignUpUseCase
+import com.jjbaksa.domain.usecase.user.UserUseCase
+import com.jjbaksa.jjbaksa.base.BaseViewModel
 import com.jjbaksa.jjbaksa.ui.signup.viewmodel.state.SignUpUIState
 import com.jjbaksa.jjbaksa.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
     private val checkAccountAvailableUseCase: CheckAccountAvailableUseCase,
-    private val signUpUseCase: SignUpUseCase
+    private val signUpUseCase: SignUpUseCase,
+    private val userUseCase: UserUseCase
 ) :
-    ViewModel() {
+    BaseViewModel() {
 
     private val _isSignUpSuccess = MutableLiveData<Boolean>()
+    private val _userEmailIdState = SingleLiveEvent<Boolean>()
+
+    val userEmail = MutableLiveData<String>("")
+    val userEmailIdState: SingleLiveEvent<Boolean> get() = _userEmailIdState
+
     val isSignUpSuccess: LiveData<Boolean>
         get() = _isSignUpSuccess
 
-    private val _uiState  = SingleLiveEvent<SignUpUIState>()
+    private val _uiState = SingleLiveEvent<SignUpUIState>()
     val uiState: SingleLiveEvent<SignUpUIState> get() = _uiState
 
     private var availableId = ""
@@ -73,7 +75,7 @@ class SignUpViewModel @Inject constructor(
     }
 
     fun updateIdCheckedState(newState: Boolean) {
-        _uiState.value = _uiState.value?.copy(isIdChecked =  newState)
+        _uiState.value = _uiState.value?.copy(isIdChecked = newState)
     }
 
     fun updateAlertState(newState: Boolean) {
@@ -93,6 +95,17 @@ class SignUpViewModel @Inject constructor(
                 _isSignUpSuccess.value = true
             }.onFailure {
                 // Handle sign up fail throwable
+            }
+        }
+    }
+
+    fun postUserEmailId(email: String) {
+        userEmail.value = email
+        viewModelScope.launch(ceh) {
+            userUseCase.postUserEmailCheck(email).collect {
+                it.onSuccess {
+                    _userEmailIdState.value = it.isSuccess
+                }
             }
         }
     }
