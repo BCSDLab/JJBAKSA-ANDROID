@@ -191,5 +191,4 @@ class UserLocalDataSource @Inject constructor(
             dataStore.data.first()[PreferenceKeys.AUTH_PASSWORD_TOKEN] ?: ""
         }
     }
-
 }

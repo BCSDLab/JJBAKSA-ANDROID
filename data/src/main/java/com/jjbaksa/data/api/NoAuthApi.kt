@@ -100,5 +100,4 @@ interface NoAuthApi {
     suspend fun postUserEmailCheck(
         @Query("email") userEmail: String
     ): Response<LoginResp>
-
 }

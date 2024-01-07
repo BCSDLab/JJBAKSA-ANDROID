@@ -53,7 +53,6 @@ interface UserRepository {
     suspend fun deleteUserMe(onError: (String) -> Unit): Flow<Result<Boolean>>
     suspend fun postUserEmailCheck(email: String): Flow<Result<Login>>
 
-
     suspend fun logout()
     fun getAutoLoginFlag(): Boolean
     fun getAccount(): String

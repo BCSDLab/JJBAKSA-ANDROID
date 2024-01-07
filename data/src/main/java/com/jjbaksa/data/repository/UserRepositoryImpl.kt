@@ -93,7 +93,7 @@ class UserRepositoryImpl @Inject constructor(
             }
         )
     }
-    
+
     override suspend fun postUserEmailId(
         email: String,
         onError: (String) -> Unit

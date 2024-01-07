@@ -5,7 +5,6 @@ import android.text.Editable
 import android.text.InputType
 import android.util.Log
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -20,12 +19,9 @@ import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseFragment
 import com.jjbaksa.jjbaksa.databinding.FragmentSignUpBinding
 import com.jjbaksa.jjbaksa.dialog.ConfirmDialog
-import com.jjbaksa.jjbaksa.ui.findpassword.FindPasswordFragment
 import com.jjbaksa.jjbaksa.ui.findpassword.FindPasswordResetFragment
 import com.jjbaksa.jjbaksa.util.RegexUtil.isPasswordRuleMatch
 import com.jjbaksa.jjbaksa.ui.signup.viewmodel.SignUpViewModel
-import com.jjbaksa.jjbaksa.ui.signup.viewmodel.state.SignUpUIState
-import com.jjbaksa.jjbaksa.util.KeyboardProvider
 import com.jjbaksa.jjbaksa.util.RegexUtil.checkEmailFormat
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -60,18 +56,18 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
                     binding.jEditTextSignUpId.setTailButtonEnable(isIdTyped)
                     if (isIdTyped) {
                         signUpViewModel.id = p0.toString()
-                        //중복확인 ui 변경
+                        // 중복확인 ui 변경
                     }
-                //    updateSignUpNextButton(isIdTyped)
+                    //    updateSignUpNextButton(isIdTyped)
                     signUpViewModel.updateIdCheckedState(false)
-                    updateSignUpNextButton( isIdTyped && isEmailTyped && isPasswordTyped && isPasswordConfirmedTyped)
+                    updateSignUpNextButton(isIdTyped && isEmailTyped && isPasswordTyped && isPasswordConfirmedTyped)
                 }
             }
         )
 
         binding.jEditTextSignUpId.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
-              //  updateSignUpNextButton(isIdTyped)
+                //  updateSignUpNextButton(isIdTyped)
             }
         }
 
@@ -96,19 +92,19 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
                         signUpViewModel.updateAlertType(EMAIL_NOT_FOUND)
                         signUpViewModel.updateAlertState(true)
                     }
-                    updateSignUpNextButton( isIdTyped && isEmailTyped && isPasswordTyped && isPasswordConfirmedTyped)
+                    updateSignUpNextButton(isIdTyped && isEmailTyped && isPasswordTyped && isPasswordConfirmedTyped)
                 }
             }
         )
 
         binding.jEditTextSignUpEmail.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
-                //updateSignUpNextButton(isEmailTyped)
+                // updateSignUpNextButton(isEmailTyped)
             }
         }
 
         binding.jEditTextSignUpPassword.setTailImgOnClickListener {
-            if( signUpViewModel.password.isNotEmpty()){
+            if (signUpViewModel.password.isNotEmpty()) {
                 binding.jEditTextSignUpPassword.setTailImgSelected(!binding.jEditTextSignUpPassword.getTailImgSelected())
 
                 if (binding.jEditTextSignUpPassword.getTailImgSelected()) {
@@ -131,7 +127,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
                     }
 
                     if (isPasswordRuleMatch) {
-                        updateSignUpNextButton( isIdTyped && isEmailTyped && isPasswordTyped && isPasswordConfirmedTyped)
+                        updateSignUpNextButton(isIdTyped && isEmailTyped && isPasswordTyped && isPasswordConfirmedTyped)
 
                         if (signUpViewModel.uiState.value?.isAlertShown == true) {
                             signUpViewModel.updateAlertState(false)
@@ -146,12 +142,12 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
 
         binding.jEditTextSignUpPassword.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
-             //   updateSignUpNextButton(isPasswordTyped)
+                //   updateSignUpNextButton(isPasswordTyped)
             }
         }
 
         binding.jEditTextSignUpPasswordConfirm.setTailImgOnClickListener {
-            if(  isPasswordConfirmedTyped){
+            if (isPasswordConfirmedTyped) {
                 binding.jEditTextSignUpPasswordConfirm.setTailImgSelected(!binding.jEditTextSignUpPasswordConfirm.getTailImgSelected())
 
                 if (binding.jEditTextSignUpPasswordConfirm.getTailImgSelected()) {
@@ -175,14 +171,14 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
                     } else {
                         signUpViewModel.updateAlertState(false)
                     }
-                    updateSignUpNextButton( isIdTyped && isEmailTyped && isPasswordTyped && isPasswordConfirmedTyped)
+                    updateSignUpNextButton(isIdTyped && isEmailTyped && isPasswordTyped && isPasswordConfirmedTyped)
                 }
             }
         )
 
         binding.jEditTextSignUpPasswordConfirm.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
-              //  updateSignUpNextButton(isPasswordConfirmed)
+                //  updateSignUpNextButton(isPasswordConfirmed)
             }
         }
 
@@ -197,20 +193,17 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
                         getString(R.string.sign_up_content_text),
                         getString(R.string.confirm),
                         {
-                          //  findNavController().navigate(R.id.action_nav_graph_move_to_welcome)
+                            //  findNavController().navigate(R.id.action_nav_graph_move_to_welcome)
                             dismissDialog()
                         }
                     ).show(parentFragmentManager, FindPasswordResetFragment.DIALOG_TAG)
-
                 } else {
                     signUpViewModel.updateAlertType(NEED_ID_CHECK)
                     signUpViewModel.updateAlertState(true)
-
                 }
             }
         }
     }
-
 
     private fun dismissDialog() {
         val dialogFragment =
