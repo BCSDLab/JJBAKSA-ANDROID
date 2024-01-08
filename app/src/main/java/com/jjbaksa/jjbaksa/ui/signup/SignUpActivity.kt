@@ -17,10 +17,10 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
         get() = R.layout.activity_sign_up
 
     override fun initView() {
-        binding.lifecycleOwner = this
     }
 
     override fun subscribe() {
+        binding.lifecycleOwner = this
     }
 
     override fun initEvent() {

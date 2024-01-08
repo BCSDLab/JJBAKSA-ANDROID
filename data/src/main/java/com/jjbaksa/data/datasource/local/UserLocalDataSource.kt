@@ -37,6 +37,10 @@ class UserLocalDataSource @Inject constructor(
         TODO("Not yet implemented")
     }
 
+    override suspend fun postUserEmailCheck(email: String): Response<LoginResp> {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun getUserId(email: String, code: String): Response<UserResp> {
         TODO("Not yet implemented")
     }

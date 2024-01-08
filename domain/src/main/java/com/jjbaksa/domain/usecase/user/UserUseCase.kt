@@ -23,6 +23,10 @@ class UserUseCase @Inject constructor(
         return userRepository.postLogin(account, password, isAutoLogin)
     }
 
+    suspend fun postUserEmailCheck(email: String): Flow<Result<Login>> {
+        return userRepository.postUserEmailCheck(email)
+    }
+
     suspend fun postUserEmailId(
         email: String,
         onError: (String) -> Unit

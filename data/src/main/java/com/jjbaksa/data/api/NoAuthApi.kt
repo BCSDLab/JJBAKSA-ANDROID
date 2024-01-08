@@ -95,4 +95,9 @@ interface NoAuthApi {
     suspend fun getPostDetail(
         @Path("post-id") postId: Int
     ): Response<PostDetailResp>
+
+    @POST("user/authenticate")
+    suspend fun postUserEmailCheck(
+        @Query("email") userEmail: String
+    ): Response<LoginResp>
 }
