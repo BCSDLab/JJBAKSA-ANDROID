@@ -22,6 +22,8 @@ import com.jjbaksa.jjbaksa.dialog.ConfirmDialog
 import com.jjbaksa.jjbaksa.ui.findpassword.FindPasswordResetFragment
 import com.jjbaksa.jjbaksa.util.RegexUtil.isPasswordRuleMatch
 import com.jjbaksa.jjbaksa.ui.signup.viewmodel.SignUpViewModel
+import com.jjbaksa.jjbaksa.ui.signup.viewmodel.state.SignUpUIState
+import com.jjbaksa.jjbaksa.util.KeyboardProvider
 import com.jjbaksa.jjbaksa.util.RegexUtil.checkEmailFormat
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -37,7 +39,9 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
     private var isPasswordTyped = false
     private var isPasswordConfirmedTyped = false
     private var isPasswordConfirmed = false
-
+    private var isEmailRuleMatch = false
+    private var isPasswordRuleMatch = false
+    private var alertExist = false
     override fun initView() {
     }
 
@@ -56,27 +60,18 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
                     binding.jEditTextSignUpId.setTailButtonEnable(isIdTyped)
                     if (isIdTyped) {
                         signUpViewModel.id = p0.toString()
-                        // 중복확인 ui 변경
                     }
-                    //    updateSignUpNextButton(isIdTyped)
                     signUpViewModel.updateIdCheckedState(false)
                     updateSignUpNextButton(isIdTyped && isEmailTyped && isPasswordTyped && isPasswordConfirmedTyped)
                 }
             }
         )
 
-        binding.jEditTextSignUpId.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) {
-                //  updateSignUpNextButton(isIdTyped)
-            }
-        }
-
         binding.jEditTextSignUpEmail.addTextChangedListener(
             @SuppressLint("RestrictedApi")
             object : TextWatcherAdapter() {
                 override fun afterTextChanged(p0: Editable) {
-                    val isEmailRuleMatch = checkEmailFormat(p0.toString())
-
+                     isEmailRuleMatch = checkEmailFormat(p0.toString())
                     isEmailTyped = p0.toString().isNotEmpty()
                     isIdTyped = p0?.isNotEmpty() == true
 
@@ -97,12 +92,6 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
             }
         )
 
-        binding.jEditTextSignUpEmail.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) {
-                // updateSignUpNextButton(isEmailTyped)
-            }
-        }
-
         binding.jEditTextSignUpPassword.setTailImgOnClickListener {
             if (signUpViewModel.password.isNotEmpty()) {
                 binding.jEditTextSignUpPassword.setTailImgSelected(!binding.jEditTextSignUpPassword.getTailImgSelected())
@@ -119,13 +108,12 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
             @SuppressLint("RestrictedApi")
             object : TextWatcherAdapter() {
                 override fun afterTextChanged(p0: Editable) {
-                    val isPasswordRuleMatch = p0.toString().isPasswordRuleMatch()
+                    isPasswordRuleMatch = p0.toString().isPasswordRuleMatch()
                     isPasswordTyped = p0.toString().isNotEmpty()
 
                     if (isPasswordTyped) {
                         signUpViewModel.password = p0.toString()
                     }
-
                     if (isPasswordRuleMatch) {
                         updateSignUpNextButton(isIdTyped && isEmailTyped && isPasswordTyped && isPasswordConfirmedTyped)
 
@@ -139,12 +127,6 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
                 }
             }
         )
-
-        binding.jEditTextSignUpPassword.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) {
-                //   updateSignUpNextButton(isPasswordTyped)
-            }
-        }
 
         binding.jEditTextSignUpPasswordConfirm.setTailImgOnClickListener {
             if (isPasswordConfirmedTyped) {
@@ -176,24 +158,33 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
             }
         )
 
-        binding.jEditTextSignUpPasswordConfirm.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) {
-                //  updateSignUpNextButton(isPasswordConfirmed)
-            }
-        }
 
         binding.buttonSignUpNext.setOnClickListener {
-            if (isPasswordConfirmed) {
-                if (signUpViewModel.uiState.value?.isIdChecked == true) {
-                    Log.e("이메일", signUpViewModel.email)
-                    signUpViewModel.postUserEmailId(signUpViewModel.email)
+            checkError()
+        /*    if(signUpViewModel.uiState.value?.isIdChecked != true){
+                showSnackBar(setAlert(SignUpAlertEnum.NEED_ID_CHECK).toString())
+            }*/
+           if(!isEmailRuleMatch){
+                showSnackBar(setAlert(SignUpAlertEnum.EMAIL_NOT_FOUND).toString())
+            }
+            else if(!isPasswordRuleMatch){
+                showSnackBar(setAlert(SignUpAlertEnum.PASSWORD_RULE_NOT_MATCH).toString())
+            }
+            else if(!isPasswordConfirmed){
+                showSnackBar(setAlert(SignUpAlertEnum.PASSWORD_NOT_MATCH).toString())
+            }
 
+            Log.e("asfdadfafdr", signUpViewModel.uiState.value?.isIdChecked.toString())
+            if(alertExist){
+                if (signUpViewModel.uiState.value?.isIdChecked == true) {
+
+                    signUpViewModel.postUserEmailCheck(signUpViewModel.email)
                     ConfirmDialog(
                         getString(R.string.sign_up_title_text),
                         getString(R.string.sign_up_content_text),
                         getString(R.string.confirm),
                         {
-                            //  findNavController().navigate(R.id.action_nav_graph_move_to_welcome)
+                            findNavController().navigate(R.id.action_nav_graph_move_to_welcome)
                             dismissDialog()
                         }
                     ).show(parentFragmentManager, FindPasswordResetFragment.DIALOG_TAG)
@@ -206,8 +197,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
     }
 
     private fun dismissDialog() {
-        val dialogFragment =
-            parentFragmentManager.findFragmentByTag(FindPasswordResetFragment.DIALOG_TAG)
+        val dialogFragment = parentFragmentManager.findFragmentByTag(FindPasswordResetFragment.DIALOG_TAG)
         if (dialogFragment is DialogFragment) {
             dialogFragment.dismiss()
         }
@@ -216,23 +206,21 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
         signUpViewModel.uiState.observe(viewLifecycleOwner) {
             binding.jEditTextSignUpId.setTailButtonEnable(!it.isIdChecked)
             setAlert(it.alertType)
-            binding.textViewSignUpAlert.visibility =
-                if (it.isAlertShown) View.VISIBLE else View.INVISIBLE
-            binding.imageViewSignUpAlert.visibility =
-                if (it.isAlertShown) View.VISIBLE else View.INVISIBLE
         }
 
-        signUpViewModel.userEmailIdState.observe(viewLifecycleOwner) {
+        signUpViewModel.userEmailCheckState.observe(viewLifecycleOwner) {
             if (it) {
                 findNavController().navigate(R.id.action_nav_graph_move_to_welcome)
             } else {
                 binding.buttonSignUpNext.isEnabled = false
-               /* binding.editTextFindIdToEmail.background = ContextCompat.getDrawable(
-                    requireContext(),
-                    R.drawable.shape_rectf6bf54_solid_radius_100_stroke_ff7f23
-                )*/
             }
         }
+
+        signUpViewModel.toastMsg.observe(viewLifecycleOwner) {//
+            showSnackBar(it)
+            KeyboardProvider(requireContext()).hideKeyboard(binding.jEditTextSignUpId)
+        }
+
     }
 
     override fun onResume() {
@@ -254,13 +242,18 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
         binding.buttonSignUpNext.isEnabled = isEnabled
     }
 
-    private fun setAlert(alertType: SignUpAlertEnum) {
-        binding.textViewSignUpAlert.text = when (alertType) {
+    private fun setAlert(alertType: SignUpAlertEnum): String? {
+        val alertMsg = when (alertType) {
             ID_EXIST -> context?.getString(R.string.id_already_exist)
             EMAIL_NOT_FOUND -> context?.getString(R.string.email_not_found)
             PASSWORD_RULE_NOT_MATCH -> context?.getString(R.string.password_rule_not_match)
             PASSWORD_NOT_MATCH -> context?.getString(R.string.password_not_match)
             NEED_ID_CHECK -> context?.getString(R.string.need_id_check)
         }
+
+        return alertMsg
+    }
+    private fun checkError(){
+        alertExist = isPasswordConfirmed && isPasswordRuleMatch && isEmailRuleMatch
     }
 }

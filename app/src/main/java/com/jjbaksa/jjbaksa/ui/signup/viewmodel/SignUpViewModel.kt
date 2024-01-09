@@ -21,18 +21,16 @@ class SignUpViewModel @Inject constructor(
     private val checkAccountAvailableUseCase: CheckAccountAvailableUseCase,
     private val signUpUseCase: SignUpUseCase,
     private val userUseCase: UserUseCase
-) :
-    BaseViewModel() {
+) : BaseViewModel() {
 
     private val _isSignUpSuccess = MutableLiveData<Boolean>()
-    private val _userEmailIdState = SingleLiveEvent<Boolean>()
-
-    val userEmail = MutableLiveData<String>("")
-    val userEmailIdState: SingleLiveEvent<Boolean> get() = _userEmailIdState
+    private val _userEmailCheckState = SingleLiveEvent<Boolean>()
+    val userEmailCheckState: SingleLiveEvent<Boolean> get() = _userEmailCheckState
 
     val isSignUpSuccess: LiveData<Boolean>
         get() = _isSignUpSuccess
 
+    val userEmail = MutableLiveData<String>("")
     private val _uiState = SingleLiveEvent<SignUpUIState>()
     val uiState: SingleLiveEvent<SignUpUIState> get() = _uiState
 
@@ -48,7 +46,6 @@ class SignUpViewModel @Inject constructor(
     }
 
     fun checkAccountAvailable(account: String) {
-
         viewModelScope.launch {
             runCatching {
                 checkAccountAvailableUseCase(account)
@@ -57,6 +54,7 @@ class SignUpViewModel @Inject constructor(
                     is RespResult.Error -> {
                         updateAlertType(SignUpAlertEnum.ID_EXIST)
                         updateAlertState(true)
+                        toastMsg.postValue(it.errorType.errorMessage)
                     }
                     is RespResult.Success -> {
                         availableId = id
@@ -76,6 +74,8 @@ class SignUpViewModel @Inject constructor(
 
     fun updateIdCheckedState(newState: Boolean) {
         _uiState.value = _uiState.value?.copy(isIdChecked = newState)
+        //toastMsg.postValue(SignUpAlertEnum.ID_EXIST.toString())
+        //TODO: 아이디 중복 성공 메세지
     }
 
     fun updateAlertState(newState: Boolean) {
@@ -99,12 +99,12 @@ class SignUpViewModel @Inject constructor(
         }
     }
 
-    fun postUserEmailId(email: String) {
+    fun postUserEmailCheck(email: String) {
         userEmail.value = email
         viewModelScope.launch(ceh) {
             userUseCase.postUserEmailCheck(email).collect {
                 it.onSuccess {
-                    _userEmailIdState.value = it.isSuccess
+                    _userEmailCheckState.value = it.isSuccess
                 }
             }
         }
