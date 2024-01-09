@@ -50,7 +50,10 @@ class MyPageBottomSheetDialog : BaseBottomSheetDialogFragment<DialogMypageBindin
     private fun confirmProfile() {
         binding.confirmButton.setOnClickListener {
             if (viewModel.textLength.value == "0") {
-                Toast.makeText(requireContext(), "닉네임을 입력하시오.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "닉네임을 입력해주세요.", Toast.LENGTH_SHORT).show()
+            } else if (!isNicknameAvailable(binding.profileNicknameEditText.text.toString())) {
+                Toast.makeText(requireContext(), "닉네임에 특수문자는 포함할 수 없어요.", Toast.LENGTH_SHORT)
+                    .show()
             } else if (viewModel.loadImage.value.isNullOrEmpty() && viewModel.textLength.value != "0") {
                 viewModel.setNewNickname(binding.profileNicknameEditText.text.toString())
             } else if (viewModel.loadImage.value != null && viewModel.textLength.value != "0") {
@@ -96,5 +99,10 @@ class MyPageBottomSheetDialog : BaseBottomSheetDialogFragment<DialogMypageBindin
     }
 
     override fun initData() {
+    }
+
+    private fun isNicknameAvailable(temp: String): Boolean {
+        val specialCharRegex = Regex("[\\p{P}\\s]")
+        return specialCharRegex.find(temp) == null
     }
 }
