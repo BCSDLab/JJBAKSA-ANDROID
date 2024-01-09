@@ -1,5 +1,6 @@
 package com.jjbaksa.jjbaksa.ui.signup.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -52,7 +53,6 @@ class SignUpViewModel @Inject constructor(
             }.onSuccess {
                 when (it) {
                     is RespResult.Error -> {
-                        updateAlertType(SignUpAlertEnum.ID_EXIST)
                         updateAlertState(true)
                         toastMsg.postValue(it.errorType.errorMessage)
                     }
@@ -74,8 +74,6 @@ class SignUpViewModel @Inject constructor(
 
     fun updateIdCheckedState(newState: Boolean) {
         _uiState.value = _uiState.value?.copy(isIdChecked = newState)
-        //toastMsg.postValue(SignUpAlertEnum.ID_EXIST.toString())
-        //TODO: 아이디 중복 성공 메세지
     }
 
     fun updateAlertState(newState: Boolean) {

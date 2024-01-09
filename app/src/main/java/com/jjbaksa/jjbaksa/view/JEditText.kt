@@ -13,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.annotation.DrawableRes
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.jjbaksa.jjbaksa.R
@@ -65,6 +66,21 @@ class JEditText @JvmOverloads constructor(
             recycle()
         }
     }
+
+    fun setEditTextErrorImg(errorExist:Boolean) {
+        if(errorExist) {
+            binding.clJ.background = ContextCompat.getDrawable(
+                context,
+                R.drawable.shape_rectf6bf54_solid_radius_100_stroke_ff7f23
+            )
+        } else {
+            binding.clJ.background = ContextCompat.getDrawable(
+                context,
+                R.drawable.shape_rect_eeeeee_solid_radius_100_padding_7_11_11_8
+            )
+        }
+    }
+
     fun setTailImageDrawable(@DrawableRes drawableRes: Int) {
         if (drawableRes != 0) {
             binding.ivJ.setImageDrawable(ContextCompat.getDrawable(context, drawableRes))

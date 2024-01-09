@@ -1,17 +1,18 @@
 package com.jjbaksa.jjbaksa.ui.signup
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.text.Editable
 import android.text.InputType
 import android.util.Log
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.internal.TextWatcherAdapter
 import com.jjbaksa.domain.enums.SignUpAlertEnum
 import com.jjbaksa.domain.enums.SignUpAlertEnum.EMAIL_NOT_FOUND
-import com.jjbaksa.domain.enums.SignUpAlertEnum.ID_EXIST
 import com.jjbaksa.domain.enums.SignUpAlertEnum.NEED_ID_CHECK
 import com.jjbaksa.domain.enums.SignUpAlertEnum.PASSWORD_NOT_MATCH
 import com.jjbaksa.domain.enums.SignUpAlertEnum.PASSWORD_RULE_NOT_MATCH
@@ -57,6 +58,8 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
             object : TextWatcherAdapter() {
                 override fun afterTextChanged(p0: Editable) {
                     isIdTyped = p0?.isNotEmpty() == true
+                    Log.e("ididididid", signUpViewModel.id)
+                    Log.e("idididididwwww", p0.toString())
                     binding.jEditTextSignUpId.setTailButtonEnable(isIdTyped)
                     if (isIdTyped) {
                         signUpViewModel.id = p0.toString()
@@ -74,9 +77,10 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
                      isEmailRuleMatch = checkEmailFormat(p0.toString())
                     isEmailTyped = p0.toString().isNotEmpty()
                     isIdTyped = p0?.isNotEmpty() == true
-
+                    Log.e("이메일이메일", signUpViewModel.email)
                     if (isEmailTyped) {
                         signUpViewModel.email = p0.toString()
+
                     }
                     if (isEmailRuleMatch) {
                         updateSignUpNextButton(isEmailTyped && isEmailRuleMatch)
@@ -154,27 +158,19 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
                         signUpViewModel.updateAlertState(false)
                     }
                     updateSignUpNextButton(isIdTyped && isEmailTyped && isPasswordTyped && isPasswordConfirmedTyped)
+
                 }
             }
         )
 
 
         binding.buttonSignUpNext.setOnClickListener {
+            Log.e("id", signUpViewModel.id)
+            Log.e("email", signUpViewModel.email)
+            Log.e("psw", signUpViewModel.password )
             checkError()
-        /*    if(signUpViewModel.uiState.value?.isIdChecked != true){
-                showSnackBar(setAlert(SignUpAlertEnum.NEED_ID_CHECK).toString())
-            }*/
-           if(!isEmailRuleMatch){
-                showSnackBar(setAlert(SignUpAlertEnum.EMAIL_NOT_FOUND).toString())
-            }
-            else if(!isPasswordRuleMatch){
-                showSnackBar(setAlert(SignUpAlertEnum.PASSWORD_RULE_NOT_MATCH).toString())
-            }
-            else if(!isPasswordConfirmed){
-                showSnackBar(setAlert(SignUpAlertEnum.PASSWORD_NOT_MATCH).toString())
-            }
 
-            Log.e("asfdadfafdr", signUpViewModel.uiState.value?.isIdChecked.toString())
+
             if(alertExist){
                 if (signUpViewModel.uiState.value?.isIdChecked == true) {
 
@@ -226,17 +222,21 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
     override fun onResume() {
         super.onResume()
         if (signUpViewModel.id.isNotEmpty()) {
-            binding.jEditTextSignUpId.text = signUpViewModel.id
+          //  binding.jEditTextSignUpId.text = signUpViewModel.id
+            Log.e("id22", signUpViewModel.id)
         }
 
         if (signUpViewModel.email.isNotEmpty()) {
-            binding.jEditTextSignUpEmail.text = signUpViewModel.email
+       //     binding.jEditTextSignUpEmail.text = signUpViewModel.email
+            Log.e("email22", signUpViewModel.email)
         }
 
         if (signUpViewModel.password.isNotEmpty()) {
-            binding.jEditTextSignUpPassword.text = signUpViewModel.password
+      //      binding.jEditTextSignUpPassword.text = signUpViewModel.password
+            Log.e("password22", signUpViewModel.password)
         }
     }
+
 
     private fun updateSignUpNextButton(isEnabled: Boolean) {
         binding.buttonSignUpNext.isEnabled = isEnabled
@@ -244,7 +244,6 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
 
     private fun setAlert(alertType: SignUpAlertEnum): String? {
         val alertMsg = when (alertType) {
-            ID_EXIST -> context?.getString(R.string.id_already_exist)
             EMAIL_NOT_FOUND -> context?.getString(R.string.email_not_found)
             PASSWORD_RULE_NOT_MATCH -> context?.getString(R.string.password_rule_not_match)
             PASSWORD_NOT_MATCH -> context?.getString(R.string.password_not_match)
@@ -255,5 +254,26 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
     }
     private fun checkError(){
         alertExist = isPasswordConfirmed && isPasswordRuleMatch && isEmailRuleMatch
+        binding.jEditTextSignUpId.setEditTextErrorImg(signUpViewModel.uiState.value?.isIdChecked != true)
+        binding.jEditTextSignUpEmail.setEditTextErrorImg(!isEmailRuleMatch)
+        binding.jEditTextSignUpPassword.setEditTextErrorImg(!isPasswordRuleMatch)
+        binding.jEditTextSignUpPasswordConfirm.setEditTextErrorImg(!isPasswordConfirmed)
+
+        if(signUpViewModel.uiState.value?.isIdChecked != true){
+            showSnackBar(setAlert(SignUpAlertEnum.NEED_ID_CHECK).toString())
+        }
+        else if(!isEmailRuleMatch){
+            showSnackBar(setAlert(SignUpAlertEnum.EMAIL_NOT_FOUND).toString())
+        }
+        else if(!isPasswordRuleMatch){
+            showSnackBar(setAlert(SignUpAlertEnum.PASSWORD_RULE_NOT_MATCH).toString())
+        }
+        else if(!isPasswordConfirmed){
+            showSnackBar(setAlert(SignUpAlertEnum.PASSWORD_NOT_MATCH).toString())
+        }
+
+        if(alertExist){
+            binding.buttonSignUpNext.isEnabled = false
+        }
     }
 }
