@@ -35,8 +35,6 @@ class SignUpViewModel @Inject constructor(
     private val _uiState = SingleLiveEvent<SignUpUIState>()
     val uiState: SingleLiveEvent<SignUpUIState> get() = _uiState
 
-    private var availableId = ""
-
     var id: String = ""
     var email: String = ""
     var password: String = ""
@@ -46,7 +44,7 @@ class SignUpViewModel @Inject constructor(
         _uiState.value = SignUpUIState()
     }
 
-    fun checkAccountAvailable(account: String) {
+    fun checkAccountAvailable(account: String, onComplete: (Boolean) -> Unit) {
         viewModelScope.launch {
             runCatching {
                 checkAccountAvailableUseCase(account)
@@ -55,21 +53,18 @@ class SignUpViewModel @Inject constructor(
                     is RespResult.Error -> {
                         updateAlertState(true)
                         toastMsg.postValue(it.errorType.errorMessage)
+                        onComplete(false)
                     }
                     is RespResult.Success -> {
-                        availableId = id
                         updateIdCheckedState(true)
                         updateAlertState(false)
+                        onComplete(true)
                     }
                 }
             }.onFailure {
                 // Handle error here
             }
         }
-    }
-
-    fun isTypedIdChanged(): Boolean {
-        return availableId != id
     }
 
     fun updateIdCheckedState(newState: Boolean) {

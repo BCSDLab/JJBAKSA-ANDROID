@@ -67,8 +67,8 @@ class JEditText @JvmOverloads constructor(
         }
     }
 
-    fun setEditTextErrorImg(errorExist:Boolean) {
-        if(errorExist) {
+    fun setEditTextAlertImg(AlertExist:Boolean) {
+        if(AlertExist) {
             binding.clJ.background = ContextCompat.getDrawable(
                 context,
                 R.drawable.shape_rectf6bf54_solid_radius_100_stroke_ff7f23
@@ -76,7 +76,7 @@ class JEditText @JvmOverloads constructor(
         } else {
             binding.clJ.background = ContextCompat.getDrawable(
                 context,
-                R.drawable.shape_rect_eeeeee_solid_radius_100_padding_7_11_11_8
+                R.drawable.shape_rect_eeeeee_solid_radius_100
             )
         }
     }
