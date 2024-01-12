@@ -22,7 +22,7 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
     val binding: T
         get() = _binding!!
 
-    protected var onBackPressedCallBack: OnBackPressedCallback? = null
+    protected open var onBackPressedCallBack: OnBackPressedCallback? = null
     protected var backPressedTime: Long = 0
 
     override fun onCreateView(
@@ -36,6 +36,10 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        onBackPressedCallBack?.let {
+            requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, it)
+        }
+
         initState()
     }
 

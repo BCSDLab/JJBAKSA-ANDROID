@@ -29,9 +29,27 @@ android {
         resValue("string", "naver_maps_client_id", getPropertyKey("naver_maps_client_id"))
     }
 
+    signingConfigs {
+
+        create("release") {
+            keyAlias = "jjbaksa_release_key"
+            keyPassword = ""
+            storeFile = file("./jjbaksa.jks")
+            storePassword = ""
+        }
+    }
+
     buildTypes {
+        getByName("debug") {
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
         getByName("release") {
             isMinifyEnabled = false
+            // signingConfig = signingConfigs.getByName("release")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"

@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.Context
 import android.location.Location
 import android.os.Looper
-import android.util.Log
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
@@ -34,7 +33,6 @@ class FusedLocationUtil(
                     val latitude = location.latitude
                     val longitude = location.longitude
 
-                    Log.e("service", "$latitude / $longitude")
                     callBackLocation(latitude, longitude)
                 }
             }
