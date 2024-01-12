@@ -41,7 +41,7 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
         get() = R.layout.fragment_navi_home
 
     private val viewModel: HomeViewModel by activityViewModels()
-    private lateinit var currentMap: NaverMap
+    private var currentMap: NaverMap? = null
     private lateinit var mapOptions: NaverMapOptions
     private lateinit var cameraUpdate: CameraUpdate
     private var locationOverlay: LocationOverlay? = null
@@ -212,7 +212,7 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
 
     override fun onMapReady(naverMap: NaverMap) {
         currentMap = naverMap
-        locationOverlay = currentMap.locationOverlay
+        locationOverlay = currentMap?.locationOverlay
         mapOptions = NaverMapOptions()
             .mapType(NaverMap.MapType.Basic)
             .enabledLayerGroups(NaverMap.LAYER_GROUP_BUILDING)
@@ -224,7 +224,7 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
             viewModel.setLastLocation(it.latitude, it.longitude)
         }
 
-        currentMap.addOnCameraChangeListener { reason, _ ->
+        currentMap?.addOnCameraChangeListener { reason, _ ->
             if (reason == -1 && viewModel.moveCamera.value == true) {
                 viewModel.searchCurrentPosition.value = true
                 viewModel.moveCamera.value = false
@@ -233,8 +233,10 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
     }
 
     private fun initTedNaverClustering() {
+        if (currentMap == null)
+            return
         tedNaverClusteringBuilder =
-            TedNaverClustering.with<ShopContent>(requireContext(), currentMap)
+            TedNaverClustering.with<ShopContent>(requireContext(), currentMap!!)
                 .customCluster { clusterItem ->
                     JjMarker(requireContext()).apply {
                         setMarkerCount(clusterItem.items.size.toString())
@@ -273,14 +275,18 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
     }
 
     private fun currentCameraPosition(lat: Double, lon: Double) {
+        if (currentMap == null)
+            return
         cameraUpdate = CameraUpdate.scrollAndZoomTo(LatLng(lat, lon), 17.0)
             .animate(CameraAnimation.Easing)
-        currentMap.moveCamera(cameraUpdate)
+        currentMap!!.moveCamera(cameraUpdate)
     }
 
     private fun initUiSettings() {
-        currentMap.uiSettings.isCompassEnabled = false
-        currentMap.uiSettings.isZoomControlEnabled = false
+        if (currentMap == null)
+            return
+        currentMap!!.uiSettings.isCompassEnabled = false
+        currentMap!!.uiSettings.isZoomControlEnabled = false
         binding.naverMapCompassView.map = currentMap
     }
 
@@ -345,28 +351,30 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
     }
 
     private fun getShops() {
+        if (currentMap == null)
+            return
         when (viewModel.category.value) {
             JjCategory.NEAR_STORE -> {
                 viewModel.getMapShop(
                     0, 1, 0,
-                    currentMap.cameraPosition.target.latitude,
-                    currentMap.cameraPosition.target.longitude
+                    currentMap!!.cameraPosition.target.latitude,
+                    currentMap!!.cameraPosition.target.longitude
                 )
             }
 
             JjCategory.FRIEND -> {
                 viewModel.getMapShop(
                     1, 0, 0,
-                    currentMap.cameraPosition.target.latitude,
-                    currentMap.cameraPosition.target.longitude
+                    currentMap!!.cameraPosition.target.latitude,
+                    currentMap!!.cameraPosition.target.longitude
                 )
             }
 
             JjCategory.BOOKMARK -> {
                 viewModel.getMapShop(
                     0, 0, 1,
-                    currentMap.cameraPosition.target.latitude,
-                    currentMap.cameraPosition.target.longitude
+                    currentMap!!.cameraPosition.target.latitude,
+                    currentMap!!.cameraPosition.target.longitude
                 )
             }
 
@@ -377,13 +385,17 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
     }
 
     fun zoomIn() {
+        if (currentMap == null)
+            return
         cameraUpdate = CameraUpdate.zoomIn()
-        currentMap.moveCamera(cameraUpdate)
+        currentMap!!.moveCamera(cameraUpdate)
     }
 
     fun zoomOut() {
+        if (currentMap == null)
+            return
         cameraUpdate = CameraUpdate.zoomOut()
-        currentMap.moveCamera(cameraUpdate)
+        currentMap!!.moveCamera(cameraUpdate)
     }
 
     companion object {
@@ -392,5 +404,7 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
             Manifest.permission.ACCESS_FINE_LOCATION
         )
         const val LOCATION_PERM_DIALOG = "LOCATION_PERM_DIALOG"
+        fun newInstance() = NaviHomeFragment()
+        val TAG = "NaviHomeFragment"
     }
 }

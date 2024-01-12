@@ -132,8 +132,8 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>() {
         binding.rvKeyword.visibility = View.GONE
     }
 
-    private fun locationCallback(lat: Double, lng: Double) {
-        searchViewModel.setLocation(lat, lng)
+    private fun locationCallback(latitude: Double, longitude: Double) {
+        searchViewModel.setLocation(latitude, longitude)
     }
 
     override fun onStart() {

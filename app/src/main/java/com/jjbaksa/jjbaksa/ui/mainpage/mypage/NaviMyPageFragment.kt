@@ -1,6 +1,7 @@
 package com.jjbaksa.jjbaksa.ui.mainpage.mypage
 
 import android.content.Intent
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import coil.load
@@ -10,6 +11,7 @@ import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseFragment
 import com.jjbaksa.jjbaksa.databinding.FragmentNaviMyPageBinding
 import com.jjbaksa.jjbaksa.dialog.MyPageBottomSheetDialog
+import com.jjbaksa.jjbaksa.ui.mainpage.MainPageActivity
 import com.jjbaksa.jjbaksa.ui.mainpage.mypage.adapter.MyPageAdapter
 import com.jjbaksa.jjbaksa.ui.mainpage.mypage.viewmodel.MyPageViewModel
 import com.jjbaksa.jjbaksa.ui.setting.SettingActivity
@@ -26,6 +28,11 @@ class NaviMyPageFragment : BaseFragment<FragmentNaviMyPageBinding>() {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             // Handle SettingActivity result
         }
+    override var onBackPressedCallBack: OnBackPressedCallback? = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            (requireActivity() as MainPageActivity).showHomeFragment()
+        }
+    }
 
     override fun initView() {
         requireActivity().setExtendView(binding.myPageConstraintLayout)
@@ -79,5 +86,7 @@ class NaviMyPageFragment : BaseFragment<FragmentNaviMyPageBinding>() {
 
     companion object {
         const val MY_PAGE_DIALOG_TAG = "MY_PAGE_DIALOG_TAG"
+        fun newInstance() = NaviMyPageFragment()
+        val TAG = "NaviMyPageFragment"
     }
 }
