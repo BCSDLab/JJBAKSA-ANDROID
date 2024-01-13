@@ -41,4 +41,5 @@ interface ReviewRepository {
         rate: Int,
         reviewImages: List<String>
     ): Flow<Result<ReviewShopDetail>>
+    suspend fun getFollowersShopReviewCount(placeId: String): Flow<Result<Int>>
 }

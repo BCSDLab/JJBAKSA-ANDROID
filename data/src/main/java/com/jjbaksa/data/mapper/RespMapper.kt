@@ -1,6 +1,9 @@
 package com.jjbaksa.data.mapper
 
 import com.google.gson.Gson
+import com.jjbaksa.data.model.pin.CloseResp
+import com.jjbaksa.data.model.pin.OpenResp
+import com.jjbaksa.data.model.pin.PeriodResp
 import com.jjbaksa.data.model.shop.ShopsMapsResp
 import com.jjbaksa.data.model.pin.ShopDetailResp
 import com.jjbaksa.data.model.search.AutoKeywordResp
@@ -13,6 +16,9 @@ import com.jjbaksa.domain.model.shop.ShopDetail
 import com.jjbaksa.domain.model.search.AutoKeyword
 import com.jjbaksa.domain.model.search.Shop
 import com.jjbaksa.domain.model.search.ShopData
+import com.jjbaksa.domain.model.shop.Close
+import com.jjbaksa.domain.model.shop.Open
+import com.jjbaksa.domain.model.shop.Period
 
 object RespMapper {
     fun errorMapper(json: String): ErrorResp {
@@ -60,6 +66,21 @@ fun ShopsMapsResp.toMapShopContent() = ShopsMapsContent(
     photo = photo ?: "",
 )
 
+fun PeriodResp.toPeriod() = Period(
+    open = open?.toOpen() ?: Open(),
+    close = close?.toClose() ?: Close()
+)
+
+fun OpenResp.toOpen() = Open(
+    day = day ?: 0,
+    time = time ?: 0
+)
+
+fun CloseResp.toClose() = Close(
+    day = day ?: 0,
+    time = time ?: 0
+)
+
 fun ShopDetailResp.toShopDetail() = ShopDetail(
     shopId = shopId ?: 0,
     placeId = placeId ?: "",
@@ -69,4 +90,10 @@ fun ShopDetailResp.toShopDetail() = ShopDetail(
     ratingCount = ratingCount ?: 0,
     scrap = scrap ?: 0,
     photos = photos ?: emptyList(),
+    formattedAddress = formattedAddress ?: "",
+    formattedPhoneNumber = formattedPhoneNumber ?: "",
+    openNow = openNow ?: false,
+    period = period?.map { it.toPeriod() } ?: listOf(Period()),
+    lat = lat ?: 0.0,
+    lng = lng ?: 0.0
 )

@@ -20,4 +20,8 @@ class GetShopScrapUseCase @Inject constructor(
     suspend fun getUserScrapsShop(user: Int?, cursor: Int?, size: Int): Flow<Result<Scraps>> {
         return scrapRepository.getScraps(user, cursor, size)
     }
+
+    suspend fun deleteShopScrap(scrapId: Int): Flow<Result<Unit>> {
+        return scrapRepository.deleteShopScrap(scrapId)
+    }
 }

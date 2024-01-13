@@ -60,4 +60,17 @@ class ScrapRepositoryImpl @Inject constructor(
             }
         )
     }
+
+    override suspend fun deleteShopScrap(scrapId: Int): Flow<Result<Unit>> {
+        return apiCall(
+            call = { scrapRemoteDataSource.deleteShopScrap(scrapId) },
+            mapper = {
+                if (it.isSuccessful) {
+                    Unit
+                } else {
+                    Unit
+                }
+            }
+        )
+    }
 }

@@ -75,4 +75,8 @@ class ReviewRemoteDataSource(
     ): Response<ReviewShopDetailResp> {
         return authApi.postReview(placeId, content, rate, reviewImages)
     }
+
+    override suspend fun getFollowersShopReviewCount(placeId: String): Response<Int> {
+        return authApi.getFollowersShopReviewCount(placeId)
+    }
 }

@@ -18,4 +18,7 @@ interface ScrapDataSource {
         cursor: Int?,
         size: Int
     ): Response<ScrapsResp>
+    suspend fun deleteShopScrap(
+        scrapId: Int
+    ): Response<Unit>
 }

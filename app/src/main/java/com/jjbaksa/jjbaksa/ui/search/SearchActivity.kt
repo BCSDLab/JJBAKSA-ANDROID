@@ -1,5 +1,6 @@
 package com.jjbaksa.jjbaksa.ui.search
 
+import android.content.Intent
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
@@ -10,6 +11,7 @@ import com.jjbaksa.jjbaksa.base.BaseActivity
 import com.jjbaksa.jjbaksa.databinding.ActivitySearchBinding
 import com.jjbaksa.jjbaksa.listener.OnClickShopListener
 import com.jjbaksa.jjbaksa.listener.PaginationScrollListener
+import com.jjbaksa.jjbaksa.ui.shop.ShopActivity
 import com.jjbaksa.jjbaksa.util.FusedLocationUtil
 import com.jjbaksa.jjbaksa.util.KeyboardProvider
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,6 +37,10 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>() {
             this,
             object : OnClickShopListener {
                 override fun onClick(item: Shop, position: Int) {
+                    val intent = Intent(this@SearchActivity, ShopActivity::class.java).apply {
+                        putExtra("place_id", item.placeId)
+                    }
+                    startActivity(intent)
                 }
             }
         )

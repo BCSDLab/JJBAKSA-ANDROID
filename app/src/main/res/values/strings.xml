@@ -158,10 +158,17 @@
     <string name="review">리뷰</string>
     <string name="do_review">리뷰하기</string>
     <string name="bookmark">북마크</string>
+    <string name="friends_review">친구의 리뷰</string>
+    <string name="my_review">내 리뷰</string>
+    <string name="see_all">전체 보기</string>
+    <string name="map">지도</string>
+    <string name="default_information">기본 정보</string>
+    <string name="report_wrong_information">틀린 정보 신고</string>
     <string name="no_review_title">등록된 리뷰가 없어요.</string>
     <string name="no_review_content">다녀온 음식점의 리뷰를 작성해 보세요!</string>
+    <string name="no_review_yet">아직 등록된 리뷰가 없습니다.\n친구에게 추천해볼까요?</string>
     <string name="no_bookmark_title">등록된 북마크가 없어요.</string>
-    <string name="no_bookmark_content">새로운 음식점을 저장해 보세요!</string>
+    <string name="no_bookmark_content" formatted="false">새로운 음식점을 저장해 보세요!</string>
     <string name="search">검색</string>
     <string name="search_main_title">오늘은 어떤음식이 땡기나요?</string>
     <string name="sharp">#</string>
@@ -176,7 +183,7 @@
     <string name="withdrawal_reason3">다른 앱을 더 많이 사용해요</string>
     <string name="withdrawal_reason4">새 계정을 만들고 싶어요</string>
     <string name="withdrawal_reason5">그 외</string>
-    
+
     <string name="register_inquiry_title">쩝쩝박사 이용 중에 생긴 불편한 점이나 문의사항을 등록해주세요.</string>
     <string name="register_inquiry_content">확인 후 순차적으로 답변 드리겠습니다.</string>
     <string name="empty_answer">아직 답변이 없네요. 조금만 기다려주세요!</string>
@@ -193,4 +200,6 @@
     <string name="change_profile_content">%s님,\n프로필을 변경하시겠어요?</string>
     <string name="last_register_date">마지막 일자 %s</string>
     <string name="total_review">총 %s개의 리뷰</string>
+    <string name="last_review_date">마지막 리뷰 %s</string>
+    <string name="schedule">%s ~ %s</string>
 </resources>

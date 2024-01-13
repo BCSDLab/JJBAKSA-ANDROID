@@ -31,4 +31,8 @@ class ScrapRemoteDataSource @Inject constructor(
 //        return testNoAuthApi.getScraps()
         return authApi.getScraps(user, cursor, size)
     }
+
+    override suspend fun deleteShopScrap(scrapId: Int): Response<Unit> {
+        return authApi.deleteShopScrap(scrapId)
+    }
 }

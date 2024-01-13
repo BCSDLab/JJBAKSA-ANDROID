@@ -42,4 +42,5 @@ interface ReviewDataSource {
         rate: Int,
         reviewImages: List<MultipartBody.Part>
     ): Response<ReviewShopDetailResp>
+    suspend fun getFollowersShopReviewCount(placeId: String): Response<Int>
 }

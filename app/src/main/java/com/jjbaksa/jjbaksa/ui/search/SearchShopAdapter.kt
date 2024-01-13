@@ -18,6 +18,7 @@ import com.jjbaksa.jjbaksa.base.BaseViewHolder
 import com.jjbaksa.jjbaksa.databinding.ItemLoadingBinding
 import com.jjbaksa.jjbaksa.databinding.ItemSearchShopBinding
 import com.jjbaksa.jjbaksa.listener.AdapterListener
+import com.jjbaksa.jjbaksa.listener.OnClickShopListener
 import java.math.RoundingMode
 import java.text.DecimalFormat
 
@@ -105,6 +106,7 @@ class SearchShopAdapter(
         BaseViewHolder<Shop>(binding) {
         override fun bindViews(item: Shop, position: Int, adapterListener: AdapterListener) {
             with(binding) {
+                root.setOnClickListener { (adapterListener as OnClickShopListener).onClick(item, position) }
                 tvItemSearchShopTitle.text = item.name
                 if (item.photoToken.isEmpty()) {
                     llItemSearchShopPhotoError.visibility = View.VISIBLE
