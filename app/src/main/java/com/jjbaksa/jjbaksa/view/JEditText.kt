@@ -65,6 +65,21 @@ class JEditText @JvmOverloads constructor(
             recycle()
         }
     }
+
+    fun setEditTextAlertImg(AlertExist: Boolean) {
+        if (AlertExist) {
+            binding.clJ.background = ContextCompat.getDrawable(
+                context,
+                R.drawable.shape_rectf6bf54_solid_radius_100_stroke_ff7f23
+            )
+        } else {
+            binding.clJ.background = ContextCompat.getDrawable(
+                context,
+                R.drawable.shape_rect_eeeeee_solid_radius_100
+            )
+        }
+    }
+
     fun setTailImageDrawable(@DrawableRes drawableRes: Int) {
         if (drawableRes != 0) {
             binding.ivJ.setImageDrawable(ContextCompat.getDrawable(context, drawableRes))

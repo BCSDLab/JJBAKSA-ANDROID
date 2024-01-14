@@ -21,22 +21,18 @@ class SignUpViewModel @Inject constructor(
     private val checkAccountAvailableUseCase: CheckAccountAvailableUseCase,
     private val signUpUseCase: SignUpUseCase,
     private val userUseCase: UserUseCase
-) :
-    BaseViewModel() {
+) : BaseViewModel() {
 
     private val _isSignUpSuccess = MutableLiveData<Boolean>()
-    private val _userEmailIdState = SingleLiveEvent<Boolean>()
-
-    val userEmail = MutableLiveData<String>("")
-    val userEmailIdState: SingleLiveEvent<Boolean> get() = _userEmailIdState
+    private val _userEmailCheckState = SingleLiveEvent<Boolean>()
+    val userEmailCheckState: SingleLiveEvent<Boolean> get() = _userEmailCheckState
 
     val isSignUpSuccess: LiveData<Boolean>
         get() = _isSignUpSuccess
 
+    val userEmail = MutableLiveData<String>("")
     private val _uiState = SingleLiveEvent<SignUpUIState>()
     val uiState: SingleLiveEvent<SignUpUIState> get() = _uiState
-
-    private var availableId = ""
 
     var id: String = ""
     var email: String = ""
@@ -47,31 +43,27 @@ class SignUpViewModel @Inject constructor(
         _uiState.value = SignUpUIState()
     }
 
-    fun checkAccountAvailable(account: String) {
-
+    fun checkAccountAvailable(account: String, onComplete: (Boolean) -> Unit) {
         viewModelScope.launch {
             runCatching {
                 checkAccountAvailableUseCase(account)
             }.onSuccess {
                 when (it) {
                     is RespResult.Error -> {
-                        updateAlertType(SignUpAlertEnum.ID_EXIST)
                         updateAlertState(true)
+                        toastMsg.postValue(it.errorType.errorMessage)
+                        onComplete(false)
                     }
                     is RespResult.Success -> {
-                        availableId = id
                         updateIdCheckedState(true)
                         updateAlertState(false)
+                        onComplete(true)
                     }
                 }
             }.onFailure {
                 // Handle error here
             }
         }
-    }
-
-    fun isTypedIdChanged(): Boolean {
-        return availableId != id
     }
 
     fun updateIdCheckedState(newState: Boolean) {
@@ -99,12 +91,12 @@ class SignUpViewModel @Inject constructor(
         }
     }
 
-    fun postUserEmailId(email: String) {
+    fun postUserEmailCheck(email: String) {
         userEmail.value = email
         viewModelScope.launch(ceh) {
             userUseCase.postUserEmailCheck(email).collect {
                 it.onSuccess {
-                    _userEmailIdState.value = it.isSuccess
+                    _userEmailCheckState.value = it.isSuccess
                 }
             }
         }
