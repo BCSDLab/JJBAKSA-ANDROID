@@ -48,7 +48,6 @@ class JEditText @JvmOverloads constructor(
             binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.view_j_edit_text, this@JEditText, true)
             binding.clJ.minimumHeight = getDimension(R.styleable.JEditText_android_minHeight, 33.fromDpToPx()).toInt()
             binding.etJ.inputType = getInt(R.styleable.JEditText_android_inputType, InputType.TYPE_CLASS_TEXT)
-            binding.etJ.isSingleLine = true
             hintText = getString(R.styleable.JEditText_android_hint) ?: ""
             text = getString(R.styleable.JEditText_android_text) ?: ""
             var sp = getDimension(R.styleable.JEditText_android_textSize, context.resources.getDimension(R.dimen.sp_14))
