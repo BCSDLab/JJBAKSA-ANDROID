@@ -22,7 +22,7 @@ object RefreshManager {
             level = if (BuildConfig.DEBUG) {
                 HttpLoggingInterceptor.Level.BODY
             } else {
-                HttpLoggingInterceptor.Level.HEADERS
+                HttpLoggingInterceptor.Level.BODY
             }
         }
         val refreshHeaderInterceptor = Interceptor { chain: Interceptor.Chain ->

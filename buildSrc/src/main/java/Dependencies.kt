@@ -3,6 +3,7 @@ object KotlinDependencies {
     const val coroutine =
         "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutineVersion}"
     const val inject = "javax.inject:javax.inject:1"
+    const val kotlin_serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.kotlinSerializationVersion}"
 }
 
 object AndroidXDependencies {

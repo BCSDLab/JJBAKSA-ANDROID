@@ -41,4 +41,5 @@ object Versions {
     const val datastoreVersion = "1.0.0"
 
     const val glideVersion = "4.15.1"
+    const val kotlinSerializationVersion = "1.3.2"
 }
