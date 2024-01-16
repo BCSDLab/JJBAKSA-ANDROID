@@ -74,6 +74,7 @@
     <string name="not_correct_verification_code">인증번호가 올바르지 않습니다.</string>
     <string name="input_verification_code">인증번호 입력</string>
 
+    <string name="id_checked">사용 가능한 아이디입니다.</string>
     <string name="id_already_exist">이미 존재하는 아이디입니다.</string>
     <string name="fail_id">아이디가 존재하지 않아요.</string>
     <string name="fail_email">올바르지 않은 이메일이에요.</string>
