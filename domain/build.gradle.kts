@@ -1,3 +1,5 @@
+import ThirdPartyDependencies.gson
+
 plugins {
     id("java-library")
     kotlin("jvm")
@@ -14,6 +16,7 @@ dependencies {
         implementation(kotlin)
         implementation(inject)
         implementation(coroutine)
+        implementation(gson)
     }
 }
 

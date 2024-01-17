@@ -32,10 +32,10 @@ android {
     signingConfigs {
 
         create("release") {
-            keyAlias = "jjbaksa_release_key"
-            keyPassword = ""
+            keyAlias = "jjbaksk_release_key"
+            keyPassword = getPropertyKey("keyPassword")
             storeFile = file("./jjbaksa.jks")
-            storePassword = ""
+            storePassword = getPropertyKey("storePassword")
         }
     }
 
@@ -46,14 +46,16 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            isDebuggable = true
         }
         getByName("release") {
             isMinifyEnabled = true
-            signingConfig = signingConfigs.getByName("release")
+            // signingConfig = signingConfigs.getByName("release")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            isDebuggable = false
         }
     }
 
