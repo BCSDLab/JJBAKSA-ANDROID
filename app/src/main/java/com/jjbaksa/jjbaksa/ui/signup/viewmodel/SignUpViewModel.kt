@@ -37,6 +37,7 @@ class SignUpViewModel @Inject constructor(
     var id: String = ""
     var email: String = ""
     var password: String = ""
+    var passwordCheck: String = ""
     var nickname: String = ""
 
     init {
