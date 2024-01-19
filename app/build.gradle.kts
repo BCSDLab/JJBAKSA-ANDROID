@@ -32,10 +32,10 @@ android {
     signingConfigs {
 
         create("release") {
-            keyAlias = "jjbaksa_release_key"
-            keyPassword = ""
+            keyAlias = "jjbaksk_release_key"
+            keyPassword = getPropertyKey("keyPassword")
             storeFile = file("./jjbaksa.jks")
-            storePassword = ""
+            storePassword = getPropertyKey("storePassword")
         }
     }
 
