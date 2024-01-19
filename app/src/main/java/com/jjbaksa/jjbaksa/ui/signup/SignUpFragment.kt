@@ -20,8 +20,10 @@ import com.jjbaksa.jjbaksa.ui.findpassword.FindPasswordResetFragment
 import com.jjbaksa.jjbaksa.util.RegexUtil.isPasswordRuleMatch
 import com.jjbaksa.jjbaksa.ui.signup.viewmodel.SignUpViewModel
 import com.jjbaksa.jjbaksa.util.KeyboardProvider
+import com.jjbaksa.jjbaksa.util.RegexUtil
 import com.jjbaksa.jjbaksa.util.RegexUtil.checkEmailFormat
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.math.sign
 
 @AndroidEntryPoint
 class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
@@ -32,7 +34,6 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
 
     private var isPasswordConfirmed = false
     private var isPasswordRuleMatch = false
-    private var alertExist = false
     private var nextButtonEnable = false
 
     override fun initView() {
@@ -40,13 +41,21 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
 
     override fun initEvent() {
         binding.jEditTextSignUpId.setTailButtonOnClickListener {
-
+            if(!RegexUtil.checkIdFormat(signUpViewModel.id)) {
+                showSnackBar(getString(R.string.id_format_not_match))
+                KeyboardProvider(requireContext()).hideKeyboard(binding.jEditTextSignUpId)
+                return@setTailButtonOnClickListener
+            }
             signUpViewModel.checkAccountAvailable(signUpViewModel.id) { isAvailable ->
                 if (isAvailable) {
+                    binding.buttonSignUpNext.isEnabled = true
                     showSnackBar(getString(R.string.id_checked))
                     KeyboardProvider(requireContext()).hideKeyboard(binding.jEditTextSignUpId)
                     binding.jEditTextSignUpId.setEditTextAlertImg(false)
                 } else {
+                    binding.buttonSignUpNext.isEnabled = false
+                    showSnackBar(getString(R.string.id_already_exist))
+                    KeyboardProvider(requireContext()).hideKeyboard(binding.jEditTextSignUpId)
                     binding.jEditTextSignUpId.setEditTextAlertImg(true)
                 }
             }
@@ -160,7 +169,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
 
         binding.buttonSignUpNext.setOnClickListener {
             checkInputsCorrect()
-            if (!alertExist) {
+            if (!signUpViewModel.uiState.value?.isAlertShown!!) {
                 signUpViewModel.postUserEmailCheck(signUpViewModel.email)
                 if (signUpViewModel.uiState.value?.isIdChecked == true) {
                     ConfirmDialog(
@@ -200,10 +209,6 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
             }
         }
 
-        signUpViewModel.toastMsg.observe(viewLifecycleOwner) {
-            showSnackBar(it)
-            KeyboardProvider(requireContext()).hideKeyboard(binding.jEditTextSignUpId)
-        }
     }
 
     override fun onResume() {
@@ -223,7 +228,6 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
 
     private fun updateSignUpNextButton(isEnabled: Boolean) {
         binding.buttonSignUpNext.isEnabled = isEnabled
-      //  if(alertExist)//스낵바있ㅇㄹ때 버튼 비활성화, 텍스트 바뀌면활성화 해야댐
     }
 
     private fun setAlert(alertType: SignUpAlertEnum): String? {
@@ -244,9 +248,10 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
         binding.jEditTextSignUpPassword.setEditTextAlertImg(false)
         binding.jEditTextSignUpPasswordConfirm.setEditTextAlertImg(false)
 
-        alertExist = !isPasswordConfirmed || !isPasswordRuleMatch || !checkEmailFormat(signUpViewModel.email)
+        signUpViewModel.updateAlertState( !isPasswordConfirmed || !isPasswordRuleMatch || !checkEmailFormat(signUpViewModel.email))
 
-        if (alertExist) {
+
+        if (signUpViewModel.uiState.value?.isAlertShown == true) {
             binding.buttonSignUpNext.isEnabled = false
         }
 
