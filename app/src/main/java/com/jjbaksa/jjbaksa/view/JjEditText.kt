@@ -88,6 +88,7 @@ open class JjEditText constructor(context: Context, attrs: AttributeSet?) :
             true
         )
 
+        binding.editTextJjEditTextInput.isSingleLine = true
         binding.editTextJjEditTextInput.background = editTextBackground
         binding.editTextJjEditTextInput.hint = editTextHint
         binding.editTextJjEditTextInput.setHintTextColor(editTextHintColor)

@@ -42,10 +42,10 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="16dp"
+            android:layoutDirection="ltr"
             android:hint="아이디를 입력하세요"
             android:layout_marginStart="16dp"
             app:layout_constraintEnd_toStartOf="@+id/tv_tail" />
-
 
     </LinearLayout>
 
