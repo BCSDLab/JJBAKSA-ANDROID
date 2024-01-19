@@ -23,7 +23,6 @@ import com.jjbaksa.jjbaksa.util.KeyboardProvider
 import com.jjbaksa.jjbaksa.util.RegexUtil
 import com.jjbaksa.jjbaksa.util.RegexUtil.checkEmailFormat
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.math.sign
 
 @AndroidEntryPoint
 class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
@@ -41,7 +40,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
 
     override fun initEvent() {
         binding.jEditTextSignUpId.setTailButtonOnClickListener {
-            if(!RegexUtil.checkIdFormat(signUpViewModel.id)) {
+            if (!RegexUtil.checkIdFormat(signUpViewModel.id)) {
                 showSnackBar(getString(R.string.id_format_not_match))
                 KeyboardProvider(requireContext()).hideKeyboard(binding.jEditTextSignUpId)
                 return@setTailButtonOnClickListener
@@ -71,7 +70,6 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
                         signUpViewModel.id = p0.toString()
                     }
                     signUpViewModel.updateIdCheckedState(false)
-
                 }
             }
         )
@@ -93,7 +91,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
                         signUpViewModel.updateAlertType(EMAIL_NOT_FOUND)
                         signUpViewModel.updateAlertState(true)
                     }
-                    updateSignUpNextButton(signUpViewModel.id.isNotEmpty() && signUpViewModel.email.isNotEmpty() && signUpViewModel.password.isNotEmpty() )
+                    updateSignUpNextButton(signUpViewModel.id.isNotEmpty() && signUpViewModel.email.isNotEmpty() && signUpViewModel.password.isNotEmpty())
                 }
             }
         )
@@ -117,7 +115,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
                     nextButtonEnable = p0?.isNotEmpty() == true
                     isPasswordRuleMatch = p0.toString().isPasswordRuleMatch()
 
-                    if ( p0.toString().isNotEmpty()) {
+                    if (p0.toString().isNotEmpty()) {
                         signUpViewModel.password = p0.toString()
                         isPasswordConfirmed =
                             p0.toString() == signUpViewModel.passwordCheck
@@ -138,14 +136,13 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
 
         binding.jEditTextSignUpPasswordConfirm.setTailImgOnClickListener {
 
-                binding.jEditTextSignUpPasswordConfirm.setTailImgSelected(!binding.jEditTextSignUpPasswordConfirm.getTailImgSelected())
+            binding.jEditTextSignUpPasswordConfirm.setTailImgSelected(!binding.jEditTextSignUpPasswordConfirm.getTailImgSelected())
 
-                if (binding.jEditTextSignUpPasswordConfirm.getTailImgSelected()) {
-                    binding.jEditTextSignUpPasswordConfirm.setInputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD)
-                } else {
-                    binding.jEditTextSignUpPasswordConfirm.setInputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD)
-                }
-
+            if (binding.jEditTextSignUpPasswordConfirm.getTailImgSelected()) {
+                binding.jEditTextSignUpPasswordConfirm.setInputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD)
+            } else {
+                binding.jEditTextSignUpPasswordConfirm.setInputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD)
+            }
         }
 
         binding.jEditTextSignUpPasswordConfirm.addTextChangedListener(
@@ -155,7 +152,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
                     nextButtonEnable = p0?.isNotEmpty() == true
                     isPasswordConfirmed =
                         p0.toString() == signUpViewModel.password
-                    signUpViewModel.passwordCheck= p0.toString()
+                    signUpViewModel.passwordCheck = p0.toString()
                     if (!isPasswordConfirmed) {
                         signUpViewModel.updateAlertType(PASSWORD_NOT_MATCH)
                         signUpViewModel.updateAlertState(true)
@@ -208,7 +205,6 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
                 binding.buttonSignUpNext.isEnabled = false
             }
         }
-
     }
 
     override fun onResume() {
@@ -248,8 +244,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
         binding.jEditTextSignUpPassword.setEditTextAlertImg(false)
         binding.jEditTextSignUpPasswordConfirm.setEditTextAlertImg(false)
 
-        signUpViewModel.updateAlertState( !isPasswordConfirmed || !isPasswordRuleMatch || !checkEmailFormat(signUpViewModel.email))
-
+        signUpViewModel.updateAlertState(!isPasswordConfirmed || !isPasswordRuleMatch || !checkEmailFormat(signUpViewModel.email))
 
         if (signUpViewModel.uiState.value?.isAlertShown == true) {
             binding.buttonSignUpNext.isEnabled = false

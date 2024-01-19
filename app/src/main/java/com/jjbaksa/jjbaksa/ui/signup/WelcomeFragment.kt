@@ -21,7 +21,7 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
 
     override fun initEvent() {
 
-        requireActivity().onBackPressedDispatcher.addCallback(object: OnBackPressedCallback(true) {
+        requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 activity?.finish()
             }
