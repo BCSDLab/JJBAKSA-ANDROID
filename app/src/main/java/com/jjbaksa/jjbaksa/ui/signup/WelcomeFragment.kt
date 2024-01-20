@@ -2,6 +2,7 @@ package com.jjbaksa.jjbaksa.ui.signup
 
 import android.annotation.SuppressLint
 import android.text.Editable
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.internal.TextWatcherAdapter
 import com.jjbaksa.jjbaksa.R
@@ -19,6 +20,13 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
     override fun initView() {}
 
     override fun initEvent() {
+
+        requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                activity?.finish()
+            }
+        }
+        )
 
         with(binding) {
 

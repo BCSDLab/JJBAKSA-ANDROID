@@ -20,6 +20,7 @@ import com.jjbaksa.jjbaksa.ui.findpassword.FindPasswordResetFragment
 import com.jjbaksa.jjbaksa.util.RegexUtil.isPasswordRuleMatch
 import com.jjbaksa.jjbaksa.ui.signup.viewmodel.SignUpViewModel
 import com.jjbaksa.jjbaksa.util.KeyboardProvider
+import com.jjbaksa.jjbaksa.util.RegexUtil
 import com.jjbaksa.jjbaksa.util.RegexUtil.checkEmailFormat
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -30,30 +31,30 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
 
     private val signUpViewModel: SignUpViewModel by activityViewModels()
 
-    private var isIdTyped = false
-    private var isEmailTyped = false
-    private var isPasswordTyped = false
-    private var isPasswordConfirmedTyped = false
     private var isPasswordConfirmed = false
-    private var passwordConfirmed = ""
-    private var isEmailRuleMatch = false
     private var isPasswordRuleMatch = false
-    private var alertExist = false
+    private var nextButtonEnable = false
 
-    private var id: String = ""
-    private var email: String = ""
     override fun initView() {
     }
 
     override fun initEvent() {
         binding.jEditTextSignUpId.setTailButtonOnClickListener {
-            signUpViewModel.id = id
-            signUpViewModel.checkAccountAvailable(id) { isAvailable ->
+            if (!RegexUtil.checkIdFormat(signUpViewModel.id)) {
+                showSnackBar(getString(R.string.id_format_not_match))
+                KeyboardProvider(requireContext()).hideKeyboard(binding.jEditTextSignUpId)
+                return@setTailButtonOnClickListener
+            }
+            signUpViewModel.checkAccountAvailable(signUpViewModel.id) { isAvailable ->
                 if (isAvailable) {
+                    binding.buttonSignUpNext.isEnabled = true
                     showSnackBar(getString(R.string.id_checked))
                     KeyboardProvider(requireContext()).hideKeyboard(binding.jEditTextSignUpId)
                     binding.jEditTextSignUpId.setEditTextAlertImg(false)
                 } else {
+                    binding.buttonSignUpNext.isEnabled = false
+                    showSnackBar(getString(R.string.id_already_exist))
+                    KeyboardProvider(requireContext()).hideKeyboard(binding.jEditTextSignUpId)
                     binding.jEditTextSignUpId.setEditTextAlertImg(true)
                 }
             }
@@ -63,13 +64,12 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
             @SuppressLint("RestrictedApi")
             object : TextWatcherAdapter() {
                 override fun afterTextChanged(p0: Editable) {
-                    isIdTyped = p0?.isNotEmpty() == true
-                    binding.jEditTextSignUpId.setTailButtonEnable(isIdTyped)
-                    if (isIdTyped) {
-                        id = p0.toString()
+                    nextButtonEnable = p0?.isNotEmpty() == true
+                    binding.jEditTextSignUpId.setTailButtonEnable(p0?.isNotEmpty() == true)
+                    if (p0?.isNotEmpty() == true) {
+                        signUpViewModel.id = p0.toString()
                     }
                     signUpViewModel.updateIdCheckedState(false)
-                    updateSignUpNextButton(isIdTyped && isEmailTyped && isPasswordTyped && isPasswordConfirmedTyped)
                 }
             }
         )
@@ -78,14 +78,12 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
             @SuppressLint("RestrictedApi")
             object : TextWatcherAdapter() {
                 override fun afterTextChanged(p0: Editable) {
-                    isEmailRuleMatch = checkEmailFormat(p0.toString())
-                    isEmailTyped = p0.toString().isNotEmpty()
-                    isIdTyped = p0?.isNotEmpty() == true
-                    if (isEmailTyped) {
-                        email = p0.toString()
+                    nextButtonEnable = p0?.isNotEmpty() == true
+                    if (p0?.isNotEmpty() == true) {
+                        signUpViewModel.email = p0.toString()
                     }
-                    if (isEmailRuleMatch) {
-                        updateSignUpNextButton(isEmailTyped && isEmailRuleMatch)
+                    if (checkEmailFormat(p0.toString())) {
+                        updateSignUpNextButton(signUpViewModel.email.isNotEmpty() && checkEmailFormat(p0.toString()))
                         if (signUpViewModel.uiState.value?.isAlertShown == true) {
                             signUpViewModel.updateAlertState(false)
                         }
@@ -93,7 +91,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
                         signUpViewModel.updateAlertType(EMAIL_NOT_FOUND)
                         signUpViewModel.updateAlertState(true)
                     }
-                    updateSignUpNextButton(isIdTyped && isEmailTyped && isPasswordTyped && isPasswordConfirmedTyped)
+                    updateSignUpNextButton(signUpViewModel.id.isNotEmpty() && signUpViewModel.email.isNotEmpty() && signUpViewModel.password.isNotEmpty())
                 }
             }
         )
@@ -114,16 +112,16 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
             @SuppressLint("RestrictedApi")
             object : TextWatcherAdapter() {
                 override fun afterTextChanged(p0: Editable) {
+                    nextButtonEnable = p0?.isNotEmpty() == true
                     isPasswordRuleMatch = p0.toString().isPasswordRuleMatch()
-                    isPasswordTyped = p0.toString().isNotEmpty()
 
-                    if (isPasswordTyped) {
+                    if (p0.toString().isNotEmpty()) {
                         signUpViewModel.password = p0.toString()
                         isPasswordConfirmed =
-                            p0.toString() == passwordConfirmed
+                            p0.toString() == signUpViewModel.passwordCheck
                     }
                     if (isPasswordRuleMatch) {
-                        updateSignUpNextButton(isIdTyped && isEmailTyped && isPasswordTyped && isPasswordConfirmedTyped)
+                        updateSignUpNextButton(signUpViewModel.id.isNotEmpty() && signUpViewModel.email.isNotEmpty() && signUpViewModel.password.isNotEmpty())
 
                         if (signUpViewModel.uiState.value?.isAlertShown == true) {
                             signUpViewModel.updateAlertState(false)
@@ -137,14 +135,13 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
         )
 
         binding.jEditTextSignUpPasswordConfirm.setTailImgOnClickListener {
-            if (isPasswordConfirmedTyped) {
-                binding.jEditTextSignUpPasswordConfirm.setTailImgSelected(!binding.jEditTextSignUpPasswordConfirm.getTailImgSelected())
 
-                if (binding.jEditTextSignUpPasswordConfirm.getTailImgSelected()) {
-                    binding.jEditTextSignUpPasswordConfirm.setInputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD)
-                } else {
-                    binding.jEditTextSignUpPasswordConfirm.setInputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD)
-                }
+            binding.jEditTextSignUpPasswordConfirm.setTailImgSelected(!binding.jEditTextSignUpPasswordConfirm.getTailImgSelected())
+
+            if (binding.jEditTextSignUpPasswordConfirm.getTailImgSelected()) {
+                binding.jEditTextSignUpPasswordConfirm.setInputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD)
+            } else {
+                binding.jEditTextSignUpPasswordConfirm.setInputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD)
             }
         }
 
@@ -152,29 +149,26 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
             @SuppressLint("RestrictedApi")
             object : TextWatcherAdapter() {
                 override fun afterTextChanged(p0: Editable) {
-                    isPasswordConfirmedTyped = p0.toString().isNotEmpty()
+                    nextButtonEnable = p0?.isNotEmpty() == true
                     isPasswordConfirmed =
                         p0.toString() == signUpViewModel.password
-                    passwordConfirmed = p0.toString()
+                    signUpViewModel.passwordCheck = p0.toString()
                     if (!isPasswordConfirmed) {
                         signUpViewModel.updateAlertType(PASSWORD_NOT_MATCH)
                         signUpViewModel.updateAlertState(true)
                     } else {
                         signUpViewModel.updateAlertState(false)
                     }
-                    updateSignUpNextButton(isIdTyped && isEmailTyped && isPasswordTyped && isPasswordConfirmedTyped)
+                    updateSignUpNextButton(signUpViewModel.id.isNotEmpty() && signUpViewModel.email.isNotEmpty() && signUpViewModel.password.isNotEmpty())
                 }
             }
         )
 
         binding.buttonSignUpNext.setOnClickListener {
             checkInputsCorrect()
-            signUpViewModel.id = id
-            signUpViewModel.email = email
-            if (alertExist) {
+            if (!signUpViewModel.uiState.value?.isAlertShown!!) {
+                signUpViewModel.postUserEmailCheck(signUpViewModel.email)
                 if (signUpViewModel.uiState.value?.isIdChecked == true) {
-
-                    signUpViewModel.postUserEmailCheck(signUpViewModel.email)
                     ConfirmDialog(
                         getString(R.string.sign_up_title_text),
                         getString(R.string.sign_up_content_text),
@@ -210,11 +204,6 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
             } else {
                 binding.buttonSignUpNext.isEnabled = false
             }
-        }
-
-        signUpViewModel.toastMsg.observe(viewLifecycleOwner) {
-            showSnackBar(it)
-            KeyboardProvider(requireContext()).hideKeyboard(binding.jEditTextSignUpId)
         }
     }
 
@@ -255,9 +244,9 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
         binding.jEditTextSignUpPassword.setEditTextAlertImg(false)
         binding.jEditTextSignUpPasswordConfirm.setEditTextAlertImg(false)
 
-        alertExist = isPasswordConfirmed && isPasswordRuleMatch && isEmailRuleMatch
+        signUpViewModel.updateAlertState(!isPasswordConfirmed || !isPasswordRuleMatch || !checkEmailFormat(signUpViewModel.email))
 
-        if (alertExist) {
+        if (signUpViewModel.uiState.value?.isAlertShown == true) {
             binding.buttonSignUpNext.isEnabled = false
         }
 
@@ -266,9 +255,9 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
                 showSnackBar(setAlert(SignUpAlertEnum.NEED_ID_CHECK).toString())
                 binding.jEditTextSignUpId.setEditTextAlertImg(signUpViewModel.uiState.value?.isIdChecked != true)
             }
-            !isEmailRuleMatch -> {
+            !checkEmailFormat(signUpViewModel.email) -> {
                 showSnackBar(setAlert(SignUpAlertEnum.EMAIL_NOT_FOUND).toString())
-                binding.jEditTextSignUpEmail.setEditTextAlertImg(!isEmailRuleMatch)
+                binding.jEditTextSignUpEmail.setEditTextAlertImg(!checkEmailFormat(signUpViewModel.email))
             }
             !isPasswordRuleMatch -> {
                 showSnackBar(setAlert(SignUpAlertEnum.PASSWORD_RULE_NOT_MATCH).toString())

@@ -29,6 +29,12 @@ class TermsFragment : BaseFragment<FragmentTermsBinding>() {
     }
 
     override fun subscribe() {}
+
+    override fun onResume() {
+        super.onResume()
+        checkAllCheckBox(false)
+        isAllCheckBoxChecked()
+    }
     private fun isAllCheckBoxChecked() {
         val isAllCheckBoxChecked =
             binding.jjCheckBoxTermsTermsOne.isChecked && binding.jjCheckBoxTermsTermsTwo.isChecked
