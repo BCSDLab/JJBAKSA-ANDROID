@@ -17,10 +17,6 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseActivity
 import com.jjbaksa.jjbaksa.databinding.ActivitySocialLoginBinding
-import com.kakao.sdk.auth.model.OAuthToken
-import com.kakao.sdk.common.model.ClientError
-import com.kakao.sdk.common.model.ClientErrorCause
-import com.kakao.sdk.user.UserApiClient
 import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.oauth.NidOAuthBehavior
 import com.navercorp.nid.oauth.OAuthLoginCallback
@@ -52,42 +48,6 @@ class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
         binding.jjAppBarContainer.setOnClickListener { finish() }
         with(binding) {
             buttonKakaoLogin.setOnClickListener {
-                UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
-                    if (error != null) {
-                        Log.d(TAG, "토큰 정보 보기 실패", error)
-                    } else if (tokenInfo != null) {
-                        Log.d(TAG, "토큰 정보 보기 성공", error)
-                    }
-                }
-
-                val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
-                    if (error != null) {
-                        Log.e(TAG, "카카오계정으로 로그인 실패", error)
-                    } else if (token != null) {
-                        Log.e(TAG, "카카오계정으로 로그인 성공 ${token.accessToken}")
-                    }
-                }
-
-                if (UserApiClient.instance.isKakaoTalkLoginAvailable(this@SocialLoginActivity)) {
-                    UserApiClient.instance.loginWithKakaoTalk(this@SocialLoginActivity) { token, error ->
-                        if (error != null) {
-                            Log.e(TAG, "카카오톡으로 로그인 실패", error)
-                            if (error is ClientError && error.reason == ClientErrorCause.Cancelled) {
-                                return@loginWithKakaoTalk
-                            }
-                            UserApiClient.instance.loginWithKakaoAccount(
-                                this@SocialLoginActivity,
-                                callback = callback
-                            )
-                        } else if (token != null) {
-                            Log.i(TAG, "카카오톡으로 로그인 성공 ${token.accessToken}")
-                        }
-                    }
-                } else {
-                    UserApiClient.instance.loginWithKakaoAccount(
-                        this@SocialLoginActivity,
-                        callback = callback
-                    )
                 }
             }
             buttonNaverLogin.setOnClickListener {
