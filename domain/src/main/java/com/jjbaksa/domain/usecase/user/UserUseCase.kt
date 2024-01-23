@@ -11,6 +11,8 @@ import javax.inject.Inject
 class UserUseCase @Inject constructor(
     private val userRepository: UserRepository
 ) {
+    suspend fun postLoginSNS(token: String, snsType: String): Result<Login> =
+        userRepository.postLoginSNS(token, snsType)
     suspend fun getUserMe(): Flow<Result<User>> {
         return userRepository.getUserMe()
     }
