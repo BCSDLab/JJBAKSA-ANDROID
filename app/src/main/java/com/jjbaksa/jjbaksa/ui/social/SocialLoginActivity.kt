@@ -20,7 +20,6 @@ import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseActivity
 import com.jjbaksa.jjbaksa.databinding.ActivitySocialLoginBinding
 import com.jjbaksa.jjbaksa.util.UiState
-import com.kakao.sdk.common.util.Utility
 import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.oauth.NidOAuthBehavior
 import com.navercorp.nid.oauth.OAuthLoginCallback
