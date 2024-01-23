@@ -5,6 +5,7 @@ import com.kakao.sdk.common.KakaoSdk
 import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
+import androidx.appcompat.app.AppCompatDelegate
 import com.jjbaksa.data.database.PreferenceKeys
 import com.jjbaksa.data.database.userDataStore
 import com.jjbaksa.jjbaksa.util.MyInfo
@@ -24,6 +25,7 @@ class JjbaksaApp : Application() {
     override fun onCreate() {
         super.onCreate()
         if (BuildConfig.DEBUG) Timber.plant(Timber.DebugTree())
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         KakaoSdk.init(this, BuildConfig.kakao_native_app_key)
         instance = this
         val dataStore = appContext.userDataStore.data
