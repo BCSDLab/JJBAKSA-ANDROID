@@ -13,6 +13,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @HiltAndroidApp
 class JjbaksaApp : Application() {
@@ -22,6 +23,7 @@ class JjbaksaApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        if (BuildConfig.DEBUG) Timber.plant(Timber.DebugTree())
         KakaoSdk.init(this, BuildConfig.kakao_native_app_key)
         instance = this
         val dataStore = appContext.userDataStore.data
