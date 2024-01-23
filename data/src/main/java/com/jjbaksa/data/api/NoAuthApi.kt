@@ -19,10 +19,16 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
 import retrofit2.http.Header
+import retrofit2.http.Headers
 import retrofit2.http.PATCH
 import retrofit2.http.Path
 
 interface NoAuthApi {
+    @GET("login/{sns-type}")
+    suspend fun postLoginSNS(
+        @Header("Authorization") token: String,
+        @Path("sns-type") snsType: String
+    ): LoginResp
     @POST("user/login")
     suspend fun postLogin(
         @Body loginReq: LoginReq
