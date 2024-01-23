@@ -1,5 +1,6 @@
 package com.jjbaksa.jjbaksa.ui.mainpage.write
 
+import android.content.Intent
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
@@ -15,6 +16,7 @@ import com.jjbaksa.jjbaksa.databinding.FragmentNaviWriteBinding
 import com.jjbaksa.jjbaksa.listener.OnClickShopListener
 import com.jjbaksa.jjbaksa.listener.PaginationScrollListener
 import com.jjbaksa.jjbaksa.ui.mainpage.MainPageActivity
+import com.jjbaksa.jjbaksa.ui.pin.PinReviewWriteActivity
 import com.jjbaksa.jjbaksa.ui.search.AutoCompleteKeywordAdapter
 import com.jjbaksa.jjbaksa.ui.search.SearchShopAdapter
 import com.jjbaksa.jjbaksa.ui.search.TrendTextAdapter
@@ -50,6 +52,10 @@ class NaviWriteFragment : BaseFragment<FragmentNaviWriteBinding>() {
             requireContext(),
             object : OnClickShopListener {
                 override fun onClick(item: Shop, position: Int) {
+                    val intent = Intent(requireContext(), PinReviewWriteActivity::class.java)
+                    intent.putExtra("place_id", item.placeId)
+                    intent.putExtra("name", item.name)
+                    startActivity(intent)
                 }
             }
         )
