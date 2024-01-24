@@ -2,29 +2,31 @@ package com.jjbaksa.jjbaksa.ui.social
 
 import android.content.Intent
 import android.util.Log
+import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.firebase.auth.FirebaseAuth
-import com.jjbaksa.jjbaksa.BuildConfig
-import androidx.activity.result.ActivityResultCallback
+import androidx.activity.viewModels
+import androidx.lifecycle.flowWithLifecycle
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.AuthCredential
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
+import com.jjbaksa.jjbaksa.BuildConfig
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseActivity
 import com.jjbaksa.jjbaksa.databinding.ActivitySocialLoginBinding
-import com.kakao.sdk.auth.model.OAuthToken
-import com.kakao.sdk.common.model.ClientError
-import com.kakao.sdk.common.model.ClientErrorCause
-import com.kakao.sdk.user.UserApiClient
+import com.jjbaksa.jjbaksa.util.UiState
 import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.oauth.NidOAuthBehavior
 import com.navercorp.nid.oauth.OAuthLoginCallback
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.onEach
+import timber.log.Timber
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
@@ -32,6 +34,11 @@ class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
     private lateinit var firebaseAuth: FirebaseAuth
     private var userEmail: String = ""
     private var tokenId: String? = null
+
+    private val socialLoginViewModel: SocialLoginViewModel by viewModels()
+
+    @Inject
+    lateinit var kakaoService: KakaoService
 
     companion object {
         const val TAG = "SocialLogin"
@@ -50,44 +57,12 @@ class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
 
     override fun initEvent() {
         binding.jjAppBarContainer.setOnClickListener { finish() }
+
         with(binding) {
             buttonKakaoLogin.setOnClickListener {
-                UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
-                    if (error != null) {
-                        Log.d(TAG, "토큰 정보 보기 실패", error)
-                    } else if (tokenInfo != null) {
-                        Log.d(TAG, "토큰 정보 보기 성공", error)
-                    }
-                }
-
-                val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
-                    if (error != null) {
-                        Log.e(TAG, "카카오계정으로 로그인 실패", error)
-                    } else if (token != null) {
-                        Log.e(TAG, "카카오계정으로 로그인 성공 ${token.accessToken}")
-                    }
-                }
-
-                if (UserApiClient.instance.isKakaoTalkLoginAvailable(this@SocialLoginActivity)) {
-                    UserApiClient.instance.loginWithKakaoTalk(this@SocialLoginActivity) { token, error ->
-                        if (error != null) {
-                            Log.e(TAG, "카카오톡으로 로그인 실패", error)
-                            if (error is ClientError && error.reason == ClientErrorCause.Cancelled) {
-                                return@loginWithKakaoTalk
-                            }
-                            UserApiClient.instance.loginWithKakaoAccount(
-                                this@SocialLoginActivity,
-                                callback = callback
-                            )
-                        } else if (token != null) {
-                            Log.i(TAG, "카카오톡으로 로그인 성공 ${token.accessToken}")
-                        }
-                    }
-                } else {
-                    UserApiClient.instance.loginWithKakaoAccount(
-                        this@SocialLoginActivity,
-                        callback = callback
-                    )
+                kakaoService.initKakaoLogin {
+                    Timber.tag("kakao_token").e("$it")
+//                    socialLoginViewModel.postLoginSNS("Bearer $it", KAKAO)
                 }
             }
             buttonNaverLogin.setOnClickListener {
@@ -122,6 +97,24 @@ class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
                     GoogleSignIn.getClient(this@SocialLoginActivity, googleSignInOptions)
                 val signInIntent: Intent = googleSignInClient.signInIntent
                 activityResultLauncher.launch(signInIntent)
+            }
+        }
+
+        observeData()
+    }
+
+    private fun observeData() {
+        socialLoginViewModel.kakaoLoginState.flowWithLifecycle(lifecycle).onEach { uiState ->
+            when (uiState) {
+                is UiState.Success -> {
+                    Timber.tag("kakao").e("success")
+                }
+
+                is UiState.Failure -> {
+                    Timber.tag("kakao").e("failure")
+                }
+
+                else -> Unit // Loading etc...
             }
         }
     }

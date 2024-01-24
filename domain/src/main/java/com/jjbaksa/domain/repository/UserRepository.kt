@@ -10,6 +10,7 @@ import com.jjbaksa.domain.model.user.WithdrawalReasonReq
 import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
+    suspend fun postLoginSNS(token: String, snsType: String): Result<Login>
     suspend fun getUserMe(): Flow<Result<User>>
     suspend fun postLogin(
         account: String,
