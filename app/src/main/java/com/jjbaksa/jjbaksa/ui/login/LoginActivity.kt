@@ -3,6 +3,7 @@ package com.jjbaksa.jjbaksa.ui.login
 import android.content.Intent
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
+import android.view.MotionEvent
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
@@ -136,5 +137,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
     private fun goToActivity(classActivity: Class<*>) {
         Intent(this, classActivity).also { startActivity(it) }
+    }
+
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        controlSoftKeyboard(binding.root, false)
+        return super.dispatchTouchEvent(ev)
     }
 }
