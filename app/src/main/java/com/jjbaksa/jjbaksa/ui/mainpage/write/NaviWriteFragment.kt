@@ -15,6 +15,7 @@ import com.jjbaksa.jjbaksa.databinding.FragmentNaviWriteBinding
 import com.jjbaksa.jjbaksa.listener.OnClickShopListener
 import com.jjbaksa.jjbaksa.listener.PaginationScrollListener
 import com.jjbaksa.jjbaksa.ui.mainpage.MainPageActivity
+import com.jjbaksa.jjbaksa.ui.mainpage.home.NaviHomeFragment
 import com.jjbaksa.jjbaksa.ui.search.AutoCompleteKeywordAdapter
 import com.jjbaksa.jjbaksa.ui.search.SearchShopAdapter
 import com.jjbaksa.jjbaksa.ui.search.TrendTextAdapter
@@ -24,13 +25,24 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class NaviWriteFragment : BaseFragment<FragmentNaviWriteBinding>() {
+    private var backClickTime = 0L
+
     override val layoutId: Int
         get() = R.layout.fragment_navi_write
-    override var onBackPressedCallBack: OnBackPressedCallback? = object : OnBackPressedCallback(true) {
-        override fun handleOnBackPressed() {
-            (requireActivity() as MainPageActivity).showHomeFragment()
+    override var onBackPressedCallBack: OnBackPressedCallback? =
+        object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (parentFragmentManager.findFragmentByTag(NaviHomeFragment.TAG)?.isVisible == true) {
+                    if (System.currentTimeMillis() - backClickTime >= 2000L) {
+                        backClickTime = System.currentTimeMillis()
+                        showSnackBar(getString(R.string.back_finish))
+                    } else {
+                        requireActivity().finish()
+                    }
+                }
+                (requireActivity() as MainPageActivity).showHomeFragment()
+            }
         }
-    }
     private val keyboardProvider: KeyboardProvider by lazy { KeyboardProvider(requireContext()) }
     private val naviWriteViewModel: NaviWriteViewModel by viewModels()
     private val trendTextAdapter: TrendTextAdapter by lazy { TrendTextAdapter(this::onClickTrendKeyword) }
@@ -144,26 +156,32 @@ class NaviWriteFragment : BaseFragment<FragmentNaviWriteBinding>() {
             }
         }
     }
+
     private fun locationCallback(latitude: Double, longitude: Double) {
         naviWriteViewModel.setLocation(latitude, longitude)
     }
+
     private fun onClickTrendKeyword(trendText: String) {
         binding.etSearch.setText(trendText)
     }
+
     private fun onClickKeyword(keyword: String) {
         binding.etSearch.setText(keyword)
         autoCompleteKeywordAdapter.submitList(listOf())
         autoCompleteKeywordAdapter.notifyDataSetChanged()
         binding.rvKeyword.visibility = View.GONE
     }
+
     override fun onStart() {
         fusedLocationUtil.startLocationUpdate()
         super.onStart()
     }
+
     override fun onStop() {
         fusedLocationUtil.stopLocationUpdates()
         super.onStop()
     }
+
     companion object {
         fun newInstance() = NaviWriteFragment()
         val TAG = "NaviWriteFragment"
