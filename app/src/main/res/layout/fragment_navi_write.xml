@@ -95,7 +95,7 @@
             android:background="@drawable/shape_rect_ffffff_gradient_end"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/ll_keyword_history"
+            android:id="@+id/cl_keyword_history"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -145,7 +145,9 @@
                 android:layout_height="wrap_content"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintTop_toBottomOf="@id/tv_recent_search"
-                android:layout_marginTop="4dp" />
+                android:layout_marginTop="4dp"
+                tools:itemCount="4"
+                tools:listitem="@layout/item_search_history"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
         <androidx.recyclerview.widget.RecyclerView
@@ -154,7 +156,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toBottomOf="@+id/ll_keyword_history"
+            app:layout_constraintTop_toBottomOf="@+id/cl_keyword_history"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -167,7 +169,7 @@
             android:orientation="vertical"
             android:gravity="center"
             android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@+id/rv_keyword"
+            app:layout_constraintTop_toBottomOf="@+id/rv_trend"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
