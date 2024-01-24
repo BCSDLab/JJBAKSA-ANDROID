@@ -18,6 +18,7 @@ import com.jjbaksa.jjbaksa.listener.PaginationScrollListener
 import com.jjbaksa.jjbaksa.ui.mainpage.MainPageActivity
 import com.jjbaksa.jjbaksa.ui.pin.PinReviewWriteActivity
 import com.jjbaksa.jjbaksa.ui.search.AutoCompleteKeywordAdapter
+import com.jjbaksa.jjbaksa.ui.search.SearchHistoryAdapter
 import com.jjbaksa.jjbaksa.ui.search.SearchShopAdapter
 import com.jjbaksa.jjbaksa.ui.search.TrendTextAdapter
 import com.jjbaksa.jjbaksa.util.FusedLocationUtil
@@ -36,6 +37,12 @@ class NaviWriteFragment : BaseFragment<FragmentNaviWriteBinding>() {
     private val keyboardProvider: KeyboardProvider by lazy { KeyboardProvider(requireContext()) }
     private val viewModel: NaviWriteViewModel by viewModels()
     private val trendTextAdapter: TrendTextAdapter by lazy { TrendTextAdapter(this::onClickTrendKeyword) }
+    private val searchHistoryAdapter: SearchHistoryAdapter by lazy {
+        SearchHistoryAdapter(
+            this::onClickHistory,
+            this::onClickDelete
+        )
+    }
     private val fusedLocationUtil: FusedLocationUtil by lazy {
         FusedLocationUtil(
             requireContext(),
@@ -91,6 +98,7 @@ class NaviWriteFragment : BaseFragment<FragmentNaviWriteBinding>() {
             })
         }
         viewModel.getTrendingText()
+        viewModel.getSearchHistory()
     }
 
     override fun initEvent() {
@@ -106,11 +114,7 @@ class NaviWriteFragment : BaseFragment<FragmentNaviWriteBinding>() {
                 viewModel.getAutoCompleteKeyword(it.toString())
             }
             ivSearch.setOnClickListener {
-                rvKeyword.visibility = View.GONE
-                tvWriteTitle.visibility = View.GONE
-                viewModel.searchKeyword(etSearch.text.toString())
-                searchShopAdapter.clear()
-                keyboardProvider.hideKeyboard(etSearch)
+                search(etSearch.text.toString())
             }
             appbarSearch.ivAppbarBack.setOnClickListener {
                 (requireActivity() as MainPageActivity).showHomeFragment()
@@ -121,6 +125,9 @@ class NaviWriteFragment : BaseFragment<FragmentNaviWriteBinding>() {
     override fun subscribe() {
         viewModel.trendTextData.observe(viewLifecycleOwner) {
             trendTextAdapter.submitList(it)
+        }
+        viewModel.searchHistoryData.observe(viewLifecycleOwner) {
+            searchHistoryAdapter.submitList(it)
         }
         viewModel.autoCompleteData.observe(viewLifecycleOwner) {
             autoCompleteKeywordAdapter.submitList(it)
@@ -161,6 +168,23 @@ class NaviWriteFragment : BaseFragment<FragmentNaviWriteBinding>() {
         autoCompleteKeywordAdapter.submitList(listOf())
         autoCompleteKeywordAdapter.notifyDataSetChanged()
         binding.rvKeyword.visibility = View.GONE
+    }
+    private fun onClickHistory(keyword: String) {
+        binding.etSearch.setText(keyword)
+        search(keyword)
+    }
+    private fun onClickDelete(keyword: String) {
+        viewModel.deleteSearchHistory(keyword)
+    }
+    private fun search(text: String) {
+        binding.run {
+            rvKeyword.visibility = View.GONE
+            tvWriteTitle.visibility = View.GONE
+            viewModel.searchKeyword(text)
+            searchShopAdapter.clear()
+            keyboardProvider.hideKeyboard(etSearch)
+            viewModel.saveSearchHistory(text)
+        }
     }
     override fun onStart() {
         fusedLocationUtil.startLocationUpdate()
