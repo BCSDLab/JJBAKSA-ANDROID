@@ -5,6 +5,7 @@ import android.content.ContentResolver
 import android.net.Uri
 import android.provider.OpenableColumns
 import android.util.Log
+import com.google.gson.GsonBuilder
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
@@ -111,5 +112,15 @@ object FormDataUtil {
         val minutes = totalSeconds / secUnit % secUnit
         val hours = totalSeconds / (secUnit * secUnit)
         return listOf(hours, minutes, seconds)
+    }
+
+    fun jsonStringToList(json: String): List<String> {
+        return if(json != "[]")
+            GsonBuilder().create().fromJson(json, Array<String>::class.java).toList()
+        else listOf()
+    }
+
+    fun stringListToJsonString(list: List<String>): String {
+        return GsonBuilder().create().toJson(list)
     }
 }
