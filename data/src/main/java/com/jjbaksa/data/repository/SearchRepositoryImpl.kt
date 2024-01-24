@@ -1,7 +1,9 @@
 package com.jjbaksa.data.repository
 
 import android.util.Log
+import com.jjbaksa.data.datasource.local.SearchLocalDataSource
 import com.jjbaksa.data.datasource.remote.SearchRemoteDataSource
+import com.jjbaksa.data.mapper.FormDataUtil
 import com.jjbaksa.data.mapper.toAutoKeyword
 import com.jjbaksa.data.mapper.toShopData
 import com.jjbaksa.data.model.apiCall
@@ -12,7 +14,8 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class SearchRepositoryImpl @Inject constructor(
-    private val searchRemoteDataSource: SearchRemoteDataSource
+    private val searchRemoteDataSource: SearchRemoteDataSource,
+    private val searchLocalDataSource: SearchLocalDataSource
 ) : SearchRepository {
     override suspend fun getTrendText(): Flow<Result<List<String>>> {
         return apiCall(
@@ -76,5 +79,23 @@ class SearchRepositoryImpl @Inject constructor(
                 }
             }
         )
+    }
+
+    override suspend fun getSearchHistory(
+    ): Flow<Result<List<String>>> {
+        return apiCall(
+            call = { searchLocalDataSource.getSearchHistory() },
+            mapper = {
+                FormDataUtil.jsonStringToList(it)
+            }
+        )
+    }
+
+    override suspend fun saveSearchHistory(keyword: String) {
+        searchLocalDataSource.saveSearchHistory(keyword)
+    }
+
+    override suspend fun deleteSearchHistory(keyword: String) {
+        searchLocalDataSource.deleteSearchHistory(keyword)
     }
 }
