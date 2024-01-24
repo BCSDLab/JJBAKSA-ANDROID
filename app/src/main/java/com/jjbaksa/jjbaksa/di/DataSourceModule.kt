@@ -7,6 +7,7 @@ import com.jjbaksa.data.api.TestNoAuthApi
 import com.jjbaksa.data.database.UserDao
 import com.jjbaksa.data.datasource.local.HomeLocalDataSource
 import com.jjbaksa.data.datasource.local.UserLocalDataSource
+import com.jjbaksa.data.datasource.remote.FollowerRemoteDataSource
 import com.jjbaksa.data.datasource.remote.HomeRemoteDataSource
 import com.jjbaksa.data.datasource.remote.InquiryRemoteDataSource
 import com.jjbaksa.data.datasource.remote.ShopRemoteDataSource
@@ -108,4 +109,11 @@ object DataSourceModule {
     ): ReviewRemoteDataSource {
         return ReviewRemoteDataSource(authApi, noAuthApi)
     }
+
+    @Provides
+    @Singleton
+    fun provideFollowerRemoteDataSource(authApi: AuthApi, noAuthApi: NoAuthApi): FollowerRemoteDataSource {
+        return FollowerRemoteDataSource(authApi, noAuthApi)
+    }
+
 }

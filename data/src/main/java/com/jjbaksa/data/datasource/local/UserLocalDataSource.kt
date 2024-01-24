@@ -7,6 +7,7 @@ import com.jjbaksa.data.database.UserDao
 import com.jjbaksa.data.database.userDataStore
 import com.jjbaksa.data.datasource.UserDataSource
 import com.jjbaksa.data.model.user.LoginResp
+import com.jjbaksa.data.model.user.UserListResp
 import com.jjbaksa.data.model.user.UserResp
 import com.jjbaksa.domain.model.user.FindPasswordReq
 import com.jjbaksa.domain.model.user.LoginReq
@@ -87,6 +88,14 @@ class UserLocalDataSource @Inject constructor(
     }
 
     override suspend fun deleteUserMe(): Response<Unit> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getUserSearch(
+        keyword: String?,
+        pageSize: Int,
+        cursor: Long
+    ): Response<UserListResp> {
         TODO("Not yet implemented")
     }
 

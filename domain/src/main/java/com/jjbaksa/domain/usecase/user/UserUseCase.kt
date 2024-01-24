@@ -97,4 +97,12 @@ class UserUseCase @Inject constructor(
     ): Flow<Result<Boolean>> {
         return userRepository.deleteUserMe(onError)
     }
+
+    suspend fun getUserSearch(
+        keyWord: String?,
+        pageSize: Int,
+        cursor: Long
+    ): Flow<Result<List<User>>> {
+        return userRepository.getUserSearch(keyWord, pageSize, cursor)
+    }
 }

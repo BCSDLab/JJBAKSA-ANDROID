@@ -1,5 +1,6 @@
 package com.jjbaksa.data.api
 
+import com.jjbaksa.data.model.follower.FollowerResp
 import com.jjbaksa.data.model.follower.FollowerReviewShopsResp
 import com.jjbaksa.data.model.inquiry.InquiryContentResp
 import com.jjbaksa.data.model.inquiry.InquiryResp
@@ -14,6 +15,7 @@ import com.jjbaksa.data.model.scrap.AddShopScrapResp
 import com.jjbaksa.data.model.scrap.ScrapsResp
 import com.jjbaksa.data.model.scrap.ShopScrapResp
 import com.jjbaksa.data.model.search.LocationBody
+import com.jjbaksa.data.model.user.UserListResp
 import retrofit2.http.GET
 import com.jjbaksa.data.model.user.UserResp
 import okhttp3.MultipartBody
@@ -160,4 +162,19 @@ interface AuthApi {
         @Query("idCursor") idCursor: Long?,
         @Query("size") size: Int
     ): Response<InquiryResp>
+
+
+    @GET("users")
+    suspend fun getUserSearch(
+        @Query("keyword") keyword: String?,
+        @Query("pageSize") pageSize: Int,
+        @Query("cursor") cursor: Long,
+    ): Response<UserListResp>
+
+    @GET("follow/followers")
+    suspend fun getFollower(
+        @Query("pageSize") pageSize: String,
+        @Query("cursor") cursor: Int,
+    ): Response<FollowerResp>
+
 }

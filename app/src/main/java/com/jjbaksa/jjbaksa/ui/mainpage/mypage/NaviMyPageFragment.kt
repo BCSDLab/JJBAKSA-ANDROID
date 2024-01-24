@@ -7,10 +7,12 @@ import androidx.fragment.app.activityViewModels
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.google.android.material.tabs.TabLayoutMediator
+import com.jjbaksa.domain.model.review.FollowerReviewShops
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseFragment
 import com.jjbaksa.jjbaksa.databinding.FragmentNaviMyPageBinding
 import com.jjbaksa.jjbaksa.dialog.MyPageBottomSheetDialog
+import com.jjbaksa.jjbaksa.ui.follower.FollowerActivity
 import com.jjbaksa.jjbaksa.ui.mainpage.MainPageActivity
 import com.jjbaksa.jjbaksa.ui.mainpage.mypage.adapter.MyPageAdapter
 import com.jjbaksa.jjbaksa.ui.mainpage.mypage.viewmodel.MyPageViewModel
@@ -58,6 +60,10 @@ class NaviMyPageFragment : BaseFragment<FragmentNaviMyPageBinding>() {
         onClickSettingImage()
         binding.profileImageView.setOnClickListener {
             MyPageBottomSheetDialog().show(parentFragmentManager, MY_PAGE_DIALOG_TAG)
+        }
+
+        binding.followerTextView.setOnClickListener {
+            settingResult.launch(Intent(requireContext(), FollowerActivity::class.java))
         }
     }
 

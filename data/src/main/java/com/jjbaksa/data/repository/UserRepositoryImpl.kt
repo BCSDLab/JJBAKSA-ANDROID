@@ -330,4 +330,24 @@ class UserRepositoryImpl @Inject constructor(
     override fun getAccessToken(): String {
         return userLocalDataSource.getAccessToken()
     }
+
+    override suspend fun getUserSearch(
+        keyWord: String?,
+        pageSize: Int,
+        cursor: Long
+    ): Flow<Result<List<User>>> {
+        return apiCall(
+            call = { userRemoteDataSource.getUserSearch(keyWord, pageSize, cursor) },
+            mapper = {
+                if (it.isSuccessful) {
+                    it.body()?.content?.map { user -> user.toUser() } ?: listOf()
+                } else {
+                    listOf()
+                }
+            }
+        )
+    }
+
+
+
 }

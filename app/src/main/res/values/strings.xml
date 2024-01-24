@@ -204,4 +204,6 @@
     <string name="last_review_date">마지막 리뷰 %s</string>
     <string name="schedule">%s ~ %s</string>
     <string name="id_format_not_match">올바른 형식의 아이디가 아닙니다.</string>
+    <string name="following">팔로잉</string>
+    <string name="follower">친구 목록</string>
 </resources>

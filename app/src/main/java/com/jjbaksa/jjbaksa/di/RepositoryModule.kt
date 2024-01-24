@@ -11,6 +11,7 @@ import com.jjbaksa.data.repository.HomeRepositoryImpl
 import com.jjbaksa.domain.repository.UserRepository
 import com.jjbaksa.data.repository.UserRepositoryImpl
 import com.example.imageselector.repository.ImageRepository
+import com.jjbaksa.data.datasource.remote.FollowerRemoteDataSource
 import com.jjbaksa.data.datasource.remote.InquiryRemoteDataSource
 import com.jjbaksa.data.datasource.remote.ShopRemoteDataSource
 import com.jjbaksa.data.datasource.remote.SearchRemoteDataSource
@@ -21,10 +22,12 @@ import com.jjbaksa.domain.repository.InquiryRepository
 import com.jjbaksa.data.datasource.remote.PostRemoteDataSource
 import com.jjbaksa.data.datasource.remote.ReviewRemoteDataSource
 import com.jjbaksa.data.datasource.remote.ScrapRemoteDataSource
+import com.jjbaksa.data.repository.FollowerRepositoryImpl
 import com.jjbaksa.data.repository.ShopRepositoryImpl
 import com.jjbaksa.data.repository.PostRepositoryImpl
 import com.jjbaksa.data.repository.ReviewRepositoryImpl
 import com.jjbaksa.data.repository.ScrapRepositoryImpl
+import com.jjbaksa.domain.repository.FollowerRepository
 import com.jjbaksa.domain.repository.ShopRepository
 import com.jjbaksa.domain.repository.PostRepository
 import com.jjbaksa.domain.repository.ReviewRepository
@@ -110,5 +113,13 @@ object RepositoryModule {
         userLocalDataSource: UserLocalDataSource,
     ): ReviewRepository {
         return ReviewRepositoryImpl(reviewRemoteDataSource, userLocalDataSource)
+    }
+
+    @Singleton
+    @Provides
+    fun provideFollowerRepository(
+        followerRemoteDataSource: FollowerRemoteDataSource,
+    ): FollowerRepository {
+        return FollowerRepositoryImpl(followerRemoteDataSource)
     }
 }

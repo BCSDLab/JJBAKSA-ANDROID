@@ -60,4 +60,10 @@ interface UserRepository {
     fun getFollowers(): Int
     fun getProfileImage(): String
     fun getAccessToken(): String
+
+    suspend fun getUserSearch(
+        cursor: String?,
+        dateCursor: Int,
+        size: Long
+    ): Flow<Result<List<User>>>
 }

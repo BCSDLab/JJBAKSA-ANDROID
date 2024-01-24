@@ -2,9 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.jjbaksa.jjbaksa"
+    tools:ignore="ObsoleteSdkInt"
     tools:remove="android:appComponentFactory"
-    tools:targetApi="p"
-    tools:ignore="ObsoleteSdkInt">
+    tools:targetApi="p">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -23,6 +23,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.JJBAKSAAOS"
         tools:targetApi="33">
+        <activity
+            android:name=".ui.follower.FollowerActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.shop.ShopActivity"
             android:exported="false" />
