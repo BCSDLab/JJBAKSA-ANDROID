@@ -41,7 +41,7 @@ class NaviWriteViewModel @Inject constructor(
 
     fun getAutoCompleteKeyword(word: String) {
         viewModelScope.launch(ceh) {
-            getAutoCompleteKeywordUseCase.invoke(word)
+            getAutoCompleteKeywordUseCase(word, lat, lng)
                 .collect {
                     it.onSuccess { _autoCompleteData.value = it }
                 }

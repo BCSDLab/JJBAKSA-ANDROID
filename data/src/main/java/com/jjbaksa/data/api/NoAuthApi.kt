@@ -69,8 +69,11 @@ interface NoAuthApi {
     @GET("trending")
     suspend fun getTrending(): Response<TrendResp>
 
-    @GET("auto-complete/{word}")
-    suspend fun getSearchKeyword(@Path("word") word: String): Response<AutoKeywordResp>
+    @POST("shops/auto-complete")
+    suspend fun getSearchKeyword(
+        @Query("query") query: String,
+        @Body locationBody: LocationBody
+    ): Response<AutoKeywordResp>
 
     @POST("shops")
     suspend fun getShops(

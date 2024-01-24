@@ -5,7 +5,11 @@ import kotlinx.coroutines.flow.Flow
 
 interface SearchRepository {
     suspend fun getTrendText(): Flow<Result<List<String>>>
-    suspend fun getSearchKeyword(word: String): Flow<Result<List<String>>>
+    suspend fun getSearchKeyword(
+        word: String,
+        lat: Double,
+        lng: Double
+    ): Flow<Result<List<String>>>
     suspend fun getShops(
         keyword: String,
         lat: Double,

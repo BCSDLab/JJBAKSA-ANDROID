@@ -1,5 +1,6 @@
 package com.jjbaksa.data.repository
 
+import android.util.Log
 import com.jjbaksa.data.datasource.remote.SearchRemoteDataSource
 import com.jjbaksa.data.mapper.toAutoKeyword
 import com.jjbaksa.data.mapper.toShopData
@@ -27,10 +28,12 @@ class SearchRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getSearchKeyword(
-        word: String
+        word: String,
+        lat: Double,
+        lng: Double
     ): Flow<Result<List<String>>> {
         return apiCall(
-            call = { searchRemoteDataSource.getSearchKeyword(word) },
+            call = { searchRemoteDataSource.getSearchKeyword(word, LocationBody(lat, lng)) },
             mapper = {
                 if (it.isSuccessful) {
                     it.body()!!.toAutoKeyword().autoCompletes

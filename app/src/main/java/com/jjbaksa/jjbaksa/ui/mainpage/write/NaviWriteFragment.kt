@@ -34,7 +34,7 @@ class NaviWriteFragment : BaseFragment<FragmentNaviWriteBinding>() {
         }
     }
     private val keyboardProvider: KeyboardProvider by lazy { KeyboardProvider(requireContext()) }
-    private val naviWriteViewModel: NaviWriteViewModel by viewModels()
+    private val viewModel: NaviWriteViewModel by viewModels()
     private val trendTextAdapter: TrendTextAdapter by lazy { TrendTextAdapter(this::onClickTrendKeyword) }
     private val fusedLocationUtil: FusedLocationUtil by lazy {
         FusedLocationUtil(
@@ -86,11 +86,11 @@ class NaviWriteFragment : BaseFragment<FragmentNaviWriteBinding>() {
 
                 override fun loadMoreItems() {
                     if (!currentPage.isEmpty())
-                        naviWriteViewModel.searchPage(currentPage)
+                        viewModel.searchPage(currentPage)
                 }
             })
         }
-        naviWriteViewModel.getTrendingText()
+        viewModel.getTrendingText()
     }
 
     override fun initEvent() {
@@ -103,12 +103,12 @@ class NaviWriteFragment : BaseFragment<FragmentNaviWriteBinding>() {
             etSearch.addTextChangedListener {
                 rvKeyword.visibility = View.VISIBLE
                 rvShop.visibility = View.GONE
-                naviWriteViewModel.getAutoCompleteKeyword(it.toString())
+                viewModel.getAutoCompleteKeyword(it.toString())
             }
             ivSearch.setOnClickListener {
                 rvKeyword.visibility = View.GONE
                 tvWriteTitle.visibility = View.GONE
-                naviWriteViewModel.searchKeyword(etSearch.text.toString())
+                viewModel.searchKeyword(etSearch.text.toString())
                 searchShopAdapter.clear()
                 keyboardProvider.hideKeyboard(etSearch)
             }
@@ -119,14 +119,14 @@ class NaviWriteFragment : BaseFragment<FragmentNaviWriteBinding>() {
     }
 
     override fun subscribe() {
-        naviWriteViewModel.trendTextData.observe(viewLifecycleOwner) {
+        viewModel.trendTextData.observe(viewLifecycleOwner) {
             trendTextAdapter.submitList(it)
         }
-        naviWriteViewModel.autoCompleteData.observe(viewLifecycleOwner) {
+        viewModel.autoCompleteData.observe(viewLifecycleOwner) {
             autoCompleteKeywordAdapter.submitList(it)
             autoCompleteKeywordAdapter.notifyDataSetChanged()
         }
-        naviWriteViewModel.shopData.observe(viewLifecycleOwner) {
+        viewModel.shopData.observe(viewLifecycleOwner) {
             if (it.shopQueryResponseList.isEmpty()) {
                 if (searchShopAdapter.itemCount == 0) {
                     binding.rvTrend.visibility = View.VISIBLE
@@ -142,7 +142,7 @@ class NaviWriteFragment : BaseFragment<FragmentNaviWriteBinding>() {
                 searchShopAdapter.addAll(it.shopQueryResponseList)
             }
         }
-        naviWriteViewModel.isLoading.observe(viewLifecycleOwner) {
+        viewModel.isLoading.observe(viewLifecycleOwner) {
             if (it) {
                 showLoading()
             } else {
@@ -151,7 +151,7 @@ class NaviWriteFragment : BaseFragment<FragmentNaviWriteBinding>() {
         }
     }
     private fun locationCallback(latitude: Double, longitude: Double) {
-        naviWriteViewModel.setLocation(latitude, longitude)
+        viewModel.setLocation(latitude, longitude)
     }
     private fun onClickTrendKeyword(trendText: String) {
         binding.etSearch.setText(trendText)

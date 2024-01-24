@@ -8,7 +8,7 @@ import retrofit2.Response
 
 interface SearchDataSource {
     suspend fun getTrending(): Response<TrendResp>
-    suspend fun getSearchKeyword(word: String): Response<AutoKeywordResp>
+    suspend fun getSearchKeyword(word: String, locationBody: LocationBody): Response<AutoKeywordResp>
     suspend fun getShops(keyword: String, locationBody: LocationBody): Response<SearchShopResp>
     suspend fun getShopsPage(pageToken: String, locationBody: LocationBody): Response<SearchShopResp>
 }

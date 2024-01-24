@@ -7,7 +7,7 @@ import javax.inject.Inject
 class GetAutoCompleteKeywordUseCase @Inject constructor(
     private val searchRepository: SearchRepository
 ) {
-    suspend operator fun invoke(keyword: String): Flow<Result<List<String>>> {
-        return searchRepository.getSearchKeyword(keyword)
+    suspend operator fun invoke(keyword: String, lat: Double, lng: Double): Flow<Result<List<String>>> {
+        return searchRepository.getSearchKeyword(keyword, lat, lng)
     }
 }

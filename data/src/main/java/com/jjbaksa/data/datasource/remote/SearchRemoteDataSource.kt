@@ -18,8 +18,8 @@ class SearchRemoteDataSource @Inject constructor(
         return noAuthApi.getTrending()
     }
 
-    override suspend fun getSearchKeyword(word: String): Response<AutoKeywordResp> {
-        return noAuthApi.getSearchKeyword(word)
+    override suspend fun getSearchKeyword(word: String, locationBody: LocationBody): Response<AutoKeywordResp> {
+        return noAuthApi.getSearchKeyword(word, locationBody)
     }
 
     override suspend fun getShops(
