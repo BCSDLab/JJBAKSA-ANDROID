@@ -19,6 +19,9 @@ class UserRemoteDataSource @Inject constructor(
     private val authApi: AuthApi,
     private val noAuthApi: NoAuthApi
 ) : UserDataSource {
+    override suspend fun postLoginSNS(token: String, snsType: String): LoginResp =
+        noAuthApi.postLoginSNS(token, snsType)
+
     override suspend fun getUserMe(): Response<UserResp> {
         return authApi.getUserMe()
     }
