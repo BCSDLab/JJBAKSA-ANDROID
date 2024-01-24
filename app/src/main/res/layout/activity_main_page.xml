@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main_page_constraint_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragment_container_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            app:layout_constraintBottom_toTopOf="@id/navigation_view"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:defaultNavHost = "true"
+            app:navGraph="@navigation/nav_main_page"/>
+        <LinearLayout
+            android:id="@+id/navigation_view"
+            android:layout_width="match_parent"
+            android:layout_height="76dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:id="@+id/bottom_home"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_weight="1">
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_bottom_home"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/sel_ic_menu_item_home"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_bottom_home"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text="@string/menu_title_home"
+                    android:textColor="@color/sel_c4c4c4_666666"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/bottom_write"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_weight="1">
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_bottom_write"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_menu_item_write"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_bottom_write"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text="@string/menu_title_write"
+                    android:textColor="@color/sel_c4c4c4_666666"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/bottom_mypage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_weight="1">
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_bottom_mypage"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/sel_ic_menu_item_user"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_bottom_mypage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text="@string/menu_title_my_page"
+                    android:textColor="@color/sel_c4c4c4_666666"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

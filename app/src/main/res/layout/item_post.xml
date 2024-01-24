@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="16dp"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/post_title_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/color_000000"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintEnd_toStartOf="@id/recent_post_image_view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="[공지] 2023.10.20 서버 다운 관련 안내"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/recent_post_image_view"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:layout_marginStart="4dp"
+        android:src="@drawable/shape_circ_222222_solid"
+        android:tint="@color/color_ff7f23"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/post_title_text_view"
+        app:layout_constraintTop_toTopOf="@id/post_title_text_view" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/post_create_time_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/color_666666"
+        android:textSize="11sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/post_title_text_view"
+        tools:text="2023.10.28" />
+    
+    <View
+        android:layout_marginTop="16dp"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintTop_toBottomOf="@id/post_create_time_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

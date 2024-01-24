@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="16dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/inquiry_title_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:breakStrategy="simple"
+            android:bufferType="spannable"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:textColor="@color/color_000000"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/dropdown_image_view"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="이거 왜 이러죠?" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/dropdown_image_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_drop_down"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/inquiry_create_time_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/color_666666"
+            android:textSize="11sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/inquiry_title_text_view"
+            tools:text="2023.10.28" />
+
+        <View
+            android:id="@+id/line_view"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="4dp"
+            android:background="@color/color_666666"
+            app:layout_constraintBottom_toBottomOf="@id/inquiry_create_time_text_view"
+            app:layout_constraintStart_toEndOf="@id/inquiry_create_time_text_view"
+            app:layout_constraintTop_toTopOf="@id/inquiry_create_time_text_view" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/inquiry_nickname_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:textColor="@color/color_666666"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="@id/line_view"
+            app:layout_constraintStart_toEndOf="@id/line_view"
+            app:layout_constraintTop_toTopOf="@id/line_view"
+            tools:text="이병건이올씨다" />
+
+        <LinearLayout
+            android:id="@+id/answer_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/inquiry_create_time_text_view">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/answer_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_inquiry_answer"
+                android:padding="16dp"
+                android:textColor="@color/color_666666"
+                android:textSize="14sp"
+                tools:text="아직 답변이 없네요. 조금만 기다려주세요!" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider_view"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/color_eeeeee"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/answer_container" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

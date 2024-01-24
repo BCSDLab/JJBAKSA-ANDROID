@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="view"
+            type="com.jjbaksa.jjbaksa.ui.mainpage.home.NaviHomeFragment" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_layout_main_page"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_eeeeee">
+
+        <fragment
+            android:id="@+id/map"
+            android:name="com.naver.maps.map.MapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <com.naver.maps.map.widget.CompassView
+            android:id="@+id/naver_map_compass_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            app:layout_constraintStart_toStartOf="@+id/edit_text_main_page"
+            app:layout_constraintTop_toBottomOf="@+id/edit_text_main_page" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/edit_text_main_page"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="64dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/shape_rect_ccffffff_solid_radius_100"
+            android:drawableEnd="@drawable/ic_search_666666"
+            android:gravity="center_vertical"
+            android:hint="@string/main_page_search_edit_text_hint"
+            android:paddingStart="16dp"
+            android:paddingEnd="12dp"
+            android:textColor="@color/color_666666"
+            android:textColorHint="@color/color_666666"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@id/button_see_more"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/button_see_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:backgroundTint="@color/color_ffffff"
+            android:checked="true"
+            android:onClick="@{() -> view.seeMoreCategory()}"
+            app:borderWidth="0dp"
+            app:fabCustomSize="48dp"
+            app:layout_constraintBottom_toBottomOf="@+id/edit_text_main_page"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/edit_text_main_page"
+            app:layout_constraintTop_toTopOf="@id/edit_text_main_page"
+            app:maxImageSize="32dp"
+            app:srcCompat="@drawable/baseline_more_vert_24"
+            app:tint="@color/color_666666" />
+
+        <LinearLayout
+            android:id="@+id/category_linear_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/shape_rect_e6ffffff_stroke_eeeeee_radius_15"
+            android:orientation="vertical"
+            android:padding="15dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@id/button_see_more"
+            app:layout_constraintTop_toBottomOf="@id/button_see_more"
+            tools:visibility="visible">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/category_near_store_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:drawableStart="@drawable/ic_near_store"
+                android:drawablePadding="10dp"
+                android:text="@string/nearby_restaurant"
+                android:textColor="@color/color_666666"
+                android:textSize="14sp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/category_friend_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:drawableStart="@drawable/ic_friend"
+                android:drawablePadding="10dp"
+                android:text="@string/friend_restaurant"
+                android:textColor="@color/color_666666"
+                android:textSize="14sp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/category_bookmark_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_bookmark"
+                android:drawablePadding="16dp"
+                android:text="@string/bookmark_restaurant"
+                android:textColor="@color/color_666666"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/button_zoom_in"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="@color/color_ffffff"
+            android:onClick="@{() -> view.zoomIn()}"
+            app:borderWidth="0dp"
+            app:fabCustomSize="48dp"
+            app:layout_constraintBottom_toTopOf="@id/button_zoom_out"
+            app:layout_constraintStart_toStartOf="@id/button_check_location"
+            app:maxImageSize="32dp"
+            app:srcCompat="@drawable/ic_baseline_add_16"
+            app:tint="@color/color_666666" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/button_zoom_out"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="@color/color_ffffff"
+            android:onClick="@{() -> view.zoomOut()}"
+            app:borderWidth="0dp"
+            app:fabCustomSize="48dp"
+            app:layout_constraintBottom_toTopOf="@+id/button_check_location"
+            app:layout_constraintStart_toStartOf="@+id/button_check_location"
+            app:layout_constraintVertical_bias="0.8"
+            app:maxImageSize="32dp"
+            app:srcCompat="@drawable/ic_baseline_remove_16"
+            app:tint="@color/color_666666" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/button_check_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/color_ffffff"
+            android:onClick="@{() -> view.loadLocation()}"
+            app:borderWidth="0dp"
+            app:fabCustomSize="48dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:maxImageSize="32dp"
+            app:srcCompat="@drawable/ic_location"
+            app:tint="@color/color_ff7f23" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/search_current_location_button"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:background="@drawable/shape_rect_ffffff_solid_radius_20"
+            android:drawableStart="@drawable/ic_research"
+            android:drawablePadding="6dp"
+            android:onClick="@{() -> view.reloadLocation()}"
+            android:paddingHorizontal="12dp"
+            android:text="@string/check_the_real_location"
+            android:textColor="@color/color_ff7f23"
+            android:textSize="14sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/button_check_location"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.511"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:visibility="visible" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

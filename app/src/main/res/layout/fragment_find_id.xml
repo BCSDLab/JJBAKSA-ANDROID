@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.jjbaksa.jjbaksa.view.JjAppbar
+            android:id="@+id/jj_app_bar_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:titleSize="18sp"
+            app:titleTextColor="@color/color_000000" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/jj_app_bar_container">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/text_view_find_id_to_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="64dp"
+                    android:layout_marginTop="54dp"
+                    android:layout_marginEnd="74dp"
+                    android:text="@string/input_email_when_find_id_text"
+                    android:textColor="@color/color_222222"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/text_view_find_id_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="87dp"
+                    android:text="@string/email"
+                    android:textColor="@color/color_222222"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="@+id/edit_text_find_id_to_email"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_find_id_to_email" />
+
+                <EditText
+                    android:id="@+id/edit_text_find_id_to_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:width="216dp"
+                    android:height="30dp"
+                    android:background="@drawable/shape_rect_eeeeee_solid_radius_100_padding_7_11_11_8"
+                    android:hint="@string/input_email"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/color_222222"
+                    android:textColorHint="@color/color_c4c4c4"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_find_id_email" />
+
+                <Button
+                    android:id="@+id/button_find_id_send_to_verification_code"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="17dp"
+                    android:background="@drawable/sel_sign_up_button"
+                    android:enabled="false"
+                    android:text="@string/send_to_verification_number"
+                    android:textColor="@color/color_ffffff"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@+id/edit_text_find_id_to_email"
+                    app:layout_constraintStart_toStartOf="@+id/edit_text_find_id_to_email"
+                    app:layout_constraintTop_toBottomOf="@+id/edit_text_find_id_to_email" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

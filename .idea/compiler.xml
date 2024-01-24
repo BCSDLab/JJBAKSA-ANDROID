@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel target="1.8">
+      <module name="JJBAKSA.app" target="17" />
+      <module name="JJBAKSA.buildSrc" target="17" />
+      <module name="JJBAKSA.buildSrc.main" target="17" />
+      <module name="JJBAKSA.buildSrc.test" target="17" />
+      <module name="JJBAKSA.data" target="17" />
+      <module name="JJBAKSA.image_selector" target="17" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

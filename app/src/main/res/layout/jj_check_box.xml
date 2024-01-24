@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_layout_base_term_check_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <CheckBox
+            android:id="@+id/check_box_jj_check_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/sel_jj_check_box_check_box"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/image_button_jj_check_box_more_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:src="@drawable/sel_jj_check_box_more_info_closed"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/check_box_jj_check_box"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/check_box_jj_check_box" />
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nested_scroll_view_jj_check_box_more_info"
+            android:layout_width="match_parent"
+            android:layout_height="104dp"
+            android:background="@drawable/shape_rect_c4c4c4_stroke_radius_16"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@id/image_button_jj_check_box_more_info"
+            app:layout_constraintStart_toStartOf="@id/check_box_jj_check_box"
+            app:layout_constraintTop_toBottomOf="@id/check_box_jj_check_box"
+
+            android:scrollbarAlwaysDrawVerticalTrack="true"
+            android:scrollbarSize="5dp"
+
+            >
+
+            <TextView
+                android:id="@+id/text_view_jj_check_box_more_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

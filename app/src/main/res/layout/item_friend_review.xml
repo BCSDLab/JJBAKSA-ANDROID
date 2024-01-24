@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="24dp"
+    android:paddingTop="24dp">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/friend_review_profile_image_view"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@color/black" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/friend_review_name_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="9dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/color_222222"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toStartOf="@id/friend_review_account_text_view"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/friend_review_profile_image_view"
+        app:layout_constraintTop_toTopOf="@id/friend_review_profile_image_view"
+        tools:text="조돌이" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/friend_review_account_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/color_666666"
+        android:textSize="12sp"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toBottomOf="@id/friend_review_name_text_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/friend_review_name_text_view"
+        tools:text="codmso" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/friend_review_content_text_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/color_222222"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/friend_review_name_text_view"
+        app:layout_constraintTop_toBottomOf="@id/friend_review_name_text_view"
+        tools:text="학교 주변에 숨겨진 맛집. 주인 아주머니가 친절하시고 가 격도 싸다. 자주 방문할 것 같다." />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/friend_review_created_date_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:textColor="@color/color_666666"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@id/friend_review_content_text_view"
+        app:layout_constraintTop_toBottomOf="@id/friend_review_content_text_view"
+        tools:text="01/03" />
+
+    <View
+        android:id="@+id/friend_review_line_view"
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="4dp"
+        android:alpha="0.6"
+        android:background="@color/color_666666"
+        app:layout_constraintBottom_toBottomOf="@id/friend_review_created_date_text_view"
+        app:layout_constraintStart_toEndOf="@id/friend_review_created_date_text_view"
+        app:layout_constraintTop_toTopOf="@id/friend_review_created_date_text_view" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/review_star_count_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:drawableStart="@drawable/ic_review_star"
+        android:textColor="@color/color_666666"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/friend_review_created_date_text_view"
+        app:layout_constraintStart_toEndOf="@id/friend_review_line_view"
+        app:layout_constraintTop_toTopOf="@id/friend_review_created_date_text_view"
+        tools:drawableStart="@drawable/ic_review_star"
+        tools:text="4.0" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/my_friend_review_report_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_report"
+        android:text="@string/report"
+        android:textColor="@color/color_c4c4c4"
+        android:textSize="11sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/friend_review_created_date_text_view"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintTop_toBottomOf="@+id/review_star_count_text_view" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

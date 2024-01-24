@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.jjbaksa.jjbaksa"
+    tools:remove="android:appComponentFactory"
+    tools:targetApi="p"
+    tools:ignore="ObsoleteSdkInt">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <application
+        android:name=".JjbaksaApp"
+        android:allowBackup="false"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_main"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_main_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.JJBAKSAAOS"
+        tools:targetApi="33">
+        <activity
+            android:name=".ui.shop.ShopActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.pin.PinMyFriendReviewReportActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.pin.PinReviewWriteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.pin.PinActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.inquiry.WriteInquiryActivity"
+            android:exported="false" />
+        <activity android:name=".ui.inquiry.InquiryActivity" />
+        <activity
+            android:name=".ui.post.PostDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.post.PostActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.withdrawal.WithdrawalActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.splash.SplashActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.changepassword.ChangePasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.setting.SettingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.SampleActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.imageselector.gallery.GalleryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.findpassword.FindPasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.findid.FindIdActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.mainpage.MainPageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.signup.SignUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.social.SocialLoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.main.MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.login.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.search.SearchActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="oauth"
+                    android:scheme="@string/kakao_oauth_host" />
+            </intent-filter>
+        </activity>
+
+        <meta-data
+            android:name="com.naver.maps.map.CLIENT_ID"
+            android:value="@string/naver_maps_client_id" />
+    </application>
+
+</manifest>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:id="@+id/cl_j"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="5"
+        android:gravity="center_vertical"
+        android:layoutDirection="rtl"
+        android:background="@drawable/shape_rect_eeeeee_solid_radius_100">
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_j"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:visibility="gone"
+            android:layout_marginStart="16dp"
+            android:src="@drawable/sel_password_visibility"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_tail"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="11sp"
+            android:gravity="center"
+            android:layout_weight="0"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:visibility="gone"
+            android:text="@string/empty_review"
+            android:background="@drawable/bg_radius_100_tail_button"
+            android:textColor="@color/color_j_tail_text"/>
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/et_j"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColorHint="@color/color_c4c4c4"
+            android:gravity="center_vertical"
+            android:background="@null"
+            android:inputType="text"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="16dp"
+            android:layoutDirection="ltr"
+            android:hint="아이디를 입력하세요"
+            android:layout_marginStart="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/tv_tail" />
+
+    </LinearLayout>
+
+</layout>

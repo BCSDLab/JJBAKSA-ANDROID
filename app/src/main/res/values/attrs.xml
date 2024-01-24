@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="title" format="reference|string" />
+    <attr name="titleSize" format="reference|dimension" />
+    <attr name="content" format="reference|string"/>
+    <attr name="tailText" format="string" />
+    <attr name="tailImg" format="reference" />
+
+    <declare-styleable name="JjAppbar">
+        <attr name="title"/>
+        <attr name="titleSize" />
+        <attr name="titleTextColor" format="reference|color"/>
+    </declare-styleable>
+
+    <declare-styleable name="JjCheckBox">
+        <attr name="title" />
+        <attr name="has_moreInfo" format="reference|boolean" />
+        <attr name="moreInfo" format="reference|string" />
+        <attr name="checkBox_textSize" format="reference|dimension" />
+        <attr name="moreInfo_textSize" format="reference|dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="JjEditText">
+        <attr name="title" />
+        <attr name="titleSize" />
+        <attr name="button_text" format="reference|string" />
+        <attr name="button_textSize" format="reference|dimension" />
+        <attr name="hint" format="reference|string" />
+        <attr name="hintColor" format="reference|color"/>
+        <attr name="hintSize" format="reference|dimension"/>
+        <attr name="has_title" format="reference|boolean" />
+        <attr name="has_button" format="reference|boolean" />
+        <attr name="is_password" format="reference|boolean" />
+        <attr name="is_email" format="reference|boolean" />
+        <attr name="editText_gravity">
+            <flag name="top" value="0x30" />
+            <flag name="bottom" value="0x50" />
+            <flag name="left" value="0x03" />
+            <flag name="right" value="0x05" />
+            <flag name="center_vertical" value="0x10" />
+            <flag name="center_horizontal" value="0x01" />
+            <flag name="center" value="0x11" />
+            <flag name="start" value="0x00800003" />
+            <flag name="end" value="0x00800005" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="JjSmallEditText">
+    </declare-styleable>
+
+    <declare-styleable name="JjNoContentView">
+        <attr name="title"/>
+        <attr name="content"/>
+    </declare-styleable>
+
+    <declare-styleable name="JjMarker">
+        <attr name="markerCount" format="string"/>
+        <attr name="imageUrl" format="string"/>
+    </declare-styleable>
+
+    <declare-styleable name="JjLoadingView">
+        <attr name="loading" format="boolean"/>
+    </declare-styleable>
+    <declare-styleable name="JEditText">
+        <attr name="android:minHeight" />
+        <attr name="android:inputType" />
+        <attr name="android:hint" />
+        <attr name="android:text" />
+        <attr name="android:textSize" />
+        <attr name="android:maxLength" />
+        <attr name="tailText" />
+        <attr name="tailImg" />
+    </declare-styleable>
+</resources>

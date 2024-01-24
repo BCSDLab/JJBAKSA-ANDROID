@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <Button
+            android:id="@+id/confirm_dialog_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:text="ConfirmDialog"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:orientation="horizontal">
+            <RadioButton
+                android:id="@+id/rb"
+                style="@style/CircleCheckButton"
+                android:layout_width="16dp"
+                android:layout_height="16dp" />
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Regular.14"
+                android:text="개인정보 이용약관"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+            <androidx.appcompat.widget.AppCompatToggleButton
+                android:id="@+id/tb"
+                style="@style/CircleToggleButton"
+                android:layout_width="16dp"
+                android:layout_height="16dp" />
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Regular.14"
+                android:text="개인정보 이용약관"/>
+        </LinearLayout>
+        <androidx.appcompat.widget.AppCompatButton
+            style="@style/RadiusButton"
+            android:text="disable"
+            android:enabled="false"
+            android:layout_marginTop="20dp"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_enable"
+            style="@style/RadiusButton"
+            android:text="enable"
+            android:layout_marginTop="20dp"/>
+        <com.jjbaksa.jjbaksa.view.JEditText
+            android:id="@+id/jet_tailtext"
+            android:layout_width="match_parent"
+            android:layout_height="33dp"
+            android:inputType="text"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            app:tailText="@string/id_check"
+            android:maxLength="50"
+            android:hint="@string/id"/>
+        <com.jjbaksa.jjbaksa.view.JEditText
+            android:id="@+id/jet_tailimg"
+            android:layout_width="match_parent"
+            android:layout_height="33dp"
+            android:inputType="text"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            app:tailImg="@drawable/sel_password_visibility"
+            android:maxLength="50"
+            android:hint="@string/password"/>
+
+
+
+
+
+    </LinearLayout>
+
+</layout>
