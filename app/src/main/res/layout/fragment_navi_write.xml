@@ -109,7 +109,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxHeight="168dp"
-                android:visibility="gone"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:itemCount="4"
@@ -137,8 +136,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:textStyle="bold"
                 android:textSize="12sp"
-                android:textColor="@color/color_ff7f23"
-                />
+                android:textColor="@color/color_ff7f23" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_history"
@@ -146,9 +144,8 @@
                 android:layout_height="wrap_content"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintTop_toBottomOf="@id/tv_recent_search"
-                android:layout_marginTop="4dp"
-                android:visibility="gone" />
-            
+                android:layout_marginTop="4dp" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_shop"
