@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -47,6 +48,20 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
     private var locationOverlay: LocationOverlay? = null
 
     private lateinit var tedNaverClusteringBuilder: TedNaverClustering<ShopContent>
+
+    private var backClickTime = 0L
+
+    override var onBackPressedCallBack: OnBackPressedCallback? =
+        object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (System.currentTimeMillis() - backClickTime >= 2000L) {
+                    backClickTime = System.currentTimeMillis()
+                    showSnackBar(getString(R.string.back_finish))
+                } else {
+                    requireActivity().finish()
+                }
+            }
+        }
 
     private val fusedLocationUtil: FusedLocationUtil by lazy {
         FusedLocationUtil(

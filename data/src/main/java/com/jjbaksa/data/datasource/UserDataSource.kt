@@ -12,6 +12,7 @@ import com.jjbaksa.domain.model.user.WithdrawalReasonReq
 import retrofit2.Response
 
 interface UserDataSource {
+    suspend fun postLoginSNS(token: String, snsType: String): LoginResp
     suspend fun getUserMe(): Response<UserResp>
     suspend fun postLogin(loginReq: LoginReq): Response<LoginResp>
     suspend fun postUserEmailId(email: String): Response<Unit>

@@ -26,6 +26,10 @@ class UserLocalDataSource @Inject constructor(
     private val userDao: UserDao
 ) : UserDataSource {
     private val dataStore = context.userDataStore
+    override suspend fun postLoginSNS(token: String, snsType: String): LoginResp {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun getUserMe(): Response<UserResp> {
         TODO("Not yet implemented")
     }
