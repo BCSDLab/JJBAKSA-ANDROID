@@ -3,6 +3,7 @@ package com.jjbaksa.jjbaksa.ui.mainpage.write
 import androidx.lifecycle.viewModelScope
 import com.jjbaksa.domain.model.search.ShopData
 import com.jjbaksa.domain.usecase.GetAutoCompleteKeywordUseCase
+import com.jjbaksa.domain.usecase.GetSearchHistoryUseCase
 import com.jjbaksa.domain.usecase.GetSearchShopUseCase
 import com.jjbaksa.domain.usecase.GetTrendingSearchKeyword
 import com.jjbaksa.jjbaksa.base.BaseViewModel
@@ -15,7 +16,8 @@ import javax.inject.Inject
 class NaviWriteViewModel @Inject constructor(
     private val getTrendingSearchKeyword: GetTrendingSearchKeyword,
     private val getAutoCompleteKeywordUseCase: GetAutoCompleteKeywordUseCase,
-    private val getSearchShopUseCase: GetSearchShopUseCase
+    private val getSearchShopUseCase: GetSearchShopUseCase,
+    private val getSearchHistoryUseCase: GetSearchHistoryUseCase
 ) : BaseViewModel() {
     private var lat: Double = 0.0
     private var lng: Double = 0.0
@@ -27,6 +29,9 @@ class NaviWriteViewModel @Inject constructor(
 
     private val _shopData = SingleLiveEvent<ShopData>()
     val shopData: SingleLiveEvent<ShopData> get() = _shopData
+
+    private val _searchHistoryData = SingleLiveEvent<List<String>>()
+    val searchHistoryData: SingleLiveEvent<List<String>> get() = _searchHistoryData
 
     var comparePage: String = ""
 
@@ -73,5 +78,33 @@ class NaviWriteViewModel @Inject constructor(
     fun setLocation(lat: Double, lng: Double) {
         this.lat = lat
         this.lng = lng
+    }
+
+    fun getSearchHistory() {
+        viewModelScope.launch(ceh) {
+            getSearchHistoryUseCase().collect {
+                it.onSuccess { _searchHistoryData.value = it }
+            }
+        }
+    }
+    fun saveSearchHistory(keyword: String) {
+        viewModelScope.launch(ceh) {
+            if(isDuplicatedHistory(keyword)) {
+                deleteSearchHistory(keyword)
+            }
+            getSearchHistoryUseCase.saveSearchHistory(keyword)
+            _searchHistoryData.value = _searchHistoryData.value?.plus(keyword)
+        }
+    }
+
+    fun deleteSearchHistory(keyword: String) {
+        _searchHistoryData.value = _searchHistoryData.value?.filter { it != keyword }
+        viewModelScope.launch(ceh) {
+            getSearchHistoryUseCase.deleteSearchHistory(keyword)
+        }
+    }
+
+    private fun isDuplicatedHistory(keyword: String): Boolean {
+        return _searchHistoryData.value?.contains(keyword) ?: false
     }
 }
