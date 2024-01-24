@@ -35,4 +35,16 @@ class SearchRemoteDataSource @Inject constructor(
     ): Response<SearchShopResp> {
         return noAuthApi.getShopsPage(pageToken, locationBody)
     }
+
+    override suspend fun getSearchHistory(): String {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun saveSearchHistory(keyword: String) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun deleteSearchHistory(keyword: String) {
+        TODO("Not yet implemented")
+    }
 }

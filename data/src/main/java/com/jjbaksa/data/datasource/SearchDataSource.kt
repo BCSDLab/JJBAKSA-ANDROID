@@ -11,4 +11,7 @@ interface SearchDataSource {
     suspend fun getSearchKeyword(word: String, locationBody: LocationBody): Response<AutoKeywordResp>
     suspend fun getShops(keyword: String, locationBody: LocationBody): Response<SearchShopResp>
     suspend fun getShopsPage(pageToken: String, locationBody: LocationBody): Response<SearchShopResp>
+    suspend fun getSearchHistory(): String
+    suspend fun saveSearchHistory(keyword: String)
+    suspend fun deleteSearchHistory(keyword: String)
 }
