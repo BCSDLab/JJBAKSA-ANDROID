@@ -143,7 +143,7 @@ class NaviWriteFragment : BaseFragment<FragmentNaviWriteBinding>() {
             trendTextAdapter.submitList(it)
         }
         viewModel.searchHistoryData.observe(viewLifecycleOwner) {
-            searchHistoryAdapter.submitList(it)
+            searchHistoryAdapter.submitList(it.reversed())
         }
         viewModel.autoCompleteData.observe(viewLifecycleOwner) {
             autoCompleteKeywordAdapter.submitList(it)

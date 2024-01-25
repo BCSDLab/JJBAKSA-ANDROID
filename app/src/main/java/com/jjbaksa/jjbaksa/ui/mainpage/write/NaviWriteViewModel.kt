@@ -90,6 +90,9 @@ class NaviWriteViewModel @Inject constructor(
                 _searchHistoryData.value = _searchHistoryData.value?.filter { it != keyword }
             }
             _searchHistoryData.value = _searchHistoryData.value?.plus(keyword)
+            if((_searchHistoryData.value?.size ?: 0) > MAX_HISTORY_SIZE) {
+                _searchHistoryData.value = _searchHistoryData.value?.drop(1)
+            }
             getSearchHistoryUseCase.setSearchHistories(_searchHistoryData.value ?: listOf())
         }
     }
@@ -103,5 +106,9 @@ class NaviWriteViewModel @Inject constructor(
 
     private fun isDuplicatedHistory(keyword: String): Boolean {
         return _searchHistoryData.value?.contains(keyword) ?: false
+    }
+
+    companion object {
+        private const val MAX_HISTORY_SIZE = 6
     }
 }
