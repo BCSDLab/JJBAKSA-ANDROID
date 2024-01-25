@@ -6,23 +6,28 @@ import com.jjbaksa.data.model.search.AutoKeywordResp
 import com.jjbaksa.data.model.search.LocationBody
 import com.jjbaksa.data.model.search.SearchShopResp
 import com.jjbaksa.data.model.search.TrendResp
-import com.jjbaksa.domain.model.user.LoginReq
 import com.jjbaksa.data.model.user.LoginResp
 import com.jjbaksa.data.model.user.UserResp
 import com.jjbaksa.domain.model.user.FindPasswordReq
+import com.jjbaksa.domain.model.user.LoginReq
 import com.jjbaksa.domain.model.user.PasswordAndNicknameReq
 import com.jjbaksa.domain.model.user.SignUpReq
 import com.jjbaksa.domain.model.user.SignUpResp
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
 import retrofit2.http.Header
 import retrofit2.http.PATCH
+import retrofit2.http.POST
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface NoAuthApi {
+    @GET("login/{sns-type}")
+    suspend fun postLoginSNS(
+        @Header("Authorization") token: String,
+        @Path("sns-type") snsType: String
+    ): LoginResp
     @POST("user/login")
     suspend fun postLogin(
         @Body loginReq: LoginReq
