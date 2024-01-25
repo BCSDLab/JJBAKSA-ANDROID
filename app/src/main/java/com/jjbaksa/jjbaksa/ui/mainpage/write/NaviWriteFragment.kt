@@ -193,7 +193,7 @@ class NaviWriteFragment : BaseFragment<FragmentNaviWriteBinding>() {
     }
     private fun search(text: String) {
         binding.run {
-            rvKeyword.visibility = View.GONE
+            clKeywordHistory.visibility = View.GONE
             tvWriteTitle.visibility = View.GONE
             viewModel.searchKeyword(text)
             searchShopAdapter.clear()
