@@ -16,8 +16,8 @@ class FollowerRepositoryImpl @Inject constructor(
 ) : FollowerRepository {
 
     override suspend fun getFollower(
-        cursor: String,
-        pageSize: Int
+        cursor: String?,
+        pageSize: Int?
     ): Flow<Result<Follower>> {
         return apiCall(
             call = { followerRemoteDataSource.getFollower(cursor, pageSize) },

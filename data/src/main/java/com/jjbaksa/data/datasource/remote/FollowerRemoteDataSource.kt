@@ -12,8 +12,8 @@ class FollowerRemoteDataSource @Inject constructor(
     private val noAuthApi: NoAuthApi
 ) : FollowerDataSource {
     override suspend fun getFollower(
-        cursor: String,
-        pageSize: Int
+        cursor: String?,
+        pageSize: Int?
     ): Response<FollowerResp> {
         return authApi.getFollower(cursor, pageSize)
     }

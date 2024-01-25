@@ -11,8 +11,8 @@ class FollowerUseCase @Inject constructor(
     private val followerRepository: FollowerRepository
 ) {
     suspend fun getFollower(
-        cursor: String,
-        pageSize: Int
+        cursor: String?,
+        pageSize: Int?
     ): Flow<Result<Follower>> {
         return followerRepository.getFollower(cursor, pageSize)
     }

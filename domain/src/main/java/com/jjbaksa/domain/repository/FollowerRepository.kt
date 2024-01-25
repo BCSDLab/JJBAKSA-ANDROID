@@ -7,8 +7,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface FollowerRepository {
     suspend fun getFollower(
-        cursor: String,
-        pageSize: Int
+        cursor: String?,
+        pageSize: Int?
     ): Flow<Result<Follower>>
 
 }

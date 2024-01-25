@@ -5,8 +5,8 @@ import retrofit2.Response
 
 interface FollowerDataSource {
     suspend fun getFollower(
-        cursor: String,
-        pageSize: Int
+        cursor: String?,
+        pageSize: Int?
     ): Response<FollowerResp>
 
 }
