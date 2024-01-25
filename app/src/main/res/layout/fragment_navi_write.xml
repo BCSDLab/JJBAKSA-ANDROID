@@ -101,7 +101,6 @@
             android:orientation="vertical"
             android:visibility="visible"
             android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@+id/rv_trend">
 
             <androidx.recyclerview.widget.RecyclerView
@@ -110,6 +109,8 @@
                 android:layout_height="wrap_content"
                 android:maxHeight="168dp"
                 android:visibility="gone"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="9dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:itemCount="4"
@@ -121,6 +122,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/recent_search"
                 android:layout_marginStart="10dp"
+                android:layout_marginTop="24dp"
                 android:textStyle="bold"
                 app:layout_constraintTop_toBottomOf="@id/rv_keyword"
                 app:layout_constraintStart_toStartOf="@id/rv_keyword"
