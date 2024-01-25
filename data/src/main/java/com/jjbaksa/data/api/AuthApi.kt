@@ -173,8 +173,8 @@ interface AuthApi {
 
     @GET("follow/followers")
     suspend fun getFollower(
-        @Query("pageSize") pageSize: String,
-        @Query("cursor") cursor: Int,
+        @Query("cursor") cursor: String?,
+        @Query("pageSize") pageSize: Int?,
     ): Response<FollowerResp>
 
 }
