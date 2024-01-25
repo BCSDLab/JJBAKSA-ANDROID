@@ -24,8 +24,14 @@ import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
     private val userRemoteDataSource: UserRemoteDataSource,
-    private val userLocalDataSource: UserLocalDataSource
+    private val userLocalDataSource: UserLocalDataSource,
 ) : UserRepository {
+    override suspend fun postLoginSNS(token: String, snsType: String): Result<Login> =
+        runCatching { userRemoteDataSource.postLoginSNS(token, snsType).toLoginResult() }.onSuccess {
+            userRemoteDataSource.saveAccessToken(it.accessToken)
+            userRemoteDataSource.saveRefreshToken(it.refreshToken)
+        }
+
     override suspend fun getUserMe(): Flow<Result<User>> {
         return apiCall(
             call = { userRemoteDataSource.getUserMe() },
@@ -51,7 +57,7 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun postLogin(
         account: String,
         password: String,
-        isAutoLogin: Boolean
+        isAutoLogin: Boolean,
     ): Flow<Result<Login>> {
         return apiCall(
             call = { userRemoteDataSource.postLogin(LoginReq(account, password)) },
@@ -77,7 +83,7 @@ class UserRepositoryImpl @Inject constructor(
     }
 
     override suspend fun postUserEmailCheck(
-        email: String
+        email: String,
     ): Flow<Result<Login>> {
         return apiCall(
             call = {
@@ -96,7 +102,7 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun postUserEmailId(
         email: String,
-        onError: (String) -> Unit
+        onError: (String) -> Unit,
     ): Flow<Result<Boolean>> {
         return apiCall(
             call = { userRemoteDataSource.postUserEmailId(email) },
@@ -115,7 +121,7 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun getUserId(
         email: String,
         code: String,
-        onError: (String) -> Unit
+        onError: (String) -> Unit,
     ): Flow<Result<String>> {
         return apiCall(
             call = { userRemoteDataSource.getUserId(email, code) },
@@ -134,7 +140,7 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun postUserEmailPassword(
         id: String,
         email: String,
-        onError: (String) -> Unit
+        onError: (String) -> Unit,
     ): Flow<Result<Boolean>> {
         return apiCall(
             call = { userRemoteDataSource.postUserEmailPassword(id, email) },
@@ -152,7 +158,7 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun postUserPassword(
         findPasswordReq: FindPasswordReq,
-        onError: (String) -> Unit
+        onError: (String) -> Unit,
     ): Flow<Result<Boolean>> {
         return apiCall(
             call = { userRemoteDataSource.postUserPassword(findPasswordReq) },
@@ -173,7 +179,7 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun setNewPassword(
         password: String,
-        onError: (String) -> Unit
+        onError: (String) -> Unit,
     ): Flow<Result<Boolean>> {
         return apiCall(
             call = {
@@ -199,7 +205,7 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun postUserCheckPassword(
         password: String,
-        onError: (String) -> Unit
+        onError: (String) -> Unit,
     ): Flow<Result<Boolean>> {
         return apiCall(
             call = { userRemoteDataSource.postUserCheckPassword(password) },
@@ -271,7 +277,7 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun postUserWithdrawReason(
         withdrawalReasonReq: WithdrawalReasonReq,
-        onError: (String) -> Unit
+        onError: (String) -> Unit,
     ): Flow<Result<Boolean>> {
         return apiCall(
             call = { userRemoteDataSource.postUserWithdrawReason(withdrawalReasonReq) },

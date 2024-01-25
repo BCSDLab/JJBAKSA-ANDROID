@@ -87,6 +87,8 @@ class MainPageActivity : BaseActivity<ActivityMainPageBinding>() {
         }
     }
     fun showHomeFragment() {
+        showFragment(naviHomeFragment, NaviHomeFragment.TAG)
+        binding.navigationView.visibility = View.VISIBLE
         binding.ivBottomHome.isSelected = true
         binding.tvBottomHome.isSelected = true
         binding.bottomHome.performClick()
@@ -101,6 +103,7 @@ class MainPageActivity : BaseActivity<ActivityMainPageBinding>() {
             tvBottomMypage.isSelected = false
         }
         val findFragment = supportFragmentManager.findFragmentByTag(tag)
+
         supportFragmentManager.fragments.forEach { fm ->
             supportFragmentManager.beginTransaction().hide(fm).commitAllowingStateLoss()
         }

@@ -12,6 +12,7 @@ import com.jjbaksa.jjbaksa.base.BaseFragment
 import com.jjbaksa.jjbaksa.databinding.FragmentNaviMyPageBinding
 import com.jjbaksa.jjbaksa.dialog.MyPageBottomSheetDialog
 import com.jjbaksa.jjbaksa.ui.mainpage.MainPageActivity
+import com.jjbaksa.jjbaksa.ui.mainpage.home.NaviHomeFragment
 import com.jjbaksa.jjbaksa.ui.mainpage.mypage.adapter.MyPageAdapter
 import com.jjbaksa.jjbaksa.ui.mainpage.mypage.viewmodel.MyPageViewModel
 import com.jjbaksa.jjbaksa.ui.setting.SettingActivity
@@ -24,15 +25,27 @@ class NaviMyPageFragment : BaseFragment<FragmentNaviMyPageBinding>() {
         get() = R.layout.fragment_navi_my_page
     private val viewModel: MyPageViewModel by activityViewModels()
 
+    private var backClickTime = 0L
+
     private val settingResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             // Handle SettingActivity result
         }
-    override var onBackPressedCallBack: OnBackPressedCallback? = object : OnBackPressedCallback(true) {
-        override fun handleOnBackPressed() {
-            (requireActivity() as MainPageActivity).showHomeFragment()
+    override var onBackPressedCallBack: OnBackPressedCallback? =
+        object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                (requireActivity() as MainPageActivity).showHomeFragment()
+
+                if (parentFragmentManager.findFragmentByTag(NaviHomeFragment.TAG)?.isVisible == true) {
+                    if (System.currentTimeMillis() - backClickTime >= 2000L) {
+                        backClickTime = System.currentTimeMillis()
+                        showSnackBar(getString(R.string.back_finish))
+                    } else {
+                        requireActivity().finish()
+                    }
+                }
+            }
         }
-    }
 
     override fun initView() {
         requireActivity().setExtendView(binding.myPageConstraintLayout)
