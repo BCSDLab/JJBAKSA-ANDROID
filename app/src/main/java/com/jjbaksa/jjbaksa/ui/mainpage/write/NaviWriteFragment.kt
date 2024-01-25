@@ -123,6 +123,7 @@ class NaviWriteFragment : BaseFragment<FragmentNaviWriteBinding>() {
                 }
             }
             etSearch.addTextChangedListener {
+                clKeywordHistory.visibility = View.VISIBLE
                 rvKeyword.visibility = View.VISIBLE
                 rvShop.visibility = View.GONE
                 viewModel.getAutoCompleteKeyword(it.toString())
