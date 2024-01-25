@@ -5,7 +5,7 @@ import com.jjbaksa.data.api.NoAuthApi
 import com.jjbaksa.data.datasource.FollowerDataSource
 import com.jjbaksa.data.model.follower.FollowRequestResp
 import com.jjbaksa.data.model.follower.FollowResp
-import com.jjbaksa.data.model.follower.FollowerResp
+import com.jjbaksa.data.model.follower.FollowerListResp
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -16,7 +16,7 @@ class FollowerRemoteDataSource @Inject constructor(
     override suspend fun getFollower(
         cursor: String?,
         pageSize: Int?
-    ): Response<FollowerResp> {
+    ): Response<FollowerListResp> {
         return authApi.getFollower(cursor, pageSize)
     }
 
