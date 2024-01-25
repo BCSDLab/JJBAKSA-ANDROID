@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.jjbaksa.domain.base.RespResult
 import com.jjbaksa.domain.enums.SignUpAlertEnum
+import com.jjbaksa.domain.model.user.Login
 import com.jjbaksa.domain.model.user.SignUpReq
 import com.jjbaksa.domain.usecase.CheckAccountAvailableUseCase
 import com.jjbaksa.domain.usecase.SignUpUseCase
@@ -24,8 +25,9 @@ class SignUpViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     private val _isSignUpSuccess = MutableLiveData<Boolean>()
-    private val _userEmailCheckState = SingleLiveEvent<Boolean>()
-    val userEmailCheckState: SingleLiveEvent<Boolean> get() = _userEmailCheckState
+
+    private val _login = SingleLiveEvent<Login>()
+    val login: SingleLiveEvent<Login> get() = _login
 
     val isSignUpSuccess: LiveData<Boolean>
         get() = _isSignUpSuccess
@@ -97,7 +99,7 @@ class SignUpViewModel @Inject constructor(
         viewModelScope.launch(ceh) {
             userUseCase.postUserEmailCheck(email).collect {
                 it.onSuccess {
-                    _userEmailCheckState.value = it.isSuccess
+                    _login.value = it
                 }
             }
         }

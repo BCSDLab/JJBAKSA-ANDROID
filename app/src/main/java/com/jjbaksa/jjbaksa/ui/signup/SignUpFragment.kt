@@ -3,11 +3,13 @@ package com.jjbaksa.jjbaksa.ui.signup
 import android.annotation.SuppressLint
 import android.text.Editable
 import android.text.InputType
+import android.util.Log
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.internal.TextWatcherAdapter
 import com.jjbaksa.domain.enums.SignUpAlertEnum
+import com.jjbaksa.domain.enums.SignUpAlertEnum.EMAIL_ALREADY_EXIST
 import com.jjbaksa.domain.enums.SignUpAlertEnum.EMAIL_NOT_FOUND
 import com.jjbaksa.domain.enums.SignUpAlertEnum.NEED_ID_CHECK
 import com.jjbaksa.domain.enums.SignUpAlertEnum.PASSWORD_NOT_MATCH
@@ -198,11 +200,12 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
             setAlert(it.alertType)
         }
 
-        signUpViewModel.userEmailCheckState.observe(viewLifecycleOwner) {
-            if (it) {
+        signUpViewModel.login.observe(viewLifecycleOwner) {
+            Log.d("Login", it.errorMessage)
+            if (it.isSuccess) {
                 findNavController().navigate(R.id.action_nav_graph_move_to_welcome)
             } else {
-                binding.buttonSignUpNext.isEnabled = false
+                showSnackBar(it.errorMessage)
             }
         }
     }
@@ -232,6 +235,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
             PASSWORD_RULE_NOT_MATCH -> context?.getString(R.string.password_rule_not_match)
             PASSWORD_NOT_MATCH -> context?.getString(R.string.password_not_match)
             NEED_ID_CHECK -> context?.getString(R.string.need_id_check)
+            EMAIL_ALREADY_EXIST -> context?.getString(R.string.email_already_exist)
         }
 
         return alertMsg
