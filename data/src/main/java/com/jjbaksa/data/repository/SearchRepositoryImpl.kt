@@ -3,14 +3,16 @@ package com.jjbaksa.data.repository
 import android.util.Log
 import com.jjbaksa.data.datasource.local.SearchLocalDataSource
 import com.jjbaksa.data.datasource.remote.SearchRemoteDataSource
-import com.jjbaksa.data.mapper.FormDataUtil
 import com.jjbaksa.data.mapper.toAutoKeyword
 import com.jjbaksa.data.mapper.toShopData
 import com.jjbaksa.data.model.apiCall
 import com.jjbaksa.data.model.search.LocationBody
 import com.jjbaksa.domain.repository.SearchRepository
 import com.jjbaksa.domain.model.search.ShopData
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class SearchRepositoryImpl @Inject constructor(
@@ -81,21 +83,12 @@ class SearchRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun getSearchHistory(
-    ): Flow<Result<List<String>>> {
-        return apiCall(
-            call = { searchLocalDataSource.getSearchHistory() },
-            mapper = {
-                FormDataUtil.jsonStringToList(it)
-            }
-        )
+    override fun getSearchHistory(
+    ): String {
+        return searchLocalDataSource.getSearchHistory()
     }
 
-    override suspend fun saveSearchHistory(keyword: String) {
-        searchLocalDataSource.saveSearchHistory(keyword)
-    }
-
-    override suspend fun deleteSearchHistory(keyword: String) {
-        searchLocalDataSource.deleteSearchHistory(keyword)
+    override suspend fun setSearchHistories(resultJsonString: String) {
+        searchLocalDataSource.setSearchHistories(resultJsonString)
     }
 }

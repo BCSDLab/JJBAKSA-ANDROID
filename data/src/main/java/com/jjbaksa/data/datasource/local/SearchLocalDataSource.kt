@@ -1,23 +1,28 @@
 package com.jjbaksa.data.datasource.local
 
 import android.content.Context
+import android.util.Log
 import androidx.datastore.preferences.core.edit
 import com.jjbaksa.data.database.SearchPreferenceKeys
-import com.jjbaksa.data.database.userDataStore
+import com.jjbaksa.data.database.searchDataStore
 import com.jjbaksa.data.datasource.SearchDataSource
 import com.jjbaksa.data.model.search.AutoKeywordResp
 import com.jjbaksa.data.model.search.LocationBody
 import com.jjbaksa.data.model.search.SearchShopResp
 import com.jjbaksa.data.model.search.TrendResp
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.runBlocking
 import retrofit2.Response
 
 class SearchLocalDataSource(
     @ApplicationContext context: Context,
 ) : SearchDataSource {
-    private val dataStore = context.userDataStore
+    private val dataStore = context.searchDataStore
     override suspend fun getTrending(): Response<TrendResp> {
         TODO("Not yet implemented")
     }
@@ -44,19 +49,15 @@ class SearchLocalDataSource(
     }
 
 
-    override suspend fun getSearchHistory(): String {
+    override fun getSearchHistory(): String {
         return runBlocking {
             dataStore.data.first()[SearchPreferenceKeys.SEARCH_HISTORY] ?: "[]"
         }
     }
 
-    override suspend fun saveSearchHistory(keyword: String) {
+    override suspend fun setSearchHistories(resultJsonString: String) {
         dataStore.edit {
-            it[SearchPreferenceKeys.SEARCH_HISTORY] = keyword
+            it[SearchPreferenceKeys.SEARCH_HISTORY] = resultJsonString
         }
-    }
-
-    override suspend fun deleteSearchHistory(keyword: String) {
-        TODO("DELETE SEARCH HISTORY")
     }
 }

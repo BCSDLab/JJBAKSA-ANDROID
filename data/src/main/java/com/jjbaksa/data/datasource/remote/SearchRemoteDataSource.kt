@@ -7,6 +7,7 @@ import com.jjbaksa.data.model.search.AutoKeywordResp
 import com.jjbaksa.data.model.search.LocationBody
 import com.jjbaksa.data.model.search.SearchShopResp
 import com.jjbaksa.data.model.search.TrendResp
+import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -36,15 +37,11 @@ class SearchRemoteDataSource @Inject constructor(
         return noAuthApi.getShopsPage(pageToken, locationBody)
     }
 
-    override suspend fun getSearchHistory(): String {
+    override fun getSearchHistory(): String {
         TODO("Not yet implemented")
     }
 
-    override suspend fun saveSearchHistory(keyword: String) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun deleteSearchHistory(keyword: String) {
+    override suspend fun setSearchHistories(resultJsonString: String) {
         TODO("Not yet implemented")
     }
 }

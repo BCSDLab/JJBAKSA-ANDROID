@@ -1,5 +1,6 @@
 package com.jjbaksa.jjbaksa.ui.mainpage.write
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.jjbaksa.domain.model.search.ShopData
 import com.jjbaksa.domain.usecase.GetAutoCompleteKeywordUseCase
@@ -80,27 +81,24 @@ class NaviWriteViewModel @Inject constructor(
         this.lng = lng
     }
 
-    fun getSearchHistory() {
-        viewModelScope.launch(ceh) {
-            getSearchHistoryUseCase().collect {
-                it.onSuccess { _searchHistoryData.value = it }
-            }
-        }
+    fun initSearchHistory() {
+        _searchHistoryData.value = getSearchHistoryUseCase()
     }
     fun saveSearchHistory(keyword: String) {
         viewModelScope.launch(ceh) {
             if(isDuplicatedHistory(keyword)) {
-                deleteSearchHistory(keyword)
+                _searchHistoryData.value = _searchHistoryData.value?.filter { it != keyword }
             }
-            getSearchHistoryUseCase.saveSearchHistory(keyword)
             _searchHistoryData.value = _searchHistoryData.value?.plus(keyword)
+            getSearchHistoryUseCase.setSearchHistories(_searchHistoryData.value ?: listOf())
+            Log.d("searchHistory", _searchHistoryData.value.toString())
         }
     }
 
     fun deleteSearchHistory(keyword: String) {
         _searchHistoryData.value = _searchHistoryData.value?.filter { it != keyword }
         viewModelScope.launch(ceh) {
-            getSearchHistoryUseCase.deleteSearchHistory(keyword)
+            getSearchHistoryUseCase.setSearchHistories(_searchHistoryData.value ?: listOf())
         }
     }
 

@@ -20,7 +20,6 @@ interface SearchRepository {
         lat: Double,
         lng: Double,
     ): Flow<Result<ShopData>>
-    suspend fun getSearchHistory(): Flow<Result<List<String>>>
-    suspend fun saveSearchHistory(keyword: String)
-    suspend fun deleteSearchHistory(keyword: String)
+    fun getSearchHistory(): String
+    suspend fun setSearchHistories(resultJsonString: String)
 }

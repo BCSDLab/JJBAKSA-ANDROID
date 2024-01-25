@@ -1,21 +1,31 @@
 package com.jjbaksa.domain.usecase
 
+import com.google.gson.GsonBuilder
+import com.jjbaksa.domain.model.user.Login
 import com.jjbaksa.domain.repository.SearchRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class GetSearchHistoryUseCase @Inject constructor(
     private val searchRepository: SearchRepository
 ) {
-    suspend operator fun invoke(): Flow<Result<List<String>>> {
-        return searchRepository.getSearchHistory()
+    operator fun invoke(): List<String> {
+        return searchRepository.getSearchHistory().toList()
+
     }
 
-    suspend fun saveSearchHistory(keyword: String) {
-        searchRepository.saveSearchHistory(keyword)
+    suspend fun setSearchHistories(histories: List<String>) {
+        searchRepository.setSearchHistories(histories.toJsonString())
     }
 
-    suspend fun deleteSearchHistory(keyword: String) {
-        searchRepository.deleteSearchHistory(keyword)
+    private fun String.toList(): List<String> {
+        return if(this != "[]")
+            GsonBuilder().create().fromJson(this, Array<String>::class.java).toList()
+        else listOf()
+    }
+
+    private fun List<String>.toJsonString(): String {
+        return GsonBuilder().create().toJson(this)
     }
 }

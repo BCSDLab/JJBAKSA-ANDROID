@@ -110,7 +110,7 @@ class NaviWriteFragment : BaseFragment<FragmentNaviWriteBinding>() {
             })
         }
         viewModel.getTrendingText()
-        viewModel.getSearchHistory()
+        viewModel.initSearchHistory()
     }
 
     override fun initEvent() {
