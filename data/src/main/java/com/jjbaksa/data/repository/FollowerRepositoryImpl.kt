@@ -1,9 +1,12 @@
 package com.jjbaksa.data.repository
 
 import com.jjbaksa.data.datasource.remote.FollowerRemoteDataSource
+import com.jjbaksa.data.mapper.follower.toFollowRequest
 import com.jjbaksa.data.mapper.follower.toFollower
 import com.jjbaksa.data.mapper.inquiry.toInquiry
 import com.jjbaksa.data.model.apiCall
+import com.jjbaksa.data.model.follower.FollowRequestResp
+import com.jjbaksa.domain.model.follower.FollowRequest
 import com.jjbaksa.domain.model.follower.Follower
 import com.jjbaksa.domain.model.inquiry.Inquiry
 import com.jjbaksa.domain.repository.FollowerRepository
@@ -29,6 +32,19 @@ class FollowerRepositoryImpl @Inject constructor(
                 }
             }
 
+        )
+    }
+
+    override suspend fun followRequest(userAccount: String?): Flow<Result<FollowRequest>> {
+        return apiCall(
+            call = { followerRemoteDataSource.followRequest(userAccount) },
+            mapper = {
+                if (it.isSuccessful) {
+                    it.body()?.toFollowRequest() ?: FollowRequest()
+                } else {
+                    FollowRequest()
+                }
+            }
         )
     }
 }

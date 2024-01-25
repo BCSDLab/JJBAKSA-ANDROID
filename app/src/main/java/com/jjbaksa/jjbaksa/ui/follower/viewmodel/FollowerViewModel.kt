@@ -34,5 +34,14 @@ class FollowerViewModel @Inject constructor(
         }
     }
 
+    fun followRequest(userAccount: String?) {
+        viewModelScope.launch(ceh) {
+            followerUseCase.followRequest(userAccount).collect {
+                it.onSuccess {
+                    Log.d("followUser", "success")
+                }
+            }
+        }
+    }
 
 }

@@ -1,5 +1,6 @@
 package com.jjbaksa.data.api
 
+import com.jjbaksa.data.model.follower.FollowRequestResp
 import com.jjbaksa.data.model.follower.FollowerResp
 import com.jjbaksa.data.model.follower.FollowerReviewShopsResp
 import com.jjbaksa.data.model.inquiry.InquiryContentResp
@@ -176,5 +177,13 @@ interface AuthApi {
         @Query("cursor") cursor: String?,
         @Query("pageSize") pageSize: Int?,
     ): Response<FollowerResp>
+
+
+    @POST("follow/requests")
+    suspend fun followRequest(
+        @Query("userAccount") userAccount: String?
+    ): Response<FollowRequestResp>
+
+
 
 }

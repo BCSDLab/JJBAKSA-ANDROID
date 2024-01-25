@@ -1,5 +1,6 @@
 package com.jjbaksa.domain.usecase.follower
 
+import com.jjbaksa.domain.model.follower.FollowRequest
 import com.jjbaksa.domain.model.follower.Follower
 import com.jjbaksa.domain.model.inquiry.Inquiry
 import com.jjbaksa.domain.model.inquiry.InquiryContent
@@ -17,4 +18,7 @@ class FollowerUseCase @Inject constructor(
         return followerRepository.getFollower(cursor, pageSize)
     }
 
+    suspend fun followRequest(userAccount: String?): Flow<Result<FollowRequest>> {
+        return followerRepository.followRequest(userAccount)
+    }
 }
