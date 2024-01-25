@@ -135,6 +135,9 @@ class NaviWriteFragment : BaseFragment<FragmentNaviWriteBinding>() {
                 KeyboardProvider(requireContext()).hideKeyboard(etSearch)
                 (requireActivity() as MainPageActivity).showHomeFragment()
             }
+            tvClearAll.setOnClickListener {
+                viewModel.clearSearchHistory()
+            }
         }
     }
 

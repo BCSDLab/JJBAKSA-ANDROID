@@ -104,6 +104,13 @@ class NaviWriteViewModel @Inject constructor(
         }
     }
 
+    fun clearSearchHistory() {
+        _searchHistoryData.value = emptyList()
+        viewModelScope.launch(ceh) {
+            getSearchHistoryUseCase.setSearchHistories(emptyList())
+        }
+    }
+
     private fun isDuplicatedHistory(keyword: String): Boolean {
         return _searchHistoryData.value?.contains(keyword) ?: false
     }
