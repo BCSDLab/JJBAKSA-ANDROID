@@ -91,7 +91,6 @@ class NaviWriteViewModel @Inject constructor(
             }
             _searchHistoryData.value = _searchHistoryData.value?.plus(keyword)
             getSearchHistoryUseCase.setSearchHistories(_searchHistoryData.value ?: listOf())
-            Log.d("searchHistory", _searchHistoryData.value.toString())
         }
     }
 

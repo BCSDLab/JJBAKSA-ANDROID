@@ -4,6 +4,7 @@ import android.content.Intent
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
+import android.util.Log
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.addTextChangedListener
@@ -94,6 +95,7 @@ class NaviWriteFragment : BaseFragment<FragmentNaviWriteBinding>() {
             rvTrend.adapter = trendTextAdapter
             rvKeyword.adapter = autoCompleteKeywordAdapter
             rvShop.adapter = searchShopAdapter
+            rvHistory.adapter = searchHistoryAdapter
 
             val linearLayoutManager = LinearLayoutManager(requireContext())
             rvShop.layoutManager = linearLayoutManager
