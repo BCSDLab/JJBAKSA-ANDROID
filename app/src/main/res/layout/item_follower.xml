@@ -27,7 +27,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/ic_launcher_background" />
-        <!-- app:img="@{vm.profileImage}" -->
+        <!--  app:img="@{vm.profileImage}"-->
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/follower_name_text_view"
             android:layout_width="276dp"
@@ -56,7 +56,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/inquiry_create_time_text_view"
+            android:id="@+id/follower_account_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
