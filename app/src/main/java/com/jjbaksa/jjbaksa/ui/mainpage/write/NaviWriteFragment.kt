@@ -129,6 +129,7 @@ class NaviWriteFragment : BaseFragment<FragmentNaviWriteBinding>() {
                 search(etSearch.text.toString())
             }
             appbarSearch.ivAppbarBack.setOnClickListener {
+                KeyboardProvider(requireContext()).hideKeyboard(etSearch)
                 (requireActivity() as MainPageActivity).showHomeFragment()
             }
         }
