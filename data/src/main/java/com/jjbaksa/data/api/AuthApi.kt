@@ -1,6 +1,7 @@
 package com.jjbaksa.data.api
 
 import com.jjbaksa.data.model.follower.FollowRequestResp
+import com.jjbaksa.data.model.follower.FollowResp
 import com.jjbaksa.data.model.follower.FollowerResp
 import com.jjbaksa.data.model.follower.FollowerReviewShopsResp
 import com.jjbaksa.data.model.inquiry.InquiryContentResp
@@ -185,5 +186,19 @@ interface AuthApi {
     ): Response<FollowRequestResp>
 
 
+    @POST("follow/requests/{request_id}/accept")
+    suspend fun followRequestAccept(
+        @Path("request_id") userAccount: String
+    ): Response<FollowResp>
+
+    @POST("follow/requests/{request_id}/cancel")
+    suspend fun followRequestCancle(
+        @Path("request_id") userAccount: String
+    ): Response<Unit>
+
+    @POST("follow/requests/{request_id}/reject")
+    suspend fun followRequestReject(
+        @Path("request_id") userAccount: String
+    ): Response<Unit>
 
 }

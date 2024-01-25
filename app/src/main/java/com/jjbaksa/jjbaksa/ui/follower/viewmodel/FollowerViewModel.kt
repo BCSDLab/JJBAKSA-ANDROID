@@ -2,11 +2,9 @@ package com.jjbaksa.jjbaksa.ui.follower.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.viewModelScope
-import com.jjbaksa.domain.enums.InquiryCursor
-import com.jjbaksa.domain.model.follower.Follower
-import com.jjbaksa.domain.model.inquiry.Inquiry
+import com.jjbaksa.domain.enums.FollowCursor
+import com.jjbaksa.domain.model.follower.FollowerList
 import com.jjbaksa.domain.usecase.follower.FollowerUseCase
-import com.jjbaksa.domain.usecase.inquiry.InquiryUseCase
 import com.jjbaksa.jjbaksa.base.BaseViewModel
 import com.jjbaksa.jjbaksa.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,9 +15,10 @@ import javax.inject.Inject
 class FollowerViewModel @Inject constructor(
     private val followerUseCase: FollowerUseCase
 ) : BaseViewModel() {
-    private val _followerList = SingleLiveEvent<Follower>()
-    val followerList: SingleLiveEvent<Follower> get() = _followerList
+    private val _followerListList = SingleLiveEvent<FollowerList>()
+    val followerList: SingleLiveEvent<FollowerList> get() = _followerListList
     val followerHasMore = SingleLiveEvent<Boolean>()
+    var followState : Enum<FollowCursor> = FollowCursor.UNFOLLOW
 
     fun getFollower(cursor: String?, pageSize: Int) {
         viewModelScope.launch(ceh) {
@@ -34,13 +33,27 @@ class FollowerViewModel @Inject constructor(
         }
     }
 
-    fun followRequest(userAccount: String?) {
+    fun followRequest(userAccount: String) {
         viewModelScope.launch(ceh) {
-            followerUseCase.followRequest(userAccount).collect {
-                it.onSuccess {
-                    Log.d("followUser", "success")
+            when(followState) {
+                FollowCursor.FOLLOW -> {
+                    followState = FollowCursor.UNFOLLOW
+                    followerUseCase.followRequest(userAccount).collect {
+                        it.onSuccess {
+                            Log.d("FollowerViewModel", "followRequest: $it")
+                        }
+                    }
+                }
+                FollowCursor.UNFOLLOW -> {
+                    followState = FollowCursor.FOLLOW
+                    followerUseCase.followRequestCancle(userAccount).collect {
+                        it.onSuccess {
+                            Log.d("FollowerViewModel", "followRequest: $it")
+                        }
+                    }
                 }
             }
+
         }
     }
 

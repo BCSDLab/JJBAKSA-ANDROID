@@ -46,7 +46,7 @@
             app:layout_constraintTop_toTopOf="@+id/profile_image_view"
             tools:text="김동글" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/dropdown_image_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
             android:background="@drawable/ic_follow_back"
             android:gravity="center"
             />
-
+<!--    "-->
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/follower_account_text_view"
             android:layout_width="wrap_content"
