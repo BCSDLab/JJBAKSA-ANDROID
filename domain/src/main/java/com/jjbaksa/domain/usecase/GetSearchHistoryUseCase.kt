@@ -1,10 +1,7 @@
 package com.jjbaksa.domain.usecase
 
 import com.google.gson.GsonBuilder
-import com.jjbaksa.domain.model.user.Login
 import com.jjbaksa.domain.repository.SearchRepository
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class GetSearchHistoryUseCase @Inject constructor(
@@ -12,7 +9,6 @@ class GetSearchHistoryUseCase @Inject constructor(
 ) {
     operator fun invoke(): List<String> {
         return searchRepository.getSearchHistory().toList()
-
     }
 
     suspend fun setSearchHistories(histories: List<String>) {
@@ -20,7 +16,7 @@ class GetSearchHistoryUseCase @Inject constructor(
     }
 
     private fun String.toList(): List<String> {
-        return if(this != "[]")
+        return if (this != "[]")
             GsonBuilder().create().fromJson(this, Array<String>::class.java).toList()
         else listOf()
     }

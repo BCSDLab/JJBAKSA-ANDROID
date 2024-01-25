@@ -1,7 +1,6 @@
 package com.jjbaksa.data.datasource.local
 
 import android.content.Context
-import android.util.Log
 import androidx.datastore.preferences.core.edit
 import com.jjbaksa.data.database.SearchPreferenceKeys
 import com.jjbaksa.data.database.searchDataStore
@@ -11,11 +10,7 @@ import com.jjbaksa.data.model.search.LocationBody
 import com.jjbaksa.data.model.search.SearchShopResp
 import com.jjbaksa.data.model.search.TrendResp
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.runBlocking
 import retrofit2.Response
 
@@ -47,7 +42,6 @@ class SearchLocalDataSource(
     ): Response<SearchShopResp> {
         TODO("Not yet implemented")
     }
-
 
     override fun getSearchHistory(): String {
         return runBlocking {

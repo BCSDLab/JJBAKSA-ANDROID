@@ -4,7 +4,6 @@ import com.jjbaksa.data.model.search.AutoKeywordResp
 import com.jjbaksa.data.model.search.LocationBody
 import com.jjbaksa.data.model.search.SearchShopResp
 import com.jjbaksa.data.model.search.TrendResp
-import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 
 interface SearchDataSource {

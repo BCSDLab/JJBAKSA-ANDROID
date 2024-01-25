@@ -1,6 +1,5 @@
 package com.jjbaksa.jjbaksa.ui.mainpage.write
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.jjbaksa.domain.model.search.ShopData
 import com.jjbaksa.domain.usecase.GetAutoCompleteKeywordUseCase
@@ -86,11 +85,11 @@ class NaviWriteViewModel @Inject constructor(
     }
     fun saveSearchHistory(keyword: String) {
         viewModelScope.launch(ceh) {
-            if(isDuplicatedHistory(keyword)) {
+            if (isDuplicatedHistory(keyword)) {
                 _searchHistoryData.value = _searchHistoryData.value?.filter { it != keyword }
             }
             _searchHistoryData.value = _searchHistoryData.value?.plus(keyword)
-            if((_searchHistoryData.value?.size ?: 0) > MAX_HISTORY_SIZE) {
+            if ((_searchHistoryData.value?.size ?: 0) > MAX_HISTORY_SIZE) {
                 _searchHistoryData.value = _searchHistoryData.value?.drop(1)
             }
             getSearchHistoryUseCase.setSearchHistories(_searchHistoryData.value ?: listOf())
