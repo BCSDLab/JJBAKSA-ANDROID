@@ -5,5 +5,5 @@ import com.jjbaksa.domain.model.user.User
 
 data class FollowRequestCheck(
     @SerializedName("content")
-    val content: FollowContent = FollowContent()
+    val content: List<FollowContent> = listOf(),
 )

@@ -4,6 +4,6 @@ import com.google.gson.annotations.SerializedName
 
 data class FollowRequestCheckResp(
     @SerializedName("content")
-    val content: FollowContentResp = FollowContentResp()
+    val content: List<FollowContentResp> = listOf(),
 
 )

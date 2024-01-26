@@ -41,6 +41,6 @@ class FollowerRemoteDataSource @Inject constructor(
     }
 
     override suspend fun followRequestCheck(page: Int?, pageSize: Int?): Response<FollowRequestCheckResp> {
-        return authApi.followRequestCheck(page, pageSize)
+        return authApi.followRequestCheck(page, pageSize).apply { Log.e("으아아아아ㅏ", "followRequestCheck: $this") }
     }
 }

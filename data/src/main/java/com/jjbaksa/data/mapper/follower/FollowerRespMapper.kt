@@ -31,7 +31,7 @@ fun FollowResp.toFollow() = Follow(
 )
 
 fun FollowRequestCheckResp.toFollowRequestCheck() = FollowRequestCheck(
-    content = content.toFollowContent()
+    content = content?.map { it.toFollowContent() }.orEmpty()
 )
 
 

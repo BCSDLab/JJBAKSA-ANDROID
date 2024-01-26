@@ -207,6 +207,6 @@ interface AuthApi {
     @GET("follow/requests/receive")
     suspend fun followRequestCheck(
         @Query("page") page: Int?,
-        @Query("pageSize") size: Int?
+        @Query("pageSize") pageSize: Int?
     ): Response<FollowRequestCheckResp>
 }

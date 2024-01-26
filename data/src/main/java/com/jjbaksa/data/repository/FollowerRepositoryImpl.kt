@@ -91,6 +91,7 @@ class FollowerRepositoryImpl @Inject constructor(
             mapper = {
                 if (it.isSuccessful) {
                     it.body()?.toFollowRequestCheck() ?: FollowRequestCheck()
+
                 } else {
                     FollowRequestCheck()
                 }
