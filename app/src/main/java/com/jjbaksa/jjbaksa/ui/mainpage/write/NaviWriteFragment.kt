@@ -217,6 +217,11 @@ class NaviWriteFragment : BaseFragment<FragmentNaviWriteBinding>() {
         super.onStop()
     }
 
+    override fun onResume() {
+        viewModel.initSearchHistory()
+        super.onResume()
+    }
+
     companion object {
         fun newInstance() = NaviWriteFragment()
         val TAG = "NaviWriteFragment"
