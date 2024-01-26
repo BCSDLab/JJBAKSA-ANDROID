@@ -51,11 +51,41 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_drop_down"
             android:text="@string/following"
+            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:background="@drawable/ic_following_back"
             android:gravity="center"
             />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/delete_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_drop_down"
+            android:text="@string/delete"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@drawable/ic_following_back"
+            android:gravity="center"
+            />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/accept_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_drop_down"
+            android:text="@string/accept"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toStartOf="@+id/delete_button"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@drawable/ic_following_back"
+            android:backgroundTint="#F6BF54"
+            android:textColor="@color/white"
+            android:gravity="center"
+            />
+
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/follower_account_text_view"
