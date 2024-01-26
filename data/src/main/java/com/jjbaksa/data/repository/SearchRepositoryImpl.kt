@@ -2,7 +2,6 @@ package com.jjbaksa.data.repository
 
 import com.jjbaksa.data.datasource.local.SearchLocalDataSource
 import com.jjbaksa.data.datasource.remote.SearchRemoteDataSource
-import com.jjbaksa.data.mapper.toAutoKeyword
 import com.jjbaksa.data.mapper.toShopData
 import com.jjbaksa.data.model.apiCall
 import com.jjbaksa.data.model.search.LocationBody
@@ -37,7 +36,7 @@ class SearchRepositoryImpl @Inject constructor(
             call = { searchRemoteDataSource.getSearchKeyword(word, LocationBody(lat, lng)) },
             mapper = {
                 if (it.isSuccessful) {
-                    it.body()!!.toAutoKeyword().autoCompletes
+                    it.body() ?: listOf()
                 } else {
                     listOf()
                 }

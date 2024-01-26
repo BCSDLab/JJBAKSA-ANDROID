@@ -3,7 +3,6 @@ package com.jjbaksa.data.datasource.remote
 import com.jjbaksa.data.api.AuthApi
 import com.jjbaksa.data.api.NoAuthApi
 import com.jjbaksa.data.datasource.SearchDataSource
-import com.jjbaksa.data.model.search.AutoKeywordResp
 import com.jjbaksa.data.model.search.LocationBody
 import com.jjbaksa.data.model.search.SearchShopResp
 import com.jjbaksa.data.model.search.TrendResp
@@ -18,7 +17,7 @@ class SearchRemoteDataSource @Inject constructor(
         return noAuthApi.getTrending()
     }
 
-    override suspend fun getSearchKeyword(word: String, locationBody: LocationBody): Response<AutoKeywordResp> {
+    override suspend fun getSearchKeyword(word: String, locationBody: LocationBody): Response<List<String>> {
         return noAuthApi.getSearchKeyword(word, locationBody)
     }
 

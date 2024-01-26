@@ -5,7 +5,6 @@ import androidx.datastore.preferences.core.edit
 import com.jjbaksa.data.database.SearchPreferenceKeys
 import com.jjbaksa.data.database.searchDataStore
 import com.jjbaksa.data.datasource.SearchDataSource
-import com.jjbaksa.data.model.search.AutoKeywordResp
 import com.jjbaksa.data.model.search.LocationBody
 import com.jjbaksa.data.model.search.SearchShopResp
 import com.jjbaksa.data.model.search.TrendResp
@@ -25,7 +24,7 @@ class SearchLocalDataSource(
     override suspend fun getSearchKeyword(
         word: String,
         locationBody: LocationBody,
-    ): Response<AutoKeywordResp> {
+    ): Response<List<String>> {
         TODO("Not yet implemented")
     }
 

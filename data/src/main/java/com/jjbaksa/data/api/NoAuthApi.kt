@@ -2,7 +2,6 @@ package com.jjbaksa.data.api
 
 import com.jjbaksa.data.model.post.PostDetailResp
 import com.jjbaksa.data.model.post.PostResp
-import com.jjbaksa.data.model.search.AutoKeywordResp
 import com.jjbaksa.data.model.search.LocationBody
 import com.jjbaksa.data.model.search.SearchShopResp
 import com.jjbaksa.data.model.search.TrendResp
@@ -78,7 +77,7 @@ interface NoAuthApi {
     suspend fun getSearchKeyword(
         @Query("query") query: String,
         @Body locationBody: LocationBody
-    ): Response<AutoKeywordResp>
+    ): Response<List<String>>
 
     @POST("shops")
     suspend fun getShops(
