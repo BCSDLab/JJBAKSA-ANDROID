@@ -11,12 +11,29 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/follower_recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="300dp"
             android:layout_marginTop="64dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/item_follower" />
 
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/item_follow" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black"
+            app:layout_constraintBottom_toBottomOf="@+id/follower_recycler_view"></View>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/follow_request_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/follower_recycler_view"
+            app:layout_constraintVertical_bias="1.0"
+            tools:layout_editor_absoluteX="0dp"
+            tools:listitem="@layout/item_follow" />
 
         <com.jjbaksa.jjbaksa.view.JjLoadingView
             android:id="@+id/loading_view"

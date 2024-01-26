@@ -7,27 +7,27 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.jjbaksa.domain.model.user.User
-import com.jjbaksa.jjbaksa.databinding.ItemFollowerBinding
+import com.jjbaksa.jjbaksa.databinding.ItemFollowBinding
 
 class FollowerAdapter(
     private val onButtonClicked: (User) -> Unit,
 ) : ListAdapter<User, FollowerAdapter.ViewHolder>(diffUtil) {
 
-    inner class ViewHolder(private val binding: ItemFollowerBinding) :
+    inner class ViewHolder(private val binding: ItemFollowBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: User) {
             binding.followerNameTextView.text = item.nickname
             binding.followerAccountTextView.text = item.account
             binding.followButton.setOnClickListener {
                 onButtonClicked(item)
-
+                
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            ItemFollowerBinding.inflate(
+            ItemFollowBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
