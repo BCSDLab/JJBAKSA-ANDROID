@@ -31,7 +31,13 @@ class FollowerFragment() : BaseFragment<FragmentFollowerBinding>() {
 
     override fun initView() {
         viewModel.getFollower(null, 10)
-        followerAdapter = FollowerAdapter(requireContext())
+        followerAdapter = FollowerAdapter() {
+            if(viewModel.unfollowedUsers.contains(it.account)) {
+                viewModel.followRequest(it.account)
+            } else {
+                viewModel.followerDelete(it.account)
+            }
+        }
         linearLayoutManager = LinearLayoutManager(requireContext())
         binding.followerRecyclerView.apply {
             layoutManager = linearLayoutManager
@@ -57,6 +63,8 @@ class FollowerFragment() : BaseFragment<FragmentFollowerBinding>() {
                     }
                 }
             })
+
+
     }
 
     override fun subscribe() {
@@ -71,5 +79,4 @@ class FollowerFragment() : BaseFragment<FragmentFollowerBinding>() {
             }
         }
     }
-
 }

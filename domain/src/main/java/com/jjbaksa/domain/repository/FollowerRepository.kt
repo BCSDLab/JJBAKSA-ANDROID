@@ -13,7 +13,7 @@ interface FollowerRepository {
 
     suspend fun followRequest(userAccount: String?): Flow<Result<FollowRequest>>
     suspend fun followRequestAccept(userAccount: String): Flow<Result<Follow>>
-    suspend fun followRequestCancle(userAccount: String): Flow<Result<Unit>>
+    suspend fun followerDelete(userAccount: String): Flow<Result<Unit>>
     suspend fun followRequestReject(userAccount: String): Flow<Result<Unit>>
 
 }

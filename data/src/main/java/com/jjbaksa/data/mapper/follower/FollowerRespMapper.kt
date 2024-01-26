@@ -15,9 +15,8 @@ fun FollowerListResp.toFollower() = FollowerList(
 
 fun FollowRequestResp.toFollowRequest() = FollowRequest(
     follower = follower?.toUser(),
-    followerCountResp = followerCountResp?.toUserCount(),
     user = user?.toUser(),
-    userCountResp = userCountResp?.toUserCount()
+    id = id
 )
 
 fun FollowResp.toFollow() = Follow(

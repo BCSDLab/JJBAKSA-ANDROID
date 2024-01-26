@@ -5,6 +5,7 @@ import com.jjbaksa.data.mapper.follower.toFollow
 import com.jjbaksa.data.mapper.follower.toFollowRequest
 import com.jjbaksa.data.mapper.follower.toFollower
 import com.jjbaksa.data.model.apiCall
+import com.jjbaksa.data.model.follower.FollowReq
 import com.jjbaksa.domain.model.follower.Follow
 import com.jjbaksa.domain.model.follower.FollowRequest
 import com.jjbaksa.domain.model.follower.FollowerList
@@ -36,7 +37,7 @@ class FollowerRepositoryImpl @Inject constructor(
 
     override suspend fun followRequest(userAccount: String?): Flow<Result<FollowRequest>> {
         return apiCall(
-            call = { followerRemoteDataSource.followRequest(userAccount) },
+            call = { followerRemoteDataSource.followRequest(FollowReq(userAccount)) },
             mapper = {
                 if (it.isSuccessful) {
                     it.body()?.toFollowRequest() ?: FollowRequest()
@@ -60,15 +61,11 @@ class FollowerRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun followRequestCancle(userAccount: String): Flow<Result<Unit>> {
+    override suspend fun followerDelete(userAccount: String): Flow<Result<Unit>> {
         return apiCall(
-            call = { followerRemoteDataSource.followRequestCancle(userAccount) },
+            call = { followerRemoteDataSource.followerDelete(FollowReq(userAccount)) },
             mapper = {
-                if (it.isSuccessful) {
-                    Unit
-                } else {
-                    Unit
-                }
+                Unit
             }
         )
     }

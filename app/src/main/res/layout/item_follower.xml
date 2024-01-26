@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="vm"
-            type="com.jjbaksa.jjbaksa.ui.follower.viewmodel.FollowerViewModel" />
+            name="view"
+            type="com.jjbaksa.jjbaksa.ui.follower.FollowerFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -41,24 +41,23 @@
             android:textColor="@color/color_000000"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@id/dropdown_image_view"
+            app:layout_constraintEnd_toStartOf="@id/follow_button"
             app:layout_constraintStart_toEndOf="@+id/profile_image_view"
             app:layout_constraintTop_toTopOf="@+id/profile_image_view"
             tools:text="김동글" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/dropdown_image_view"
+            android:id="@+id/follow_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_drop_down"
             android:text="@string/follow"
-            android:onClick="@{() -> vm.followRequest()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:background="@drawable/ic_follow_back"
             android:gravity="center"
             />
-<!--    "-->
+<!--           "-->
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/follower_account_text_view"
             android:layout_width="wrap_content"

@@ -8,12 +8,7 @@ import com.jjbaksa.data.model.user.UserResp
 data class FollowRequestResp  (
     @SerializedName("follower")
     val follower: UserResp? = UserResp(),
-    @SerializedName("userCountResponse")
-    val followerCountResp: UserCountResp? = UserCountResp(),
     @SerializedName("user")
     val user: UserResp? = UserResp(),
-    @SerializedName("userCountResponse")
-    val userCountResp: UserCountResp? = UserCountResp(),
-
-
+    @SerializedName("id") val id: Long = 0,
 )

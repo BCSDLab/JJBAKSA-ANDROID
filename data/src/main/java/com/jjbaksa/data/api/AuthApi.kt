@@ -2,6 +2,7 @@ package com.jjbaksa.data.api
 
 import com.jjbaksa.data.model.follower.FollowRequestResp
 import com.jjbaksa.data.model.follower.FollowResp
+import com.jjbaksa.data.model.follower.FollowReq
 import com.jjbaksa.data.model.follower.FollowerListResp
 import com.jjbaksa.data.model.follower.FollowerReviewShopsResp
 import com.jjbaksa.data.model.inquiry.InquiryContentResp
@@ -26,6 +27,7 @@ import com.jjbaksa.domain.model.user.PasswordAndNicknameReq
 import com.jjbaksa.domain.model.user.WithdrawalReasonReq
 import retrofit2.http.Body
 import retrofit2.http.DELETE
+import retrofit2.http.HTTP
 import retrofit2.http.Multipart
 import retrofit2.http.PATCH
 import retrofit2.http.POST
@@ -182,7 +184,7 @@ interface AuthApi {
 
     @POST("follow/requests")
     suspend fun followRequest(
-        @Query("userAccount") userAccount: String?
+        @Body userAccount: FollowReq
     ): Response<FollowRequestResp>
 
 
@@ -191,14 +193,13 @@ interface AuthApi {
         @Path("request_id") userAccount: String
     ): Response<FollowResp>
 
-    @POST("follow/requests/{request_id}/cancel")
-    suspend fun followRequestCancle(
-        @Path("request_id") userAccount: String
+    @HTTP(method = "DELETE", path = "follow/followers", hasBody = true)
+    suspend fun followerDelete(
+        @Body userAccount: FollowReq
     ): Response<Unit>
 
-    @POST("follow/requests/{request_id}/reject")
+    @DELETE("follow/requests/{request_id}/reject")
     suspend fun followRequestReject(
         @Path("request_id") userAccount: String
     ): Response<Unit>
-
 }

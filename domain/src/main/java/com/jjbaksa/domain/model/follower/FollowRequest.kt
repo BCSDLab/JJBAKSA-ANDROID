@@ -7,10 +7,7 @@ import com.jjbaksa.domain.model.user.UserCount
 data class FollowRequest (
     @SerializedName("follower")
     val follower: User? = User(),
-    @SerializedName("userCountResponse")
-    val followerCountResp: UserCount? = UserCount(),
     @SerializedName("user")
     val user: User? = User(),
-    @SerializedName("userCountResponse")
-    val userCountResp: UserCount? = UserCount()
+    @SerializedName("id") val id: Long = 0,
 )
