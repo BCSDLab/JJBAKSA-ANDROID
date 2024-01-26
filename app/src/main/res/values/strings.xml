@@ -205,4 +205,5 @@
     <string name="last_review_date">마지막 리뷰 %s</string>
     <string name="schedule">%s ~ %s</string>
     <string name="id_format_not_match">올바른 형식의 아이디가 아닙니다.</string>
+    <string name="email_already_exist">이미 회원가입된 이메일입니다.</string>
 </resources>
