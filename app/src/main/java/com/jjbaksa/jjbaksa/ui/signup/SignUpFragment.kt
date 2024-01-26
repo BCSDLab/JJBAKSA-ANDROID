@@ -3,7 +3,6 @@ package com.jjbaksa.jjbaksa.ui.signup
 import android.annotation.SuppressLint
 import android.text.Editable
 import android.text.InputType
-import android.util.Log
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -18,14 +17,12 @@ import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseFragment
 import com.jjbaksa.jjbaksa.databinding.FragmentSignUpBinding
 import com.jjbaksa.jjbaksa.dialog.ConfirmDialog
-import com.jjbaksa.jjbaksa.ui.findpassword.FindPasswordResetFragment
 import com.jjbaksa.jjbaksa.util.RegexUtil.isPasswordRuleMatch
 import com.jjbaksa.jjbaksa.ui.signup.viewmodel.SignUpViewModel
 import com.jjbaksa.jjbaksa.util.KeyboardProvider
 import com.jjbaksa.jjbaksa.util.RegexUtil
 import com.jjbaksa.jjbaksa.util.RegexUtil.checkEmailFormat
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.math.sign
 
 @AndroidEntryPoint
 class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {

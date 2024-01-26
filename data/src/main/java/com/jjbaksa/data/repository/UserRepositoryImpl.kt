@@ -1,7 +1,6 @@
 package com.jjbaksa.data.repository
 
 import android.net.Uri
-import android.util.Log
 import com.jjbaksa.data.datasource.local.UserLocalDataSource
 import com.jjbaksa.data.datasource.remote.UserRemoteDataSource
 import com.jjbaksa.data.mapper.FormDataUtil
