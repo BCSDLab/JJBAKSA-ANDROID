@@ -2,6 +2,7 @@ package com.jjbaksa.domain.usecase.follower
 
 import com.jjbaksa.domain.model.follower.Follow
 import com.jjbaksa.domain.model.follower.FollowRequest
+import com.jjbaksa.domain.model.follower.FollowRequestCheck
 import com.jjbaksa.domain.model.follower.FollowerList
 import com.jjbaksa.domain.repository.FollowerRepository
 import kotlinx.coroutines.flow.Flow
@@ -21,15 +22,20 @@ class FollowerUseCase @Inject constructor(
         return followerRepository.followRequest(userAccount)
     }
 
-    suspend fun followRequestAccept(userAccount: String): Flow<Result<Follow>> {
-        return followerRepository.followRequestAccept(userAccount)
-    }
     suspend fun followerDelete(userAccount: String): Flow<Result<Unit>> {
         return followerRepository.followerDelete(userAccount)
     }
 
+    suspend fun followRequestAccept(userAccount: String): Flow<Result<Follow>> {
+        return followerRepository.followRequestAccept(userAccount)
+    }
     suspend fun followRequestReject(userAccount: String): Flow<Result<Unit>> {
         return followerRepository.followRequestReject(userAccount)
     }
+
+    suspend fun followRequestCheck(page: Int? ,pageSize: Int?): Flow<Result<FollowRequestCheck>> {
+        return followerRepository.followRequestCheck(page, pageSize)
+    }
+
 
 }

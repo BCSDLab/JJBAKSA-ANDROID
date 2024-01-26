@@ -3,6 +3,7 @@ package com.jjbaksa.data.api
 import com.jjbaksa.data.model.follower.FollowRequestResp
 import com.jjbaksa.data.model.follower.FollowResp
 import com.jjbaksa.data.model.follower.FollowReq
+import com.jjbaksa.data.model.follower.FollowRequestCheckResp
 import com.jjbaksa.data.model.follower.FollowerListResp
 import com.jjbaksa.data.model.follower.FollowerReviewShopsResp
 import com.jjbaksa.data.model.inquiry.InquiryContentResp
@@ -181,6 +182,10 @@ interface AuthApi {
         @Query("pageSize") pageSize: Int?,
     ): Response<FollowerListResp>
 
+    @HTTP(method = "DELETE", path = "follow/followers", hasBody = true)
+    suspend fun followerDelete(
+        @Body userAccount: FollowReq
+    ): Response<Unit>
 
     @POST("follow/requests")
     suspend fun followRequest(
@@ -193,13 +198,15 @@ interface AuthApi {
         @Path("request_id") userAccount: String
     ): Response<FollowResp>
 
-    @HTTP(method = "DELETE", path = "follow/followers", hasBody = true)
-    suspend fun followerDelete(
-        @Body userAccount: FollowReq
-    ): Response<Unit>
 
     @DELETE("follow/requests/{request_id}/reject")
     suspend fun followRequestReject(
         @Path("request_id") userAccount: String
     ): Response<Unit>
+
+    @GET("follow/requests/receive")
+    suspend fun followRequestCheck(
+        @Query("page") page: Int?,
+        @Query("pageSize") size: Int?
+    ): Response<FollowRequestCheckResp>
 }

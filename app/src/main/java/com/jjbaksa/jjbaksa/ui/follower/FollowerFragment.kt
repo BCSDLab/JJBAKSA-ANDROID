@@ -15,6 +15,7 @@ import com.jjbaksa.domain.enums.InquiryCursor
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseFragment
 import com.jjbaksa.jjbaksa.databinding.FragmentFollowerBinding
+import com.jjbaksa.jjbaksa.dialog.DoubleConfirmDialog
 import com.jjbaksa.jjbaksa.ui.follower.adapter.FollowerAdapter
 import com.jjbaksa.jjbaksa.ui.follower.viewmodel.FollowerViewModel
 import com.jjbaksa.jjbaksa.ui.inquiry.adapter.InquiryAllAdapter

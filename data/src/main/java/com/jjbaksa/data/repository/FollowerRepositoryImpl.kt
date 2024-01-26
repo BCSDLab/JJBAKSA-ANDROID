@@ -3,11 +3,13 @@ package com.jjbaksa.data.repository
 import com.jjbaksa.data.datasource.remote.FollowerRemoteDataSource
 import com.jjbaksa.data.mapper.follower.toFollow
 import com.jjbaksa.data.mapper.follower.toFollowRequest
+import com.jjbaksa.data.mapper.follower.toFollowRequestCheck
 import com.jjbaksa.data.mapper.follower.toFollower
 import com.jjbaksa.data.model.apiCall
 import com.jjbaksa.data.model.follower.FollowReq
 import com.jjbaksa.domain.model.follower.Follow
 import com.jjbaksa.domain.model.follower.FollowRequest
+import com.jjbaksa.domain.model.follower.FollowRequestCheck
 import com.jjbaksa.domain.model.follower.FollowerList
 import com.jjbaksa.domain.repository.FollowerRepository
 import kotlinx.coroutines.flow.Flow
@@ -75,10 +77,22 @@ class FollowerRepositoryImpl @Inject constructor(
         return apiCall(
             call = { followerRemoteDataSource.followRequestReject(userAccount) },
             mapper = {
+                Unit
+            }
+        )
+    }
+
+    override suspend fun followRequestCheck(
+        page: Int?,
+        pageSize: Int?
+    ): Flow<Result<FollowRequestCheck>> {
+        return apiCall(
+            call = { followerRemoteDataSource.followRequestCheck(page, pageSize) },
+            mapper = {
                 if (it.isSuccessful) {
-                    Unit
+                    it.body()?.toFollowRequestCheck() ?: FollowRequestCheck()
                 } else {
-                    Unit
+                    FollowRequestCheck()
                 }
             }
         )
