@@ -1,6 +1,7 @@
 package com.jjbaksa.data.repository
 
 import android.net.Uri
+import android.util.Log
 import com.jjbaksa.data.datasource.local.UserLocalDataSource
 import com.jjbaksa.data.datasource.remote.UserRemoteDataSource
 import com.jjbaksa.data.mapper.FormDataUtil
@@ -221,8 +222,13 @@ class UserRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun postSignUp(signUpReq: SignUpReq): SignUpResp? {
+    override suspend fun postSignUp(signUpReq: SignUpReq, onError: (String) -> Unit): SignUpResp? {
         val resp = userRemoteDataSource.postSignUp(signUpReq)
+        if (!resp.isSuccessful) {
+            val errorBodyJson = resp.errorBody()!!.string()
+            val errorBody = RespMapper.errorMapper(errorBodyJson)
+            onError(errorBody.errorMessage)
+        }
         return resp.body()
     }
 

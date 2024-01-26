@@ -25,6 +25,7 @@ import com.jjbaksa.jjbaksa.util.KeyboardProvider
 import com.jjbaksa.jjbaksa.util.RegexUtil
 import com.jjbaksa.jjbaksa.util.RegexUtil.checkEmailFormat
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.math.sign
 
 @AndroidEntryPoint
 class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
@@ -169,27 +170,41 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
         binding.buttonSignUpNext.setOnClickListener {
             checkInputsCorrect()
             if (!signUpViewModel.uiState.value?.isAlertShown!!) {
-                signUpViewModel.postUserEmailCheck(signUpViewModel.email)
-                if (signUpViewModel.uiState.value?.isIdChecked == true) {
-                    ConfirmDialog(
-                        getString(R.string.sign_up_title_text),
-                        getString(R.string.sign_up_content_text),
-                        getString(R.string.confirm),
-                        {
-                            findNavController().navigate(R.id.action_nav_graph_move_to_welcome)
-                            dismissDialog()
+                signUpViewModel.signUpRequest(
+                    {
+                        if (signUpViewModel.uiState.value?.isIdChecked == true && signUpViewModel.isSignUpSuccess) {
+                            signUpViewModel.postUserEmailCheck(signUpViewModel.email)
+                            ConfirmDialog(
+                                getString(R.string.sign_up_title_text),
+                                getString(R.string.sign_up_content_text),
+                                getString(R.string.confirm),
+                                {
+                                    findNavController().navigate(R.id.action_nav_graph_move_to_welcome)
+                                    dismissDialog()
+                                }
+                            ).show(parentFragmentManager, DIALOG_TAG)
+                        } else {
+                            signUpViewModel.updateAlertType(NEED_ID_CHECK)
+                            signUpViewModel.updateAlertState(true)
                         }
-                    ).show(parentFragmentManager, FindPasswordResetFragment.DIALOG_TAG)
-                } else {
-                    signUpViewModel.updateAlertType(NEED_ID_CHECK)
+                    }
+                ) {
+                    KeyboardProvider(requireContext()).run {
+                        hideKeyboard(binding.jEditTextSignUpId)
+                        hideKeyboard(binding.jEditTextSignUpEmail)
+                        hideKeyboard(binding.jEditTextSignUpPassword)
+                        hideKeyboard(binding.jEditTextSignUpPasswordConfirm)
+                    }
+                    showSnackBar(it)
                     signUpViewModel.updateAlertState(true)
+                    signUpViewModel.isSignUpSuccess = false
                 }
             }
         }
     }
 
     private fun dismissDialog() {
-        val dialogFragment = parentFragmentManager.findFragmentByTag(FindPasswordResetFragment.DIALOG_TAG)
+        val dialogFragment = parentFragmentManager.findFragmentByTag(DIALOG_TAG)
         if (dialogFragment is DialogFragment) {
             dialogFragment.dismiss()
         }
@@ -201,9 +216,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
         }
 
         signUpViewModel.login.observe(viewLifecycleOwner) {
-            Log.d("Login", it.errorMessage)
             if (it.isSuccess) {
-                findNavController().navigate(R.id.action_nav_graph_move_to_welcome)
             } else {
                 showSnackBar(it.errorMessage)
             }
@@ -273,5 +286,9 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
                     binding.jEditTextSignUpPasswordConfirm.setEditTextAlertImg(!isPasswordConfirmed)
                 }
         }
+    }
+
+    companion object {
+        private const val DIALOG_TAG = "DIALOG_TAG"
     }
 }

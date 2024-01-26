@@ -1,6 +1,5 @@
 package com.jjbaksa.jjbaksa.ui.signup.viewmodel
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.jjbaksa.domain.base.RespResult
@@ -24,13 +23,8 @@ class SignUpViewModel @Inject constructor(
     private val userUseCase: UserUseCase
 ) : BaseViewModel() {
 
-    private val _isSignUpSuccess = MutableLiveData<Boolean>()
-
     private val _login = SingleLiveEvent<Login>()
     val login: SingleLiveEvent<Login> get() = _login
-
-    val isSignUpSuccess: LiveData<Boolean>
-        get() = _isSignUpSuccess
 
     val userEmail = MutableLiveData<String>("")
     private val _uiState = SingleLiveEvent<SignUpUIState>()
@@ -41,6 +35,8 @@ class SignUpViewModel @Inject constructor(
     var password: String = ""
     var passwordCheck: String = ""
     var nickname: String = ""
+
+    var isSignUpSuccess = true
 
     init {
         _uiState.value = SignUpUIState()
@@ -81,13 +77,14 @@ class SignUpViewModel @Inject constructor(
         _uiState.value = _uiState.value?.copy(alertType = newAlertType)
     }
 
-    fun signUpRequest() {
+    fun signUpRequest(onSuccess: () -> Unit, onError: (String) -> Unit) {
         val signUpReq = SignUpReq(id, email, nickname, password)
         viewModelScope.launch {
             runCatching {
-                signUpUseCase(signUpReq)
+                isSignUpSuccess = true
+                signUpUseCase(signUpReq, onError)
             }.onSuccess {
-                _isSignUpSuccess.value = true
+                onSuccess()
             }.onFailure {
                 // Handle sign up fail throwable
             }
@@ -102,6 +99,12 @@ class SignUpViewModel @Inject constructor(
                     _login.value = it
                 }
             }
+        }
+    }
+
+    fun setNewNickname(nickname: String) {
+        viewModelScope.launch(ceh) {
+            userUseCase.setNewNickname(nickname)
         }
     }
 }

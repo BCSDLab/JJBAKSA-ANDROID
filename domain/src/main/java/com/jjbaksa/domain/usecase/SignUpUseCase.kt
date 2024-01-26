@@ -8,7 +8,7 @@ import javax.inject.Inject
 class SignUpUseCase @Inject constructor(
     private val userRepository: UserRepository
 ) {
-    suspend operator fun invoke(signUpReq: SignUpReq): SignUpResp? {
-        return userRepository.postSignUp(signUpReq)
+    suspend operator fun invoke(signUpReq: SignUpReq, onError: (String) -> Unit): SignUpResp? {
+        return userRepository.postSignUp(signUpReq, onError)
     }
 }
