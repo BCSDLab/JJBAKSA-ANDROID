@@ -1,9 +1,11 @@
 package com.jjbaksa.domain.usecase.user
 
+import com.jjbaksa.domain.model.follower.FollowerList
 import com.jjbaksa.domain.model.user.FindPasswordReq
 import com.jjbaksa.domain.model.user.User
 import com.jjbaksa.domain.repository.UserRepository
 import com.jjbaksa.domain.model.user.Login
+import com.jjbaksa.domain.model.user.UserList
 import com.jjbaksa.domain.model.user.WithdrawalReasonReq
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -104,7 +106,7 @@ class UserUseCase @Inject constructor(
         keyWord: String?,
         pageSize: Int,
         cursor: Long
-    ): Flow<Result<List<User>>> {
+    ): Flow<Result<UserList>> {
         return userRepository.getUserSearch(keyWord, pageSize, cursor)
     }
 }

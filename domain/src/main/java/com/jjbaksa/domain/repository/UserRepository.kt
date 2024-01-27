@@ -1,11 +1,13 @@
 package com.jjbaksa.domain.repository
 
 import com.jjbaksa.domain.base.RespResult
+import com.jjbaksa.domain.model.follower.FollowerList
 import com.jjbaksa.domain.model.user.User
 import com.jjbaksa.domain.model.user.FindPasswordReq
 import com.jjbaksa.domain.model.user.Login
 import com.jjbaksa.domain.model.user.SignUpReq
 import com.jjbaksa.domain.model.user.SignUpResp
+import com.jjbaksa.domain.model.user.UserList
 import com.jjbaksa.domain.model.user.WithdrawalReasonReq
 import kotlinx.coroutines.flow.Flow
 
@@ -66,5 +68,5 @@ interface UserRepository {
         cursor: String?,
         dateCursor: Int,
         size: Long
-    ): Flow<Result<List<User>>>
+    ): Flow<Result<UserList>>
 }
