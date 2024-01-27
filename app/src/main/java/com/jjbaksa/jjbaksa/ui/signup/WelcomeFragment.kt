@@ -1,7 +1,9 @@
 package com.jjbaksa.jjbaksa.ui.signup
 
 import android.annotation.SuppressLint
+import android.os.Bundle
 import android.text.Editable
+import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.internal.TextWatcherAdapter
@@ -15,18 +17,26 @@ import dagger.hilt.android.AndroidEntryPoint
 class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
 
     private val signUpViewModel: SignUpViewModel by activityViewModels()
+    protected override var onBackPressedCallBack: OnBackPressedCallback? = object :
+        OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            activity?.finish()
+        }
+    }
     override val layoutId: Int
         get() = R.layout.fragment_welcome
     override fun initView() {}
 
-    override fun initEvent() {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                activity?.finish()
-            }
-        }
-        )
+        onBackPressedCallBack?.let { requireActivity().onBackPressedDispatcher.addCallback(it) }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+    }
+    override fun initEvent() {
 
         with(binding) {
 
@@ -44,13 +54,8 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
             )
 
             buttonWelcomeComplete.setOnClickListener {
-
-                signUpViewModel.signUpRequest()
-                signUpViewModel.isSignUpSuccess.observe(viewLifecycleOwner) {
-                    if (it) {
-                        activity?.finish()
-                    }
-                }
+                signUpViewModel.setNewNickname(binding.jEditTextWelcomeName.text)
+                activity?.finish()
             }
         }
     }

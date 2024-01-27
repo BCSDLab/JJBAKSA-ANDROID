@@ -207,4 +207,5 @@
     <string name="id_format_not_match">올바른 형식의 아이디가 아닙니다.</string>
     <string name="recent_search">최근 검색</string>
     <string name="clear_all">전체삭제</string>
+    <string name="email_already_exist">이미 회원가입된 이메일입니다.</string>
 </resources>
