@@ -16,8 +16,8 @@ class FollowerAdapter(
     inner class ViewHolder(private val binding: ItemFollowBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: User) {
-            binding.followerNameTextView.text = item.nickname
-            binding.followerAccountTextView.text = item.account
+            binding.followNameTextView.text = item.nickname
+            binding.followAccountTextView.text = "@" +item.account
             binding.followButton.setOnClickListener {
                 onButtonClicked(item)
                 

@@ -28,7 +28,7 @@
             tools:src="@drawable/ic_launcher_background" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/follower_name_text_view"
+            android:id="@+id/follow_name_text_view"
             android:layout_width="0dp"
             android:layout_height="26dp"
             android:layout_marginStart="16dp"
@@ -88,14 +88,14 @@
 
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/follower_account_text_view"
+            android:id="@+id/follow_account_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:textColor="@color/black"
             android:textSize="11sp"
-            app:layout_constraintStart_toStartOf="@+id/follower_name_text_view"
-            app:layout_constraintTop_toBottomOf="@id/follower_name_text_view"
+            app:layout_constraintStart_toStartOf="@+id/follow_name_text_view"
+            app:layout_constraintTop_toBottomOf="@id/follow_name_text_view"
             tools:text="acsfgsdgd" />
 
 

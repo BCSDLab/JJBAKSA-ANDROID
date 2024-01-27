@@ -19,8 +19,8 @@ class FollowRequestCheckAdapter(
     inner class ViewHolder(private val binding: ItemFollowBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: FollowContent) {
-            binding.followerNameTextView.text = item.user?.nickname
-            binding.followerAccountTextView.text = item.user?.account
+            binding.followNameTextView.text = item.user?.nickname
+            binding.followAccountTextView.text = "@" +item.user?.account
 
             binding.followButton.isVisible = false
             binding.acceptButton.isVisible = true
