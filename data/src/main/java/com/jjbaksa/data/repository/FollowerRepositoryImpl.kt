@@ -50,18 +50,7 @@ class FollowerRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun followRequestAccept(userAccount: String): Flow<Result<Follow>> {
-        return apiCall(
-            call = { followerRemoteDataSource.followRequestAccept(userAccount) },
-            mapper = {
-                if (it.isSuccessful) {
-                    it.body()?.toFollow() ?: Follow()
-                } else {
-                    Follow()
-                }
-            }
-        )
-    }
+
 
     override suspend fun followerDelete(userAccount: String): Flow<Result<Unit>> {
         return apiCall(
@@ -72,10 +61,22 @@ class FollowerRepositoryImpl @Inject constructor(
         )
     }
 
-
-    override suspend fun followRequestReject(userAccount: String): Flow<Result<Unit>> {
+    override suspend fun followRequestAccept(userId : Long): Flow<Result<Follow>> {
         return apiCall(
-            call = { followerRemoteDataSource.followRequestReject(userAccount) },
+            call = { followerRemoteDataSource.followRequestAccept(userId) },
+            mapper = {
+                if (it.isSuccessful) {
+                    it.body()?.toFollow() ?: Follow()
+                } else {
+                    Follow()
+                }
+            }
+        )
+    }
+
+    override suspend fun followRequestReject(userId : Long): Flow<Result<Unit>> {
+        return apiCall(
+            call = { followerRemoteDataSource.followRequestReject(userId) },
             mapper = {
                 Unit
             }

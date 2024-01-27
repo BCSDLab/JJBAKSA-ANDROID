@@ -7,7 +7,7 @@ data class FollowContent (
     @SerializedName("follower")
     val follower: User = User(),
     @SerializedName("id")
-    val id : Int = 0,
+    val id : Long = 0,
     @SerializedName("user")
     val user: User = User()
 )

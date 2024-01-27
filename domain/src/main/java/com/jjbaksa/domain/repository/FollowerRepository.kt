@@ -13,9 +13,10 @@ interface FollowerRepository {
     ): Flow<Result<FollowerList>>
 
     suspend fun followRequest(userAccount: String?): Flow<Result<FollowRequest>>
-    suspend fun followRequestAccept(userAccount: String): Flow<Result<Follow>>
     suspend fun followerDelete(userAccount: String): Flow<Result<Unit>>
-    suspend fun followRequestReject(userAccount: String): Flow<Result<Unit>>
+    suspend fun followRequestAccept(userId: Long): Flow<Result<Follow>>
+
+    suspend fun followRequestReject(userId: Long): Flow<Result<Unit>>
     suspend fun followRequestCheck(page: Int?, pageSize: Int?): Flow<Result<FollowRequestCheck>>
 
 }

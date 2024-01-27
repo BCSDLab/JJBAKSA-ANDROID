@@ -26,8 +26,7 @@ fun FollowRequestResp.toFollowRequest() = FollowRequest(
 )
 
 fun FollowResp.toFollow() = Follow(
-    follower = follower?.toUser(),
-    followerCountResp = followerCountResp?.toUserCount()
+    follower = follower?.toUser()
 )
 
 fun FollowRequestCheckResp.toFollowRequestCheck() = FollowRequestCheck(

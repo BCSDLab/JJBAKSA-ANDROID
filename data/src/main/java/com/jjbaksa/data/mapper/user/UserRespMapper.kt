@@ -43,9 +43,9 @@ fun LoginResp.toLoginResult() = Login(
     isSuccess = true
 )
 fun FollowContentResp.toFollowContent() = FollowContent(
-    follower = follower?.toUser() ?: User(),
+    follower = follower.toUser(),
     id = id ?: 0,
-    user = user?.toUser() ?: User()
+    user = user.toUser()
 )
 
 

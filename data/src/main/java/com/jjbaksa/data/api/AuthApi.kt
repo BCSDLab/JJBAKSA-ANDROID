@@ -195,13 +195,13 @@ interface AuthApi {
 
     @POST("follow/requests/{request_id}/accept")
     suspend fun followRequestAccept(
-        @Path("request_id") userAccount: String
+        @Path("request_id") userId : Long
     ): Response<FollowResp>
 
 
     @DELETE("follow/requests/{request_id}/reject")
     suspend fun followRequestReject(
-        @Path("request_id") userAccount: String
+        @Path("request_id") userId : Long
     ): Response<Unit>
 
     @GET("follow/requests/receive")

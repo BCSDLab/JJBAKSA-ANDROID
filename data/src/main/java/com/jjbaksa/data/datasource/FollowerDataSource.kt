@@ -14,9 +14,10 @@ interface FollowerDataSource {
     ): Response<FollowerListResp>
 
     suspend fun followRequest(req: FollowReq): Response<FollowRequestResp>
-    suspend fun followRequestAccept(userAccount: String): Response<FollowResp>
     suspend fun followerDelete(req: FollowReq): Response<Unit>
-    suspend fun followRequestReject(userAccount: String): Response<Unit>
+    suspend fun followRequestAccept(userId : Long): Response<FollowResp>
+
+    suspend fun followRequestReject(userId : Long): Response<Unit>
 
     suspend fun followRequestCheck(page: Int?, pageSize: Int?): Response<FollowRequestCheckResp>
 }

@@ -4,10 +4,8 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.jjbaksa.domain.enums.FollowCursor
 import com.jjbaksa.domain.model.follower.FollowRequestCheck
 import com.jjbaksa.domain.model.follower.FollowerList
-import com.jjbaksa.domain.model.user.User
 import com.jjbaksa.domain.usecase.follower.FollowerUseCase
 import com.jjbaksa.jjbaksa.base.BaseViewModel
 import com.jjbaksa.jjbaksa.util.SingleLiveEvent
@@ -25,9 +23,9 @@ class FollowerViewModel @Inject constructor(
     val unfollowedUsers = mutableListOf<String>()
 
     private val _followRequestList = MutableLiveData<FollowRequestCheck>()
-    val followRequestList : LiveData<FollowRequestCheck> get() = _followRequestList
+    val followRequestList: LiveData<FollowRequestCheck> get() = _followRequestList
 
-    val followRequestHasMore= SingleLiveEvent<Boolean>()
+    val followRequestHasMore = SingleLiveEvent<Boolean>()
     fun getFollower(cursor: String?, pageSize: Int) {
         viewModelScope.launch(ceh) {
             followerUseCase.getFollower(cursor, pageSize).collect {
@@ -55,31 +53,32 @@ class FollowerViewModel @Inject constructor(
         viewModelScope.launch(ceh) {
             followerUseCase.followRequest(userAccount).collect {
                 it.onSuccess {
-                    if(unfollowedUsers.contains(userAccount)) {
-                       // unfollowedUsers.remove(userAccount)
+                    if (unfollowedUsers.contains(userAccount)) {
+                        // unfollowedUsers.remove(userAccount)
                     }
                 }
             }
         }
     }
 
-    fun followRequestDelete(userAccount: String) {
+    fun followRequestReject(userId: Long) {
         viewModelScope.launch(ceh) {
-            followerUseCase.followerDelete(userAccount).collect {
+            followerUseCase.followRequestReject(userId).collect {
                 it.onSuccess {
-                   // unfollowedUsers.add(userAccount)
+                    // unfollowedUsers.add(userAccount)
+                    Log.e("거절거절", userId.toString())
                 }
             }
         }
     }
 
-    fun followRequestAccept(userAccount: String) {
+    fun followRequestAccept(userId: Long) {
         viewModelScope.launch(ceh) {
-            followerUseCase.followRequestAccept(userAccount).collect {
+
+            followerUseCase.followRequestAccept(userId).collect {
                 it.onSuccess {
-                    if(unfollowedUsers.contains(userAccount)) {
-                        unfollowedUsers.remove(userAccount)
-                    }
+                    Log.e("확인확인", userId.toString())
+
                 }
             }
         }

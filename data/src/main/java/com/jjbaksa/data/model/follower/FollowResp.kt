@@ -7,6 +7,5 @@ import com.jjbaksa.data.model.user.UserResp
 data class FollowResp (
     @SerializedName("follower")
     val follower: UserResp? = UserResp(),
-    @SerializedName("userCountResponse")
-    val followerCountResp: UserCountResp? = UserCountResp()
+
 )

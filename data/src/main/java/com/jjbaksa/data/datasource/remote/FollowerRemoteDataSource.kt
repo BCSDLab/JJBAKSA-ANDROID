@@ -28,19 +28,19 @@ class FollowerRemoteDataSource @Inject constructor(
         return authApi.followRequest(req)
     }
 
-    override suspend fun followRequestAccept(userAccount: String): Response<FollowResp> {
-        return authApi.followRequestAccept(userAccount)
-    }
-
     override suspend fun followerDelete(req: FollowReq): Response<Unit> {
         return authApi.followerDelete(req)
     }
 
-    override suspend fun followRequestReject(userAccount: String): Response<Unit> {
-        return authApi.followRequestReject(userAccount)
+    override suspend fun followRequestAccept(userId :Long): Response<FollowResp> {
+        return authApi.followRequestAccept(userId)
+    }
+
+    override suspend fun followRequestReject(userId: Long): Response<Unit> {
+        return authApi.followRequestReject(userId)
     }
 
     override suspend fun followRequestCheck(page: Int?, pageSize: Int?): Response<FollowRequestCheckResp> {
-        return authApi.followRequestCheck(page, pageSize).apply { Log.e("으아아아아ㅏ", "followRequestCheck: $this") }
+        return authApi.followRequestCheck(page, pageSize)
     }
 }

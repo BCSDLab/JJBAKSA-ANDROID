@@ -26,11 +26,11 @@ class FollowerUseCase @Inject constructor(
         return followerRepository.followerDelete(userAccount)
     }
 
-    suspend fun followRequestAccept(userAccount: String): Flow<Result<Follow>> {
-        return followerRepository.followRequestAccept(userAccount)
+    suspend fun followRequestAccept(userId: Long): Flow<Result<Follow>> {
+        return followerRepository.followRequestAccept(userId)
     }
-    suspend fun followRequestReject(userAccount: String): Flow<Result<Unit>> {
-        return followerRepository.followRequestReject(userAccount)
+    suspend fun followRequestReject(userId: Long): Flow<Result<Unit>> {
+        return followerRepository.followRequestReject(userId)
     }
 
     suspend fun followRequestCheck(page: Int? ,pageSize: Int?): Flow<Result<FollowRequestCheck>> {

@@ -1,18 +1,10 @@
 package com.jjbaksa.jjbaksa.ui.follower
 
-import android.os.Bundle
-import android.os.Parcel
-import android.os.Parcelable
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.jjbaksa.domain.enums.InquiryCursor
-import com.jjbaksa.domain.model.follower.FollowRequestCheck
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseFragment
 import com.jjbaksa.jjbaksa.databinding.FragmentFollowerBinding
@@ -34,13 +26,18 @@ class FollowerFragment() : BaseFragment<FragmentFollowerBinding>() {
 
     override fun initView() {
         viewModel.getFollower(null, 10)
-        viewModel.followRequestCheck(null,10)
+        viewModel.followRequestCheck(null, 10)
         followerAdapter = FollowerAdapter() {
-            if(viewModel.unfollowedUsers.contains(it.account)) {
+            if (viewModel.unfollowedUsers.contains(it.account)) {
                 viewModel.followRequest(it.account)
             } else {
                 viewModel.followerDelete(it.account)
             }
+        }
+        followRequestCheckAdapter = FollowRequestCheckAdapter({
+            viewModel.followRequestAccept(it.user.id)
+        }) {
+            viewModel.followRequestReject(it.user.id)
         }
 
         linearLayoutManager = LinearLayoutManager(requireContext())
@@ -51,7 +48,7 @@ class FollowerFragment() : BaseFragment<FragmentFollowerBinding>() {
             adapter = followerAdapter
         }
         binding.followRequestRecyclerView.apply {
-            layoutManager =  requestLinearLayoutManager
+            layoutManager = requestLinearLayoutManager
             adapter = followRequestCheckAdapter
         }
     }
@@ -107,13 +104,13 @@ class FollowerFragment() : BaseFragment<FragmentFollowerBinding>() {
         }
         viewModel.followRequestList.observe(viewLifecycleOwner) {
             binding.loadingView.setLoading(false)
-           if (it.content.isEmpty() && followRequestCheckAdapter.currentList.isEmpty()) {
-                    binding.emptyContainer.isVisible = true
-                    followRequestCheckAdapter.submitList(emptyList())
-                } else {
-                    binding.emptyContainer.isVisible = false
-                    followRequestCheckAdapter.submitList(it.content)
-                }
+            if (it.content.isEmpty() && followRequestCheckAdapter.currentList.isEmpty()) {
+                binding.emptyContainer.isVisible = true
+                followRequestCheckAdapter.submitList(emptyList())
+            } else {
+                binding.emptyContainer.isVisible = false
+                followRequestCheckAdapter.submitList(it.content)
+            }
         }
     }
 }
