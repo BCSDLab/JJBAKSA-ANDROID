@@ -6,6 +6,7 @@ import com.jjbaksa.data.api.NoAuthApi
 import com.jjbaksa.data.api.TestNoAuthApi
 import com.jjbaksa.data.database.UserDao
 import com.jjbaksa.data.datasource.local.HomeLocalDataSource
+import com.jjbaksa.data.datasource.local.SearchLocalDataSource
 import com.jjbaksa.data.datasource.local.UserLocalDataSource
 import com.jjbaksa.data.datasource.remote.HomeRemoteDataSource
 import com.jjbaksa.data.datasource.remote.InquiryRemoteDataSource
@@ -107,5 +108,13 @@ object DataSourceModule {
         noAuthApi: NoAuthApi
     ): ReviewRemoteDataSource {
         return ReviewRemoteDataSource(authApi, noAuthApi)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSearchLocalDataSource(
+        @ApplicationContext context: Context
+    ): SearchLocalDataSource {
+        return SearchLocalDataSource(context)
     }
 }

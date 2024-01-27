@@ -11,6 +11,7 @@ import com.jjbaksa.jjbaksa.base.BaseActivity
 import com.jjbaksa.jjbaksa.databinding.ActivitySearchBinding
 import com.jjbaksa.jjbaksa.listener.OnClickShopListener
 import com.jjbaksa.jjbaksa.listener.PaginationScrollListener
+import com.jjbaksa.jjbaksa.ui.mainpage.write.NaviWriteViewModel
 import com.jjbaksa.jjbaksa.ui.shop.ShopActivity
 import com.jjbaksa.jjbaksa.util.FusedLocationUtil
 import com.jjbaksa.jjbaksa.util.KeyboardProvider
@@ -19,7 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class SearchActivity : BaseActivity<ActivitySearchBinding>() {
     private val keyboardProvider = KeyboardProvider(this)
-    private val searchViewModel: SearchViewModel by viewModels()
+    private val viewModel: NaviWriteViewModel by viewModels()
     private val trendTextAdapter: TrendTextAdapter by lazy { TrendTextAdapter(this::onClickTrendKeyword) }
     private val fusedLocationUtil: FusedLocationUtil by lazy {
         FusedLocationUtil(
@@ -45,6 +46,12 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>() {
             }
         )
     }
+    private val searchHistoryAdapter: SearchHistoryAdapter by lazy {
+        SearchHistoryAdapter(
+            this::onClickHistory,
+            this::onClickDelete
+        )
+    }
     override val layoutId: Int
         get() = R.layout.activity_search
 
@@ -55,6 +62,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>() {
             rvTrend.adapter = trendTextAdapter
             rvKeyword.adapter = autoCompleteKeywordAdapter
             rvShop.adapter = searchShopAdapter
+            rvHistory.adapter = searchHistoryAdapter
 
             val linearLayoutManager = LinearLayoutManager(this@SearchActivity)
             rvShop.layoutManager = linearLayoutManager
@@ -66,22 +74,26 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>() {
 
                 override fun loadMoreItems() {
                     if (!currentPage.isEmpty())
-                        searchViewModel.searchPage(currentPage)
+                        viewModel.searchPage(currentPage)
                 }
             })
         }
-        searchViewModel.getTrendingText()
+        viewModel.getTrendingText()
+        viewModel.initSearchHistory()
     }
 
     override fun subscribe() {
-        searchViewModel.trendTextData.observe(this) {
+        viewModel.trendTextData.observe(this) {
             trendTextAdapter.submitList(it)
         }
-        searchViewModel.autoCompleteData.observe(this) {
+        viewModel.searchHistoryData.observe(this) {
+            searchHistoryAdapter.submitList(it.reversed())
+        }
+        viewModel.autoCompleteData.observe(this) {
             autoCompleteKeywordAdapter.submitList(it)
             autoCompleteKeywordAdapter.notifyDataSetChanged()
         }
-        searchViewModel.shopData.observe(this) {
+        viewModel.shopData.observe(this) {
             if (it.shopQueryResponseList.isEmpty()) {
                 if (searchShopAdapter.itemCount == 0) {
                     binding.rvTrend.visibility = View.VISIBLE
@@ -97,7 +109,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>() {
                 searchShopAdapter.addAll(it.shopQueryResponseList)
             }
         }
-        searchViewModel.isLoading.observe(this) {
+        viewModel.isLoading.observe(this) {
             if (it) {
                 showLoading()
             } else {
@@ -114,16 +126,16 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>() {
                 }
             }
             etSearch.addTextChangedListener {
+                clKeywordHistory.visibility = View.VISIBLE
                 rvKeyword.visibility = View.VISIBLE
                 rvShop.visibility = View.GONE
-                searchViewModel.getAutoCompleteKeyword(it.toString())
+                viewModel.getAutoCompleteKeyword(it.toString())
             }
             ivSearch.setOnClickListener {
-                rvKeyword.visibility = View.GONE
-                tvSearchTitle.visibility = View.GONE
-                searchViewModel.searchKeyword(etSearch.text.toString())
-                searchShopAdapter.clear()
-                keyboardProvider.hideKeyboard(etSearch)
+                search(etSearch.text.toString())
+            }
+            tvClearAll.setOnClickListener {
+                viewModel.clearSearchHistory()
             }
             appbarSearch.ivAppbarBack.setOnClickListener {
                 onBackPressed()
@@ -137,9 +149,26 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>() {
         autoCompleteKeywordAdapter.notifyDataSetChanged()
         binding.rvKeyword.visibility = View.GONE
     }
-
+    private fun onClickHistory(keyword: String) {
+        binding.etSearch.setText(keyword)
+        search(keyword)
+    }
+    private fun onClickDelete(keyword: String) {
+        viewModel.deleteSearchHistory(keyword)
+    }
     private fun locationCallback(latitude: Double, longitude: Double) {
-        searchViewModel.setLocation(latitude, longitude)
+        viewModel.setLocation(latitude, longitude)
+    }
+
+    private fun search(text: String) {
+        binding.run {
+            clKeywordHistory.visibility = View.GONE
+            tvSearchTitle.visibility = View.GONE
+            viewModel.searchKeyword(text)
+            searchShopAdapter.clear()
+            keyboardProvider.hideKeyboard(etSearch)
+            viewModel.saveSearchHistory(text)
+        }
     }
 
     override fun onStart() {

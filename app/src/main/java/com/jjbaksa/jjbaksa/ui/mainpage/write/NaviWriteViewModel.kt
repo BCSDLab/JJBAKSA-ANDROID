@@ -3,6 +3,7 @@ package com.jjbaksa.jjbaksa.ui.mainpage.write
 import androidx.lifecycle.viewModelScope
 import com.jjbaksa.domain.model.search.ShopData
 import com.jjbaksa.domain.usecase.GetAutoCompleteKeywordUseCase
+import com.jjbaksa.domain.usecase.GetSearchHistoryUseCase
 import com.jjbaksa.domain.usecase.GetSearchShopUseCase
 import com.jjbaksa.domain.usecase.GetTrendingSearchKeyword
 import com.jjbaksa.jjbaksa.base.BaseViewModel
@@ -15,7 +16,8 @@ import javax.inject.Inject
 class NaviWriteViewModel @Inject constructor(
     private val getTrendingSearchKeyword: GetTrendingSearchKeyword,
     private val getAutoCompleteKeywordUseCase: GetAutoCompleteKeywordUseCase,
-    private val getSearchShopUseCase: GetSearchShopUseCase
+    private val getSearchShopUseCase: GetSearchShopUseCase,
+    private val getSearchHistoryUseCase: GetSearchHistoryUseCase
 ) : BaseViewModel() {
     private var lat: Double = 0.0
     private var lng: Double = 0.0
@@ -27,6 +29,9 @@ class NaviWriteViewModel @Inject constructor(
 
     private val _shopData = SingleLiveEvent<ShopData>()
     val shopData: SingleLiveEvent<ShopData> get() = _shopData
+
+    private val _searchHistoryData = SingleLiveEvent<List<String>>()
+    val searchHistoryData: SingleLiveEvent<List<String>> get() = _searchHistoryData
 
     var comparePage: String = ""
 
@@ -41,7 +46,7 @@ class NaviWriteViewModel @Inject constructor(
 
     fun getAutoCompleteKeyword(word: String) {
         viewModelScope.launch(ceh) {
-            getAutoCompleteKeywordUseCase.invoke(word)
+            getAutoCompleteKeywordUseCase(word, lat, lng)
                 .collect {
                     it.onSuccess { _autoCompleteData.value = it }
                 }
@@ -73,5 +78,43 @@ class NaviWriteViewModel @Inject constructor(
     fun setLocation(lat: Double, lng: Double) {
         this.lat = lat
         this.lng = lng
+    }
+
+    fun initSearchHistory() {
+        _searchHistoryData.value = getSearchHistoryUseCase()
+    }
+    fun saveSearchHistory(keyword: String) {
+        viewModelScope.launch(ceh) {
+            if (isDuplicatedHistory(keyword)) {
+                _searchHistoryData.value = _searchHistoryData.value?.filter { it != keyword }
+            }
+            _searchHistoryData.value = _searchHistoryData.value?.plus(keyword)
+            if ((_searchHistoryData.value?.size ?: 0) > MAX_HISTORY_SIZE) {
+                _searchHistoryData.value = _searchHistoryData.value?.drop(1)
+            }
+            getSearchHistoryUseCase.setSearchHistories(_searchHistoryData.value ?: listOf())
+        }
+    }
+
+    fun deleteSearchHistory(keyword: String) {
+        _searchHistoryData.value = _searchHistoryData.value?.filter { it != keyword }
+        viewModelScope.launch(ceh) {
+            getSearchHistoryUseCase.setSearchHistories(_searchHistoryData.value ?: listOf())
+        }
+    }
+
+    fun clearSearchHistory() {
+        _searchHistoryData.value = emptyList()
+        viewModelScope.launch(ceh) {
+            getSearchHistoryUseCase.setSearchHistories(emptyList())
+        }
+    }
+
+    private fun isDuplicatedHistory(keyword: String): Boolean {
+        return _searchHistoryData.value?.contains(keyword) ?: false
+    }
+
+    companion object {
+        private const val MAX_HISTORY_SIZE = 6
     }
 }

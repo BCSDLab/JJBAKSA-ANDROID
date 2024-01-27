@@ -6,14 +6,12 @@ import com.jjbaksa.data.model.pin.OpenResp
 import com.jjbaksa.data.model.pin.PeriodResp
 import com.jjbaksa.data.model.shop.ShopsMapsResp
 import com.jjbaksa.data.model.pin.ShopDetailResp
-import com.jjbaksa.data.model.search.AutoKeywordResp
 import com.jjbaksa.data.model.search.SearchShopResp
 import com.jjbaksa.data.model.search.ShopResp
 import com.jjbaksa.domain.ErrorResp
 import com.jjbaksa.domain.model.shop.ShopsMapsContent
 import com.jjbaksa.domain.model.shop.ShopsMaps
 import com.jjbaksa.domain.model.shop.ShopDetail
-import com.jjbaksa.domain.model.search.AutoKeyword
 import com.jjbaksa.domain.model.search.Shop
 import com.jjbaksa.domain.model.search.ShopData
 import com.jjbaksa.domain.model.shop.Close
@@ -29,10 +27,6 @@ object RespMapper {
         return errorResp
     }
 }
-
-fun AutoKeywordResp.toAutoKeyword() = AutoKeyword(
-    autoCompletes = autoCompletes ?: listOf()
-)
 
 fun SearchShopResp.toShopData() = ShopData(
     pageToken = pageToken ?: "",

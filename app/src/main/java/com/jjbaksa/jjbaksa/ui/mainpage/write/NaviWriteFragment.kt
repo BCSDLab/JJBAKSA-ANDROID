@@ -1,5 +1,6 @@
 package com.jjbaksa.jjbaksa.ui.mainpage.write
 
+import android.content.Intent
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
@@ -15,8 +16,10 @@ import com.jjbaksa.jjbaksa.databinding.FragmentNaviWriteBinding
 import com.jjbaksa.jjbaksa.listener.OnClickShopListener
 import com.jjbaksa.jjbaksa.listener.PaginationScrollListener
 import com.jjbaksa.jjbaksa.ui.mainpage.MainPageActivity
+import com.jjbaksa.jjbaksa.ui.pin.PinReviewWriteActivity
 import com.jjbaksa.jjbaksa.ui.mainpage.home.NaviHomeFragment
 import com.jjbaksa.jjbaksa.ui.search.AutoCompleteKeywordAdapter
+import com.jjbaksa.jjbaksa.ui.search.SearchHistoryAdapter
 import com.jjbaksa.jjbaksa.ui.search.SearchShopAdapter
 import com.jjbaksa.jjbaksa.ui.search.TrendTextAdapter
 import com.jjbaksa.jjbaksa.util.FusedLocationUtil
@@ -44,8 +47,14 @@ class NaviWriteFragment : BaseFragment<FragmentNaviWriteBinding>() {
             }
         }
     private val keyboardProvider: KeyboardProvider by lazy { KeyboardProvider(requireContext()) }
-    private val naviWriteViewModel: NaviWriteViewModel by viewModels()
+    private val viewModel: NaviWriteViewModel by viewModels()
     private val trendTextAdapter: TrendTextAdapter by lazy { TrendTextAdapter(this::onClickTrendKeyword) }
+    private val searchHistoryAdapter: SearchHistoryAdapter by lazy {
+        SearchHistoryAdapter(
+            this::onClickHistory,
+            this::onClickDelete
+        )
+    }
     private val fusedLocationUtil: FusedLocationUtil by lazy {
         FusedLocationUtil(
             requireContext(),
@@ -62,6 +71,10 @@ class NaviWriteFragment : BaseFragment<FragmentNaviWriteBinding>() {
             requireContext(),
             object : OnClickShopListener {
                 override fun onClick(item: Shop, position: Int) {
+                    val intent = Intent(requireContext(), PinReviewWriteActivity::class.java)
+                    intent.putExtra("place_id", item.placeId)
+                    intent.putExtra("name", item.name)
+                    startActivity(intent)
                 }
             }
         )
@@ -81,6 +94,7 @@ class NaviWriteFragment : BaseFragment<FragmentNaviWriteBinding>() {
             rvTrend.adapter = trendTextAdapter
             rvKeyword.adapter = autoCompleteKeywordAdapter
             rvShop.adapter = searchShopAdapter
+            rvHistory.adapter = searchHistoryAdapter
 
             val linearLayoutManager = LinearLayoutManager(requireContext())
             rvShop.layoutManager = linearLayoutManager
@@ -92,11 +106,12 @@ class NaviWriteFragment : BaseFragment<FragmentNaviWriteBinding>() {
 
                 override fun loadMoreItems() {
                     if (!currentPage.isEmpty())
-                        naviWriteViewModel.searchPage(currentPage)
+                        viewModel.searchPage(currentPage)
                 }
             })
         }
-        naviWriteViewModel.getTrendingText()
+        viewModel.getTrendingText()
+        viewModel.initSearchHistory()
     }
 
     override fun initEvent() {
@@ -107,32 +122,36 @@ class NaviWriteFragment : BaseFragment<FragmentNaviWriteBinding>() {
                 }
             }
             etSearch.addTextChangedListener {
+                clKeywordHistory.visibility = View.VISIBLE
                 rvKeyword.visibility = View.VISIBLE
                 rvShop.visibility = View.GONE
-                naviWriteViewModel.getAutoCompleteKeyword(it.toString())
+                viewModel.getAutoCompleteKeyword(it.toString())
             }
             ivSearch.setOnClickListener {
-                rvKeyword.visibility = View.GONE
-                tvWriteTitle.visibility = View.GONE
-                naviWriteViewModel.searchKeyword(etSearch.text.toString())
-                searchShopAdapter.clear()
-                keyboardProvider.hideKeyboard(etSearch)
+                search(etSearch.text.toString())
             }
             appbarSearch.ivAppbarBack.setOnClickListener {
+                KeyboardProvider(requireContext()).hideKeyboard(etSearch)
                 (requireActivity() as MainPageActivity).showHomeFragment()
+            }
+            tvClearAll.setOnClickListener {
+                viewModel.clearSearchHistory()
             }
         }
     }
 
     override fun subscribe() {
-        naviWriteViewModel.trendTextData.observe(viewLifecycleOwner) {
+        viewModel.trendTextData.observe(viewLifecycleOwner) {
             trendTextAdapter.submitList(it)
         }
-        naviWriteViewModel.autoCompleteData.observe(viewLifecycleOwner) {
+        viewModel.searchHistoryData.observe(viewLifecycleOwner) {
+            searchHistoryAdapter.submitList(it.reversed())
+        }
+        viewModel.autoCompleteData.observe(viewLifecycleOwner) {
             autoCompleteKeywordAdapter.submitList(it)
             autoCompleteKeywordAdapter.notifyDataSetChanged()
         }
-        naviWriteViewModel.shopData.observe(viewLifecycleOwner) {
+        viewModel.shopData.observe(viewLifecycleOwner) {
             if (it.shopQueryResponseList.isEmpty()) {
                 if (searchShopAdapter.itemCount == 0) {
                     binding.rvTrend.visibility = View.VISIBLE
@@ -148,7 +167,7 @@ class NaviWriteFragment : BaseFragment<FragmentNaviWriteBinding>() {
                 searchShopAdapter.addAll(it.shopQueryResponseList)
             }
         }
-        naviWriteViewModel.isLoading.observe(viewLifecycleOwner) {
+        viewModel.isLoading.observe(viewLifecycleOwner) {
             if (it) {
                 showLoading()
             } else {
@@ -158,7 +177,7 @@ class NaviWriteFragment : BaseFragment<FragmentNaviWriteBinding>() {
     }
 
     private fun locationCallback(latitude: Double, longitude: Double) {
-        naviWriteViewModel.setLocation(latitude, longitude)
+        viewModel.setLocation(latitude, longitude)
     }
 
     private fun onClickTrendKeyword(trendText: String) {
@@ -171,7 +190,23 @@ class NaviWriteFragment : BaseFragment<FragmentNaviWriteBinding>() {
         autoCompleteKeywordAdapter.notifyDataSetChanged()
         binding.rvKeyword.visibility = View.GONE
     }
-
+    private fun onClickHistory(keyword: String) {
+        binding.etSearch.setText(keyword)
+        search(keyword)
+    }
+    private fun onClickDelete(keyword: String) {
+        viewModel.deleteSearchHistory(keyword)
+    }
+    private fun search(text: String) {
+        binding.run {
+            clKeywordHistory.visibility = View.GONE
+            tvWriteTitle.visibility = View.GONE
+            viewModel.searchKeyword(text)
+            searchShopAdapter.clear()
+            keyboardProvider.hideKeyboard(etSearch)
+            viewModel.saveSearchHistory(text)
+        }
+    }
     override fun onStart() {
         fusedLocationUtil.startLocationUpdate()
         super.onStart()
@@ -180,6 +215,11 @@ class NaviWriteFragment : BaseFragment<FragmentNaviWriteBinding>() {
     override fun onStop() {
         fusedLocationUtil.stopLocationUpdates()
         super.onStop()
+    }
+
+    override fun onResume() {
+        viewModel.initSearchHistory()
+        super.onResume()
     }
 
     companion object {
