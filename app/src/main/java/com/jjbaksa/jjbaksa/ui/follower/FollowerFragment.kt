@@ -35,9 +35,9 @@ class FollowerFragment() : BaseFragment<FragmentFollowerBinding>() {
             }
         }
         followRequestCheckAdapter = FollowRequestCheckAdapter({
-            viewModel.followRequestAccept(it.user.id)
+            viewModel.followRequestAccept(it.id)
         }) {
-            viewModel.followRequestReject(it.user.id)
+            viewModel.followRequestReject(it.id)
         }
 
         linearLayoutManager = LinearLayoutManager(requireContext())
