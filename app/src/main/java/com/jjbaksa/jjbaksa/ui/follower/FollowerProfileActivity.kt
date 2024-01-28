@@ -4,6 +4,7 @@ import android.Manifest
 import android.os.Build
 import android.util.Log
 import androidx.activity.viewModels
+import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseActivity
@@ -32,6 +33,9 @@ class FollowerProfileActivity : BaseActivity<ActivityFollowerProfileBinding>() {
     private val fid: Long by lazy {
         intent.getLongExtra("fid", 0)
     }
+    private val profileImage: String by lazy {
+        intent.getStringExtra("profileImage") ?: ""
+    }
 
     override fun initView() {
         binding.lifecycleOwner = this
@@ -39,6 +43,11 @@ class FollowerProfileActivity : BaseActivity<ActivityFollowerProfileBinding>() {
             tvNickname.text = nickname
             tvAccount.text = "@" + account
             tvFollowerCount.text = followerCount.toString()
+            Glide.with(this@FollowerProfileActivity)
+                .load(profileImage)
+                .error(R.drawable.baseline_supervised_user_circle_24)
+                .circleCrop()
+                .into(ivProfile)
         }
         viewModel.fid = fid
         initTabLayoutAndViewPager()

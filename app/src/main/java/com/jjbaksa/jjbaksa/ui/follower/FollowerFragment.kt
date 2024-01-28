@@ -49,7 +49,7 @@ class FollowerFragment() : BaseFragment<FragmentFollowerBinding>() {
                 putExtra("nickname", it.nickname)
                 putExtra("account", it.account)
                 putExtra("fid", it.id)
-                //putExtra("profileImage", it.profileImage)
+                putExtra("profileImage", it.profileImage.url)
                 putExtra("followerCount", it.userCountResponse.friendCount)
 
             }
