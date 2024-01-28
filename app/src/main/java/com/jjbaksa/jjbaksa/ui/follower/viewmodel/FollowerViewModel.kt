@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.jjbaksa.domain.enums.UserCursor
 import com.jjbaksa.domain.model.follower.FollowRequestCheck
 import com.jjbaksa.domain.model.follower.FollowerList
 import com.jjbaksa.domain.model.user.UserList
@@ -22,25 +23,22 @@ class FollowerViewModel @Inject constructor(
 ) : BaseViewModel() {
     private val _followerList = SingleLiveEvent<FollowerList>()
     val followerList: SingleLiveEvent<FollowerList> get() = _followerList
-    val followerHasMore = SingleLiveEvent<Boolean>()
-    val unfollowedUsers = mutableListOf<String>()
-
-    private val _followRequestList = SingleLiveEvent<FollowRequestCheck>()
-    private val _followCursor = SingleLiveEvent<String>()
-    val followCursor: LiveData<String> get() = _followCursor
-    val userCursor: LiveData<String> get() = _followCursor
 
     private val _UserList = SingleLiveEvent<UserList>()
     val userList: LiveData<UserList> get() = _UserList
+    private val _followRequestList = SingleLiveEvent<FollowRequestCheck>()
     val followRequestList: LiveData<FollowRequestCheck> get() = _followRequestList
 
-    val followRequestHasMore = SingleLiveEvent<Boolean>()
+    val unfollowedUsers = mutableListOf<String>()
+    val  searchKeyword = SingleLiveEvent<String>()
+
+    val curser = SingleLiveEvent<UserCursor>()
     fun getFollower(cursor: String?, pageSize: Int) {
         viewModelScope.launch(ceh) {
+
             followerUseCase.getFollower(cursor, pageSize).collect {
                 it.onSuccess {
                     _followerList.value = it
-                    followerHasMore.value = it.content.count() == 10
                 }
 
             }
@@ -94,20 +92,21 @@ class FollowerViewModel @Inject constructor(
             followerUseCase.followRequestCheck(page, pageSize).collect {
                 it.onSuccess {
                     _followRequestList.value = it
-                    followRequestHasMore.value = it.content.count() == 10
+
                 }
             }
         }
     }
 
 
-    fun userSearch(keyword: String?, pageSize: Int, cursor: Long) {
+    fun getUserSearch(keyword: String, pageSize: Int?, cursor: Long?) {
         viewModelScope.launch(ceh) {
             userUseCase.getUserSearch(keyword, pageSize, cursor).collect {
                 it.onSuccess {
                     _UserList.value = it
-                    followerHasMore.value = it.content.count() == 10
                 }
+
+                    searchKeyword.value = keyword
             }
         }
     }

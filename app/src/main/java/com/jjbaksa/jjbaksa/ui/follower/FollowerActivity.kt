@@ -7,6 +7,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContentProviderCompat
 import com.jjbaksa.domain.enums.InquiryCursor
+import com.jjbaksa.domain.enums.UserCursor
 import com.jjbaksa.jjbaksa.base.BaseActivity
 import com.jjbaksa.jjbaksa.databinding.ActivityFollowerBinding
 import com.jjbaksa.jjbaksa.ui.follower.viewmodel.FollowerViewModel
@@ -37,20 +38,20 @@ class FollowerActivity : BaseActivity<ActivityFollowerBinding>() {
 
     override fun initEvent() {
         binding.jjAppBar.setOnClickListener { finish() }
+
         binding.ivSearch.setOnClickListener {
+
             binding.etSearch.text?.let {
                 if (it.isEmpty()) {
-                    KeyboardProvider(this).hideKeyboard(binding.etSearch)
                     showSnackBar(getString(R.string.main_page_search_edit_text_hint))
+                    viewModel.curser.value = UserCursor.FOLLOWER
+                } else {
+                    viewModel.getUserSearch(it.toString(), 20, null )
+                    viewModel.curser.value = UserCursor.ALL
                 }
-                else {
-                    viewModel.getFollower(null, 10)
-                }
+
             }
         }
     }
 
-    companion object {
-
-    }
 }
