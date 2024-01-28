@@ -32,7 +32,6 @@ fun ReviewShopContentDTO.toReviewShopContent() = ReviewShopContent(
     placeId = placeId ?: "",
     name = name ?: "",
     category = category ?: "",
-    scrap = scrap ?: 0,
     photos = photos ?: emptyList()
 )
 

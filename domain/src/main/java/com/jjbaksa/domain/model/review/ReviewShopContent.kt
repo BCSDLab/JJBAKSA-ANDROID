@@ -11,8 +11,6 @@ data class ReviewShopContent(
     val name: String = "",
     @SerializedName("category")
     val category: String = "",
-    @SerializedName("scrap")
-    val scrap: Int = 0,
     @SerializedName("photos")
     val photos: List<String> = emptyList()
 )
