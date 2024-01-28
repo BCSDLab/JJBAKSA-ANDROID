@@ -1,8 +1,10 @@
 package com.jjbaksa.jjbaksa.ui.follower
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,8 +21,9 @@ import com.jjbaksa.jjbaksa.databinding.FragmentFollowerBinding
 import com.jjbaksa.jjbaksa.ui.follower.adapter.FollowRequestCheckAdapter
 import com.jjbaksa.jjbaksa.ui.follower.adapter.FollowerAdapter
 import com.jjbaksa.jjbaksa.ui.follower.viewmodel.FollowerViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class FollowerFragment() : BaseFragment<FragmentFollowerBinding>() {
 
     private lateinit var followerAdapter: FollowerAdapter
@@ -35,14 +38,26 @@ class FollowerFragment() : BaseFragment<FragmentFollowerBinding>() {
     override fun initView() {
         viewModel.getFollower(null, 10)
         viewModel.followRequestCheck(null,10)
-        followerAdapter = FollowerAdapter() {
+        followerAdapter = FollowerAdapter({
             if(viewModel.unfollowedUsers.contains(it.account)) {
                 viewModel.followRequest(it.account)
             } else {
                 viewModel.followerDelete(it.account)
             }
-        }
+        }) {
+            val intent = Intent(requireContext(), FollowerProfileActivity::class.java).apply {
+                putExtra("nickname", it.nickname)
+                putExtra("account", it.account)
+                putExtra("fid", it.id)
+                //putExtra("profileImage", it.profileImage)
+                putExtra("followerCount", it.userCountResponse.friendCount)
 
+            }
+            startActivity(intent)
+        }
+        followRequestCheckAdapter = FollowRequestCheckAdapter {
+            viewModel.followRequest(it.user.account)
+        }
         linearLayoutManager = LinearLayoutManager(requireContext())
         requestLinearLayoutManager = LinearLayoutManager(requireContext())
 
