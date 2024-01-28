@@ -29,6 +29,8 @@ class FollowerViewModel @Inject constructor(
     private val _followRequestList = SingleLiveEvent<FollowRequestCheck>()
     val followRequestList: LiveData<FollowRequestCheck> get() = _followRequestList
 
+    val followerHasMore = SingleLiveEvent<Boolean>()
+    val followRequestHasMore = SingleLiveEvent<Boolean>()
     val unfollowedUsers = mutableListOf<String>()
     val  searchKeyword = SingleLiveEvent<String>()
 

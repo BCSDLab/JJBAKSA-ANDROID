@@ -76,7 +76,8 @@ class FollowerFragment() : BaseFragment<FragmentFollowerBinding>() {
                     val lastPosition =
                         linearLayoutManager.findLastCompletelyVisibleItemPosition()
 
-                    if (lastPosition != -1 && lastPosition >= (itemCount - 1) ) {
+                    if (lastPosition != -1 && lastPosition >= (itemCount - 1) && viewModel.followerHasMore.value == true) {
+                        viewModel.followerHasMore.value = false
                         viewModel.getFollower(
                             null,
                             10
@@ -92,7 +93,8 @@ class FollowerFragment() : BaseFragment<FragmentFollowerBinding>() {
                     val lastPosition =
                         requestLinearLayoutManager.findLastCompletelyVisibleItemPosition()
 
-                    if (lastPosition != -1 && lastPosition >= (itemCount - 1) ) {
+                    if (lastPosition != -1 && lastPosition >= (itemCount - 1) && viewModel.followRequestHasMore.value == true) {
+                        viewModel.followRequestHasMore.value = false
                         viewModel.followRequestCheck(
                             null,
                             10
@@ -109,7 +111,7 @@ class FollowerFragment() : BaseFragment<FragmentFollowerBinding>() {
                     val lastPosition =
                         userLinearLayoutManager.findLastCompletelyVisibleItemPosition()
 
-                    if (lastPosition != -1 && lastPosition >= (itemCount - 1)) {
+                    if (lastPosition != -1 &&  lastPosition>= (itemCount - 1)) {
                         viewModel.getUserSearch(
                             viewModel.searchKeyword.value!!,
                             20,
@@ -130,7 +132,7 @@ class FollowerFragment() : BaseFragment<FragmentFollowerBinding>() {
                 followerAdapter.submitList(emptyList())
             } else {
                 binding.emptyContainer.isVisible = false
-                followerAdapter.submitList(it.content)
+                followerAdapter.submitList(followerAdapter.currentList+it.content)
             }
         }
 
@@ -142,7 +144,7 @@ class FollowerFragment() : BaseFragment<FragmentFollowerBinding>() {
                 followRequestCheckAdapter.submitList(emptyList())
             } else {
                 binding.emptyContainer.isVisible = false
-                followRequestCheckAdapter.submitList(it.content)
+                followRequestCheckAdapter.submitList(followRequestCheckAdapter.currentList+it.content)
             }
         }
 
