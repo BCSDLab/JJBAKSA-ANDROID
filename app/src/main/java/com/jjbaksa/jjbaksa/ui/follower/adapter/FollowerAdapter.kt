@@ -11,6 +11,7 @@ import com.jjbaksa.jjbaksa.databinding.ItemFollowBinding
 
 class FollowerAdapter(
     private val onButtonClicked: (User) -> Unit,
+    private val onItemClicked: (User) -> Unit
 ) : ListAdapter<User, FollowerAdapter.ViewHolder>(diffUtil) {
 
     inner class ViewHolder(private val binding: ItemFollowBinding) :
@@ -20,7 +21,9 @@ class FollowerAdapter(
             binding.followerAccountTextView.text = item.account
             binding.followButton.setOnClickListener {
                 onButtonClicked(item)
-                
+            }
+            binding.clItemFollower.setOnClickListener {
+                onItemClicked(item)
             }
         }
     }
