@@ -1,6 +1,6 @@
 package com.jjbaksa.jjbaksa.ui.follower
 
-import android.util.Log
+import android.view.View
 import androidx.fragment.app.activityViewModels
 import com.jjbaksa.domain.model.review.MyReviewShopsContent
 import com.jjbaksa.jjbaksa.R
