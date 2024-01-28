@@ -1,5 +1,6 @@
 package com.jjbaksa.data.api
 
+import com.google.gson.annotations.SerializedName
 import com.jjbaksa.data.model.follower.FollowRequestResp
 import com.jjbaksa.data.model.follower.FollowResp
 import com.jjbaksa.data.model.follower.FollowReq
@@ -12,6 +13,7 @@ import com.jjbaksa.data.model.shop.ShopsMapsResp
 import com.jjbaksa.data.model.review.MyReviewShopsResp
 import com.jjbaksa.data.model.review.ReviewShopLastDateResp
 import com.jjbaksa.data.model.pin.ShopDetailResp
+import com.jjbaksa.data.model.review.ReviewCountResp
 import com.jjbaksa.data.model.review.ReviewShopDetailResp
 import com.jjbaksa.data.model.review.ReviewShopResp
 import com.jjbaksa.data.model.scrap.AddShopScrapBodyReq
@@ -19,6 +21,7 @@ import com.jjbaksa.data.model.scrap.AddShopScrapResp
 import com.jjbaksa.data.model.scrap.ScrapsResp
 import com.jjbaksa.data.model.scrap.ShopScrapResp
 import com.jjbaksa.data.model.search.LocationBody
+import com.jjbaksa.data.model.search.ShopResp
 import com.jjbaksa.data.model.user.UserListResp
 import retrofit2.http.GET
 import com.jjbaksa.data.model.user.UserResp
@@ -209,4 +212,21 @@ interface AuthApi {
         @Query("page") page: Int?,
         @Query("pageSize") pageSize: Int?
     ): Response<FollowRequestCheckResp>
+
+    @GET("review/follower/{follower-id}/count")
+    suspend fun getFollowerReviewCount(
+        @Path("follower-id") id: Long
+    ): Response<ReviewCountResp>
+
+    @GET("review/follower/{follower-id}/shops")
+    suspend fun getReviewedShops(
+        @Path("follower-id") id: Long
+    ): Response<ReviewShopResp>
+
+    @GET("review/follower/{follower-id}/shop/{place-id}")
+    suspend fun getShopReview(
+        @Path("follower-id") id: Long,
+        @Path("place-id") placeId: String,
+        @Query("size") size: Int = 10,
+    ): Response<FollowerReviewShopsResp>
 }
