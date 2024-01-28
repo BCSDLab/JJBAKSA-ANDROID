@@ -18,5 +18,6 @@ interface FollowerRepository {
 
     suspend fun followRequestReject(userId: Long): Flow<Result<Unit>>
     suspend fun followRequestCheck(page: Int?, pageSize: Int?): Flow<Result<FollowRequestCheck>>
+    suspend fun followRequestSend(page: Int?, pageSize: Int?): Flow<Result<FollowRequestCheck>>
 
 }

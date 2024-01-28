@@ -37,5 +37,9 @@ class FollowerUseCase @Inject constructor(
         return followerRepository.followRequestCheck(page, pageSize)
     }
 
+    suspend fun followRequestSend(page: Int? ,pageSize: Int?): Flow<Result<FollowRequestCheck>> {
+        return followerRepository.followRequestSend(page, pageSize)
+    }
+
 
 }

@@ -209,4 +209,10 @@ interface AuthApi {
         @Query("page") page: Int?,
         @Query("pageSize") pageSize: Int?
     ): Response<FollowRequestCheckResp>
+
+    @GET("follow/requests/send")
+    suspend fun followRequestSend(
+        @Query("page") page: Int?,
+        @Query("pageSize") pageSize: Int?
+    ): Response<FollowRequestCheckResp>
 }

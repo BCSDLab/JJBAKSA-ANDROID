@@ -99,6 +99,16 @@ class FollowerViewModel @Inject constructor(
     }
 
 
+    fun followRequestSend(page: Int?, pageSize: Int?) {
+        viewModelScope.launch(ceh) {
+            followerUseCase.followRequestSend(page, pageSize).collect {
+                it.onSuccess {
+                    _followRequestList.value = it
+                }
+            }
+        }
+    }
+
     fun getUserSearch(keyword: String, pageSize: Int?, cursor: Long?) {
         viewModelScope.launch(ceh) {
             userUseCase.getUserSearch(keyword, pageSize, cursor).collect {

@@ -99,4 +99,21 @@ class FollowerRepositoryImpl @Inject constructor(
             }
         )
     }
+
+    override suspend fun followRequestSend(
+        page: Int?,
+        pageSize: Int?
+    ): Flow<Result<FollowRequestCheck>> {
+        return apiCall(
+            call = { followerRemoteDataSource.followRequestSend(page, pageSize) },
+            mapper = {
+                if (it.isSuccessful) {
+                    it.body()?.toFollowRequestCheck() ?: FollowRequestCheck()
+
+                } else {
+                    FollowRequestCheck()
+                }
+            }
+        )
+    }
 }
