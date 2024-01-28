@@ -4,6 +4,8 @@ import com.jjbaksa.domain.model.follower.Follow
 import com.jjbaksa.domain.model.follower.FollowRequest
 import com.jjbaksa.domain.model.follower.FollowRequestCheck
 import com.jjbaksa.domain.model.follower.FollowerList
+import com.jjbaksa.domain.model.review.FollowerReviewShops
+import com.jjbaksa.domain.model.review.ReviewShop
 import com.jjbaksa.domain.repository.FollowerRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -37,5 +39,15 @@ class FollowerUseCase @Inject constructor(
         return followerRepository.followRequestCheck(page, pageSize)
     }
 
+    suspend fun getFollowerReviewCount(id: Long): Flow<Result<Int>> {
+        return followerRepository.getFollowerReviewCount(id)
+    }
 
+    suspend fun getReviewedShops(id: Long): Flow<Result<ReviewShop>> {
+        return followerRepository.getReviewedShops(id)
+    }
+
+    suspend fun getShopReview(id: Long, placeId: String): Flow<Result<FollowerReviewShops>> {
+        return followerRepository.getShopReview(id, placeId)
+    }
 }
