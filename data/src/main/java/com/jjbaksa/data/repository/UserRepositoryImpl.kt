@@ -342,9 +342,9 @@ class UserRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getUserSearch(
-        keyWord: String?,
-        pageSize: Int,
-        cursor: Long
+        keyWord: String,
+        pageSize: Int?,
+        cursor: Long?
     ): Flow<Result<UserList>> {
         return apiCall(
             call = { userRemoteDataSource.getUserSearch(keyWord, pageSize, cursor) },

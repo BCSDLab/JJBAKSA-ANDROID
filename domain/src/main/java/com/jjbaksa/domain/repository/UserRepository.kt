@@ -65,8 +65,8 @@ interface UserRepository {
     fun getAccessToken(): String
 
     suspend fun getUserSearch(
-        cursor: String?,
-        dateCursor: Int,
-        size: Long
+        cursor: String,
+        dateCursor: Int?,
+        size: Long?
     ): Flow<Result<UserList>>
 }

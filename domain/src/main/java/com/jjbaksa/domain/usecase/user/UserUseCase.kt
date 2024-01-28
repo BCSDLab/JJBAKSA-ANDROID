@@ -103,9 +103,9 @@ class UserUseCase @Inject constructor(
     }
 
     suspend fun getUserSearch(
-        keyWord: String?,
-        pageSize: Int,
-        cursor: Long
+        keyWord: String,
+        pageSize: Int?,
+        cursor: Long?
     ): Flow<Result<UserList>> {
         return userRepository.getUserSearch(keyWord, pageSize, cursor)
     }

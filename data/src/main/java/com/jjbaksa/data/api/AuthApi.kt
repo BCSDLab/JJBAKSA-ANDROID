@@ -171,9 +171,9 @@ interface AuthApi {
 
     @GET("users")
     suspend fun getUserSearch(
-        @Query("keyword") keyword: String?,
-        @Query("pageSize") pageSize: Int,
-        @Query("cursor") cursor: Long,
+        @Query("keyword") keyword: String,
+        @Query("pageSize") pageSize: Int?,
+        @Query("cursor") cursor: Long?,
     ): Response<UserListResp>
 
     @GET("follow/followers")
