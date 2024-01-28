@@ -5,6 +5,9 @@ import com.jjbaksa.data.model.follower.FollowResp
 import com.jjbaksa.data.model.follower.FollowReq
 import com.jjbaksa.data.model.follower.FollowRequestCheckResp
 import com.jjbaksa.data.model.follower.FollowerListResp
+import com.jjbaksa.data.model.follower.FollowerReviewShopsResp
+import com.jjbaksa.data.model.review.ReviewCountResp
+import com.jjbaksa.data.model.review.ReviewShopResp
 import retrofit2.Response
 
 interface FollowerDataSource {
@@ -19,4 +22,7 @@ interface FollowerDataSource {
     suspend fun followRequestReject(userAccount: String): Response<Unit>
 
     suspend fun followRequestCheck(page: Int?, pageSize: Int?): Response<FollowRequestCheckResp>
+    suspend fun getFollowerReviewCount(id: Long): Response<ReviewCountResp>
+    suspend fun getReviewedShops(id: Long): Response<ReviewShopResp>
+    suspend fun getShopReview(id: Long, placeId: String): Response<FollowerReviewShopsResp>
 }

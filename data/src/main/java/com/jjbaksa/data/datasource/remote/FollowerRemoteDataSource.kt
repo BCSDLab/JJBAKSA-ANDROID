@@ -9,7 +9,9 @@ import com.jjbaksa.data.model.follower.FollowResp
 import com.jjbaksa.data.model.follower.FollowReq
 import com.jjbaksa.data.model.follower.FollowRequestCheckResp
 import com.jjbaksa.data.model.follower.FollowerListResp
-import com.jjbaksa.domain.model.follower.FollowRequestCheck
+import com.jjbaksa.data.model.follower.FollowerReviewShopsResp
+import com.jjbaksa.data.model.review.ReviewCountResp
+import com.jjbaksa.data.model.review.ReviewShopResp
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -41,6 +43,18 @@ class FollowerRemoteDataSource @Inject constructor(
     }
 
     override suspend fun followRequestCheck(page: Int?, pageSize: Int?): Response<FollowRequestCheckResp> {
-        return authApi.followRequestCheck(page, pageSize).apply { Log.e("으아아아아ㅏ", "followRequestCheck: $this") }
+        return authApi.followRequestCheck(page, pageSize)
+    }
+
+    override suspend fun getFollowerReviewCount(id: Long): Response<ReviewCountResp> {
+        return authApi.getFollowerReviewCount(id)
+    }
+
+    override suspend fun getReviewedShops(id: Long): Response<ReviewShopResp> {
+        return authApi.getReviewedShops(id)
+    }
+
+    override suspend fun getShopReview(id: Long, placeId: String): Response<FollowerReviewShopsResp> {
+        return authApi.getShopReview(id, placeId)
     }
 }
