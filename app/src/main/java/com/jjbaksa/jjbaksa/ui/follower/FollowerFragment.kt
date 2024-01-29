@@ -34,14 +34,10 @@ class FollowerFragment() : BaseFragment<FragmentFollowerBinding>() {
     override fun initView() {
         viewModel.getFollower(null, 20)
         viewModel.followRequestReceived(null, 20)
-        viewModel.followRequestSend(null,20)
+        viewModel.followRequestSend(null, 20)
 
         followerAdapter = FollowerAdapter({
-            if (viewModel.unfollowedUsers.contains(it.account)) {
-                viewModel.followRequest(it.account)
-            } else {
-                viewModel.followerDelete(it.account)
-            }
+            toggleFollow(it)
         }) {
             goToFollowerActivity(it)
         }
@@ -52,18 +48,13 @@ class FollowerFragment() : BaseFragment<FragmentFollowerBinding>() {
         }
 
         sendRequestAdapter = FollowRequestAdapter({
-                viewModel.followRequestAccept(it.id)
-            } ) {
-                viewModel.followRequestAccept(it.id)
+            viewModel.followRequestAccept(it.id)
+        }) {
+            viewModel.followRequestAccept(it.id)
         }
 
         userAdapter = FollowerAdapter({
-            if (viewModel.unfollowedUsers.contains(it.account)) {
-
-                viewModel.followRequest(it.account)
-            } else {
-                viewModel.followerDelete(it.account)
-            }
+            toggleFollow(it)
         }) {
             goToFollowerActivity(it)
         }
@@ -159,7 +150,7 @@ class FollowerFragment() : BaseFragment<FragmentFollowerBinding>() {
                     val lastPosition =
                         userLinearLayoutManager.findLastCompletelyVisibleItemPosition()
 
-                    if (lastPosition != -1 &&  lastPosition>= (itemCount - 1)) {
+                    if (lastPosition != -1 && lastPosition >= (itemCount - 1)) {
                         viewModel.getUserSearch(
                             viewModel.searchKeyword.value!!,
                             20,
@@ -178,7 +169,7 @@ class FollowerFragment() : BaseFragment<FragmentFollowerBinding>() {
             if (it.content.isEmpty() && followerAdapter.currentList.isEmpty()) {
                 followerAdapter.submitList(emptyList())
             } else {
-                followerAdapter.submitList(followerAdapter.currentList+it.content)
+                followerAdapter.submitList(followerAdapter.currentList + it.content)
             }
         }
 
@@ -188,7 +179,7 @@ class FollowerFragment() : BaseFragment<FragmentFollowerBinding>() {
             if (it.content.isEmpty() && followRequestAdapter.currentList.isEmpty()) {
                 followRequestAdapter.submitList(emptyList())
             } else {
-                followRequestAdapter.submitList(followRequestAdapter.currentList+it.content)
+                followRequestAdapter.submitList(followRequestAdapter.currentList + it.content)
             }
         }
 
@@ -198,7 +189,7 @@ class FollowerFragment() : BaseFragment<FragmentFollowerBinding>() {
             if (it.content.isEmpty() && sendRequestAdapter.currentList.isEmpty()) {
                 sendRequestAdapter.submitList(emptyList())
             } else {
-                sendRequestAdapter.submitList(sendRequestAdapter.currentList+it.content)
+                sendRequestAdapter.submitList(sendRequestAdapter.currentList + it.content)
             }
         }
 
@@ -222,6 +213,7 @@ class FollowerFragment() : BaseFragment<FragmentFollowerBinding>() {
                     binding.sendFollowRequestRecyclerView.isVisible = false
                     binding.allUsersRecyclerView.isVisible = true
                 }
+
                 UserCursor.FOLLOWER -> {
                     binding.followerRecyclerView.isVisible = true
                     binding.recivedFollowRequestRecyclerView.isVisible = true
@@ -231,6 +223,15 @@ class FollowerFragment() : BaseFragment<FragmentFollowerBinding>() {
             }
         }
     }
+
+    private fun toggleFollow(user: User) {
+        if (viewModel.unfollowedUsers.contains(user.account)) {
+            viewModel.followRequest(user.account)
+        } else {
+            viewModel.followerDelete(user.account)
+        }
+    }
+
     private fun goToFollowerActivity(user: User) {
         val intent = Intent(requireContext(), FollowerProfileActivity::class.java).apply {
             putExtra("nickname", user.nickname)
