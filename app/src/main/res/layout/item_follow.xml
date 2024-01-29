@@ -20,7 +20,7 @@
         android:paddingBottom="8dp">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/profile_image_view"
+            android:id="@+id/iv_profile"
             android:layout_width="46dp"
             android:layout_height="46dp"
             android:scaleType="centerCrop"
@@ -42,8 +42,8 @@
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@id/follow_button"
-            app:layout_constraintStart_toEndOf="@+id/profile_image_view"
-            app:layout_constraintTop_toTopOf="@+id/profile_image_view"
+            app:layout_constraintStart_toEndOf="@+id/iv_profile"
+            app:layout_constraintTop_toTopOf="@+id/iv_profile"
             tools:text="김동글" />
 
         <androidx.appcompat.widget.AppCompatButton

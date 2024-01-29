@@ -7,7 +7,9 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.jjbaksa.domain.model.user.User
+import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.databinding.ItemFollowBinding
 
 class FollowerAdapter(
@@ -20,6 +22,12 @@ class FollowerAdapter(
         fun bind(item: User) {
             binding.followNameTextView.text = item.nickname
             binding.followAccountTextView.text = "@" +item.account
+
+            Glide.with(binding.root.context)
+                .load(item.profileImage.url)
+                .error(R.drawable.baseline_supervised_user_circle_24)
+                .circleCrop()
+                .into(binding.ivProfile)
 
             binding.followingButton.setOnClickListener {
                 onButtonClicked(item)
@@ -42,6 +50,8 @@ class FollowerAdapter(
                 binding.followButton.isVisible = true
                 binding.requestedButton.isVisible = false
             }
+
+
 
         }
     }
