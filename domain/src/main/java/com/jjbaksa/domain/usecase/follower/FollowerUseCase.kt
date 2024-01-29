@@ -2,7 +2,7 @@ package com.jjbaksa.domain.usecase.follower
 
 import com.jjbaksa.domain.model.follower.Follow
 import com.jjbaksa.domain.model.follower.FollowRequest
-import com.jjbaksa.domain.model.follower.followRequestRecived
+import com.jjbaksa.domain.model.follower.FollowRequestRecived
 import com.jjbaksa.domain.model.follower.FollowerList
 import com.jjbaksa.domain.model.review.FollowerReviewShops
 import com.jjbaksa.domain.model.review.ReviewShop
@@ -35,11 +35,11 @@ class FollowerUseCase @Inject constructor(
         return followerRepository.followRequestReject(userId)
     }
 
-    suspend fun followRequestRecived(page: Int? ,pageSize: Int?): Flow<Result<followRequestRecived>> {
+    suspend fun followRequestRecived(page: Int? ,pageSize: Int?): Flow<Result<FollowRequestRecived>> {
         return followerRepository.followRequestRecived(page, pageSize)
     }
 
-    suspend fun followRequestSend(page: Int? ,pageSize: Int?): Flow<Result<followRequestRecived>> {
+    suspend fun followRequestSend(page: Int? ,pageSize: Int?): Flow<Result<FollowRequestRecived>> {
         return followerRepository.followRequestSend(page, pageSize)
     }
 

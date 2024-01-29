@@ -11,7 +11,7 @@ import com.jjbaksa.data.model.apiCall
 import com.jjbaksa.data.model.follower.FollowReq
 import com.jjbaksa.domain.model.follower.Follow
 import com.jjbaksa.domain.model.follower.FollowRequest
-import com.jjbaksa.domain.model.follower.followRequestRecived
+import com.jjbaksa.domain.model.follower.FollowRequestRecived
 import com.jjbaksa.domain.model.follower.FollowerList
 import com.jjbaksa.domain.model.review.FollowerReviewShops
 import com.jjbaksa.domain.model.review.ReviewShop
@@ -90,15 +90,15 @@ class FollowerRepositoryImpl @Inject constructor(
     override suspend fun followRequestRecived(
         page: Int?,
         pageSize: Int?
-    ): Flow<Result<followRequestRecived>> {
+    ): Flow<Result<FollowRequestRecived>> {
         return apiCall(
             call = { followerRemoteDataSource.followRequestReceived(page, pageSize) },
             mapper = {
                 if (it.isSuccessful) {
-                    it.body()?.tofollowRequestRecived() ?: followRequestRecived()
+                    it.body()?.tofollowRequestRecived() ?: FollowRequestRecived()
 
                 } else {
-                    followRequestRecived()
+                    FollowRequestRecived()
                 }
             }
         )
@@ -107,15 +107,15 @@ class FollowerRepositoryImpl @Inject constructor(
     override suspend fun followRequestSend(
         page: Int?,
         pageSize: Int?
-    ): Flow<Result<followRequestRecived>> {
+    ): Flow<Result<FollowRequestRecived>> {
         return apiCall(
             call = { followerRemoteDataSource.followRequestSend(page, pageSize) },
             mapper = {
                 if (it.isSuccessful) {
-                    it.body()?.tofollowRequestRecived() ?: followRequestRecived()
+                    it.body()?.tofollowRequestRecived() ?: FollowRequestRecived()
 
                 } else {
-                    followRequestRecived()
+                    FollowRequestRecived()
                 }
             }
         )

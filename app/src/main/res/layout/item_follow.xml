@@ -33,7 +33,6 @@
             android:textColor="@color/color_000000"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@id/follow_button"
             app:layout_constraintStart_toEndOf="@+id/iv_profile"
             app:layout_constraintTop_toTopOf="@+id/iv_profile"
             tools:text="김동글" />

@@ -8,7 +8,7 @@ import com.jjbaksa.data.model.follower.FollowResp
 import com.jjbaksa.data.model.follower.FollowerListResp
 import com.jjbaksa.domain.model.follower.Follow
 import com.jjbaksa.domain.model.follower.FollowRequest
-import com.jjbaksa.domain.model.follower.followRequestRecived
+import com.jjbaksa.domain.model.follower.FollowRequestRecived
 import com.jjbaksa.domain.model.follower.FollowerList
 
 fun FollowerListResp.toFollower() = FollowerList(
@@ -25,7 +25,7 @@ fun FollowResp.toFollow() = Follow(
     follower = follower?.toUser()
 )
 
-fun FollowRequestReceivedResp.tofollowRequestRecived() = followRequestRecived(
+fun FollowRequestReceivedResp.tofollowRequestRecived() = FollowRequestRecived(
     content = content?.map { it.toFollowContent() }.orEmpty()
 )
 
