@@ -23,7 +23,7 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface NoAuthApi {
-    @GET("login/{sns-type}")
+    @POST("login/{sns-type}")
     suspend fun postLoginSNS(
         @Header("Authorization") token: String,
         @Path("sns-type") snsType: String
