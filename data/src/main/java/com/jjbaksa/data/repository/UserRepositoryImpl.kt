@@ -28,8 +28,8 @@ class UserRepositoryImpl @Inject constructor(
 ) : UserRepository {
     override suspend fun postLoginSNS(token: String, snsType: String): Result<Login> =
         runCatching { userRemoteDataSource.postLoginSNS(token, snsType).toLoginResult() }.onSuccess {
-            userRemoteDataSource.saveAccessToken(it.accessToken)
-            userRemoteDataSource.saveRefreshToken(it.refreshToken)
+            userLocalDataSource.saveAccessToken(it.accessToken)
+            userLocalDataSource.saveRefreshToken(it.refreshToken)
         }
 
     override suspend fun getUserMe(): Flow<Result<User>> {
