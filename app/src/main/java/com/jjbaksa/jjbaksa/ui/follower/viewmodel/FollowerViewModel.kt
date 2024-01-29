@@ -4,7 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.jjbaksa.domain.enums.UserCursor
-import com.jjbaksa.domain.model.follower.followRequestRecived
+import com.jjbaksa.domain.model.follower.FollowContent
+import com.jjbaksa.domain.model.follower.FollowRequestRecived
 import com.jjbaksa.domain.model.follower.FollowerList
 import com.jjbaksa.domain.model.user.UserList
 import com.jjbaksa.domain.usecase.follower.FollowerUseCase
@@ -25,10 +26,10 @@ class FollowerViewModel @Inject constructor(
 
     private val _UserList = MutableLiveData<UserList>()
     val userList: MutableLiveData<UserList> get() = _UserList
-    private val _receivedFollowRequestList = SingleLiveEvent<followRequestRecived>()
-    val receivedFollowRequestList: LiveData<followRequestRecived> get() = _receivedFollowRequestList
-    private val _sendFollowRequestList = SingleLiveEvent<followRequestRecived>()
-    val sendFollowRequestList: LiveData<followRequestRecived> get() = _sendFollowRequestList
+    private val _receivedFollowRequestList = SingleLiveEvent<FollowRequestRecived>()
+    val receivedFollowRequestList: LiveData<FollowRequestRecived> get() = _receivedFollowRequestList
+    private val _sendFollowRequestList = SingleLiveEvent<FollowRequestRecived>()
+    val sendFollowRequestList: LiveData<FollowRequestRecived> get() = _sendFollowRequestList
 
 
 
@@ -111,7 +112,15 @@ class FollowerViewModel @Inject constructor(
         viewModelScope.launch(ceh) {
             followerUseCase.followRequestSend(page, pageSize).collect {
                 it.onSuccess {
-                    _sendFollowRequestList.value = it
+                    val list = mutableListOf<FollowContent>()
+                    it.content.forEach { item ->
+                        list.add(FollowContent(
+                            follower = item.user,
+                            id = item.id,
+                            user = item.follower
+                        ))
+                    }
+                    _sendFollowRequestList.value = FollowRequestRecived(list)
                     sendFollowRequestHasMore.value = it.content.count() == 20
                 }
             }

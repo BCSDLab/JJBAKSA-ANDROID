@@ -101,9 +101,14 @@ class FollowerActivity : BaseActivity<ActivityFollowerBinding>() {
                     val lastPosition =
                         requestLinearLayoutManager.findLastCompletelyVisibleItemPosition()
 
-                    if (lastPosition != -1 && lastPosition >= (itemCount - 1) && viewModel.receivedFollowRequestHasMore.value == true) {
+                    if (lastPosition != -1 && lastPosition >= (itemCount - 1) && viewModel.receivedFollowRequestHasMore.value == true && viewModel.sendFollowRequestHasMore.value == true) {
                         viewModel.receivedFollowRequestHasMore.value = false
+                        viewModel.sendFollowRequestHasMore.value = false
                         viewModel.followRequestReceived(
+                            null,
+                            20
+                        )
+                        viewModel.followRequestSend(
                             null,
                             20
                         )
@@ -170,7 +175,11 @@ class FollowerActivity : BaseActivity<ActivityFollowerBinding>() {
 
         viewModel.sendFollowRequestList.observe(this) {
             binding.loadingView.setLoading(false)
-            TODO()
+            if (it.content.isEmpty() && followRequestAdapter.currentList.isEmpty()) {
+                followRequestAdapter.submitList(emptyList())
+            } else {
+                followRequestAdapter.submitList(followRequestAdapter.currentList + it.content)
+            }
         }
 
         viewModel.userList.observe(this) {
