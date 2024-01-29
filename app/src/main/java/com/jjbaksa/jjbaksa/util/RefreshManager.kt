@@ -2,7 +2,6 @@ package com.jjbaksa.jjbaksa.util
 
 import android.content.Context
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.jjbaksa.data.BASE_URL
 import com.jjbaksa.data.database.userDataStore
 import com.jjbaksa.jjbaksa.BuildConfig
 import kotlinx.coroutines.flow.first
@@ -45,7 +44,7 @@ object RefreshManager {
         if (retrofitClient == null) {
             retrofitClient = Retrofit.Builder()
                 .client(okHttpClient)
-                .baseUrl(BASE_URL)
+                .baseUrl(BuildConfig.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
         }

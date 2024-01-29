@@ -48,6 +48,7 @@ android {
                 "proguard-rules.pro"
             )
             isDebuggable = true
+            buildConfigField("String", "BASE_URL", getPropertyKey("debug_url"))
         }
         getByName("release") {
             isMinifyEnabled = true
@@ -57,6 +58,7 @@ android {
                 "proguard-rules.pro"
             )
             isDebuggable = false
+            buildConfigField("String", "BASE_URL", getPropertyKey("release_url"))
         }
     }
 
