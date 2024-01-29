@@ -8,7 +8,6 @@ import com.jjbaksa.data.BASE_URL
 import com.jjbaksa.data.api.AuthApi
 import com.jjbaksa.data.api.NoAuthApi
 import com.jjbaksa.data.api.RefreshApi
-import com.jjbaksa.data.api.TestNoAuthApi
 import com.jjbaksa.data.database.PreferenceKeys
 import com.jjbaksa.data.database.userDataStore
 import com.jjbaksa.jjbaksa.JjbaksaApp
@@ -39,10 +38,6 @@ annotation class AUTH
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class NOAUTH
-
-@Qualifier
-@Retention(AnnotationRetention.BINARY)
-annotation class TEST
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
@@ -188,36 +183,5 @@ object NetworkModule {
     @Singleton
     fun provideAuthApi(@AUTH retrofit: Retrofit): AuthApi {
         return retrofit.create(AuthApi::class.java)
-    }
-
-    /**
-     * MOCK TEST
-     */
-    @TEST
-    @Provides
-    @Singleton
-    fun testProvideNoAuthOkHttpClient(): OkHttpClient {
-        return OkHttpClient.Builder().apply {
-            connectTimeout(10, TimeUnit.SECONDS)
-            readTimeout(30, TimeUnit.SECONDS)
-            writeTimeout(15, TimeUnit.SECONDS)
-            addInterceptor(httpLoggingInterceptor)
-        }.build()
-    }
-    @TEST
-    @Provides
-    @Singleton
-    fun testProvideNoAuthRetrofit(@TEST okHttpClient: OkHttpClient): Retrofit {
-        return Retrofit.Builder()
-            .client(okHttpClient)
-            .baseUrl("https://run.mocky.io/")
-            .addConverterFactory(ScalarsConverterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
-    @Provides
-    @Singleton
-    fun testProvideNoAuthApi(@TEST retrofit: Retrofit): TestNoAuthApi {
-        return retrofit.create(TestNoAuthApi::class.java)
     }
 }

@@ -2,7 +2,6 @@ package com.jjbaksa.data.datasource.remote
 
 import com.jjbaksa.data.api.AuthApi
 import com.jjbaksa.data.api.NoAuthApi
-import com.jjbaksa.data.api.TestNoAuthApi
 import com.jjbaksa.data.datasource.ShopDataSource
 import com.jjbaksa.data.model.shop.ShopsMapsResp
 import com.jjbaksa.data.model.pin.ShopDetailResp
@@ -13,7 +12,6 @@ import javax.inject.Inject
 class ShopRemoteDataSource @Inject constructor(
     private val authApi: AuthApi,
     private val noAuthApi: NoAuthApi,
-    private val testNoAuthApi: TestNoAuthApi
 ) : ShopDataSource {
     override suspend fun getShopsMaps(
         optionsFriend: Int,
@@ -21,12 +19,10 @@ class ShopRemoteDataSource @Inject constructor(
         optionsScrap: Int,
         location: LocationBody
     ): Response<List<ShopsMapsResp>> {
-//        return testNoAuthApi.getMapShop()
         return authApi.getShopsMaps(optionsFriend, optionsNearby, optionsScrap, location)
     }
 
     override suspend fun getShopDetail(placeId: String): Response<ShopDetailResp> {
-//        return testNoAuthApi.getShopDetail()
         return authApi.getShopDetail(placeId)
     }
 }
