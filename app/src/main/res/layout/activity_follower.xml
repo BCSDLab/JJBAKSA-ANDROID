@@ -77,6 +77,15 @@
                     android:visibility="gone" />
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_recently_active_follower"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:orientation="horizontal"
+                    tools:itemCount="4"
+                    tools:listitem="@layout/item_recently_active" />
+
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_all_follower"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
