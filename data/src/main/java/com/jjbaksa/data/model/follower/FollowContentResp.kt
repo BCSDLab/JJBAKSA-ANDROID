@@ -8,7 +8,7 @@ data class FollowContentResp(
     @SerializedName("follower")
     val follower: UserResp = UserResp(),
     @SerializedName("id")
-    val id: Int = 0,
+    val id: Long = 0,
     @SerializedName("user")
     val user: UserResp = UserResp()
 )

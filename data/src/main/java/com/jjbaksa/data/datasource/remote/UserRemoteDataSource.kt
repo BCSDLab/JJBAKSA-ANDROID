@@ -131,9 +131,9 @@ class UserRemoteDataSource @Inject constructor(
 
 
     override suspend fun getUserSearch(
-        keyword: String?,
-        pageSize: Int,
-        cursor: Long
+        keyword: String,
+        pageSize: Int?,
+        cursor: Long?
     ): Response<UserListResp> {
         return authApi.getUserSearch(keyword, pageSize, cursor)
     }

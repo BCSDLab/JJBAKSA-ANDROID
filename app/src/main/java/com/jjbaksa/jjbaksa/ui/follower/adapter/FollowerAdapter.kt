@@ -3,6 +3,7 @@ package com.jjbaksa.jjbaksa.ui.follower.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -17,14 +18,31 @@ class FollowerAdapter(
     inner class ViewHolder(private val binding: ItemFollowBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: User) {
-            binding.followerNameTextView.text = item.nickname
-            binding.followerAccountTextView.text = item.account
+            binding.followNameTextView.text = item.nickname
+            binding.followAccountTextView.text = "@" +item.account
+
+            binding.followingButton.setOnClickListener {
+                onButtonClicked(item)
+                binding.followingButton.isVisible = false
+                binding.followButton.isVisible = true
+                binding.requestedButton.isVisible = false
+            }
             binding.followButton.setOnClickListener {
                 onButtonClicked(item)
+                binding.followingButton.isVisible = false
+                binding.followButton.isVisible = false
+                binding.requestedButton.isVisible = true
             }
             binding.clItemFollower.setOnClickListener {
                 onItemClicked(item)
             }
+            binding.requestedButton.setOnClickListener {
+                onButtonClicked(item)
+                binding.followingButton.isVisible = false
+                binding.followButton.isVisible = true
+                binding.requestedButton.isVisible = false
+            }
+
         }
     }
 

@@ -5,8 +5,10 @@ import com.jjbaksa.data.model.user.UserCountResp
 import com.jjbaksa.data.model.user.UserResp
 
 data class FollowResp (
+    @SerializedName("createdAt")
+    val createdAt: String? = "",
     @SerializedName("follower")
     val follower: UserResp? = UserResp(),
-    @SerializedName("userCountResponse")
-    val followerCountResp: UserCountResp? = UserCountResp()
+    @SerializedName("id")
+    val id: Long? = 0,
 )

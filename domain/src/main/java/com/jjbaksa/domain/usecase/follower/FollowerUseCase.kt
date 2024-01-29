@@ -2,7 +2,7 @@ package com.jjbaksa.domain.usecase.follower
 
 import com.jjbaksa.domain.model.follower.Follow
 import com.jjbaksa.domain.model.follower.FollowRequest
-import com.jjbaksa.domain.model.follower.FollowRequestCheck
+import com.jjbaksa.domain.model.follower.followRequestRecived
 import com.jjbaksa.domain.model.follower.FollowerList
 import com.jjbaksa.domain.model.review.FollowerReviewShops
 import com.jjbaksa.domain.model.review.ReviewShop
@@ -28,15 +28,19 @@ class FollowerUseCase @Inject constructor(
         return followerRepository.followerDelete(userAccount)
     }
 
-    suspend fun followRequestAccept(userAccount: String): Flow<Result<Follow>> {
-        return followerRepository.followRequestAccept(userAccount)
+    suspend fun followRequestAccept(userId: Long): Flow<Result<Follow>> {
+        return followerRepository.followRequestAccept(userId)
     }
-    suspend fun followRequestReject(userAccount: String): Flow<Result<Unit>> {
-        return followerRepository.followRequestReject(userAccount)
+    suspend fun followRequestReject(userId: Long): Flow<Result<Unit>> {
+        return followerRepository.followRequestReject(userId)
     }
 
-    suspend fun followRequestCheck(page: Int? ,pageSize: Int?): Flow<Result<FollowRequestCheck>> {
-        return followerRepository.followRequestCheck(page, pageSize)
+    suspend fun followRequestRecived(page: Int? ,pageSize: Int?): Flow<Result<followRequestRecived>> {
+        return followerRepository.followRequestRecived(page, pageSize)
+    }
+
+    suspend fun followRequestSend(page: Int? ,pageSize: Int?): Flow<Result<followRequestRecived>> {
+        return followerRepository.followRequestSend(page, pageSize)
     }
 
     suspend fun getFollowerReviewCount(id: Long): Flow<Result<Int>> {

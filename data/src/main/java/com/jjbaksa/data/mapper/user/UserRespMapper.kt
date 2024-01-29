@@ -1,13 +1,11 @@
 package com.jjbaksa.data.mapper.user
 
 import com.jjbaksa.data.model.follower.FollowContentResp
-import com.jjbaksa.data.model.follower.FollowRequestCheckResp
 import com.jjbaksa.data.model.user.LoginResp
 import com.jjbaksa.data.model.user.UserCountResp
 import com.jjbaksa.data.model.user.UserProfileImageResp
 import com.jjbaksa.data.model.user.UserResp
 import com.jjbaksa.domain.model.follower.FollowContent
-import com.jjbaksa.domain.model.follower.FollowRequestCheck
 import com.jjbaksa.domain.model.user.Login
 import com.jjbaksa.domain.model.user.User
 import com.jjbaksa.domain.model.user.UserCount
@@ -43,9 +41,9 @@ fun LoginResp.toLoginResult() = Login(
     isSuccess = true
 )
 fun FollowContentResp.toFollowContent() = FollowContent(
-    follower = follower?.toUser() ?: User(),
+    follower = follower.toUser(),
     id = id ?: 0,
-    user = user?.toUser() ?: User()
+    user = user.toUser()
 )
 
 

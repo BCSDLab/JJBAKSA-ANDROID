@@ -11,21 +11,28 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jjbaksa.domain.model.follower.FollowContent
 import com.jjbaksa.jjbaksa.databinding.ItemFollowBinding
 
-class FollowRequestCheckAdapter(
-    private val onAcceptClicked: (FollowContent) -> Unit
-) : ListAdapter<FollowContent, FollowRequestCheckAdapter.ViewHolder>(diffUtil) {
+class FollowRequestAdapter(
+    private val onAcceptClicked: (FollowContent) -> Unit,
+    private val onDeleteClicked: (FollowContent) -> Unit,
+) : ListAdapter<FollowContent, FollowRequestAdapter.ViewHolder>(diffUtil) {
 
     inner class ViewHolder(private val binding: ItemFollowBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: FollowContent) {
-            binding.followerNameTextView.text = item.follower?.nickname
-            binding.followerAccountTextView.text = item.follower?.account
+            binding.followNameTextView.text = item.user?.nickname
+            binding.followAccountTextView.text = "@" +item.user?.account
 
             binding.followButton.isVisible = false
             binding.acceptButton.isVisible = true
             binding.deleteButton.isVisible = true
 
 
+            binding.acceptButton.setOnClickListener {
+                onAcceptClicked(item)
+            }
+            binding.deleteButton.setOnClickListener {
+                onDeleteClicked(item)
+            }
         }
     }
 
@@ -50,7 +57,10 @@ class FollowRequestCheckAdapter(
                 return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: FollowContent, newItem: FollowContent): Boolean {
+            override fun areContentsTheSame(
+                oldItem: FollowContent,
+                newItem: FollowContent
+            ): Boolean {
                 return oldItem == newItem
             }
         }

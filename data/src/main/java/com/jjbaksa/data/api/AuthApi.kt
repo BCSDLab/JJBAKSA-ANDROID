@@ -1,10 +1,9 @@
 package com.jjbaksa.data.api
 
-import com.google.gson.annotations.SerializedName
 import com.jjbaksa.data.model.follower.FollowRequestResp
 import com.jjbaksa.data.model.follower.FollowResp
 import com.jjbaksa.data.model.follower.FollowReq
-import com.jjbaksa.data.model.follower.FollowRequestCheckResp
+import com.jjbaksa.data.model.follower.FollowRequestReceivedResp
 import com.jjbaksa.data.model.follower.FollowerListResp
 import com.jjbaksa.data.model.follower.FollowerReviewShopsResp
 import com.jjbaksa.data.model.inquiry.InquiryContentResp
@@ -21,7 +20,6 @@ import com.jjbaksa.data.model.scrap.AddShopScrapResp
 import com.jjbaksa.data.model.scrap.ScrapsResp
 import com.jjbaksa.data.model.scrap.ShopScrapResp
 import com.jjbaksa.data.model.search.LocationBody
-import com.jjbaksa.data.model.search.ShopResp
 import com.jjbaksa.data.model.user.UserListResp
 import retrofit2.http.GET
 import com.jjbaksa.data.model.user.UserResp
@@ -174,9 +172,9 @@ interface AuthApi {
 
     @GET("users")
     suspend fun getUserSearch(
-        @Query("keyword") keyword: String?,
-        @Query("pageSize") pageSize: Int,
-        @Query("cursor") cursor: Long,
+        @Query("keyword") keyword: String,
+        @Query("pageSize") pageSize: Int?,
+        @Query("cursor") cursor: Long?,
     ): Response<UserListResp>
 
     @GET("follow/followers")
@@ -198,20 +196,20 @@ interface AuthApi {
 
     @POST("follow/requests/{request_id}/accept")
     suspend fun followRequestAccept(
-        @Path("request_id") userAccount: String
+        @Path("request_id") userId : Long
     ): Response<FollowResp>
 
 
     @DELETE("follow/requests/{request_id}/reject")
     suspend fun followRequestReject(
-        @Path("request_id") userAccount: String
+        @Path("request_id") userId : Long
     ): Response<Unit>
 
     @GET("follow/requests/receive")
-    suspend fun followRequestCheck(
+    suspend fun followRequestReceived(
         @Query("page") page: Int?,
         @Query("pageSize") pageSize: Int?
-    ): Response<FollowRequestCheckResp>
+    ): Response<FollowRequestReceivedResp>
 
     @GET("review/follower/{follower-id}/count")
     suspend fun getFollowerReviewCount(
@@ -229,4 +227,10 @@ interface AuthApi {
         @Path("place-id") placeId: String,
         @Query("size") size: Int = 10,
     ): Response<FollowerReviewShopsResp>
+
+    @GET("follow/requests/send")
+    suspend fun followRequestSend(
+        @Query("page") page: Int?,
+        @Query("pageSize") pageSize: Int?
+    ): Response<FollowRequestReceivedResp>
 }

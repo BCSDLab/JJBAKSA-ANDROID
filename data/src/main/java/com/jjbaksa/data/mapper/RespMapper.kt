@@ -1,6 +1,8 @@
 package com.jjbaksa.data.mapper
 
 import com.google.gson.Gson
+import com.jjbaksa.data.mapper.user.toUser
+import com.jjbaksa.data.model.follower.FollowerListResp
 import com.jjbaksa.data.model.pin.CloseResp
 import com.jjbaksa.data.model.pin.OpenResp
 import com.jjbaksa.data.model.pin.PeriodResp
@@ -9,7 +11,9 @@ import com.jjbaksa.data.model.pin.ShopDetailResp
 import com.jjbaksa.data.model.search.AutoKeywordResp
 import com.jjbaksa.data.model.search.SearchShopResp
 import com.jjbaksa.data.model.search.ShopResp
+import com.jjbaksa.data.model.user.UserListResp
 import com.jjbaksa.domain.ErrorResp
+import com.jjbaksa.domain.model.follower.FollowerList
 import com.jjbaksa.domain.model.shop.ShopsMapsContent
 import com.jjbaksa.domain.model.shop.ShopsMaps
 import com.jjbaksa.domain.model.shop.ShopDetail
@@ -19,6 +23,7 @@ import com.jjbaksa.domain.model.search.ShopData
 import com.jjbaksa.domain.model.shop.Close
 import com.jjbaksa.domain.model.shop.Open
 import com.jjbaksa.domain.model.shop.Period
+import com.jjbaksa.domain.model.user.UserList
 
 object RespMapper {
     fun errorMapper(json: String): ErrorResp {
@@ -96,4 +101,8 @@ fun ShopDetailResp.toShopDetail() = ShopDetail(
     period = period?.map { it.toPeriod() } ?: listOf(Period()),
     lat = lat ?: 0.0,
     lng = lng ?: 0.0
+)
+
+fun UserListResp.toUserList() = UserList(
+    content = content?.map { it.toUser() }.orEmpty()
 )

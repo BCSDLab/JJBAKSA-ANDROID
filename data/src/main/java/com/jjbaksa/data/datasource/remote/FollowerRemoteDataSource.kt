@@ -1,13 +1,12 @@
 package com.jjbaksa.data.datasource.remote
 
-import android.util.Log
 import com.jjbaksa.data.api.AuthApi
 import com.jjbaksa.data.api.NoAuthApi
 import com.jjbaksa.data.datasource.FollowerDataSource
 import com.jjbaksa.data.model.follower.FollowRequestResp
 import com.jjbaksa.data.model.follower.FollowResp
 import com.jjbaksa.data.model.follower.FollowReq
-import com.jjbaksa.data.model.follower.FollowRequestCheckResp
+import com.jjbaksa.data.model.follower.FollowRequestReceivedResp
 import com.jjbaksa.data.model.follower.FollowerListResp
 import com.jjbaksa.data.model.follower.FollowerReviewShopsResp
 import com.jjbaksa.data.model.review.ReviewCountResp
@@ -30,20 +29,16 @@ class FollowerRemoteDataSource @Inject constructor(
         return authApi.followRequest(req)
     }
 
-    override suspend fun followRequestAccept(userAccount: String): Response<FollowResp> {
-        return authApi.followRequestAccept(userAccount)
-    }
-
     override suspend fun followerDelete(req: FollowReq): Response<Unit> {
         return authApi.followerDelete(req)
     }
 
-    override suspend fun followRequestReject(userAccount: String): Response<Unit> {
-        return authApi.followRequestReject(userAccount)
+    override suspend fun followRequestAccept(userId :Long): Response<FollowResp> {
+        return authApi.followRequestAccept(userId)
     }
 
-    override suspend fun followRequestCheck(page: Int?, pageSize: Int?): Response<FollowRequestCheckResp> {
-        return authApi.followRequestCheck(page, pageSize)
+    override suspend fun followRequestCheck(page: Int?, pageSize: Int?): Response<FollowRequestReceivedResp> {
+        return authApi.followRequestReceived(page, pageSize)
     }
 
     override suspend fun getFollowerReviewCount(id: Long): Response<ReviewCountResp> {
@@ -56,5 +51,17 @@ class FollowerRemoteDataSource @Inject constructor(
 
     override suspend fun getShopReview(id: Long, placeId: String): Response<FollowerReviewShopsResp> {
         return authApi.getShopReview(id, placeId)
+    }
+
+    override suspend fun followRequestReject(userId: Long): Response<Unit> {
+        return authApi.followRequestReject(userId)
+    }
+
+    override suspend fun followRequestReceived(page: Int?, pageSize: Int?): Response<FollowRequestReceivedResp> {
+        return authApi.followRequestReceived(page, pageSize)
+    }
+
+    override suspend fun followRequestSend(page: Int?, pageSize: Int?): Response<FollowRequestReceivedResp> {
+        return authApi.followRequestSend(page, pageSize)
     }
 }
