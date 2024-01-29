@@ -27,7 +27,7 @@ android {
         buildConfigField("String", "naver_maps_client_id", getPropertyKey("naver_maps_client_id"))
         resValue("string", "kakao_oauth_host", getPropertyKey("kakao_oauth_host"))
         resValue("string", "naver_maps_client_id", getPropertyKey("naver_maps_client_id"))
-        signingConfig = signingConfigs.getByName("debug")
+
     }
 
     signingConfigs {

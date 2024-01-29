@@ -121,7 +121,7 @@ class FollowerRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun getRecentlyActiveFollowers(pageSize: Int? ,cursor: Long): Flow<Result<Followers>> {
+    override suspend fun getRecentlyActiveFollowers(pageSize: Int? ,cursor: Long?): Flow<Result<Followers>> {
         return apiCall(
             call = { followerRemoteDataSource.getRecentlyActiveFollowers(pageSize, cursor) },
             mapper = {

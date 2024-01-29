@@ -142,7 +142,7 @@ class FollowerViewModel @Inject constructor(
         }
     }
 
-    fun getRecentlyActiveFollowers(pageSize: Int?, cursor: Long) {
+    fun getRecentlyActiveFollowers(pageSize: Int?, cursor: Long?) {
         viewModelScope.launch(ceh) {
             followerUseCase.getRecentlyActiveFollowers(pageSize, cursor).collect {
                 it.onSuccess {

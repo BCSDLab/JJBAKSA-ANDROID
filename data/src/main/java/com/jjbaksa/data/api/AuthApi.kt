@@ -237,6 +237,6 @@ interface AuthApi {
     @GET("follow/followers/recently-active-followers")
     suspend fun getRecentlyActiveFollowers(
         @Query("pageSize") id: Int?,
-        @Query("cursor") cursor: Long
+        @Query("cursor") cursor: Long?
     ): Response<FollowerslistResp>
 }

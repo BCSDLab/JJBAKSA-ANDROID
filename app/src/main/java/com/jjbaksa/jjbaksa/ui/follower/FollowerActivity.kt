@@ -14,6 +14,7 @@ import com.jjbaksa.jjbaksa.base.BaseActivity
 import com.jjbaksa.jjbaksa.databinding.ActivityFollowerBinding
 import com.jjbaksa.jjbaksa.ui.follower.adapter.FollowRequestAdapter
 import com.jjbaksa.jjbaksa.ui.follower.adapter.FollowerAdapter
+import com.jjbaksa.jjbaksa.ui.follower.adapter.RecentlyActiveAdapter
 import com.jjbaksa.jjbaksa.ui.follower.viewmodel.FollowerViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -25,10 +26,12 @@ class FollowerActivity : BaseActivity<ActivityFollowerBinding>() {
     private lateinit var followerAdapter: FollowerAdapter
     private lateinit var followRequestAdapter: FollowRequestAdapter
     private lateinit var userAdapter: FollowerAdapter
+    private lateinit var recentlyActiveAdapter: RecentlyActiveAdapter
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var requestLinearLayoutManager: LinearLayoutManager
     private lateinit var userLinearLayoutManager: LinearLayoutManager
     private lateinit var followRequestLinearLayoutManager: LinearLayoutManager
+    private lateinit var recentlyActiveLinearLayoutManager: LinearLayoutManager
     private val viewModel: FollowerViewModel by viewModels()
 
     override fun initView() {
@@ -36,6 +39,7 @@ class FollowerActivity : BaseActivity<ActivityFollowerBinding>() {
         viewModel.getFollower(null, 20)
         viewModel.followRequestReceived(null, 20)
         viewModel.followRequestSend(null, 20)
+        viewModel.getRecentlyActiveFollowers(20, null)
 
         followerAdapter = FollowerAdapter({
             toggleFollow(it)
@@ -54,10 +58,14 @@ class FollowerActivity : BaseActivity<ActivityFollowerBinding>() {
             goToFollowerActivity(it)
         }
 
+        recentlyActiveAdapter = RecentlyActiveAdapter()
+
         linearLayoutManager = LinearLayoutManager(this)
         requestLinearLayoutManager = LinearLayoutManager(this)
         userLinearLayoutManager = LinearLayoutManager(this)
         followRequestLinearLayoutManager = LinearLayoutManager(this)
+        recentlyActiveLinearLayoutManager = LinearLayoutManager(this)
+        recentlyActiveLinearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
 
         binding.rvAllFollower.apply {
             layoutManager = linearLayoutManager
@@ -71,6 +79,11 @@ class FollowerActivity : BaseActivity<ActivityFollowerBinding>() {
         binding.rvSearchResult.apply {
             layoutManager = userLinearLayoutManager
             adapter = userAdapter
+        }
+
+        binding.rvRecentlyActiveFollower.apply {
+            layoutManager = recentlyActiveLinearLayoutManager
+            adapter = recentlyActiveAdapter
         }
     }
 
@@ -135,6 +148,25 @@ class FollowerActivity : BaseActivity<ActivityFollowerBinding>() {
 
                 }
             })
+
+        binding.rvRecentlyActiveFollower.addOnScrollListener(
+            object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    val itemCount = recentlyActiveLinearLayoutManager.itemCount
+                    val lastPosition =
+                        recentlyActiveLinearLayoutManager.findLastCompletelyVisibleItemPosition()
+
+                    if (lastPosition != -1 && lastPosition >= (itemCount - 1) && viewModel.recentlyActiveHasMore.value == true) {
+                        viewModel.recentlyActiveHasMore.value = false
+                        viewModel.getRecentlyActiveFollowers(
+                            20,
+                            recentlyActiveAdapter.currentList.last().id
+                        )
+                        binding.loadingView.setLoading(true)
+                    }
+
+                }
+            })
     }
 
     override fun initEvent() {
@@ -188,6 +220,15 @@ class FollowerActivity : BaseActivity<ActivityFollowerBinding>() {
                 userAdapter.submitList(emptyList())
             } else {
                 userAdapter.submitList(userAdapter.currentList + it.content)
+            }
+        }
+
+        viewModel.recentlyActiveList.observe(this) {
+            binding.loadingView.setLoading(false)
+            if (it.content.isEmpty() && recentlyActiveAdapter.currentList.isEmpty()) {
+                recentlyActiveAdapter.submitList(emptyList())
+            } else {
+                recentlyActiveAdapter.submitList(recentlyActiveAdapter.currentList + it.content)
             }
         }
 
