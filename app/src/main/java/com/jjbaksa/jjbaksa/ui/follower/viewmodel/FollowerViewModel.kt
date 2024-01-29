@@ -1,5 +1,6 @@
 package com.jjbaksa.jjbaksa.ui.follower.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -30,8 +31,8 @@ class FollowerViewModel @Inject constructor(
     val receivedFollowRequestList: LiveData<Followers> get() = _receivedFollowRequestList
     private val _sendFollowRequestList = SingleLiveEvent<Followers>()
     val sendFollowRequestList: LiveData<Followers> get() = _sendFollowRequestList
-    private val _recentlyActiveList = SingleLiveEvent<Followers>()
-    val recentlyActiveList: SingleLiveEvent<Followers> get() = _recentlyActiveList
+    private val _recentlyActiveList = SingleLiveEvent<FollowerList>()
+    val recentlyActiveList: SingleLiveEvent<FollowerList> get() = _recentlyActiveList
 
 
 

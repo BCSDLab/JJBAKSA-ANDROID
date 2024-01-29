@@ -43,7 +43,7 @@ class FollowerUseCase @Inject constructor(
         return followerRepository.followRequestSend(page, pageSize)
     }
 
-    suspend fun getRecentlyActiveFollowers(pageSize: Int?, cursor: Long?): Flow<Result<Followers>> {
+    suspend fun getRecentlyActiveFollowers(pageSize: Int?, cursor: Long?): Flow<Result<FollowerList>> {
         return followerRepository.getRecentlyActiveFollowers(pageSize, cursor)
     }
 

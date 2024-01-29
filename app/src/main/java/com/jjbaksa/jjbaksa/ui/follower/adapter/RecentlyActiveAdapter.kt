@@ -14,14 +14,14 @@ import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.databinding.ItemFollowBinding
 import com.jjbaksa.jjbaksa.databinding.ItemRecentlyActiveBinding
 
-class RecentlyActiveAdapter() : ListAdapter<FollowContent, RecentlyActiveAdapter.ViewHolder>(diffUtil) {
+class RecentlyActiveAdapter() : ListAdapter<User, RecentlyActiveAdapter.ViewHolder>(diffUtil) {
     inner class ViewHolder(private val binding: ItemRecentlyActiveBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: FollowContent) {
-            binding.followNameTextView.text = item.user?.nickname
+        fun bind(item: User) {
+            binding.followNameTextView.text = item.nickname
 
             Glide.with(binding.root.context)
-                .load(item.user.profileImage.url)
+                .load(item.profileImage.url)
                 .error(R.drawable.baseline_supervised_user_circle_24)
                 .circleCrop()
                 .into(binding.ivProfile)
@@ -45,13 +45,13 @@ class RecentlyActiveAdapter() : ListAdapter<FollowContent, RecentlyActiveAdapter
     }
 
     companion object {
-        val diffUtil = object : DiffUtil.ItemCallback<FollowContent>() {
+        val diffUtil = object : DiffUtil.ItemCallback<User>() {
 
-            override fun areItemsTheSame(oldItem: FollowContent, newItem: FollowContent): Boolean {
+            override fun areItemsTheSame(oldItem: User, newItem: User): Boolean {
                 return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: FollowContent, newItem: FollowContent): Boolean {
+            override fun areContentsTheSame(oldItem: User, newItem: User): Boolean {
                 return oldItem == newItem
             }
         }

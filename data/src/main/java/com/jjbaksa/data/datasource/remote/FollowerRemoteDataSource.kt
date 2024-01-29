@@ -41,7 +41,7 @@ class FollowerRemoteDataSource @Inject constructor(
         return authApi.followRequestReceived(page, pageSize)
     }
 
-    override suspend fun getRecentlyActiveFollowers(pageSize: Int?, cursor: Long?): Response<FollowerslistResp> {
+    override suspend fun getRecentlyActiveFollowers(pageSize: Int?, cursor: Long?): Response<FollowerListResp> {
         return authApi.getRecentlyActiveFollowers(pageSize, cursor)
     }
 

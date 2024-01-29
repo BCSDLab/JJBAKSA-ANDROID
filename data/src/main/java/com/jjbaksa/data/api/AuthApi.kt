@@ -37,6 +37,7 @@ import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Query
 
+
 interface AuthApi {
     @GET("user/me")
     suspend fun getUserMe(): Response<UserResp>
@@ -234,9 +235,9 @@ interface AuthApi {
         @Query("pageSize") pageSize: Int?
     ): Response<FollowerslistResp>
 
-    @GET("follow/followers/recently-active-followers")
+    @GET("recently-active-followers")
     suspend fun getRecentlyActiveFollowers(
         @Query("pageSize") id: Int?,
         @Query("cursor") cursor: Long?
-    ): Response<FollowerslistResp>
+    ): Response<FollowerListResp>
 }
