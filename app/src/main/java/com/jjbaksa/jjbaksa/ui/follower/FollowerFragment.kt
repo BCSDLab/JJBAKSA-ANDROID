@@ -191,10 +191,8 @@ class FollowerFragment() : BaseFragment<FragmentFollowerBinding>() {
         viewModel.followerList.observe(viewLifecycleOwner) {
             binding.loadingView.setLoading(false)
             if (it.content.isEmpty() && followerAdapter.currentList.isEmpty()) {
-                binding.emptyContainer.isVisible = true
                 followerAdapter.submitList(emptyList())
             } else {
-                binding.emptyContainer.isVisible = false
                 followerAdapter.submitList(followerAdapter.currentList+it.content)
             }
         }
@@ -203,10 +201,8 @@ class FollowerFragment() : BaseFragment<FragmentFollowerBinding>() {
         viewModel.receivedFollowRequestList.observe(viewLifecycleOwner) {
             binding.loadingView.setLoading(false)
             if (it.content.isEmpty() && followRequestAdapter.currentList.isEmpty()) {
-                binding.emptyContainer.isVisible = true
                 followRequestAdapter.submitList(emptyList())
             } else {
-                binding.emptyContainer.isVisible = false
                 followRequestAdapter.submitList(followRequestAdapter.currentList+it.content)
             }
         }
@@ -215,10 +211,8 @@ class FollowerFragment() : BaseFragment<FragmentFollowerBinding>() {
         viewModel.sendFollowRequestList.observe(viewLifecycleOwner) {
             binding.loadingView.setLoading(false)
             if (it.content.isEmpty() && sendRequestAdapter.currentList.isEmpty()) {
-                binding.emptyContainer.isVisible = true
                 sendRequestAdapter.submitList(emptyList())
             } else {
-                binding.emptyContainer.isVisible = false
                 sendRequestAdapter.submitList(sendRequestAdapter.currentList+it.content)
             }
         }
@@ -226,13 +220,9 @@ class FollowerFragment() : BaseFragment<FragmentFollowerBinding>() {
         viewModel.userList.observe(viewLifecycleOwner) {
             binding.loadingView.setLoading(false)
             if (it.content.isEmpty() && userAdapter.currentList.isEmpty()) {
-                binding.emptyContainer.isVisible = true
                 userAdapter.submitList(emptyList())
             } else {
-                binding.emptyContainer.isVisible = false
-
                 userAdapter.submitList(userAdapter.currentList + it.content)
-
             }
         }
 

@@ -65,17 +65,5 @@
             app:loading="true"
             tools:layout_editor_absoluteX="234dp"
             tools:layout_editor_absoluteY="181dp" />
-
-        <com.jjbaksa.jjbaksa.view.JjNoContentView
-            android:id="@+id/empty_container"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:title="@string/no_follower_title" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
