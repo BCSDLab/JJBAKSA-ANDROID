@@ -3,7 +3,6 @@ package com.jjbaksa.data.datasource.remote
 import com.jjbaksa.data.api.AuthApi
 import com.jjbaksa.data.api.NoAuthApi
 import com.jjbaksa.data.datasource.SearchDataSource
-import com.jjbaksa.data.model.search.AutoKeywordResp
 import com.jjbaksa.data.model.search.LocationBody
 import com.jjbaksa.data.model.search.SearchShopResp
 import com.jjbaksa.data.model.search.TrendResp
@@ -18,8 +17,8 @@ class SearchRemoteDataSource @Inject constructor(
         return noAuthApi.getTrending()
     }
 
-    override suspend fun getSearchKeyword(word: String): Response<AutoKeywordResp> {
-        return noAuthApi.getSearchKeyword(word)
+    override suspend fun getSearchKeyword(word: String, locationBody: LocationBody): Response<List<String>> {
+        return noAuthApi.getSearchKeyword(word, locationBody)
     }
 
     override suspend fun getShops(
@@ -34,5 +33,13 @@ class SearchRemoteDataSource @Inject constructor(
         locationBody: LocationBody
     ): Response<SearchShopResp> {
         return noAuthApi.getShopsPage(pageToken, locationBody)
+    }
+
+    override fun getSearchHistory(): String {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun setSearchHistories(resultJsonString: String) {
+        TODO("Not yet implemented")
     }
 }

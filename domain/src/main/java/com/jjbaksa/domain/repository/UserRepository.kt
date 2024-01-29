@@ -46,7 +46,7 @@ interface UserRepository {
         onError: (String) -> Unit
     ): Flow<Result<Boolean>>
 
-    suspend fun postSignUp(signUpReq: SignUpReq): SignUpResp?
+    suspend fun postSignUp(signUpReq: SignUpReq, onError: (String) -> Unit): SignUpResp?
     suspend fun checkAccountAvailable(account: String): RespResult<Boolean>
     suspend fun postUserWithdrawReason(
         withdrawalReason: WithdrawalReasonReq,

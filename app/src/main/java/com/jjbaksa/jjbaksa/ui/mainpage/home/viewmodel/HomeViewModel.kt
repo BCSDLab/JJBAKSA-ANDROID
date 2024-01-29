@@ -12,15 +12,17 @@ import com.jjbaksa.jjbaksa.model.ShopContent
 import com.jjbaksa.jjbaksa.util.MyInfo
 import com.jjbaksa.jjbaksa.util.SingleLiveEvent
 import com.jjbaksa.jjbaksa.util.toShopContent
+import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val homeRepository: HomeRepository,
     private val userUseCase: UserUseCase,
-    private val shopUseCase: ShopUseCase
+    private val shopUseCase: ShopUseCase,
 ) : BaseViewModel() {
     val location = MutableLiveData<UserLocation>()
     val lastLocation = MutableLiveData<UserLocation>()
@@ -48,7 +50,7 @@ class HomeViewModel @Inject constructor(
         optionsNearby: Int,
         optionsScrap: Int,
         lat: Double,
-        lng: Double
+        lng: Double,
     ) {
         viewModelScope.launch(ceh) {
             shopUseCase.invoke(optionsFriend, optionsNearby, optionsScrap, lat, lng) { msg ->
@@ -72,6 +74,23 @@ class HomeViewModel @Inject constructor(
                     MyInfo.reviews = homeRepository.getMyInfoReviews()
                     MyInfo.profileImage = homeRepository.getMyInfoProfileImage()
                     MyInfo.token = homeRepository.getMyInfoToken()
+                    getKakaoInfo()
+                }
+            }
+        }
+    }
+
+    fun getKakaoInfo() {
+        UserApiClient.instance.me { user, error ->
+            if (error != null) {
+                Timber.tag("kakao_user_error").e(error)
+            } else if (user != null) {
+                if (homeRepository.getMyInfoAccount().isEmpty()) MyInfo.account =
+                    user.kakaoAccount?.email.toString()
+                if (homeRepository.getMyInfoProfileImage().isEmpty()) MyInfo.profileImage =
+                    user.kakaoAccount?.profile?.thumbnailImageUrl.toString()
+                if (homeRepository.getMyInfoNickname().isEmpty()) {
+                    MyInfo.nickname = user.kakaoAccount?.profile?.nickname.toString()
                 }
             }
         }

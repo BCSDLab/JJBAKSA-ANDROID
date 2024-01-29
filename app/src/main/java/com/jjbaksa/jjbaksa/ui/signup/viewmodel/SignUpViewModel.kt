@@ -1,10 +1,10 @@
 package com.jjbaksa.jjbaksa.ui.signup.viewmodel
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.jjbaksa.domain.base.RespResult
 import com.jjbaksa.domain.enums.SignUpAlertEnum
+import com.jjbaksa.domain.model.user.Login
 import com.jjbaksa.domain.model.user.SignUpReq
 import com.jjbaksa.domain.usecase.CheckAccountAvailableUseCase
 import com.jjbaksa.domain.usecase.SignUpUseCase
@@ -23,12 +23,8 @@ class SignUpViewModel @Inject constructor(
     private val userUseCase: UserUseCase
 ) : BaseViewModel() {
 
-    private val _isSignUpSuccess = MutableLiveData<Boolean>()
-    private val _userEmailCheckState = SingleLiveEvent<Boolean>()
-    val userEmailCheckState: SingleLiveEvent<Boolean> get() = _userEmailCheckState
-
-    val isSignUpSuccess: LiveData<Boolean>
-        get() = _isSignUpSuccess
+    private val _login = SingleLiveEvent<Login>()
+    val login: SingleLiveEvent<Login> get() = _login
 
     val userEmail = MutableLiveData<String>("")
     private val _uiState = SingleLiveEvent<SignUpUIState>()
@@ -39,6 +35,8 @@ class SignUpViewModel @Inject constructor(
     var password: String = ""
     var passwordCheck: String = ""
     var nickname: String = ""
+
+    var isSignUpSuccess = true
 
     init {
         _uiState.value = SignUpUIState()
@@ -79,13 +77,14 @@ class SignUpViewModel @Inject constructor(
         _uiState.value = _uiState.value?.copy(alertType = newAlertType)
     }
 
-    fun signUpRequest() {
+    fun signUpRequest(onSuccess: () -> Unit, onError: (String) -> Unit) {
         val signUpReq = SignUpReq(id, email, nickname, password)
         viewModelScope.launch {
             runCatching {
-                signUpUseCase(signUpReq)
+                isSignUpSuccess = true
+                signUpUseCase(signUpReq, onError)
             }.onSuccess {
-                _isSignUpSuccess.value = true
+                onSuccess()
             }.onFailure {
                 // Handle sign up fail throwable
             }
@@ -97,9 +96,15 @@ class SignUpViewModel @Inject constructor(
         viewModelScope.launch(ceh) {
             userUseCase.postUserEmailCheck(email).collect {
                 it.onSuccess {
-                    _userEmailCheckState.value = it.isSuccess
+                    _login.value = it
                 }
             }
+        }
+    }
+
+    fun setNewNickname(nickname: String) {
+        viewModelScope.launch(ceh) {
+            userUseCase.setNewNickname(nickname)
         }
     }
 }

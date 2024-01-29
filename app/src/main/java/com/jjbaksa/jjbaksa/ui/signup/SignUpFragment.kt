@@ -8,6 +8,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.internal.TextWatcherAdapter
 import com.jjbaksa.domain.enums.SignUpAlertEnum
+import com.jjbaksa.domain.enums.SignUpAlertEnum.EMAIL_ALREADY_EXIST
 import com.jjbaksa.domain.enums.SignUpAlertEnum.EMAIL_NOT_FOUND
 import com.jjbaksa.domain.enums.SignUpAlertEnum.NEED_ID_CHECK
 import com.jjbaksa.domain.enums.SignUpAlertEnum.PASSWORD_NOT_MATCH
@@ -16,7 +17,6 @@ import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseFragment
 import com.jjbaksa.jjbaksa.databinding.FragmentSignUpBinding
 import com.jjbaksa.jjbaksa.dialog.ConfirmDialog
-import com.jjbaksa.jjbaksa.ui.findpassword.FindPasswordResetFragment
 import com.jjbaksa.jjbaksa.util.RegexUtil.isPasswordRuleMatch
 import com.jjbaksa.jjbaksa.ui.signup.viewmodel.SignUpViewModel
 import com.jjbaksa.jjbaksa.util.KeyboardProvider
@@ -167,27 +167,41 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
         binding.buttonSignUpNext.setOnClickListener {
             checkInputsCorrect()
             if (!signUpViewModel.uiState.value?.isAlertShown!!) {
-                signUpViewModel.postUserEmailCheck(signUpViewModel.email)
-                if (signUpViewModel.uiState.value?.isIdChecked == true) {
-                    ConfirmDialog(
-                        getString(R.string.sign_up_title_text),
-                        getString(R.string.sign_up_content_text),
-                        getString(R.string.confirm),
-                        {
-                            findNavController().navigate(R.id.action_nav_graph_move_to_welcome)
-                            dismissDialog()
+                signUpViewModel.signUpRequest(
+                    {
+                        if (signUpViewModel.uiState.value?.isIdChecked == true && signUpViewModel.isSignUpSuccess) {
+                            signUpViewModel.postUserEmailCheck(signUpViewModel.email)
+                            ConfirmDialog(
+                                getString(R.string.sign_up_title_text),
+                                getString(R.string.sign_up_content_text),
+                                getString(R.string.confirm),
+                                {
+                                    findNavController().navigate(R.id.action_nav_graph_move_to_welcome)
+                                    dismissDialog()
+                                }
+                            ).show(parentFragmentManager, DIALOG_TAG)
+                        } else {
+                            signUpViewModel.updateAlertType(NEED_ID_CHECK)
+                            signUpViewModel.updateAlertState(true)
                         }
-                    ).show(parentFragmentManager, FindPasswordResetFragment.DIALOG_TAG)
-                } else {
-                    signUpViewModel.updateAlertType(NEED_ID_CHECK)
+                    }
+                ) {
+                    KeyboardProvider(requireContext()).run {
+                        hideKeyboard(binding.jEditTextSignUpId)
+                        hideKeyboard(binding.jEditTextSignUpEmail)
+                        hideKeyboard(binding.jEditTextSignUpPassword)
+                        hideKeyboard(binding.jEditTextSignUpPasswordConfirm)
+                    }
+                    showSnackBar(it)
                     signUpViewModel.updateAlertState(true)
+                    signUpViewModel.isSignUpSuccess = false
                 }
             }
         }
     }
 
     private fun dismissDialog() {
-        val dialogFragment = parentFragmentManager.findFragmentByTag(FindPasswordResetFragment.DIALOG_TAG)
+        val dialogFragment = parentFragmentManager.findFragmentByTag(DIALOG_TAG)
         if (dialogFragment is DialogFragment) {
             dialogFragment.dismiss()
         }
@@ -198,11 +212,10 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
             setAlert(it.alertType)
         }
 
-        signUpViewModel.userEmailCheckState.observe(viewLifecycleOwner) {
-            if (it) {
-                findNavController().navigate(R.id.action_nav_graph_move_to_welcome)
+        signUpViewModel.login.observe(viewLifecycleOwner) {
+            if (it.isSuccess) {
             } else {
-                binding.buttonSignUpNext.isEnabled = false
+                showSnackBar(it.errorMessage)
             }
         }
     }
@@ -232,6 +245,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
             PASSWORD_RULE_NOT_MATCH -> context?.getString(R.string.password_rule_not_match)
             PASSWORD_NOT_MATCH -> context?.getString(R.string.password_not_match)
             NEED_ID_CHECK -> context?.getString(R.string.need_id_check)
+            EMAIL_ALREADY_EXIST -> context?.getString(R.string.email_already_exist)
         }
 
         return alertMsg
@@ -269,5 +283,9 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
                     binding.jEditTextSignUpPasswordConfirm.setEditTextAlertImg(!isPasswordConfirmed)
                 }
         }
+    }
+
+    companion object {
+        private const val DIALOG_TAG = "DIALOG_TAG"
     }
 }

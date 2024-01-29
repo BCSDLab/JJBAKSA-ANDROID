@@ -32,8 +32,8 @@ class UserRepositoryImpl @Inject constructor(
 ) : UserRepository {
     override suspend fun postLoginSNS(token: String, snsType: String): Result<Login> =
         runCatching { userRemoteDataSource.postLoginSNS(token, snsType).toLoginResult() }.onSuccess {
-            userRemoteDataSource.saveAccessToken(it.accessToken)
-            userRemoteDataSource.saveRefreshToken(it.refreshToken)
+            userLocalDataSource.saveAccessToken(it.accessToken)
+            userLocalDataSource.saveRefreshToken(it.refreshToken)
         }
 
     override suspend fun getUserMe(): Flow<Result<User>> {
@@ -225,8 +225,13 @@ class UserRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun postSignUp(signUpReq: SignUpReq): SignUpResp? {
+    override suspend fun postSignUp(signUpReq: SignUpReq, onError: (String) -> Unit): SignUpResp? {
         val resp = userRemoteDataSource.postSignUp(signUpReq)
+        if (!resp.isSuccessful) {
+            val errorBodyJson = resp.errorBody()!!.string()
+            val errorBody = RespMapper.errorMapper(errorBodyJson)
+            onError(errorBody.errorMessage)
+        }
         return resp.body()
     }
 

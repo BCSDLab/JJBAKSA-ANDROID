@@ -12,6 +12,7 @@ import com.jjbaksa.domain.repository.UserRepository
 import com.jjbaksa.data.repository.UserRepositoryImpl
 import com.example.imageselector.repository.ImageRepository
 import com.jjbaksa.data.datasource.remote.FollowerRemoteDataSource
+import com.jjbaksa.data.datasource.local.SearchLocalDataSource
 import com.jjbaksa.data.datasource.remote.InquiryRemoteDataSource
 import com.jjbaksa.data.datasource.remote.ShopRemoteDataSource
 import com.jjbaksa.data.datasource.remote.SearchRemoteDataSource
@@ -74,9 +75,10 @@ object RepositoryModule {
     @Singleton
     @Provides
     fun provideSearchRepository(
-        searchRemoteDataSource: SearchRemoteDataSource
+        searchRemoteDataSource: SearchRemoteDataSource,
+        searchLocalDataSource: SearchLocalDataSource
     ): SearchRepository {
-        return SearchRepositoryImpl(searchRemoteDataSource)
+        return SearchRepositoryImpl(searchRemoteDataSource, searchLocalDataSource)
     }
     @Singleton
     @Provides
