@@ -133,7 +133,7 @@ interface AuthApi {
     @GET("review/followers/count/shop/{place-id}")
     suspend fun getFollowersShopReviewCount(
         @Path("place-id") placeId: String
-    ): Response<Int>
+    ): Response<ReviewCountResp>
     @GET("inquiry")
     suspend fun getInquiry(
         @Query("idCursor") idCursor: Long?,

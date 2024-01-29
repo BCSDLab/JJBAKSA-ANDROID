@@ -10,6 +10,7 @@ import com.jjbaksa.data.mapper.review.toMyReviewShops
 import com.jjbaksa.data.mapper.review.toReviewShop
 import com.jjbaksa.data.mapper.review.toReviewShopDetail
 import com.jjbaksa.data.model.apiCall
+import com.jjbaksa.data.model.review.ReviewCountResp
 import com.jjbaksa.domain.repository.ReviewRepository
 import com.jjbaksa.domain.model.review.FollowerReviewShops
 import com.jjbaksa.domain.model.review.ReviewShopLastDate
@@ -153,7 +154,7 @@ class ReviewRepositoryImpl(
             call = { reviewRemoteDataSource.getFollowersShopReviewCount(placeId) },
             mapper = {
                 if (it.isSuccessful) {
-                    it.body() ?: 0
+                    it.body()?.count ?: 0
                 } else {
                     0
                 }
