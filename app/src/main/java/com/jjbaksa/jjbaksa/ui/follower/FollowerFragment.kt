@@ -6,6 +6,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jjbaksa.domain.enums.UserCursor
+import com.jjbaksa.domain.model.user.User
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseFragment
 import com.jjbaksa.jjbaksa.databinding.FragmentFollowerBinding
@@ -31,8 +32,6 @@ class FollowerFragment() : BaseFragment<FragmentFollowerBinding>() {
         get() = R.layout.fragment_follower
 
     override fun initView() {
-        viewModel.getFollower(null, 10)
-
         viewModel.getFollower(null, 20)
         viewModel.followRequestReceived(null, 20)
         viewModel.followRequestSend(null,20)
@@ -44,14 +43,7 @@ class FollowerFragment() : BaseFragment<FragmentFollowerBinding>() {
                 viewModel.followerDelete(it.account)
             }
         }) {
-            val intent = Intent(requireContext(), FollowerProfileActivity::class.java).apply {
-                putExtra("nickname", it.nickname)
-                putExtra("account", it.account)
-                putExtra("fid", it.id)
-                putExtra("profileImage", it.profileImage.url)
-                putExtra("followerCount", it.userCountResponse.friendCount)
-            }
-            startActivity(intent)
+            goToFollowerActivity(it)
         }
         followRequestAdapter = FollowRequestAdapter({
             viewModel.followRequestAccept(it.id)
@@ -73,14 +65,7 @@ class FollowerFragment() : BaseFragment<FragmentFollowerBinding>() {
                 viewModel.followerDelete(it.account)
             }
         }) {
-            val intent = Intent(requireContext(), FollowerProfileActivity::class.java).apply {
-                putExtra("nickname", it.nickname)
-                putExtra("account", it.account)
-                putExtra("fid", it.id)
-                putExtra("profileImage", it.profileImage.url)
-                putExtra("followerCount", it.userCountResponse.friendCount)
-            }
-            startActivity(intent)
+            goToFollowerActivity(it)
         }
 
         linearLayoutManager = LinearLayoutManager(requireContext())
@@ -245,5 +230,15 @@ class FollowerFragment() : BaseFragment<FragmentFollowerBinding>() {
                 }
             }
         }
+    }
+    private fun goToFollowerActivity(user: User) {
+        val intent = Intent(requireContext(), FollowerProfileActivity::class.java).apply {
+            putExtra("nickname", user.nickname)
+            putExtra("account", user.account)
+            putExtra("fid", user.id)
+            putExtra("profileImage", user.profileImage.url)
+            putExtra("followerCount", user.userCountResponse.friendCount)
+        }
+        startActivity(intent)
     }
 }
