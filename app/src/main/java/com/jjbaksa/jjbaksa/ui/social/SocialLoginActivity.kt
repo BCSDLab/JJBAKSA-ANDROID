@@ -7,6 +7,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -19,11 +20,15 @@ import com.jjbaksa.jjbaksa.BuildConfig
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseActivity
 import com.jjbaksa.jjbaksa.databinding.ActivitySocialLoginBinding
+import com.jjbaksa.jjbaksa.ui.mainpage.MainPageActivity
+import com.jjbaksa.jjbaksa.ui.social.KakaoService.Companion.KAKAO
+import com.jjbaksa.jjbaksa.ui.splash.SplashActivity
 import com.jjbaksa.jjbaksa.util.UiState
 import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.oauth.NidOAuthBehavior
 import com.navercorp.nid.oauth.OAuthLoginCallback
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 import javax.inject.Inject
@@ -62,7 +67,7 @@ class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
             buttonKakaoLogin.setOnClickListener {
                 kakaoService.initKakaoLogin {
                     Timber.tag("kakao_token").e("$it")
-//                    socialLoginViewModel.postLoginSNS("Bearer $it", KAKAO)
+                    socialLoginViewModel.postLoginSNS(it, KAKAO)
                 }
             }
             buttonNaverLogin.setOnClickListener {
@@ -108,6 +113,9 @@ class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
             when (uiState) {
                 is UiState.Success -> {
                     Timber.tag("kakao").e("success")
+                    finishAffinity()
+                    val intent = Intent(this, MainPageActivity::class.java)
+                    startActivity(intent)
                 }
 
                 is UiState.Failure -> {
@@ -116,7 +124,7 @@ class SocialLoginActivity : BaseActivity<ActivitySocialLoginBinding>() {
 
                 else -> Unit // Loading etc...
             }
-        }
+        }.launchIn(lifecycleScope)
     }
 
     private fun initNaverLogin() {
