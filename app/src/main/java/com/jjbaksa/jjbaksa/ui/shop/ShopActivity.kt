@@ -1,9 +1,11 @@
 package com.jjbaksa.jjbaksa.ui.shop
 
 import android.content.Intent
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
+import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseActivity
@@ -183,14 +185,28 @@ class ShopActivity : BaseActivity<ActivityShopBinding>(), OnMapReadyCallback {
     private fun observeFriendsReview() {
         viewModel.friendReview.observe(this) {
             if (it.content.isNotEmpty()) {
+                binding.friendReviewLayout1.friendReviewNameTextView.text = it.content[0].userReviewResponse.nickname
+                binding.friendReviewLayout1.friendReviewAccountTextView.text = it.content[0].userReviewResponse.account
                 binding.friendReviewLayout1.friendReviewContentTextView.text = it.content[0].content
                 binding.friendReviewLayout1.friendReviewCreatedDateTextView.text = it.content[0].createdAt
                 binding.friendReviewLayout1.reviewStarCountTextView.text = it.content[0].rate.toString()
+                Glide.with(this)
+                    .load(it.content[0].userReviewResponse.profileImage.url)
+                    .placeholder(R.drawable.ic_profile)
+                    .circleCrop()
+                    .into(binding.friendReviewLayout1.friendReviewProfileImageView)
 
                 if (it.content.size > 1) {
+                    binding.friendReviewLayout2.friendReviewNameTextView.text = it.content[1].userReviewResponse.nickname
+                    binding.friendReviewLayout2.friendReviewAccountTextView.text = it.content[1].userReviewResponse.account
                     binding.friendReviewLayout2.friendReviewContentTextView.text = it.content[1].content
                     binding.friendReviewLayout2.friendReviewCreatedDateTextView.text = it.content[1].createdAt
                     binding.friendReviewLayout2.reviewStarCountTextView.text = it.content[1].rate.toString()
+                    Glide.with(this)
+                        .load(it.content[1].userReviewResponse.profileImage.url)
+                        .placeholder(R.drawable.ic_profile)
+                        .circleCrop()
+                        .into(binding.friendReviewLayout2.friendReviewProfileImageView)
                 } else {
                     binding.friendReviewLayout2.root.visibility = View.GONE
                 }
