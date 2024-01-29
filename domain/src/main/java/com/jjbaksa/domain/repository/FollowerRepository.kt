@@ -2,7 +2,7 @@ package com.jjbaksa.domain.repository
 
 import com.jjbaksa.domain.model.follower.Follow
 import com.jjbaksa.domain.model.follower.FollowRequest
-import com.jjbaksa.domain.model.follower.FollowRequestCheck
+import com.jjbaksa.domain.model.follower.followRequestRecived
 import com.jjbaksa.domain.model.follower.FollowerList
 import kotlinx.coroutines.flow.Flow
 
@@ -17,7 +17,7 @@ interface FollowerRepository {
     suspend fun followRequestAccept(userId: Long): Flow<Result<Follow>>
 
     suspend fun followRequestReject(userId: Long): Flow<Result<Unit>>
-    suspend fun followRequestCheck(page: Int?, pageSize: Int?): Flow<Result<FollowRequestCheck>>
-    suspend fun followRequestSend(page: Int?, pageSize: Int?): Flow<Result<FollowRequestCheck>>
+    suspend fun followRequestRecived(page: Int?, pageSize: Int?): Flow<Result<followRequestRecived>>
+    suspend fun followRequestSend(page: Int?, pageSize: Int?): Flow<Result<followRequestRecived>>
 
 }

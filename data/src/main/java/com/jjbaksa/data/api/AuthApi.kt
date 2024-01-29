@@ -3,7 +3,7 @@ package com.jjbaksa.data.api
 import com.jjbaksa.data.model.follower.FollowRequestResp
 import com.jjbaksa.data.model.follower.FollowResp
 import com.jjbaksa.data.model.follower.FollowReq
-import com.jjbaksa.data.model.follower.FollowRequestCheckResp
+import com.jjbaksa.data.model.follower.followRequestRecivedResp
 import com.jjbaksa.data.model.follower.FollowerListResp
 import com.jjbaksa.data.model.follower.FollowerReviewShopsResp
 import com.jjbaksa.data.model.inquiry.InquiryContentResp
@@ -205,14 +205,14 @@ interface AuthApi {
     ): Response<Unit>
 
     @GET("follow/requests/receive")
-    suspend fun followRequestCheck(
+    suspend fun followRequestRecived(
         @Query("page") page: Int?,
         @Query("pageSize") pageSize: Int?
-    ): Response<FollowRequestCheckResp>
+    ): Response<followRequestRecivedResp>
 
     @GET("follow/requests/send")
     suspend fun followRequestSend(
         @Query("page") page: Int?,
         @Query("pageSize") pageSize: Int?
-    ): Response<FollowRequestCheckResp>
+    ): Response<followRequestRecivedResp>
 }

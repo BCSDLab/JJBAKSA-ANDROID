@@ -11,10 +11,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jjbaksa.domain.model.follower.FollowContent
 import com.jjbaksa.jjbaksa.databinding.ItemFollowBinding
 
-class FollowRequestCheckAdapter(
+class FollowRequestAdapter(
     private val onAcceptClicked: (FollowContent) -> Unit,
     private val onDeleteClicked: (FollowContent) -> Unit,
-) : ListAdapter<FollowContent, FollowRequestCheckAdapter.ViewHolder>(diffUtil) {
+) : ListAdapter<FollowContent, FollowRequestAdapter.ViewHolder>(diffUtil) {
 
     inner class ViewHolder(private val binding: ItemFollowBinding) :
         RecyclerView.ViewHolder(binding.root) {

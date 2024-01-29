@@ -162,11 +162,14 @@ class FollowerFragment() : BaseFragment<FragmentFollowerBinding>() {
         }
 
 
-        viewModel.curser.observe(viewLifecycleOwner) {
+
+
+        viewModel.cursor.observe(viewLifecycleOwner) {
             when (it) {
                 UserCursor.ALL -> {
                     binding.followerRecyclerView.isVisible = false
-                    binding.followRequestRecyclerView.isVisible = false
+                    binding.recivedFollowRequestRecyclerView.isVisible = false
+                    binding.sendFollowRequestRecyclerView.isVisible = false
                     binding.allUsersRecyclerView.isVisible = true
                 }
                 UserCursor.FOLLOWER -> {

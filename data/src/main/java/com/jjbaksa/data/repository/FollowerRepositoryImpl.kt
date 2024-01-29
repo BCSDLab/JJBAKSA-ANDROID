@@ -3,13 +3,13 @@ package com.jjbaksa.data.repository
 import com.jjbaksa.data.datasource.remote.FollowerRemoteDataSource
 import com.jjbaksa.data.mapper.follower.toFollow
 import com.jjbaksa.data.mapper.follower.toFollowRequest
-import com.jjbaksa.data.mapper.follower.toFollowRequestCheck
+import com.jjbaksa.data.mapper.follower.tofollowRequestRecived
 import com.jjbaksa.data.mapper.follower.toFollower
 import com.jjbaksa.data.model.apiCall
 import com.jjbaksa.data.model.follower.FollowReq
 import com.jjbaksa.domain.model.follower.Follow
 import com.jjbaksa.domain.model.follower.FollowRequest
-import com.jjbaksa.domain.model.follower.FollowRequestCheck
+import com.jjbaksa.domain.model.follower.followRequestRecived
 import com.jjbaksa.domain.model.follower.FollowerList
 import com.jjbaksa.domain.repository.FollowerRepository
 import kotlinx.coroutines.flow.Flow
@@ -83,18 +83,18 @@ class FollowerRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun followRequestCheck(
+    override suspend fun followRequestRecived(
         page: Int?,
         pageSize: Int?
-    ): Flow<Result<FollowRequestCheck>> {
+    ): Flow<Result<followRequestRecived>> {
         return apiCall(
-            call = { followerRemoteDataSource.followRequestCheck(page, pageSize) },
+            call = { followerRemoteDataSource.followRequestRecived(page, pageSize) },
             mapper = {
                 if (it.isSuccessful) {
-                    it.body()?.toFollowRequestCheck() ?: FollowRequestCheck()
+                    it.body()?.tofollowRequestRecived() ?: followRequestRecived()
 
                 } else {
-                    FollowRequestCheck()
+                    followRequestRecived()
                 }
             }
         )
@@ -103,15 +103,15 @@ class FollowerRepositoryImpl @Inject constructor(
     override suspend fun followRequestSend(
         page: Int?,
         pageSize: Int?
-    ): Flow<Result<FollowRequestCheck>> {
+    ): Flow<Result<followRequestRecived>> {
         return apiCall(
             call = { followerRemoteDataSource.followRequestSend(page, pageSize) },
             mapper = {
                 if (it.isSuccessful) {
-                    it.body()?.toFollowRequestCheck() ?: FollowRequestCheck()
+                    it.body()?.tofollowRequestRecived() ?: followRequestRecived()
 
                 } else {
-                    FollowRequestCheck()
+                    followRequestRecived()
                 }
             }
         )

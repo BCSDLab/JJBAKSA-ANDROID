@@ -7,9 +7,9 @@ import com.jjbaksa.data.datasource.FollowerDataSource
 import com.jjbaksa.data.model.follower.FollowRequestResp
 import com.jjbaksa.data.model.follower.FollowResp
 import com.jjbaksa.data.model.follower.FollowReq
-import com.jjbaksa.data.model.follower.FollowRequestCheckResp
+import com.jjbaksa.data.model.follower.followRequestRecivedResp
 import com.jjbaksa.data.model.follower.FollowerListResp
-import com.jjbaksa.domain.model.follower.FollowRequestCheck
+import com.jjbaksa.domain.model.follower.followRequestRecived
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -40,11 +40,11 @@ class FollowerRemoteDataSource @Inject constructor(
         return authApi.followRequestReject(userId)
     }
 
-    override suspend fun followRequestCheck(page: Int?, pageSize: Int?): Response<FollowRequestCheckResp> {
-        return authApi.followRequestCheck(page, pageSize)
+    override suspend fun followRequestRecived(page: Int?, pageSize: Int?): Response<followRequestRecivedResp> {
+        return authApi.followRequestRecived(page, pageSize)
     }
 
-    override suspend fun followRequestSend(page: Int?, pageSize: Int?): Response<FollowRequestCheckResp> {
+    override suspend fun followRequestSend(page: Int?, pageSize: Int?): Response<followRequestRecivedResp> {
         return authApi.followRequestSend(page, pageSize)
     }
 }
