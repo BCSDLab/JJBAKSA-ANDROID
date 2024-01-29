@@ -2,7 +2,7 @@ package com.jjbaksa.domain.repository
 
 import com.jjbaksa.domain.model.follower.Follow
 import com.jjbaksa.domain.model.follower.FollowRequest
-import com.jjbaksa.domain.model.follower.FollowRequestRecived
+import com.jjbaksa.domain.model.follower.Followers
 import com.jjbaksa.domain.model.follower.FollowerList
 import com.jjbaksa.domain.model.review.FollowerReviewShops
 import com.jjbaksa.domain.model.review.ReviewShop
@@ -19,8 +19,9 @@ interface FollowerRepository {
     suspend fun followRequestAccept(userId: Long): Flow<Result<Follow>>
 
     suspend fun followRequestReject(userId: Long): Flow<Result<Unit>>
-    suspend fun followRequestRecived(page: Int?, pageSize: Int?): Flow<Result<FollowRequestRecived>>
-    suspend fun followRequestSend(page: Int?, pageSize: Int?): Flow<Result<FollowRequestRecived>>
+    suspend fun followRequestRecived(page: Int?, pageSize: Int?): Flow<Result<Followers>>
+    suspend fun followRequestSend(page: Int?, pageSize: Int?): Flow<Result<Followers>>
+    suspend fun getRecentlyActiveFollowers(pageSize: Int?, cursor: Long): Flow<Result<Followers>>
     suspend fun getFollowerReviewCount(id: Long): Flow<Result<Int>>
     suspend fun getReviewedShops(id: Long): Flow<Result<ReviewShop>>
     suspend fun getShopReview(id: Long, placeId: String): Flow<Result<FollowerReviewShops>>
