@@ -4,12 +4,12 @@ import android.content.Context
 import android.content.Intent
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.jjbaksa.data.BASE_URL
 import com.jjbaksa.data.api.AuthApi
 import com.jjbaksa.data.api.NoAuthApi
 import com.jjbaksa.data.api.RefreshApi
 import com.jjbaksa.data.database.PreferenceKeys
 import com.jjbaksa.data.database.userDataStore
+import com.jjbaksa.jjbaksa.BuildConfig
 import com.jjbaksa.jjbaksa.JjbaksaApp
 import com.jjbaksa.jjbaksa.ui.login.LoginActivity
 import com.jjbaksa.jjbaksa.util.RefreshManager
@@ -156,7 +156,7 @@ object NetworkModule {
     fun provideNoAuthRetrofit(@NOAUTH okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .client(okHttpClient)
-            .baseUrl(BASE_URL)
+            .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -168,7 +168,7 @@ object NetworkModule {
     fun provideAuthRetrofit(@AUTH okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .client(okHttpClient)
-            .baseUrl(BASE_URL)
+            .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
