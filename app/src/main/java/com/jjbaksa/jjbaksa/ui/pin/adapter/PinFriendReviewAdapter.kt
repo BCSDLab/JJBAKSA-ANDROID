@@ -21,7 +21,7 @@ class PinFriendReviewAdapter(
             binding.friendReviewAccountTextView.text = item.userReviewResponse.account
             binding.friendReviewContentTextView.text = item.content
             binding.friendReviewCreatedDateTextView.text = item.createdAt
-            binding.reviewStarCountTextView.text = item.rate.toFloat().toString()
+            binding.tvReviewStarCount.text = item.rate.toFloat().toString()
             Glide.with(binding.friendReviewProfileImageView)
                 .load(item.userReviewResponse.profileImage.url)
                 .override(40)

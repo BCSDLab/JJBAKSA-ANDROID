@@ -9,6 +9,7 @@ import com.jjbaksa.data.model.search.SearchShopResp
 import com.jjbaksa.data.model.search.ShopResp
 import com.jjbaksa.data.model.shop.CoordinateResp
 import com.jjbaksa.data.model.shop.ShopInfoResp
+import com.jjbaksa.data.model.shop.ShopRatesResp
 import com.jjbaksa.data.model.shop.TimeResp
 import com.jjbaksa.data.model.user.UserListResp
 import com.jjbaksa.domain.ErrorResp
@@ -20,6 +21,7 @@ import com.jjbaksa.domain.model.search.ShopData
 import com.jjbaksa.domain.model.shop.Coordinate
 import com.jjbaksa.domain.model.shop.Period
 import com.jjbaksa.domain.model.shop.ShopInfo
+import com.jjbaksa.domain.model.shop.ShopRates
 import com.jjbaksa.domain.model.shop.Time
 import com.jjbaksa.domain.model.user.UserList
 
@@ -110,4 +112,9 @@ fun ShopInfoResp.toShopInfo() = ShopInfo(
     coordinate = coordinate?.toCoordinate() ?: Coordinate(),
     formattedPhoneNumber = formattedPhoneNumber ?: "",
     todayPeriod = todayPeriod?.toPeriod() ?: Period()
+)
+
+fun ShopRatesResp.toShopRates() = ShopRates(
+    totalRating = totalRating ?: 0,
+    ratingCount = ratingCount ?: 0
 )

@@ -7,6 +7,7 @@ import com.jjbaksa.domain.model.review.MyReviewShops
 import com.jjbaksa.domain.model.review.ReviewShopLastDate
 import com.jjbaksa.domain.model.scrap.AddShopScrap
 import com.jjbaksa.domain.model.shop.ShopInfo
+import com.jjbaksa.domain.model.shop.ShopRates
 import com.jjbaksa.domain.usecase.shop.ShopUseCase
 import com.jjbaksa.domain.usecase.review.ReviewUseCase
 import com.jjbaksa.domain.usecase.scrap.GetShopScrapUseCase
@@ -42,6 +43,9 @@ class ShopViewModel @Inject constructor(
 
     private val _myLastReviewDate = SingleLiveEvent<ReviewShopLastDate>()
     val myLastReviewDate: SingleLiveEvent<ReviewShopLastDate> get() = _myLastReviewDate
+
+    private val _shopAverageRate = SingleLiveEvent<Float>()
+    val shopAverageRate: SingleLiveEvent<Float> get() = _shopAverageRate
 
     fun getShopInfo(placeId: String) {
         showProgress.value = true
@@ -147,6 +151,20 @@ class ShopViewModel @Inject constructor(
                 it.onSuccess {
                     _addScrapInfo.value = AddShopScrap()
                 }.onFailure {
+                }
+            }
+        }
+    }
+
+    fun getShopRates(placeId: String) {
+        viewModelScope.launch(ceh) {
+            shopUseCase.getShopRates(placeId) { msg ->
+                toastMsg.postValue(msg)
+            }.collect {
+                it.onSuccess {
+                    _shopAverageRate.value = it
+                }.onFailure {
+                    _shopAverageRate.value = 0f
                 }
             }
         }
