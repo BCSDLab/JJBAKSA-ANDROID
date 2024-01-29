@@ -47,34 +47,66 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/follow_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="64dp"
+            android:layout_height="31dp"
+            android:src="@drawable/ic_drop_down"
+            android:text="@string/follow"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@drawable/ic_following_back"
+            android:backgroundTint="#FF7F23"
+            android:textColor="@color/white"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="@+id/follow_account_text_view"
+            />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/following_button"
+            android:layout_width="64dp"
+            android:layout_height="31dp"
             android:src="@drawable/ic_drop_down"
             android:text="@string/following"
             android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/follow_account_text_view"
             android:background="@drawable/ic_following_back"
             android:gravity="center"
             />
-
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/delete_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/requested_button"
+            android:layout_width="64dp"
+            android:layout_height="31dp"
             android:src="@drawable/ic_drop_down"
-            android:text="@string/delete"
+            android:text="@string/requested"
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:background="@drawable/ic_following_back"
+            app:layout_constraintBottom_toBottomOf="@+id/follow_account_text_view"
+            android:textColor="#666666"
+            android:background="@drawable/ic_follow_request_back"
             android:gravity="center"
             />
 
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/delete_button"
+            android:layout_width="64dp"
+            android:layout_height="31dp"
+            android:background="@drawable/ic_following_back"
+            android:gravity="center"
+            android:src="@drawable/ic_drop_down"
+            android:text="@string/delete"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/follow_account_text_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/accept_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="64dp"
+            android:layout_height="31dp"
             android:src="@drawable/ic_drop_down"
             android:text="@string/accept"
             android:visibility="invisible"
@@ -82,6 +114,7 @@
             app:layout_constraintTop_toTopOf="parent"
             android:background="@drawable/ic_following_back"
             android:backgroundTint="#F6BF54"
+            app:layout_constraintBottom_toBottomOf="@+id/follow_account_text_view"
             android:textColor="@color/white"
             android:gravity="center"
             />

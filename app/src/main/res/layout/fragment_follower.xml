@@ -26,13 +26,24 @@
 
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/follow_request_recycler_view"
+            android:id="@+id/recived_follow_request_recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="0dp"
             android:layout_marginTop="20dp"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/follower_recycler_view"
+            app:layout_constraintVertical_bias="1.0"
+            tools:layout_editor_absoluteX="0dp"
+            tools:listitem="@layout/item_follow" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/send_follow_request_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view"
             app:layout_constraintVertical_bias="1.0"
             tools:layout_editor_absoluteX="0dp"
             tools:listitem="@layout/item_follow" />

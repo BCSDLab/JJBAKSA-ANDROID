@@ -211,4 +211,5 @@
     <string name="follow">팔로우</string>
     <string name="delete">삭제</string>
     <string name="accept">확인</string>
+    <string name="requested">요청됨</string>
 </resources>
