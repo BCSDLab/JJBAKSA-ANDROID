@@ -32,7 +32,7 @@ class ShopActivity : BaseActivity<ActivityShopBinding>(), OnMapReadyCallback {
         binding.lifecycleOwner = this
         intent.getStringExtra("place_id")?.let {
             viewModel.placeId.value = it
-            viewModel.getShopDetail(it)
+            viewModel.getShopInfo(it)
         }
         viewModel.getMyReview(
             placeId = viewModel.placeId.value.toString(),
@@ -83,9 +83,9 @@ class ShopActivity : BaseActivity<ActivityShopBinding>(), OnMapReadyCallback {
             binding.addressTextView.text = it.formattedAddress
             binding.phoneTextView.text = it.formattedPhoneNumber
 
-            binding.reviewStarCountTextView.text = if (it.ratingCount == 0) "0.0" else
-                round((it.totalRating / it.ratingCount.toDouble()) * 10).div(10).toString()
-            binding.bookmarkImageView.isSelected = it.scrap != 0
+//            binding.reviewStarCountTextView.text = if (it.ratingCount == 0) "0.0" else
+//                round((it.totalRating / it.ratingCount.toDouble()) * 10).div(10).toString()
+//            binding.bookmarkImageView.isSelected = it.scrap != 0
 
             it.photos.forEach {
                 binding.shopImagesTabLayout.addTab(binding.shopImagesTabLayout.newTab())
@@ -146,8 +146,8 @@ class ShopActivity : BaseActivity<ActivityShopBinding>(), OnMapReadyCallback {
     override fun onMapReady(naverMap: NaverMap) {
         val cameraUpdate = CameraUpdate.scrollTo(
             LatLng(
-                viewModel.shopInfo.value?.lat ?: 0.0,
-                viewModel.shopInfo.value?.lng ?: 0.0
+                viewModel.shopInfo.value?.coordinate?.lat ?: 0.0,
+                viewModel.shopInfo.value?.coordinate?.lng ?: 0.0
             )
         )
         naverMap.moveCamera(cameraUpdate)

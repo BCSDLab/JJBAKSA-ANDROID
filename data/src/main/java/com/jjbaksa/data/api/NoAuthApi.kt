@@ -1,10 +1,12 @@
 package com.jjbaksa.data.api
 
+import com.jjbaksa.data.model.pin.ShopDetailResp
 import com.jjbaksa.data.model.post.PostDetailResp
 import com.jjbaksa.data.model.post.PostResp
 import com.jjbaksa.data.model.search.LocationBody
 import com.jjbaksa.data.model.search.SearchShopResp
 import com.jjbaksa.data.model.search.TrendResp
+import com.jjbaksa.data.model.shop.ShopInfoResp
 import com.jjbaksa.data.model.user.LoginResp
 import com.jjbaksa.data.model.user.UserListResp
 import com.jjbaksa.data.model.user.UserResp
@@ -108,5 +110,9 @@ interface NoAuthApi {
     suspend fun postUserEmailCheck(
         @Query("email") userEmail: String
     ): Response<LoginResp>
-    
+
+    @GET("shops/{place-id}")
+    suspend fun getShopInfo(
+        @Path("place-id") placeId: String
+    ): Response<ShopInfoResp>
 }

@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class Period(
     @SerializedName("close")
-    val close: Close = Close(),
+    val close: Time = Time(),
     @SerializedName("open")
-    val open: Open = Open()
+    val open: Time = Time()
 )

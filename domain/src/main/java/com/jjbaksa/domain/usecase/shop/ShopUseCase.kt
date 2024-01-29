@@ -3,6 +3,7 @@ package com.jjbaksa.domain.usecase.shop
 import com.jjbaksa.domain.repository.ShopRepository
 import com.jjbaksa.domain.model.shop.ShopsMaps
 import com.jjbaksa.domain.model.shop.ShopDetail
+import com.jjbaksa.domain.model.shop.ShopInfo
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -22,5 +23,9 @@ class ShopUseCase @Inject constructor(
 
     suspend fun getShopDetail(placeId: String, onError: (String) -> Unit): Flow<Result<ShopDetail>> {
         return shopRepository.getShopDetail(placeId, onError)
+    }
+
+    suspend fun getShopInfo(placeId: String, onError: (String) -> Unit): Flow<Result<ShopInfo>> {
+        return shopRepository.getShopInfo(placeId, onError)
     }
 }
