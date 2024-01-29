@@ -3,13 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-
-        <variable
-            name="view"
-            type="com.jjbaksa.jjbaksa.ui.follower.FollowerFragment" />
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_item_follower"
         android:layout_width="match_parent"

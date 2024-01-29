@@ -26,7 +26,6 @@ class FollowRequestAdapter(
             binding.acceptButton.isVisible = true
             binding.deleteButton.isVisible = true
 
-
             binding.acceptButton.setOnClickListener {
                 onAcceptClicked(item)
             }
