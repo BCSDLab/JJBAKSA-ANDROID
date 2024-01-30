@@ -54,12 +54,10 @@ class FollowerActivity : BaseActivity<ActivityFollowerBinding>() {
 
         recentlyActiveAdapter = RecentlyActiveAdapter()
 
-
         binding.rvAllFollower.adapter = followerAdapter
         binding.rvRequestFollow.adapter = followRequestAdapter
         binding.rvSearchResult.adapter = userAdapter
         binding.rvRecentlyActiveFollower.adapter = recentlyActiveAdapter
-
     }
 
     override fun subscribe() {
@@ -70,7 +68,6 @@ class FollowerActivity : BaseActivity<ActivityFollowerBinding>() {
                     val lastPosition =
                         binding.rvAllFollower.layoutManager?.let { it as LinearLayoutManager }
                             ?.findLastCompletelyVisibleItemPosition() ?: 0
-
 
                     if (lastPosition != -1 && lastPosition >= (itemCount - 1) && viewModel.followerHasMore.value == true) {
                         viewModel.followerHasMore.value = false
