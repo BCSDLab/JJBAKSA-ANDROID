@@ -6,6 +6,7 @@ import com.jjbaksa.data.datasource.ReviewDataSource
 import com.jjbaksa.data.model.follower.FollowerReviewShopsResp
 import com.jjbaksa.data.model.review.ReviewShopLastDateResp
 import com.jjbaksa.data.model.review.MyReviewShopsResp
+import com.jjbaksa.data.model.review.ReviewCountResp
 import com.jjbaksa.data.model.review.ReviewShopDetailResp
 import com.jjbaksa.data.model.review.ReviewShopResp
 import okhttp3.MultipartBody
@@ -76,7 +77,7 @@ class ReviewRemoteDataSource(
         return authApi.postReview(placeId, content, rate, reviewImages)
     }
 
-    override suspend fun getFollowersShopReviewCount(placeId: String): Response<Int> {
+    override suspend fun getFollowersShopReviewCount(placeId: String): Response<ReviewCountResp> {
         return authApi.getFollowersShopReviewCount(placeId)
     }
 }

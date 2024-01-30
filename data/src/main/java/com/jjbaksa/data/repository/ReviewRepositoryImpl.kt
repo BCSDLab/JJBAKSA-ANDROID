@@ -153,7 +153,7 @@ class ReviewRepositoryImpl(
             call = { reviewRemoteDataSource.getFollowersShopReviewCount(placeId) },
             mapper = {
                 if (it.isSuccessful) {
-                    it.body() ?: 0
+                    it.body()?.count ?: 0
                 } else {
                     0
                 }

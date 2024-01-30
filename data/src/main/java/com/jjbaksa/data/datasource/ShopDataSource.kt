@@ -5,6 +5,8 @@ import com.jjbaksa.data.model.pin.ScrapDto
 import com.jjbaksa.data.model.shop.ShopsMapsResp
 import com.jjbaksa.data.model.pin.ShopDetailResp
 import com.jjbaksa.data.model.search.LocationBody
+import com.jjbaksa.data.model.shop.ShopInfoResp
+import com.jjbaksa.data.model.shop.ShopRatesResp
 import retrofit2.Response
 
 interface ShopDataSource {

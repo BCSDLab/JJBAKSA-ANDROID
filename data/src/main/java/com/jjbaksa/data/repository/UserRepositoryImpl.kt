@@ -5,6 +5,7 @@ import com.jjbaksa.data.datasource.local.UserLocalDataSource
 import com.jjbaksa.data.datasource.remote.UserRemoteDataSource
 import com.jjbaksa.data.mapper.FormDataUtil
 import com.jjbaksa.data.mapper.RespMapper
+import com.jjbaksa.data.mapper.toUserList
 import com.jjbaksa.data.mapper.user.toLoginResult
 import com.jjbaksa.data.mapper.user.toUser
 import com.jjbaksa.data.model.apiCall
@@ -17,6 +18,7 @@ import com.jjbaksa.domain.model.user.PasswordAndNicknameReq
 import com.jjbaksa.domain.model.user.SignUpReq
 import com.jjbaksa.domain.model.user.SignUpResp
 import com.jjbaksa.domain.model.user.User
+import com.jjbaksa.domain.model.user.UserList
 import com.jjbaksa.domain.model.user.WithdrawalReasonReq
 import com.jjbaksa.domain.repository.UserRepository
 import kotlinx.coroutines.flow.Flow
@@ -348,5 +350,22 @@ class UserRepositoryImpl @Inject constructor(
 
     override fun getAccessToken(): String {
         return userLocalDataSource.getAccessToken()
+    }
+
+    override suspend fun getUserSearch(
+        keyWord: String,
+        pageSize: Int?,
+        cursor: Long?
+    ): Flow<Result<UserList>> {
+        return apiCall(
+            call = { userRemoteDataSource.getUserSearch(keyWord, pageSize, cursor) },
+            mapper = {
+                if (it.isSuccessful) {
+                    it.body()?.toUserList() ?: UserList()
+                } else {
+                    UserList()
+                }
+            }
+        )
     }
 }

@@ -4,6 +4,7 @@ import com.jjbaksa.domain.model.user.FindPasswordReq
 import com.jjbaksa.domain.model.user.User
 import com.jjbaksa.domain.repository.UserRepository
 import com.jjbaksa.domain.model.user.Login
+import com.jjbaksa.domain.model.user.UserList
 import com.jjbaksa.domain.model.user.WithdrawalReasonReq
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -102,5 +103,13 @@ class UserUseCase @Inject constructor(
         onError: (String) -> Unit
     ): Flow<Result<Boolean>> {
         return userRepository.deleteUserMe(onError)
+    }
+
+    suspend fun getUserSearch(
+        keyWord: String,
+        pageSize: Int?,
+        cursor: Long?
+    ): Flow<Result<UserList>> {
+        return userRepository.getUserSearch(keyWord, pageSize, cursor)
     }
 }

@@ -3,7 +3,9 @@ package com.jjbaksa.domain.usecase.shop
 import com.jjbaksa.domain.repository.ShopRepository
 import com.jjbaksa.domain.model.shop.ShopsMaps
 import com.jjbaksa.domain.model.shop.ShopDetail
+import com.jjbaksa.domain.model.shop.ShopInfo
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class ShopUseCase @Inject constructor(

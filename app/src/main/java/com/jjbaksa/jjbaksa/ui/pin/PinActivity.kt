@@ -108,7 +108,7 @@ class PinActivity : BaseActivity<ActivityPinBinding>() {
             imageFrameAdapter.submitList(it.photos)
         }
         viewModel.rate.flowWithLifecycle(lifecycle).onEach {
-            binding.reviewStarCountTextView.text = it.toString()
+            binding.tvReviewStarCount.text = it.toString()
         }.launchIn(lifecycleScope)
         viewModel.scrapId.flowWithLifecycle(lifecycle).onEach {
             binding.bookmarkImageView.isSelected = it != 0L

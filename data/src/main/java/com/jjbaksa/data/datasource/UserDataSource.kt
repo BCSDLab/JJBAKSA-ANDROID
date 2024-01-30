@@ -1,6 +1,7 @@
 package com.jjbaksa.data.datasource
 
 import com.jjbaksa.data.model.user.LoginResp
+import com.jjbaksa.data.model.user.UserListResp
 import com.jjbaksa.data.model.user.UserResp
 import com.jjbaksa.domain.model.user.FindPasswordReq
 import com.jjbaksa.domain.model.user.LoginReq
@@ -48,4 +49,10 @@ interface UserDataSource {
     fun getProfileImage(): String
     fun getAccessToken(): String
     fun getAuthPasswordToken(): String
+
+    suspend fun getUserSearch(
+        keyword: String,
+        pageSize: Int?,
+        cursor: Long?
+    ): Response<UserListResp>
 }
