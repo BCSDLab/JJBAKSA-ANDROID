@@ -8,20 +8,17 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.jjbaksa.domain.model.follower.FollowContent
 import com.jjbaksa.domain.model.user.User
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.databinding.ItemFollowBinding
+import com.jjbaksa.jjbaksa.databinding.ItemRecentlyActiveBinding
 
-class FollowerAdapter(
-    private val onButtonClicked: (User) -> Unit,
-    private val onItemClicked: (User) -> Unit
-) : ListAdapter<User, FollowerAdapter.ViewHolder>(diffUtil) {
-
-    inner class ViewHolder(private val binding: ItemFollowBinding) :
+class RecentlyActiveAdapter() : ListAdapter<User, RecentlyActiveAdapter.ViewHolder>(diffUtil) {
+    inner class ViewHolder(private val binding: ItemRecentlyActiveBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: User) {
             binding.followNameTextView.text = item.nickname
-            binding.followAccountTextView.text = "@" +item.account
 
             Glide.with(binding.root.context)
                 .load(item.profileImage.url)
@@ -29,36 +26,13 @@ class FollowerAdapter(
                 .circleCrop()
                 .into(binding.ivProfile)
 
-            binding.followingButton.setOnClickListener {
-                onButtonClicked(item)
-                binding.followingButton.isVisible = false
-                binding.followButton.isVisible = true
-                binding.requestedButton.isVisible = false
-            }
-            binding.followButton.setOnClickListener {
-                onButtonClicked(item)
-                binding.followingButton.isVisible = false
-                binding.followButton.isVisible = false
-                binding.requestedButton.isVisible = true
-            }
-            binding.clItemFollower.setOnClickListener {
-                onItemClicked(item)
-            }
-            binding.requestedButton.setOnClickListener {
-                onButtonClicked(item)
-                binding.followingButton.isVisible = false
-                binding.followButton.isVisible = true
-                binding.requestedButton.isVisible = false
-            }
-
-
 
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            ItemFollowBinding.inflate(
+            ItemRecentlyActiveBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false

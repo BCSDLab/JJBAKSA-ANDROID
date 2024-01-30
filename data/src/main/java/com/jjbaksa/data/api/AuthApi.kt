@@ -3,7 +3,7 @@ package com.jjbaksa.data.api
 import com.jjbaksa.data.model.follower.FollowRequestResp
 import com.jjbaksa.data.model.follower.FollowResp
 import com.jjbaksa.data.model.follower.FollowReq
-import com.jjbaksa.data.model.follower.FollowRequestReceivedResp
+import com.jjbaksa.data.model.follower.FollowerslistResp
 import com.jjbaksa.data.model.follower.FollowerListResp
 import com.jjbaksa.data.model.follower.FollowerReviewShopsResp
 import com.jjbaksa.data.model.inquiry.InquiryContentResp
@@ -36,6 +36,7 @@ import retrofit2.http.POST
 import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Query
+
 
 interface AuthApi {
     @GET("user/me")
@@ -209,7 +210,7 @@ interface AuthApi {
     suspend fun followRequestReceived(
         @Query("page") page: Int?,
         @Query("pageSize") pageSize: Int?
-    ): Response<FollowRequestReceivedResp>
+    ): Response<FollowerslistResp>
 
     @GET("review/follower/{follower-id}/count")
     suspend fun getFollowerReviewCount(
@@ -232,5 +233,11 @@ interface AuthApi {
     suspend fun followRequestSend(
         @Query("page") page: Int?,
         @Query("pageSize") pageSize: Int?
-    ): Response<FollowRequestReceivedResp>
+    ): Response<FollowerslistResp>
+
+    @GET("recently-active-followers")
+    suspend fun getRecentlyActiveFollowers(
+        @Query("pageSize") id: Int?,
+        @Query("cursor") cursor: Long?
+    ): Response<FollowerListResp>
 }
