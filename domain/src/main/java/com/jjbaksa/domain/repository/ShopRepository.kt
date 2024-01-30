@@ -17,4 +17,12 @@ interface ShopRepository {
         placeId: String,
         onError: (String) -> Unit
     ): Flow<Result<ShopDetail>>
+    suspend fun getShopsRates(
+        placeId: String,
+        onError: (String) -> Unit
+    ): Flow<Result<Float>>
+    suspend fun getShopsScraps(
+        placeId: String,
+        onError: (String) -> Unit
+    ): Flow<Result<Long>>
 }

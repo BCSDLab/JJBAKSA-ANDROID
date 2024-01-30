@@ -1,8 +1,11 @@
 package com.jjbaksa.data.api
 
+import com.jjbaksa.data.model.CoordinateDto
 import com.jjbaksa.data.model.follower.FollowerReviewShopsResp
 import com.jjbaksa.data.model.inquiry.InquiryContentResp
 import com.jjbaksa.data.model.inquiry.InquiryResp
+import com.jjbaksa.data.model.pin.RateDto
+import com.jjbaksa.data.model.pin.ScrapDto
 import com.jjbaksa.data.model.shop.ShopsMapsResp
 import com.jjbaksa.data.model.review.MyReviewShopsResp
 import com.jjbaksa.data.model.review.ReviewShopLastDateResp
@@ -55,6 +58,14 @@ interface AuthApi {
     suspend fun getShopDetail(
         @Path("place_id") placeId: String
     ): Response<ShopDetailResp>
+    @GET("shops/rates/{place_id}")
+    suspend fun getShopsRates(
+        @Path("place_id") placeId: String
+    ): Response<RateDto>
+    @GET("shops/scraps/{place_id}")
+    suspend fun getShopsScraps(
+        @Path("place_id") placeId: String
+    ): Response<ScrapDto>
     @POST("shops/maps")
     suspend fun getShopsMaps(
         @Query("options_friend") optionsFriend: Int,
