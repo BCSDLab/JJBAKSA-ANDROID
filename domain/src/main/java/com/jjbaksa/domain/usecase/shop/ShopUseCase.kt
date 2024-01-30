@@ -3,7 +3,9 @@ package com.jjbaksa.domain.usecase.shop
 import com.jjbaksa.domain.repository.ShopRepository
 import com.jjbaksa.domain.model.shop.ShopsMaps
 import com.jjbaksa.domain.model.shop.ShopDetail
+import com.jjbaksa.domain.model.shop.ShopInfo
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class ShopUseCase @Inject constructor(
@@ -22,5 +24,17 @@ class ShopUseCase @Inject constructor(
 
     suspend fun getShopDetail(placeId: String, onError: (String) -> Unit): Flow<Result<ShopDetail>> {
         return shopRepository.getShopDetail(placeId, onError)
+    }
+
+    suspend fun getShopInfo(placeId: String, onError: (String) -> Unit): Flow<Result<ShopInfo>> {
+        return shopRepository.getShopInfo(placeId, onError)
+    }
+
+    suspend fun getShopRates(placeId: String, onError: (String) -> Unit): Flow<Result<Float>> {
+        return shopRepository.getShopRates(placeId, onError).map {
+            it.map { rates ->
+                rates.totalRating.toFloat() / rates.ratingCount.toFloat()
+            }
+        }
     }
 }

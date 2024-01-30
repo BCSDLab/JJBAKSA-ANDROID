@@ -111,7 +111,7 @@
                     tools:text="일식집" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/review_star_count_text_view"
+                    android:id="@+id/tv_review_star_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
@@ -129,9 +129,9 @@
                     android:layout_marginStart="4dp"
                     android:alpha="0.6"
                     android:background="@color/color_666666"
-                    app:layout_constraintBottom_toBottomOf="@id/review_star_count_text_view"
-                    app:layout_constraintStart_toEndOf="@id/review_star_count_text_view"
-                    app:layout_constraintTop_toTopOf="@id/review_star_count_text_view" />
+                    app:layout_constraintBottom_toBottomOf="@id/tv_review_star_count"
+                    app:layout_constraintStart_toEndOf="@id/tv_review_star_count"
+                    app:layout_constraintTop_toTopOf="@id/tv_review_star_count" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/last_review_count_text_view"
@@ -140,9 +140,9 @@
                     android:layout_marginStart="4dp"
                     android:textColor="@color/color_666666"
                     android:textSize="14sp"
-                    app:layout_constraintBottom_toBottomOf="@id/review_star_count_text_view"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_review_star_count"
                     app:layout_constraintStart_toEndOf="@id/review_line_view"
-                    app:layout_constraintTop_toTopOf="@id/review_star_count_text_view"
+                    app:layout_constraintTop_toTopOf="@id/tv_review_star_count"
                     tools:text="마지막 리뷰 25/06/30" />
 
 
@@ -167,7 +167,7 @@
                     android:text="@string/bookmark"
                     android:textColor="@color/color_666666"
                     android:textSize="11sp"
-                    app:layout_constraintBottom_toBottomOf="@id/review_star_count_text_view"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_review_star_count"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/bookmark_image_view" />
 
@@ -184,7 +184,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    app:layout_constraintTop_toBottomOf="@+id/review_star_count_text_view"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_review_star_count"
                     app:tabIndicatorFullWidth="false" />
 
                 <androidx.viewpager2.widget.ViewPager2

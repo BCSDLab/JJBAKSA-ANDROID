@@ -6,6 +6,8 @@ import com.jjbaksa.data.datasource.ShopDataSource
 import com.jjbaksa.data.model.shop.ShopsMapsResp
 import com.jjbaksa.data.model.pin.ShopDetailResp
 import com.jjbaksa.data.model.search.LocationBody
+import com.jjbaksa.data.model.shop.ShopInfoResp
+import com.jjbaksa.data.model.shop.ShopRatesResp
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -24,5 +26,13 @@ class ShopRemoteDataSource @Inject constructor(
 
     override suspend fun getShopDetail(placeId: String): Response<ShopDetailResp> {
         return authApi.getShopDetail(placeId)
+    }
+
+    override suspend fun getShopInfo(placeId: String): Response<ShopInfoResp> {
+        return noAuthApi.getShopInfo(placeId)
+    }
+
+    override suspend fun getShopRates(placeId: String): Response<ShopRatesResp> {
+        return noAuthApi.getShopRates(placeId)
     }
 }

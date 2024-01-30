@@ -15,7 +15,7 @@ class PinMyReviewAdapter :
         fun bind(item: MyReviewShopsContent) {
             binding.myReviewContentTextView.text = item.content
             binding.myReviewCreatedDateTextView.text = item.createdAt
-            binding.reviewStarCountTextView.text = item.rate.toFloat().toString()
+            binding.tvReviewStarCount.text = item.rate.toFloat().toString()
         }
     }
 

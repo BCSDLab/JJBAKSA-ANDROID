@@ -122,7 +122,7 @@
                     tools:text="일식집" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/review_star_count_text_view"
+                    android:id="@+id/tv_review_star_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
@@ -154,7 +154,7 @@
                     android:text="@string/bookmark"
                     android:textColor="@color/color_666666"
                     android:textSize="11sp"
-                    app:layout_constraintBottom_toBottomOf="@id/review_star_count_text_view"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_review_star_count"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/bookmark_image_view" />
 
@@ -174,7 +174,7 @@
                     android:layout_height="1dp"
                     android:background="@color/color_eeeeee"
                     android:layout_marginTop="8dp"
-                    app:layout_constraintTop_toBottomOf="@id/review_star_count_text_view"/>
+                    app:layout_constraintTop_toBottomOf="@id/tv_review_star_count"/>
 
                 <TextView
                     android:id="@+id/information_text_view"
@@ -249,7 +249,7 @@
                     app:layout_constraintStart_toStartOf="@id/phone_text_view"
                     app:layout_constraintTop_toTopOf="@id/schedule_image_view"
                     app:layout_constraintBottom_toBottomOf="@id/schedule_image_view"
-                    android:text="@{@string/schedule(String.valueOf(shop.shopInfo.period[0].open.time),String.valueOf(shop.shopInfo.period[0].close.time))}"
+                    android:text="@{@string/schedule(shop.shopInfo.todayPeriod.open.hour, shop.shopInfo.todayPeriod.open.minute, shop.shopInfo.todayPeriod.close.hour, shop.shopInfo.todayPeriod.close.minute)}"
                     tools:text="00:00 - 23:59"/>
 
                 <androidx.appcompat.widget.AppCompatImageView
@@ -423,6 +423,7 @@
                     app:layout_constraintTop_toBottomOf="@id/my_latest_visit_text_view" >
 
                     <include
+                        android:layout_marginTop="8dp"
                         android:id="@+id/my_review_layout1"
                         layout="@layout/item_my_review"
                         android:layout_width="match_parent"
@@ -479,6 +480,7 @@
                     android:id="@+id/map_view"
                     android:layout_width="match_parent"
                     android:layout_height="240dp"
+                    android:layout_marginTop="12dp"
                     android:name="com.naver.maps.map.MapFragment"
                     app:layout_constraintTop_toBottomOf="@id/map_text_view" />
             </androidx.constraintlayout.widget.ConstraintLayout>

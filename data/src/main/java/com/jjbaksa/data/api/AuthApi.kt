@@ -1,5 +1,10 @@
 package com.jjbaksa.data.api
 
+import com.jjbaksa.data.model.follower.FollowRequestResp
+import com.jjbaksa.data.model.follower.FollowResp
+import com.jjbaksa.data.model.follower.FollowReq
+import com.jjbaksa.data.model.follower.FollowersListResp
+import com.jjbaksa.data.model.follower.FollowerListResp
 import com.jjbaksa.data.model.follower.FollowerReviewShopsResp
 import com.jjbaksa.data.model.inquiry.InquiryContentResp
 import com.jjbaksa.data.model.inquiry.InquiryResp
@@ -7,6 +12,7 @@ import com.jjbaksa.data.model.shop.ShopsMapsResp
 import com.jjbaksa.data.model.review.MyReviewShopsResp
 import com.jjbaksa.data.model.review.ReviewShopLastDateResp
 import com.jjbaksa.data.model.pin.ShopDetailResp
+import com.jjbaksa.data.model.review.ReviewCountResp
 import com.jjbaksa.data.model.review.ReviewShopDetailResp
 import com.jjbaksa.data.model.review.ReviewShopResp
 import com.jjbaksa.data.model.scrap.AddShopScrapBodyReq
@@ -14,6 +20,7 @@ import com.jjbaksa.data.model.scrap.AddShopScrapResp
 import com.jjbaksa.data.model.scrap.ScrapsResp
 import com.jjbaksa.data.model.scrap.ShopScrapResp
 import com.jjbaksa.data.model.search.LocationBody
+import com.jjbaksa.data.model.user.UserListResp
 import retrofit2.http.GET
 import com.jjbaksa.data.model.user.UserResp
 import okhttp3.MultipartBody
@@ -22,6 +29,7 @@ import com.jjbaksa.domain.model.user.PasswordAndNicknameReq
 import com.jjbaksa.domain.model.user.WithdrawalReasonReq
 import retrofit2.http.Body
 import retrofit2.http.DELETE
+import retrofit2.http.HTTP
 import retrofit2.http.Multipart
 import retrofit2.http.PATCH
 import retrofit2.http.POST
@@ -125,7 +133,7 @@ interface AuthApi {
     @GET("review/followers/count/shop/{place-id}")
     suspend fun getFollowersShopReviewCount(
         @Path("place-id") placeId: String
-    ): Response<Int>
+    ): Response<ReviewCountResp>
     @GET("inquiry")
     suspend fun getInquiry(
         @Query("idCursor") idCursor: Long?,
@@ -160,4 +168,72 @@ interface AuthApi {
         @Query("idCursor") idCursor: Long?,
         @Query("size") size: Int
     ): Response<InquiryResp>
+
+    @GET("users")
+    suspend fun getUserSearch(
+        @Query("keyword") keyword: String,
+        @Query("pageSize") pageSize: Int?,
+        @Query("cursor") cursor: Long?,
+    ): Response<UserListResp>
+
+    @GET("follow/followers")
+    suspend fun getFollower(
+        @Query("cursor") cursor: String?,
+        @Query("pageSize") pageSize: Int?,
+    ): Response<FollowerListResp>
+
+    @HTTP(method = "DELETE", path = "follow/followers", hasBody = true)
+    suspend fun followerDelete(
+        @Body userAccount: FollowReq
+    ): Response<Unit>
+
+    @POST("follow/requests")
+    suspend fun followRequest(
+        @Body userAccount: FollowReq
+    ): Response<FollowRequestResp>
+
+    @POST("follow/requests/{request_id}/accept")
+    suspend fun followRequestAccept(
+        @Path("request_id") userId: Long
+    ): Response<FollowResp>
+
+    @DELETE("follow/requests/{request_id}/reject")
+    suspend fun followRequestReject(
+        @Path("request_id") userId: Long
+    ): Response<Unit>
+
+    @GET("follow/requests/receive")
+    suspend fun followRequestReceived(
+        @Query("page") page: Int?,
+        @Query("pageSize") pageSize: Int?
+    ): Response<FollowersListResp>
+
+    @GET("review/follower/{follower-id}/count")
+    suspend fun getFollowerReviewCount(
+        @Path("follower-id") id: Long
+    ): Response<ReviewCountResp>
+
+    @GET("review/follower/{follower-id}/shops")
+    suspend fun getReviewedShops(
+        @Path("follower-id") id: Long
+    ): Response<ReviewShopResp>
+
+    @GET("review/follower/{follower-id}/shop/{place-id}")
+    suspend fun getShopReview(
+        @Path("follower-id") id: Long,
+        @Path("place-id") placeId: String,
+        @Query("size") size: Int = 10,
+    ): Response<FollowerReviewShopsResp>
+
+    @GET("follow/requests/send")
+    suspend fun followRequestSend(
+        @Query("page") page: Int?,
+        @Query("pageSize") pageSize: Int?
+    ): Response<FollowersListResp>
+
+    @GET("recently-active-followers")
+    suspend fun getRecentlyActiveFollowers(
+        @Query("pageSize") id: Int?,
+        @Query("cursor") cursor: Long?
+    ): Response<FollowerListResp>
 }

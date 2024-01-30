@@ -83,7 +83,7 @@
         app:layout_constraintTop_toTopOf="@id/friend_review_created_date_text_view" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/review_star_count_text_view"
+        android:id="@+id/tv_review_star_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
@@ -114,6 +114,6 @@
         android:layout_height="1dp"
         android:layout_marginTop="16dp"
         android:background="@color/color_eeeeee"
-        app:layout_constraintTop_toBottomOf="@+id/review_star_count_text_view" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_review_star_count" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

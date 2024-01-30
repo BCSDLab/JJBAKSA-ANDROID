@@ -203,9 +203,20 @@
     <string name="last_register_date">마지막 일자 %s</string>
     <string name="total_review">총 %s개의 리뷰</string>
     <string name="last_review_date">마지막 리뷰 %s</string>
-    <string name="schedule">%s ~ %s</string>
+    <string name="schedule">%02d:%02d ~ %02d:%02d</string>
     <string name="id_format_not_match">올바른 형식의 아이디가 아닙니다.</string>
+    <string name="following">팔로잉</string>
+    <string name="follower">친구 목록</string>
+    <string name="no_follower_title">등록된 친구가 없어요.</string>
+    <string name="follow">팔로우</string>
+    <string name="delete">삭제</string>
+    <string name="accept">확인</string>
+    <string name="requested">요청됨</string>
     <string name="recent_search">최근 검색</string>
     <string name="clear_all">전체삭제</string>
     <string name="email_already_exist">이미 회원가입된 이메일입니다.</string>
+    <string name="recently_active_follower">최근 활동한 친구</string>
+    <string name="user_search">검색</string>
+    <string name="follow_request">친구 신청</string>
+    <string name="follower_all">모든 친구</string>
 </resources>

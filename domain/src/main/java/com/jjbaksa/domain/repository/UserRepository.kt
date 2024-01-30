@@ -6,6 +6,7 @@ import com.jjbaksa.domain.model.user.FindPasswordReq
 import com.jjbaksa.domain.model.user.Login
 import com.jjbaksa.domain.model.user.SignUpReq
 import com.jjbaksa.domain.model.user.SignUpResp
+import com.jjbaksa.domain.model.user.UserList
 import com.jjbaksa.domain.model.user.WithdrawalReasonReq
 import kotlinx.coroutines.flow.Flow
 
@@ -61,4 +62,10 @@ interface UserRepository {
     fun getFollowers(): Int
     fun getProfileImage(): String
     fun getAccessToken(): String
+
+    suspend fun getUserSearch(
+        cursor: String,
+        dateCursor: Int?,
+        size: Long?
+    ): Flow<Result<UserList>>
 }

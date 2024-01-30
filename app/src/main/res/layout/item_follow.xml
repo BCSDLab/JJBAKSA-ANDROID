@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_item_follower"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="8dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_profile"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_launcher_background" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/follow_name_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:breakStrategy="simple"
+            android:bufferType="spannable"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:textColor="@color/color_000000"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/iv_profile"
+            app:layout_constraintTop_toTopOf="@+id/iv_profile"
+            tools:text="김동글" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/follow_button"
+            android:layout_width="64dp"
+            android:layout_height="31dp"
+            android:background="@drawable/ic_following_back"
+            android:backgroundTint="#FF7F23"
+            android:gravity="center"
+            android:src="@drawable/ic_drop_down"
+            android:text="@string/follow"
+            android:textColor="@color/white"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/follow_account_text_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/following_button" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/following_button"
+            android:layout_width="64dp"
+            android:layout_height="31dp"
+            android:background="@drawable/ic_following_back"
+            android:gravity="center"
+            android:src="@drawable/ic_drop_down"
+            android:text="@string/following"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/follow_account_text_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/requested_button" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/requested_button"
+            android:layout_width="64dp"
+            android:layout_height="31dp"
+            android:background="@drawable/ic_follow_request_back"
+            android:gravity="center"
+            android:src="@drawable/ic_drop_down"
+            android:text="@string/requested"
+            android:textColor="#666666"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/follow_account_text_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/accept_button" />
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/delete_button"
+            android:layout_width="64dp"
+            android:layout_height="31dp"
+            android:background="@drawable/ic_following_back"
+            android:gravity="center"
+            android:src="@drawable/ic_drop_down"
+            android:text="@string/delete"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/follow_account_text_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/accept_button" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/accept_button"
+            android:layout_width="64dp"
+            android:layout_height="31dp"
+            android:background="@drawable/ic_following_back"
+            android:backgroundTint="#F6BF54"
+            android:gravity="center"
+            android:src="@drawable/ic_drop_down"
+            android:text="@string/accept"
+            android:textColor="@color/white"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/delete_button"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/follow_account_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+
+            app:layout_constraintStart_toStartOf="@+id/follow_name_text_view"
+            app:layout_constraintTop_toBottomOf="@id/follow_name_text_view"
+            tools:text="acsfgsdgd" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

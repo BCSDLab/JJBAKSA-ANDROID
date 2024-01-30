@@ -2,6 +2,8 @@ package com.jjbaksa.domain.repository
 
 import com.jjbaksa.domain.model.shop.ShopsMaps
 import com.jjbaksa.domain.model.shop.ShopDetail
+import com.jjbaksa.domain.model.shop.ShopInfo
+import com.jjbaksa.domain.model.shop.ShopRates
 import kotlinx.coroutines.flow.Flow
 
 interface ShopRepository {
@@ -17,4 +19,14 @@ interface ShopRepository {
         placeId: String,
         onError: (String) -> Unit
     ): Flow<Result<ShopDetail>>
+
+    suspend fun getShopInfo(
+        placeId: String,
+        onError: (String) -> Unit
+    ): Flow<Result<ShopInfo>>
+
+    suspend fun getShopRates(
+        placeId: String,
+        onError: (String) -> Unit
+    ): Flow<Result<ShopRates>>
 }

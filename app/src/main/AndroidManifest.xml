@@ -2,9 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.jjbaksa.jjbaksa"
+    tools:ignore="ObsoleteSdkInt"
     tools:remove="android:appComponentFactory"
-    tools:targetApi="p"
-    tools:ignore="ObsoleteSdkInt">
+    tools:targetApi="p">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -24,51 +24,48 @@
         android:theme="@style/Theme.JJBAKSAAOS"
         tools:targetApi="33">
         <activity
+            android:name=".ui.follower.FollowerProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.follower.FollowerActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.shop.ShopActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.pin.PinMyFriendReviewReportActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.pin.PinReviewWriteActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.pin.PinActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.inquiry.WriteInquiryActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-
         <activity android:name=".ui.inquiry.InquiryActivity" />
         <activity
             android:name=".ui.post.PostDetailActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.post.PostActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.withdrawal.WithdrawalActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.splash.SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -83,57 +80,46 @@
             android:name=".ui.setting.SettingActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.SampleActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-
         <activity
             android:name="com.example.imageselector.gallery.GalleryActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.findpassword.FindPasswordActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.findid.FindIdActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.mainpage.MainPageActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.signup.SignUpActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.social.SocialLoginActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.main.MainActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.login.LoginActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.search.SearchActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-
         <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
             android:exported="true">
