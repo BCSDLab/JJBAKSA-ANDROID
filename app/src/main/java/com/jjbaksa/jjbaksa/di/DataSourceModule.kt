@@ -114,7 +114,7 @@ object DataSourceModule {
     ): SearchLocalDataSource {
         return SearchLocalDataSource(context)
     }
-    
+
     @Provides
     @Singleton
     fun provideFollowerRemoteDataSource(authApi: AuthApi, noAuthApi: NoAuthApi): FollowerRemoteDataSource {

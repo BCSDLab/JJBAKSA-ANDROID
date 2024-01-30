@@ -1,6 +1,5 @@
 package com.jjbaksa.data.api
 
-import com.jjbaksa.data.model.pin.ShopDetailResp
 import com.jjbaksa.data.model.post.PostDetailResp
 import com.jjbaksa.data.model.post.PostResp
 import com.jjbaksa.data.model.search.LocationBody
@@ -9,7 +8,6 @@ import com.jjbaksa.data.model.search.TrendResp
 import com.jjbaksa.data.model.shop.ShopInfoResp
 import com.jjbaksa.data.model.shop.ShopRatesResp
 import com.jjbaksa.data.model.user.LoginResp
-import com.jjbaksa.data.model.user.UserListResp
 import com.jjbaksa.data.model.user.UserResp
 import com.jjbaksa.domain.model.user.FindPasswordReq
 import com.jjbaksa.domain.model.user.LoginReq

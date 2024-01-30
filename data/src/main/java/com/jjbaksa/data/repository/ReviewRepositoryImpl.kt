@@ -10,7 +10,6 @@ import com.jjbaksa.data.mapper.review.toMyReviewShops
 import com.jjbaksa.data.mapper.review.toReviewShop
 import com.jjbaksa.data.mapper.review.toReviewShopDetail
 import com.jjbaksa.data.model.apiCall
-import com.jjbaksa.data.model.review.ReviewCountResp
 import com.jjbaksa.domain.repository.ReviewRepository
 import com.jjbaksa.domain.model.review.FollowerReviewShops
 import com.jjbaksa.domain.model.review.ReviewShopLastDate

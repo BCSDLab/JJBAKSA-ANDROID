@@ -1,6 +1,5 @@
 package com.jjbaksa.jjbaksa.ui.follower.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -34,12 +33,10 @@ class FollowerViewModel @Inject constructor(
     private val _recentlyActiveList = SingleLiveEvent<FollowerList>()
     val recentlyActiveList: SingleLiveEvent<FollowerList> get() = _recentlyActiveList
 
-
-
     val followerHasMore = SingleLiveEvent<Boolean>()
     val receivedFollowRequestHasMore = SingleLiveEvent<Boolean>()
     val sendFollowRequestHasMore = SingleLiveEvent<Boolean>()
-    val recentlyActiveHasMore= SingleLiveEvent<Boolean>()
+    val recentlyActiveHasMore = SingleLiveEvent<Boolean>()
     val unfollowedUsers = mutableListOf<String>()
     val searchKeyword = SingleLiveEvent<String>()
     val cursor = SingleLiveEvent<UserCursor>()
@@ -50,7 +47,6 @@ class FollowerViewModel @Inject constructor(
                     _followerList.value = it
                     followerHasMore.value = it.content.count() == 20
                 }
-
             }
         }
     }
@@ -64,7 +60,6 @@ class FollowerViewModel @Inject constructor(
             }
         }
     }
-
 
     fun followRequest(userAccount: String) {
         viewModelScope.launch(ceh) {
@@ -97,7 +92,6 @@ class FollowerViewModel @Inject constructor(
         }
     }
 
-
     fun followRequestReceived(page: Int?, pageSize: Int?) {
 
         viewModelScope.launch(ceh) {
@@ -110,7 +104,6 @@ class FollowerViewModel @Inject constructor(
         }
     }
 
-
     fun followRequestSend(page: Int?, pageSize: Int?) {
         viewModelScope.launch(ceh) {
             followerUseCase.followRequestSend(page, pageSize).collect {
@@ -119,10 +112,10 @@ class FollowerViewModel @Inject constructor(
                     it.content.forEach { item ->
                         list.add(
                             FollowContent(
-                            follower = item.user,
-                            id = item.id,
-                            user = item.follower
-                        )
+                                follower = item.user,
+                                id = item.id,
+                                user = item.follower
+                            )
                         )
                     }
                     _sendFollowRequestList.value = Followers(list)
@@ -153,6 +146,4 @@ class FollowerViewModel @Inject constructor(
             }
         }
     }
-
 }
-

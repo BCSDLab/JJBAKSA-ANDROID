@@ -28,6 +28,3 @@ fun FollowResp.toFollow() = Follow(
 fun FollowersListResp.tofollowRequestRecived() = Followers(
     content = content?.map { it.toFollowContent() }.orEmpty()
 )
-
-
-

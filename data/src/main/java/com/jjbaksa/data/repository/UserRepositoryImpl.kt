@@ -5,14 +5,12 @@ import com.jjbaksa.data.datasource.local.UserLocalDataSource
 import com.jjbaksa.data.datasource.remote.UserRemoteDataSource
 import com.jjbaksa.data.mapper.FormDataUtil
 import com.jjbaksa.data.mapper.RespMapper
-import com.jjbaksa.data.mapper.follower.toFollower
 import com.jjbaksa.data.mapper.toUserList
 import com.jjbaksa.data.mapper.user.toLoginResult
 import com.jjbaksa.data.mapper.user.toUser
 import com.jjbaksa.data.model.apiCall
 import com.jjbaksa.domain.base.ErrorType
 import com.jjbaksa.domain.base.RespResult
-import com.jjbaksa.domain.model.follower.FollowerList
 import com.jjbaksa.domain.model.user.User
 import com.jjbaksa.domain.repository.UserRepository
 import com.jjbaksa.domain.model.user.LoginReq
@@ -362,7 +360,4 @@ class UserRepositoryImpl @Inject constructor(
             }
         )
     }
-
-
-
 }

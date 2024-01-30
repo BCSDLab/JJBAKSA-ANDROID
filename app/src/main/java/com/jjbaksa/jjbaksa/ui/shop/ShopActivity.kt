@@ -1,7 +1,6 @@
 package com.jjbaksa.jjbaksa.ui.shop
 
 import android.content.Intent
-import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
@@ -20,7 +19,6 @@ import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.math.round
 
 @AndroidEntryPoint
 class ShopActivity : BaseActivity<ActivityShopBinding>(), OnMapReadyCallback {
