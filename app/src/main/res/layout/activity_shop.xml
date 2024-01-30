@@ -253,38 +253,6 @@
                     android:text="@{@string/schedule(shop.period.open.hour, shop.period.open.minute, shop.period.close.hour, shop.period.close.minute)}"
                     tools:text="00:00 - 23:59"/>
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/report_information_image_view"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    app:srcCompat="@drawable/ic_exclamation_circle"
-                    android:layout_marginEnd="2dp"
-                    app:layout_constraintEnd_toStartOf="@id/report_information_text_view"
-                    app:layout_constraintTop_toTopOf="@id/report_information_text_view"
-                    app:layout_constraintBottom_toBottomOf="@id/report_information_text_view" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/report_information_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:textSize="10sp"
-                    android:textColor="@color/color_c4c4c4"
-                    app:layout_constraintTop_toTopOf="@id/schedule_text_view"
-                    app:layout_constraintBottom_toBottomOf="@id/schedule_text_view"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:text="@string/report_wrong_information" />
-
-                <androidx.constraintlayout.helper.widget.Layer
-                    android:id="@+id/report_information_layer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="4dp"
-                    app:constraint_referenced_ids="report_information_image_view,report_information_text_view"
-                    app:layout_constraintBottom_toBottomOf="@+id/schedule_text_view"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/phone_text_view" />
-
                 <View
                     android:id="@+id/dummy_rect_view"
                     android:layout_width="match_parent"
