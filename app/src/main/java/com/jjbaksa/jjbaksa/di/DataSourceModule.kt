@@ -115,5 +115,4 @@ object DataSourceModule {
     fun provideFollowerRemoteDataSource(authApi: AuthApi, noAuthApi: NoAuthApi): FollowerRemoteDataSource {
         return FollowerRemoteDataSource(authApi, noAuthApi)
     }
-
 }

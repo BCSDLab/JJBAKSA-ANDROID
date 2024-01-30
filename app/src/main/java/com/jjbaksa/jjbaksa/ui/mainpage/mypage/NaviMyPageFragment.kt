@@ -7,7 +7,6 @@ import androidx.fragment.app.activityViewModels
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.google.android.material.tabs.TabLayoutMediator
-import com.jjbaksa.domain.model.review.FollowerReviewShops
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseFragment
 import com.jjbaksa.jjbaksa.databinding.FragmentNaviMyPageBinding

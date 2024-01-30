@@ -22,8 +22,8 @@ interface FollowerDataSource {
     suspend fun getFollowerReviewCount(id: Long): Response<ReviewCountResp>
     suspend fun getReviewedShops(id: Long): Response<ReviewShopResp>
     suspend fun getShopReview(id: Long, placeId: String): Response<FollowerReviewShopsResp>
-    suspend fun followRequestAccept(userId : Long): Response<FollowResp>
-    suspend fun followRequestReject(userId : Long): Response<Unit>
+    suspend fun followRequestAccept(userId: Long): Response<FollowResp>
+    suspend fun followRequestReject(userId: Long): Response<Unit>
     suspend fun followRequestReceived(page: Int?, pageSize: Int?): Response<FollowersListResp>
     suspend fun followRequestSend(page: Int?, pageSize: Int?): Response<FollowersListResp>
     suspend fun getRecentlyActiveFollowers(pageSize: Int?, cursor: Long?): Response<FollowerListResp>

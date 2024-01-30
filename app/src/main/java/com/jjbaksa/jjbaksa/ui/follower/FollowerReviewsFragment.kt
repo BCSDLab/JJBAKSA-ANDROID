@@ -1,6 +1,5 @@
 package com.jjbaksa.jjbaksa.ui.follower
 
-import android.view.View
 import androidx.fragment.app.activityViewModels
 import com.jjbaksa.domain.model.review.MyReviewShopsContent
 import com.jjbaksa.jjbaksa.R
@@ -10,7 +9,6 @@ import com.jjbaksa.jjbaksa.ui.follower.adapter.FollowerReviewedShopAdapter
 import com.jjbaksa.jjbaksa.ui.follower.viewmodel.FollowerProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
 class FollowerReviewsFragment : BaseFragment<FragmentFollowerReviewsBinding>() {
     override val layoutId: Int
@@ -19,14 +17,16 @@ class FollowerReviewsFragment : BaseFragment<FragmentFollowerReviewsBinding>() {
     private val followerReviewedShopAdapter: FollowerReviewedShopAdapter by lazy {
         FollowerReviewedShopAdapter { shop, adapter ->
             viewModel.getShopReview(viewModel.fid, shop.placeId) {
-                adapter.submitList(it.content.map {
-                    MyReviewShopsContent(
-                        id = it.id,
-                        content = it.content,
-                        rate = it.rate,
-                        createdAt = it.createdAt,
-                    )
-                })
+                adapter.submitList(
+                    it.content.map {
+                        MyReviewShopsContent(
+                            id = it.id,
+                            content = it.content,
+                            rate = it.rate,
+                            createdAt = it.createdAt,
+                        )
+                    }
+                )
             }
         }
     }
@@ -46,6 +46,5 @@ class FollowerReviewsFragment : BaseFragment<FragmentFollowerReviewsBinding>() {
     }
 
     override fun initEvent() {
-
     }
 }

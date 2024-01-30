@@ -1,6 +1,5 @@
 package com.jjbaksa.domain.usecase.user
 
-import com.jjbaksa.domain.model.follower.FollowerList
 import com.jjbaksa.domain.model.user.FindPasswordReq
 import com.jjbaksa.domain.model.user.User
 import com.jjbaksa.domain.repository.UserRepository
