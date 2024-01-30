@@ -3,7 +3,7 @@ package com.jjbaksa.data.api
 import com.jjbaksa.data.model.follower.FollowRequestResp
 import com.jjbaksa.data.model.follower.FollowResp
 import com.jjbaksa.data.model.follower.FollowReq
-import com.jjbaksa.data.model.follower.FollowerslistResp
+import com.jjbaksa.data.model.follower.FollowersListResp
 import com.jjbaksa.data.model.follower.FollowerListResp
 import com.jjbaksa.data.model.follower.FollowerReviewShopsResp
 import com.jjbaksa.data.model.inquiry.InquiryContentResp
@@ -210,7 +210,7 @@ interface AuthApi {
     suspend fun followRequestReceived(
         @Query("page") page: Int?,
         @Query("pageSize") pageSize: Int?
-    ): Response<FollowerslistResp>
+    ): Response<FollowersListResp>
 
     @GET("review/follower/{follower-id}/count")
     suspend fun getFollowerReviewCount(
@@ -233,7 +233,7 @@ interface AuthApi {
     suspend fun followRequestSend(
         @Query("page") page: Int?,
         @Query("pageSize") pageSize: Int?
-    ): Response<FollowerslistResp>
+    ): Response<FollowersListResp>
 
     @GET("recently-active-followers")
     suspend fun getRecentlyActiveFollowers(

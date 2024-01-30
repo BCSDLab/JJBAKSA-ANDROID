@@ -6,7 +6,7 @@ import com.jjbaksa.data.datasource.FollowerDataSource
 import com.jjbaksa.data.model.follower.FollowRequestResp
 import com.jjbaksa.data.model.follower.FollowResp
 import com.jjbaksa.data.model.follower.FollowReq
-import com.jjbaksa.data.model.follower.FollowerslistResp
+import com.jjbaksa.data.model.follower.FollowersListResp
 import com.jjbaksa.data.model.follower.FollowerListResp
 import com.jjbaksa.data.model.follower.FollowerReviewShopsResp
 import com.jjbaksa.data.model.review.ReviewCountResp
@@ -37,7 +37,7 @@ class FollowerRemoteDataSource @Inject constructor(
         return authApi.followRequestAccept(userId)
     }
 
-    override suspend fun followRequestCheck(page: Int?, pageSize: Int?): Response<FollowerslistResp> {
+    override suspend fun followRequestCheck(page: Int?, pageSize: Int?): Response<FollowersListResp> {
         return authApi.followRequestReceived(page, pageSize)
     }
 
@@ -61,11 +61,11 @@ class FollowerRemoteDataSource @Inject constructor(
         return authApi.followRequestReject(userId)
     }
 
-    override suspend fun followRequestReceived(page: Int?, pageSize: Int?): Response<FollowerslistResp> {
+    override suspend fun followRequestReceived(page: Int?, pageSize: Int?): Response<FollowersListResp> {
         return authApi.followRequestReceived(page, pageSize)
     }
 
-    override suspend fun followRequestSend(page: Int?, pageSize: Int?): Response<FollowerslistResp> {
+    override suspend fun followRequestSend(page: Int?, pageSize: Int?): Response<FollowersListResp> {
         return authApi.followRequestSend(page, pageSize)
     }
 }

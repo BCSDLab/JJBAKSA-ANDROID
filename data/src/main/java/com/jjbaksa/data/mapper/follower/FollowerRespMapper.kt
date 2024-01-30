@@ -2,7 +2,7 @@ package com.jjbaksa.data.mapper.follower
 
 import com.jjbaksa.data.mapper.user.toFollowContent
 import com.jjbaksa.data.mapper.user.toUser
-import com.jjbaksa.data.model.follower.FollowerslistResp
+import com.jjbaksa.data.model.follower.FollowersListResp
 import com.jjbaksa.data.model.follower.FollowRequestResp
 import com.jjbaksa.data.model.follower.FollowResp
 import com.jjbaksa.data.model.follower.FollowerListResp
@@ -25,7 +25,7 @@ fun FollowResp.toFollow() = Follow(
     follower = follower?.toUser()
 )
 
-fun FollowerslistResp.tofollowRequestRecived() = Followers(
+fun FollowersListResp.tofollowRequestRecived() = Followers(
     content = content?.map { it.toFollowContent() }.orEmpty()
 )
 
