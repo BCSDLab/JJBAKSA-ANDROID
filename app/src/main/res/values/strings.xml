@@ -212,4 +212,8 @@
     <string name="delete">삭제</string>
     <string name="accept">확인</string>
     <string name="requested">요청됨</string>
+    <string name="recently_active_follower">최근 활동한 친구</string>
+    <string name="user_search">검색</string>
+    <string name="follow_request">친구 신청</string>
+    <string name="follower_all">모든 친구</string>
 </resources>
