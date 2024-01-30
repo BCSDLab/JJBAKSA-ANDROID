@@ -2,9 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.jjbaksa.jjbaksa"
+    tools:ignore="ObsoleteSdkInt"
     tools:remove="android:appComponentFactory"
-    tools:targetApi="p"
-    tools:ignore="ObsoleteSdkInt">
+    tools:targetApi="p">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -22,6 +22,7 @@
         android:roundIcon="@mipmap/ic_main_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.JJBAKSAAOS"
+        android:usesCleartextTraffic="true"
         tools:targetApi="33">
         <activity
             android:name=".ui.shop.ShopActivity"

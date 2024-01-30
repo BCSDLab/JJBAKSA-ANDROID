@@ -16,6 +16,7 @@ import com.jjbaksa.jjbaksa.ui.mainpage.mypage.viewmodel.MyPageViewModel
 import com.jjbaksa.jjbaksa.util.MyInfo
 import com.jjbaksa.jjbaksa.util.fromDpToPx
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 
@@ -45,7 +46,7 @@ class ReviewFragment : BaseFragment<FragmentReviewBinding>() {
                     outRect: Rect,
                     view: View,
                     parent: RecyclerView,
-                    state: RecyclerView.State
+                    state: RecyclerView.State,
                 ) {
                     val position = parent.getChildAdapterPosition(view)
 
@@ -62,11 +63,20 @@ class ReviewFragment : BaseFragment<FragmentReviewBinding>() {
         }
     }
 
-    override fun initEvent() {}
+    override fun initEvent() {
+        refreshReview()
+    }
+
+    private fun refreshReview() {
+        binding.swipeRlContainer.setOnRefreshListener {
+            viewModel.getReviewShop(null, 10)
+        }
+    }
 
     override fun subscribe() {
         viewModel.reviewShops.observe(viewLifecycleOwner) {
             binding.progressContainer.isVisible = false
+            binding.swipeRlContainer.isRefreshing = false
             if (it.content.isNullOrEmpty()) {
                 binding.jjNoContentView.isVisible = true
             } else {
@@ -85,7 +95,7 @@ class ReviewFragment : BaseFragment<FragmentReviewBinding>() {
         bundle.putString("category", reviewShopContent.category)
         reviewDetailFragment.arguments = bundle
         parentFragmentManager.beginTransaction()
-            .add(R.id.fragment_container, reviewDetailFragment, "ReviewDetailFragment")
+            .add(R.id.fragment_container, reviewDetailFragment, ReviewDetailFragment.TAG)
             .commit()
     }
 }
