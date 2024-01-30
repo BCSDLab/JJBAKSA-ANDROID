@@ -5,6 +5,7 @@ import com.jjbaksa.domain.model.review.FollowerReviewShops
 import com.jjbaksa.domain.model.review.MyReviewShops
 import com.jjbaksa.domain.model.review.ReviewShopLastDate
 import com.jjbaksa.domain.model.scrap.AddShopScrap
+import com.jjbaksa.domain.model.shop.Period
 import com.jjbaksa.domain.model.shop.ShopInfo
 import com.jjbaksa.domain.usecase.shop.ShopUseCase
 import com.jjbaksa.domain.usecase.review.ReviewUseCase
@@ -45,6 +46,9 @@ class ShopViewModel @Inject constructor(
     private val _shopAverageRate = SingleLiveEvent<Float>()
     val shopAverageRate: SingleLiveEvent<Float> get() = _shopAverageRate
 
+    val formattedPhoneNumber = SingleLiveEvent<String>()
+    val period = SingleLiveEvent<Period>()
+
     fun getShopInfo(placeId: String) {
         showProgress.value = true
         viewModelScope.launch(ceh) {
@@ -54,6 +58,8 @@ class ShopViewModel @Inject constructor(
                 it.onSuccess {
                     showProgress.value = false
                     _shopInfo.value = it
+                    formattedPhoneNumber.value = it.formattedPhoneNumber.ifEmpty { "정보 없음" }
+                    period.value = it.todayPeriod
                 }
                 it.onFailure {
                     showProgress.value = false
