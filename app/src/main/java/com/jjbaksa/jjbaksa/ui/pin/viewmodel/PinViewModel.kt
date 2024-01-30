@@ -17,6 +17,10 @@ import com.jjbaksa.domain.usecase.scrap.GetShopScrapUseCase
 import com.jjbaksa.jjbaksa.base.BaseViewModel
 import com.jjbaksa.jjbaksa.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,7 +28,7 @@ import javax.inject.Inject
 class PinViewModel @Inject constructor(
     private val shopUseCase: ShopUseCase,
     private val reviewUseCase: ReviewUseCase,
-    private val scrapUseCase: GetShopScrapUseCase
+    private val scrapUseCase: GetShopScrapUseCase,
 ) : BaseViewModel() {
     val placeId = SingleLiveEvent<String>()
     val showProgress = SingleLiveEvent<Boolean>()
@@ -42,6 +46,12 @@ class PinViewModel @Inject constructor(
 
     private val _shopInfo = SingleLiveEvent<ShopDetail>()
     val shopInfo: SingleLiveEvent<ShopDetail> get() = _shopInfo
+
+    private val _scrapId = MutableSharedFlow<Long>()
+    val scrapId: SharedFlow<Long> get() = _scrapId.asSharedFlow()
+
+    private val _rate = MutableSharedFlow<Float>()
+    val rate: SharedFlow<Float> get() = _rate.asSharedFlow()
 
     private val _addScrapInfo = SingleLiveEvent<AddShopScrap>()
     val addScrapInfo: SingleLiveEvent<AddShopScrap> get() = _addScrapInfo
@@ -72,14 +82,52 @@ class PinViewModel @Inject constructor(
         }
     }
 
+    fun getShopsRates(placeId: String) {
+        showProgress.value = true
+        viewModelScope.launch(ceh) {
+            shopUseCase.getShopsRates(placeId) { msg ->
+                toastMsg.postValue(msg)
+            }.collect { it ->
+                it.onSuccess {
+                    showProgress.value = false
+                    _rate.emit(it)
+                }
+            }
+        }
+    }
+
+    fun getShopsScraps(placeId: String) {
+        showProgress.value = true
+        viewModelScope.launch(ceh) {
+            shopUseCase.getShopsScraps(placeId) { msg ->
+                toastMsg.postValue(msg)
+            }.collect {
+                it.onSuccess {
+                    showProgress.value = false
+                    _scrapId.emit(it)
+                }
+            }
+        }
+    }
+
     fun addShopScrap(directoryId: Int, placeId: String) {
         viewModelScope.launch(ceh) {
             scrapUseCase.addShopScrap(directoryId, placeId).collect {
                 it.onSuccess {
                     _addScrapInfo.value = it
                 }.onFailure {
-                    it.printStackTrace()
                     _addScrapInfo.value = AddShopScrap()
+                }
+            }
+        }
+    }
+
+    fun deleteShopScrap(scrapId: Int) {
+        viewModelScope.launch(ceh) {
+            scrapUseCase.deleteShopScrap(scrapId).collect {
+                it.onSuccess {
+                    _addScrapInfo.value = AddShopScrap()
+                }.onFailure {
                 }
             }
         }
@@ -118,10 +166,18 @@ class PinViewModel @Inject constructor(
         rateCursor: Int? = null,
         size: Int? = null, // 1~10
         direction: String? = null, // asc / desc
-        sort: String? = null // createdAt / rate
+        sort: String? = null, // createdAt / rate
     ) {
         viewModelScope.launch(ceh) {
-            reviewUseCase.getMyReview(placeId, idCursor, dateCursor, rateCursor, size, direction, sort)
+            reviewUseCase.getMyReview(
+                placeId,
+                idCursor,
+                dateCursor,
+                rateCursor,
+                size,
+                direction,
+                sort
+            )
                 .collect {
                     it.onSuccess {
                         myReviewHasMore.value = it.content.count() == 10
@@ -140,10 +196,18 @@ class PinViewModel @Inject constructor(
         rateCursor: Int? = null,
         size: Int? = null,
         direction: String? = null,
-        sort: String? = null
+        sort: String? = null,
     ) {
         viewModelScope.launch(ceh) {
-            reviewUseCase.getFollowerReviewShops(placeId, idCursor, dateCursor, rateCursor, size, direction, sort)
+            reviewUseCase.getFollowerReviewShops(
+                placeId,
+                idCursor,
+                dateCursor,
+                rateCursor,
+                size,
+                direction,
+                sort
+            )
                 .collect {
                     it.onSuccess {
                         friendReviewHasMore.value = it.content.count() == 10
