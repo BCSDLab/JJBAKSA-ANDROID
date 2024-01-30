@@ -95,4 +95,10 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
+
+    fun clearDataStoreNoneAutoLogin() {
+        runBlocking {
+            userUseCase.clearDataStoreNoneAutoLogin()
+        }
+    }
 }

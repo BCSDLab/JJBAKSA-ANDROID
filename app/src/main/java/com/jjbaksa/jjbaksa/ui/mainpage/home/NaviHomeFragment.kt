@@ -332,6 +332,11 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
         fusedLocationUtil.stopLocationUpdates()
     }
 
+    override fun onDestroy() {
+        viewModel.clearDataStoreNoneAutoLogin()
+        super.onDestroy()
+    }
+
     fun seeMoreCategory() {
         binding.categoryLinearLayout.isVisible = !binding.categoryLinearLayout.isVisible
         if (binding.categoryLinearLayout.isVisible) {

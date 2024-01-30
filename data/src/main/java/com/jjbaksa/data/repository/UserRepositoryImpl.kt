@@ -1,6 +1,7 @@
 package com.jjbaksa.data.repository
 
 import android.net.Uri
+import android.util.Log
 import com.jjbaksa.data.datasource.local.UserLocalDataSource
 import com.jjbaksa.data.datasource.remote.UserRemoteDataSource
 import com.jjbaksa.data.mapper.FormDataUtil
@@ -316,6 +317,12 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun logout() {
         userLocalDataSource.clearDataStore()
+    }
+
+    override suspend fun clearDataStoreNoneAutoLogin() {
+        if (!userLocalDataSource.getAutoLoginFlag()) {
+            userLocalDataSource.clearDataStore()
+        }
     }
 
     override fun getAutoLoginFlag(): Boolean {
