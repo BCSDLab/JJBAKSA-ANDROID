@@ -95,6 +95,7 @@
                         android:id="@+id/rv_search_result"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         app:layout_constraintTop_toBottomOf="@+id/tv_search_result" />
 
                     <ImageView
@@ -172,6 +173,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:layout_constraintTop_toBottomOf="@+id/tv_all_follower"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:itemCount="2"
                         tools:listitem="@layout/item_follow" />
 
@@ -212,6 +214,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:layout_constraintTop_toBottomOf="@+id/tv_request_follow"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:itemCount="4"
                         tools:listitem="@layout/item_follow" />
 
