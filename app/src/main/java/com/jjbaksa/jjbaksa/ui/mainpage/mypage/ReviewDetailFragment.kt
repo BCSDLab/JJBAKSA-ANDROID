@@ -37,7 +37,7 @@ class ReviewDetailFragment : BaseFragment<FragmentMyPageReviewBinding>() {
     override fun initEvent() {
         binding.jjAppBar.setOnClickListener {
             val reviewDetailFragment =
-                parentFragmentManager.findFragmentByTag("ReviewDetailFragment")
+                parentFragmentManager.findFragmentByTag(TAG)
             if (reviewDetailFragment != null) {
                 parentFragmentManager.beginTransaction()
                     .remove(reviewDetailFragment)
@@ -87,6 +87,7 @@ class ReviewDetailFragment : BaseFragment<FragmentMyPageReviewBinding>() {
     }
 
     companion object {
+        const val TAG = "ReviewDetailFragment"
         fun newInstance(): ReviewDetailFragment {
             return ReviewDetailFragment()
         }

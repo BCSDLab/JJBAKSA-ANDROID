@@ -18,6 +18,7 @@ import com.jjbaksa.jjbaksa.listener.PaginationScrollListener
 import com.jjbaksa.jjbaksa.ui.mainpage.MainPageActivity
 import com.jjbaksa.jjbaksa.ui.pin.PinReviewWriteActivity
 import com.jjbaksa.jjbaksa.ui.mainpage.home.NaviHomeFragment
+import com.jjbaksa.jjbaksa.ui.mainpage.mypage.ReviewDetailFragment
 import com.jjbaksa.jjbaksa.ui.search.AutoCompleteKeywordAdapter
 import com.jjbaksa.jjbaksa.ui.search.SearchHistoryAdapter
 import com.jjbaksa.jjbaksa.ui.search.SearchShopAdapter
@@ -43,7 +44,16 @@ class NaviWriteFragment : BaseFragment<FragmentNaviWriteBinding>() {
                         requireActivity().finish()
                     }
                 }
-                (requireActivity() as MainPageActivity).showHomeFragment()
+                val reviewDetailFragment= parentFragmentManager.findFragmentByTag(
+                    ReviewDetailFragment.TAG)
+                if (reviewDetailFragment?.isAdded == true) {
+                    parentFragmentManager.beginTransaction()
+                        .remove(reviewDetailFragment)
+                        .commit()
+                } else {
+                    (requireActivity() as MainPageActivity).showHomeFragment()
+                }
+
             }
         }
     private val keyboardProvider: KeyboardProvider by lazy { KeyboardProvider(requireContext()) }
