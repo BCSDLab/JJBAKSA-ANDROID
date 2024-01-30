@@ -157,6 +157,7 @@ class PinActivity : BaseActivity<ActivityPinBinding>() {
                     confirmClick = {
                         // TODO : 스크랩 삭제 API 연동
                         viewModel.deleteShopScrap(scrapId)
+                        binding.bookmarkImageView.isSelected = false
                     }
                 ).show(supportFragmentManager, SCRAP_REMOVE_DIALOG)
             } else {
