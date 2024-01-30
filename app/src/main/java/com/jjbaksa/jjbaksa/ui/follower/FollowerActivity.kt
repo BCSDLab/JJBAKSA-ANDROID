@@ -1,11 +1,9 @@
 package com.jjbaksa.jjbaksa.ui.follower
 
 import android.content.Intent
+import android.view.View
 import com.jjbaksa.jjbaksa.R
 import androidx.activity.viewModels
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.view.isVisible
-import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jjbaksa.domain.enums.UserCursor
@@ -235,15 +233,17 @@ class FollowerActivity : BaseActivity<ActivityFollowerBinding>() {
         viewModel.cursor.observe(this) {
             when (it) {
                 UserCursor.ALL -> {
-                    binding.rvAllFollower.isVisible = false
-                    binding.rvRequestFollow.isVisible = false
-                    binding.rvSearchResult.isVisible = true
+                    binding.rvRecentlyActiveFollower.visibility = View.GONE
+                    binding.clAllFollower.visibility = View.GONE
+                    binding.clRequestFollow.visibility = View.GONE
+                    binding.clSearchResult.visibility = View.VISIBLE
                 }
 
                 UserCursor.FOLLOWER -> {
-                    binding.rvAllFollower.isVisible = true
-                    binding.rvRequestFollow.isVisible = true
-                    binding.rvSearchResult.isVisible = false
+                    binding.rvRecentlyActiveFollower.visibility = View.VISIBLE
+                    binding.clAllFollower.visibility = View.VISIBLE
+                    binding.clRequestFollow.visibility = View.VISIBLE
+                    binding.clSearchResult.visibility = View.GONE
                 }
             }
         }
