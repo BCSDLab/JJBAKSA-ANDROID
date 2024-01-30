@@ -1,6 +1,5 @@
 package com.jjbaksa.jjbaksa.ui.follower.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +23,7 @@ class FollowerReviewedShopAdapter(
             binding.run {
                 tvShopTitle.text = shop.name
                 tvShopCategory.text = shop.category
-                if(reviewDetailAdapter[shop.placeId] == null)
+                if (reviewDetailAdapter[shop.placeId] == null)
                     reviewDetailAdapter[shop.placeId] = ReviewDetailAdapter()
                 rvShopReviews.adapter = reviewDetailAdapter[shop.placeId]
                 root.setOnClickListener {
@@ -55,7 +54,7 @@ class FollowerReviewedShopAdapter(
         currentList: MutableList<ReviewShopContent>
     ) {
         currentList.forEach { shop ->
-            if(reviewDetailAdapter[shop.placeId] == null) reviewDetailAdapter[shop.placeId] = ReviewDetailAdapter()
+            if (reviewDetailAdapter[shop.placeId] == null) reviewDetailAdapter[shop.placeId] = ReviewDetailAdapter()
             reviewDetailAdapter[shop.placeId]?.let {
                 onListChanged(shop, it)
             }
