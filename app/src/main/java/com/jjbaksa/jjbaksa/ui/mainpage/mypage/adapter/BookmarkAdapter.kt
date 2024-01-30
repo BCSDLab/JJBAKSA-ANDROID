@@ -33,6 +33,7 @@ class BookmarkAdapter(
                 binding.shopImageView.scaleType = ImageView.ScaleType.CENTER_CROP
                 Glide.with(binding.shopImageView)
                     .load(item.photo)
+                    .placeholder(R.drawable.ic_empty_img)
                     .into(binding.shopImageView)
             }
         }

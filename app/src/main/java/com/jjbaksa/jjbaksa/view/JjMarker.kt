@@ -5,9 +5,12 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
+import coil.load
 import com.bumptech.glide.Glide
+import com.jjbaksa.jjbaksa.GlideApp
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.databinding.ItemMarkerBinding
+import timber.log.Timber
 
 class JjMarker @JvmOverloads constructor(
     context: Context,
@@ -58,11 +61,10 @@ class JjMarker @JvmOverloads constructor(
     }
 
     fun setImageUrl(imageUrl: String) {
-        this.imageUrl = imageUrl
-        Glide.with(binding.shopImageView)
+        GlideApp.with(context)
             .load(imageUrl)
             .circleCrop()
-            .override(30)
+            .placeholder(R.drawable.ic_empty_img)
             .into(binding.shopImageView)
     }
 }
