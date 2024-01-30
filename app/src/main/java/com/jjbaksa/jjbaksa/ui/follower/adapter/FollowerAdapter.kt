@@ -1,6 +1,5 @@
 package com.jjbaksa.jjbaksa.ui.follower.adapter
 
-
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -21,7 +20,7 @@ class FollowerAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: User) {
             binding.followNameTextView.text = item.nickname
-            binding.followAccountTextView.text = "@" +item.account
+            binding.followAccountTextView.text = "@" + item.account
 
             Glide.with(binding.root.context)
                 .load(item.profileImage.url)
@@ -50,9 +49,6 @@ class FollowerAdapter(
                 binding.followButton.isVisible = true
                 binding.requestedButton.isVisible = false
             }
-
-
-
         }
     }
 

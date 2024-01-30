@@ -37,7 +37,6 @@ import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-
 interface AuthApi {
     @GET("user/me")
     suspend fun getUserMe(): Response<UserResp>
@@ -170,7 +169,6 @@ interface AuthApi {
         @Query("size") size: Int
     ): Response<InquiryResp>
 
-
     @GET("users")
     suspend fun getUserSearch(
         @Query("keyword") keyword: String,
@@ -194,16 +192,14 @@ interface AuthApi {
         @Body userAccount: FollowReq
     ): Response<FollowRequestResp>
 
-
     @POST("follow/requests/{request_id}/accept")
     suspend fun followRequestAccept(
-        @Path("request_id") userId : Long
+        @Path("request_id") userId: Long
     ): Response<FollowResp>
-
 
     @DELETE("follow/requests/{request_id}/reject")
     suspend fun followRequestReject(
-        @Path("request_id") userId : Long
+        @Path("request_id") userId: Long
     ): Response<Unit>
 
     @GET("follow/requests/receive")

@@ -1,17 +1,13 @@
 package com.jjbaksa.jjbaksa.ui.follower.adapter
 
-
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.jjbaksa.domain.model.follower.FollowContent
 import com.jjbaksa.domain.model.user.User
 import com.jjbaksa.jjbaksa.R
-import com.jjbaksa.jjbaksa.databinding.ItemFollowBinding
 import com.jjbaksa.jjbaksa.databinding.ItemRecentlyActiveBinding
 
 class RecentlyActiveAdapter() : ListAdapter<User, RecentlyActiveAdapter.ViewHolder>(diffUtil) {
@@ -25,8 +21,6 @@ class RecentlyActiveAdapter() : ListAdapter<User, RecentlyActiveAdapter.ViewHold
                 .error(R.drawable.baseline_supervised_user_circle_24)
                 .circleCrop()
                 .into(binding.ivProfile)
-
-
         }
     }
 

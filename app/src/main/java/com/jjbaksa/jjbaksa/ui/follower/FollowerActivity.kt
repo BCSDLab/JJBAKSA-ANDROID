@@ -100,7 +100,6 @@ class FollowerActivity : BaseActivity<ActivityFollowerBinding>() {
                             20
                         )
                         binding.loadingView.setLoading(true)
-
                     }
                 }
             })
@@ -143,7 +142,6 @@ class FollowerActivity : BaseActivity<ActivityFollowerBinding>() {
                         )
                         binding.loadingView.setLoading(true)
                     }
-
                 }
             })
 
@@ -162,7 +160,6 @@ class FollowerActivity : BaseActivity<ActivityFollowerBinding>() {
                         )
                         binding.loadingView.setLoading(true)
                     }
-
                 }
             })
     }
@@ -177,7 +174,7 @@ class FollowerActivity : BaseActivity<ActivityFollowerBinding>() {
                     showSnackBar(getString(R.string.main_page_search_edit_text_hint))
                     viewModel.cursor.value = UserCursor.FOLLOWER
                 } else {
-                    viewModel.getUserSearch(it.toString(), 20, null )
+                    viewModel.getUserSearch(it.toString(), 20, null)
                     viewModel.cursor.value = UserCursor.ALL
                 }
             }
@@ -192,7 +189,6 @@ class FollowerActivity : BaseActivity<ActivityFollowerBinding>() {
             }
         }
 
-
         viewModel.receivedFollowRequestList.observe(this) {
             binding.loadingView.setLoading(false)
             if (it.content.isEmpty() && followRequestAdapter.currentList.isEmpty()) {
@@ -201,7 +197,6 @@ class FollowerActivity : BaseActivity<ActivityFollowerBinding>() {
                 followRequestAdapter.submitList(followRequestAdapter.currentList + it.content)
             }
         }
-
 
         viewModel.sendFollowRequestList.observe(this) {
             binding.loadingView.setLoading(false)

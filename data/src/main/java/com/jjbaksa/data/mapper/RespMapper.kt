@@ -2,7 +2,6 @@ package com.jjbaksa.data.mapper
 
 import com.google.gson.Gson
 import com.jjbaksa.data.mapper.user.toUser
-import com.jjbaksa.data.model.follower.FollowerListResp
 import com.jjbaksa.data.model.pin.CloseResp
 import com.jjbaksa.data.model.pin.OpenResp
 import com.jjbaksa.data.model.pin.PeriodResp
@@ -13,7 +12,6 @@ import com.jjbaksa.data.model.search.SearchShopResp
 import com.jjbaksa.data.model.search.ShopResp
 import com.jjbaksa.data.model.user.UserListResp
 import com.jjbaksa.domain.ErrorResp
-import com.jjbaksa.domain.model.follower.FollowerList
 import com.jjbaksa.domain.model.shop.ShopsMapsContent
 import com.jjbaksa.domain.model.shop.ShopsMaps
 import com.jjbaksa.domain.model.shop.ShopDetail

@@ -1,6 +1,5 @@
 package com.jjbaksa.jjbaksa.ui.follower.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.jjbaksa.domain.model.review.FollowerReviewShops
 import com.jjbaksa.domain.model.review.ReviewShop

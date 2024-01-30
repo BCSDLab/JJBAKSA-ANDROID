@@ -45,7 +45,3 @@ fun FollowContentResp.toFollowContent() = FollowContent(
     id = id ?: 0,
     user = user.toUser()
 )
-
-
-
-

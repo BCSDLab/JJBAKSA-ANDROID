@@ -50,6 +50,9 @@ interface UserDataSource {
     fun getAccessToken(): String
     fun getAuthPasswordToken(): String
 
-    suspend fun getUserSearch(keyword: String, pageSize: Int?, cursor: Long?
+    suspend fun getUserSearch(
+        keyword: String,
+        pageSize: Int?,
+        cursor: Long?
     ): Response<UserListResp>
 }

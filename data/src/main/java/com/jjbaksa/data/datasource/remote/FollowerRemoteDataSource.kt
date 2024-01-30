@@ -33,7 +33,7 @@ class FollowerRemoteDataSource @Inject constructor(
         return authApi.followerDelete(req)
     }
 
-    override suspend fun followRequestAccept(userId :Long): Response<FollowResp> {
+    override suspend fun followRequestAccept(userId: Long): Response<FollowResp> {
         return authApi.followRequestAccept(userId)
     }
 

@@ -1,6 +1,5 @@
 package com.jjbaksa.jjbaksa.ui.follower.adapter
 
-
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -12,7 +11,6 @@ import com.jjbaksa.domain.model.follower.FollowContent
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.databinding.ItemFollowBinding
 
-
 class FollowRequestAdapter(
     private val onAcceptClicked: (FollowContent) -> Unit,
     private val onDeleteClicked: (FollowContent) -> Unit,
@@ -22,14 +20,12 @@ class FollowRequestAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: FollowContent) {
             binding.followNameTextView.text = item.user?.nickname
-            binding.followAccountTextView.text = "@" +item.user?.account
+            binding.followAccountTextView.text = "@" + item.user?.account
             Glide.with(binding.root.context)
                 .load(item.user.profileImage.url)
                 .error(R.drawable.baseline_supervised_user_circle_24)
                 .circleCrop()
                 .into(binding.ivProfile)
-
-
 
             binding.followButton.isVisible = false
             binding.acceptButton.isVisible = true

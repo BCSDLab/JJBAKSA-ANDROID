@@ -1,7 +1,6 @@
 package com.jjbaksa.domain.repository
 
 import com.jjbaksa.domain.base.RespResult
-import com.jjbaksa.domain.model.follower.FollowerList
 import com.jjbaksa.domain.model.user.User
 import com.jjbaksa.domain.model.user.FindPasswordReq
 import com.jjbaksa.domain.model.user.Login
