@@ -16,7 +16,6 @@ import com.jjbaksa.jjbaksa.ui.mainpage.mypage.viewmodel.MyPageViewModel
 import com.jjbaksa.jjbaksa.util.MyInfo
 import com.jjbaksa.jjbaksa.util.fromDpToPx
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 

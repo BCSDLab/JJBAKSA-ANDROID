@@ -76,7 +76,9 @@ class ShopRepositoryImpl @Inject constructor(
             mapper = {
                 if (it.isSuccessful) {
                     if (it.body()?.totalRating == 0 || it.body()?.ratingCount == 0) 0f
-                    else round(it.body()?.totalRating!! / it.body()?.ratingCount!!.toFloat()  * 10).div(10)
+                    else round(it.body()?.totalRating!! / it.body()?.ratingCount!!.toFloat() * 10).div(
+                        10
+                    )
                 } else {
                     val errorResult = RespMapper.errorMapper(it.errorBody()?.string() ?: "")
                     onError(errorResult.errorMessage)

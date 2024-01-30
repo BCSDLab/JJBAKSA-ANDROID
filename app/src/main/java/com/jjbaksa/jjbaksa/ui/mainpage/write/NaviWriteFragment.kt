@@ -16,9 +16,9 @@ import com.jjbaksa.jjbaksa.databinding.FragmentNaviWriteBinding
 import com.jjbaksa.jjbaksa.listener.OnClickShopListener
 import com.jjbaksa.jjbaksa.listener.PaginationScrollListener
 import com.jjbaksa.jjbaksa.ui.mainpage.MainPageActivity
-import com.jjbaksa.jjbaksa.ui.pin.PinReviewWriteActivity
 import com.jjbaksa.jjbaksa.ui.mainpage.home.NaviHomeFragment
 import com.jjbaksa.jjbaksa.ui.mainpage.mypage.ReviewDetailFragment
+import com.jjbaksa.jjbaksa.ui.pin.PinReviewWriteActivity
 import com.jjbaksa.jjbaksa.ui.search.AutoCompleteKeywordAdapter
 import com.jjbaksa.jjbaksa.ui.search.SearchHistoryAdapter
 import com.jjbaksa.jjbaksa.ui.search.SearchShopAdapter
@@ -44,8 +44,9 @@ class NaviWriteFragment : BaseFragment<FragmentNaviWriteBinding>() {
                         requireActivity().finish()
                     }
                 }
-                val reviewDetailFragment= parentFragmentManager.findFragmentByTag(
-                    ReviewDetailFragment.TAG)
+                val reviewDetailFragment = parentFragmentManager.findFragmentByTag(
+                    ReviewDetailFragment.TAG
+                )
                 if (reviewDetailFragment?.isAdded == true) {
                     parentFragmentManager.beginTransaction()
                         .remove(reviewDetailFragment)
@@ -53,7 +54,6 @@ class NaviWriteFragment : BaseFragment<FragmentNaviWriteBinding>() {
                 } else {
                     (requireActivity() as MainPageActivity).showHomeFragment()
                 }
-
             }
         }
     private val keyboardProvider: KeyboardProvider by lazy { KeyboardProvider(requireContext()) }
@@ -200,13 +200,16 @@ class NaviWriteFragment : BaseFragment<FragmentNaviWriteBinding>() {
         autoCompleteKeywordAdapter.notifyDataSetChanged()
         binding.rvKeyword.visibility = View.GONE
     }
+
     private fun onClickHistory(keyword: String) {
         binding.etSearch.setText(keyword)
         search(keyword)
     }
+
     private fun onClickDelete(keyword: String) {
         viewModel.deleteSearchHistory(keyword)
     }
+
     private fun search(text: String) {
         binding.run {
             clKeywordHistory.visibility = View.GONE
@@ -217,6 +220,7 @@ class NaviWriteFragment : BaseFragment<FragmentNaviWriteBinding>() {
             viewModel.saveSearchHistory(text)
         }
     }
+
     override fun onStart() {
         fusedLocationUtil.startLocationUpdate()
         super.onStart()

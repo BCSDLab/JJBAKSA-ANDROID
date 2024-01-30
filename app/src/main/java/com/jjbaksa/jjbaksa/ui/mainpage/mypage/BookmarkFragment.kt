@@ -10,7 +10,6 @@ import com.jjbaksa.jjbaksa.databinding.FragmentBookmarkBinding
 import com.jjbaksa.jjbaksa.ui.mainpage.mypage.adapter.BookmarkAdapter
 import com.jjbaksa.jjbaksa.ui.mainpage.mypage.viewmodel.MyPageViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class BookmarkFragment : BaseFragment<FragmentBookmarkBinding>() {

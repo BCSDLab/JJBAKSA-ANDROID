@@ -5,7 +5,6 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
-import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -13,7 +12,6 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import com.jjbaksa.domain.model.mainpage.JjCategory
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.base.BaseFragment
 import com.jjbaksa.jjbaksa.databinding.FragmentNaviHomeBinding
@@ -36,11 +34,9 @@ import com.naver.maps.map.overlay.LocationOverlay
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import ted.gun0912.clustering.naver.TedNaverClustering
-import timber.log.Timber
 
 @AndroidEntryPoint
 class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCallback {
@@ -161,9 +157,6 @@ class NaviHomeFragment : BaseFragment<FragmentNaviHomeBinding>(), OnMapReadyCall
         viewModel.lastLocation.observe(viewLifecycleOwner) {
             currentCameraPosition(it.latitude, it.longitude)
             initLocationOverlay(it.latitude, it.longitude)
-        }
-        viewModel.mapShops.onEach {
-
         }
         viewModel.mapShops.flowWithLifecycle(lifecycle).onEach {
             if (it.isEmpty()) {

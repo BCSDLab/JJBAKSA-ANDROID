@@ -1,9 +1,7 @@
 package com.jjbaksa.jjbaksa.ui.mainpage.home.viewmodel
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.jjbaksa.domain.model.mainpage.JjCategory
 import com.jjbaksa.domain.model.mainpage.UserLocation
 import com.jjbaksa.domain.repository.HomeRepository
 import com.jjbaksa.domain.usecase.shop.ShopUseCase
@@ -11,7 +9,6 @@ import com.jjbaksa.domain.usecase.user.UserUseCase
 import com.jjbaksa.jjbaksa.base.BaseViewModel
 import com.jjbaksa.jjbaksa.model.ShopContent
 import com.jjbaksa.jjbaksa.util.MyInfo
-import com.jjbaksa.jjbaksa.util.SingleLiveEvent
 import com.jjbaksa.jjbaksa.util.toShopContent
 import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.lifecycle.HiltViewModel

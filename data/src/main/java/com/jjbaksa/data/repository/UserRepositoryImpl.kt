@@ -1,7 +1,6 @@
 package com.jjbaksa.data.repository
 
 import android.net.Uri
-import android.util.Log
 import com.jjbaksa.data.datasource.local.UserLocalDataSource
 import com.jjbaksa.data.datasource.remote.UserRemoteDataSource
 import com.jjbaksa.data.mapper.FormDataUtil
@@ -11,15 +10,15 @@ import com.jjbaksa.data.mapper.user.toUser
 import com.jjbaksa.data.model.apiCall
 import com.jjbaksa.domain.base.ErrorType
 import com.jjbaksa.domain.base.RespResult
-import com.jjbaksa.domain.model.user.User
-import com.jjbaksa.domain.repository.UserRepository
-import com.jjbaksa.domain.model.user.LoginReq
+import com.jjbaksa.domain.model.user.FindPasswordReq
 import com.jjbaksa.domain.model.user.Login
+import com.jjbaksa.domain.model.user.LoginReq
+import com.jjbaksa.domain.model.user.PasswordAndNicknameReq
 import com.jjbaksa.domain.model.user.SignUpReq
 import com.jjbaksa.domain.model.user.SignUpResp
-import com.jjbaksa.domain.model.user.FindPasswordReq
-import com.jjbaksa.domain.model.user.PasswordAndNicknameReq
+import com.jjbaksa.domain.model.user.User
 import com.jjbaksa.domain.model.user.WithdrawalReasonReq
+import com.jjbaksa.domain.repository.UserRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -28,7 +27,9 @@ class UserRepositoryImpl @Inject constructor(
     private val userLocalDataSource: UserLocalDataSource,
 ) : UserRepository {
     override suspend fun postLoginSNS(token: String, snsType: String): Result<Login> =
-        runCatching { userRemoteDataSource.postLoginSNS(token, snsType).toLoginResult() }.onSuccess {
+        runCatching {
+            userRemoteDataSource.postLoginSNS(token, snsType).toLoginResult()
+        }.onSuccess {
             userLocalDataSource.saveAccessToken(it.accessToken)
             userLocalDataSource.saveRefreshToken(it.refreshToken)
         }

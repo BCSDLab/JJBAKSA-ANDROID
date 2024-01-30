@@ -1,6 +1,5 @@
 package com.jjbaksa.domain.model.shop
 
-
 data class ShopsMapsContent(
     val placeId: String = "",
     val name: String = "",

@@ -18,7 +18,6 @@ import com.jjbaksa.jjbaksa.ui.mainpage.mypage.viewmodel.MyPageViewModel
 import com.jjbaksa.jjbaksa.ui.setting.SettingActivity
 import com.jjbaksa.jjbaksa.util.setExtendView
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class NaviMyPageFragment : BaseFragment<FragmentNaviMyPageBinding>() {
@@ -35,7 +34,8 @@ class NaviMyPageFragment : BaseFragment<FragmentNaviMyPageBinding>() {
     override var onBackPressedCallBack: OnBackPressedCallback? =
         object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                val reviewDetailFragment= parentFragmentManager.findFragmentByTag(ReviewDetailFragment.TAG)
+                val reviewDetailFragment =
+                    parentFragmentManager.findFragmentByTag(ReviewDetailFragment.TAG)
                 if (reviewDetailFragment?.isAdded == true) {
                     parentFragmentManager.beginTransaction()
                         .remove(reviewDetailFragment)
