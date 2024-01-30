@@ -17,10 +17,8 @@ import com.jjbaksa.jjbaksa.ui.pin.adapter.ImageFrameAdapter
 import com.jjbaksa.jjbaksa.ui.pin.adapter.PinAdapter
 import com.jjbaksa.jjbaksa.ui.pin.viewmodel.PinViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlin.math.round
 
 @AndroidEntryPoint
 class PinActivity : BaseActivity<ActivityPinBinding>() {

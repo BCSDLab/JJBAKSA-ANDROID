@@ -4,15 +4,11 @@ import com.jjbaksa.data.datasource.remote.ShopRemoteDataSource
 import com.jjbaksa.data.mapper.RespMapper
 import com.jjbaksa.data.mapper.toMapShopData
 import com.jjbaksa.data.mapper.toShopDetail
-import com.jjbaksa.data.mapper.toShopInfo
-import com.jjbaksa.data.mapper.toShopRates
 import com.jjbaksa.data.model.apiCall
 import com.jjbaksa.data.model.search.LocationBody
-import com.jjbaksa.domain.repository.ShopRepository
-import com.jjbaksa.domain.model.shop.ShopsMaps
 import com.jjbaksa.domain.model.shop.ShopDetail
-import com.jjbaksa.domain.model.shop.ShopInfo
-import com.jjbaksa.domain.model.shop.ShopRates
+import com.jjbaksa.domain.model.shop.ShopsMaps
+import com.jjbaksa.domain.repository.ShopRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import kotlin.math.round

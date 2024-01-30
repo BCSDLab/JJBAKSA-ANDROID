@@ -1,9 +1,7 @@
 package com.jjbaksa.domain.repository
 
-import com.jjbaksa.domain.model.shop.ShopsMaps
 import com.jjbaksa.domain.model.shop.ShopDetail
-import com.jjbaksa.domain.model.shop.ShopInfo
-import com.jjbaksa.domain.model.shop.ShopRates
+import com.jjbaksa.domain.model.shop.ShopsMaps
 import kotlinx.coroutines.flow.Flow
 
 interface ShopRepository {

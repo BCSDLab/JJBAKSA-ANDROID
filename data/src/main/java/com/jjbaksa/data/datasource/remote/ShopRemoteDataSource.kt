@@ -5,11 +5,9 @@ import com.jjbaksa.data.api.NoAuthApi
 import com.jjbaksa.data.datasource.ShopDataSource
 import com.jjbaksa.data.model.pin.RateDto
 import com.jjbaksa.data.model.pin.ScrapDto
-import com.jjbaksa.data.model.shop.ShopsMapsResp
 import com.jjbaksa.data.model.pin.ShopDetailResp
 import com.jjbaksa.data.model.search.LocationBody
-import com.jjbaksa.data.model.shop.ShopInfoResp
-import com.jjbaksa.data.model.shop.ShopRatesResp
+import com.jjbaksa.data.model.shop.ShopsMapsResp
 import retrofit2.Response
 import javax.inject.Inject
 
