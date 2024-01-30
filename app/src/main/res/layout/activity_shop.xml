@@ -249,7 +249,7 @@
                     app:layout_constraintStart_toStartOf="@id/phone_text_view"
                     app:layout_constraintTop_toTopOf="@id/schedule_image_view"
                     app:layout_constraintBottom_toBottomOf="@id/schedule_image_view"
-                    android:text="@{@string/schedule(String.valueOf(shop.shopInfo.todayPeriod.open.hour),String.valueOf(shop.shopInfo.todayPeriod.close.hour))}"
+                    android:text="@{@string/schedule(shop.shopInfo.todayPeriod.open.hour, shop.shopInfo.todayPeriod.open.minute, shop.shopInfo.todayPeriod.close.hour, shop.shopInfo.todayPeriod.close.minute)}"
                     tools:text="00:00 - 23:59"/>
 
                 <androidx.appcompat.widget.AppCompatImageView
