@@ -4,6 +4,8 @@ import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.tabs.TabLayoutMediator
 import com.jjbaksa.domain.enums.MyReviewCursor
 import com.jjbaksa.domain.enums.PinReviewCursor
@@ -15,7 +17,8 @@ import com.jjbaksa.jjbaksa.ui.pin.adapter.ImageFrameAdapter
 import com.jjbaksa.jjbaksa.ui.pin.adapter.PinAdapter
 import com.jjbaksa.jjbaksa.ui.pin.viewmodel.PinViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.math.round
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
 class PinActivity : BaseActivity<ActivityPinBinding>() {
@@ -23,6 +26,7 @@ class PinActivity : BaseActivity<ActivityPinBinding>() {
         get() = R.layout.activity_pin
     private val viewModel: PinViewModel by viewModels()
     private lateinit var imageFrameAdapter: ImageFrameAdapter
+    var scrapId: Int = 0
 
     private val reviewWriteResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -61,6 +65,8 @@ class PinActivity : BaseActivity<ActivityPinBinding>() {
         intent.getStringExtra("place_id")?.let {
             viewModel.placeId.value = it
             viewModel.getShopDetail(it)
+            viewModel.getShopsRates(it)
+            viewModel.getShopsScraps(it)
         }
         initViewPagerWithTabLayout()
         initShopImageViewPagerWithTabLayout()
@@ -94,15 +100,18 @@ class PinActivity : BaseActivity<ActivityPinBinding>() {
         viewModel.shopInfo.observe(this) {
             binding.shopTitleTextView.text = it.name
             binding.shopTypeTextView.text = it.category
-            binding.reviewStarCountTextView.text =
-                round((it.totalRating / it.ratingCount.toDouble()) * 10).div(10).toString()
-            binding.bookmarkImageView.isSelected = it.scrap != 0
-
             it.photos.forEach {
                 binding.shopImagesTabLayout.addTab(binding.shopImagesTabLayout.newTab())
             }
             imageFrameAdapter.submitList(it.photos)
         }
+        viewModel.rate.flowWithLifecycle(lifecycle).onEach {
+            binding.tvReviewStarCount.text = it.toString()
+        }.launchIn(lifecycleScope)
+        viewModel.scrapId.flowWithLifecycle(lifecycle).onEach {
+            binding.bookmarkImageView.isSelected = it != 0L
+            scrapId = it.toInt()
+        }.launchIn(lifecycleScope)
         viewModel.myReviewLastDate.observe(this) {
             binding.lastReviewCountTextView.text = getString(
                 R.string.last_register_date, it.lastDate
@@ -147,6 +156,8 @@ class PinActivity : BaseActivity<ActivityPinBinding>() {
                     msg = "해당 음식점을 삭제하시겠습니까?",
                     confirmClick = {
                         // TODO : 스크랩 삭제 API 연동
+                        viewModel.deleteShopScrap(scrapId)
+                        binding.bookmarkImageView.isSelected = false
                     }
                 ).show(supportFragmentManager, SCRAP_REMOVE_DIALOG)
             } else {

@@ -2,10 +2,11 @@ package com.jjbaksa.data.api
 
 import com.jjbaksa.data.model.post.PostDetailResp
 import com.jjbaksa.data.model.post.PostResp
-import com.jjbaksa.data.model.search.AutoKeywordResp
 import com.jjbaksa.data.model.search.LocationBody
 import com.jjbaksa.data.model.search.SearchShopResp
 import com.jjbaksa.data.model.search.TrendResp
+import com.jjbaksa.data.model.shop.ShopInfoResp
+import com.jjbaksa.data.model.shop.ShopRatesResp
 import com.jjbaksa.data.model.user.LoginResp
 import com.jjbaksa.data.model.user.UserResp
 import com.jjbaksa.domain.model.user.FindPasswordReq
@@ -23,7 +24,7 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface NoAuthApi {
-    @GET("login/{sns-type}")
+    @POST("login/{sns-type}")
     suspend fun postLoginSNS(
         @Header("Authorization") token: String,
         @Path("sns-type") snsType: String
@@ -74,8 +75,11 @@ interface NoAuthApi {
     @GET("trending")
     suspend fun getTrending(): Response<TrendResp>
 
-    @GET("auto-complete/{word}")
-    suspend fun getSearchKeyword(@Path("word") word: String): Response<AutoKeywordResp>
+    @POST("shops/auto-complete")
+    suspend fun getSearchKeyword(
+        @Query("query") query: String,
+        @Body locationBody: LocationBody
+    ): Response<List<String>>
 
     @POST("shops")
     suspend fun getShops(
@@ -105,4 +109,14 @@ interface NoAuthApi {
     suspend fun postUserEmailCheck(
         @Query("email") userEmail: String
     ): Response<LoginResp>
+
+    @GET("shops/{place-id}")
+    suspend fun getShopInfo(
+        @Path("place-id") placeId: String
+    ): Response<ShopInfoResp>
+
+    @GET("shops/rates/{place-id}")
+    suspend fun getShopRates(
+        @Path("place-id") placeId: String
+    ): Response<ShopRatesResp>
 }

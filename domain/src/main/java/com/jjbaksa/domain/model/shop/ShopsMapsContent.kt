@@ -1,16 +1,14 @@
 package com.jjbaksa.domain.model.shop
 
-import com.google.gson.annotations.SerializedName
-
 data class ShopsMapsContent(
-    @SerializedName("placeId")
     val placeId: String = "",
-    @SerializedName("name")
     val name: String = "",
-    @SerializedName("lat")
     val lat: Double = 0.0,
-    @SerializedName("lng")
     val lng: Double = 0.0,
-    @SerializedName("photo")
-    val photo: String = ""
+    val photo: List<String> = emptyList(),
+    val totalRating: Int? = 0,
+    val ratingCount: Int? = 0,
+    val openNow: Boolean? = false,
+    val formattedAddress: String? = "",
+    val simpleFormattedAddress: String? = ""
 )

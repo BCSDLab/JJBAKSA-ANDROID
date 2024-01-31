@@ -19,8 +19,8 @@
 
         <ImageView
             android:id="@+id/shop_image_view"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             tools:background="@drawable/shape_circ_222222_solid"
             android:scaleType="centerCrop"
             app:layout_constraintVertical_bias="0.4"

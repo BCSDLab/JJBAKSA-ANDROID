@@ -4,13 +4,12 @@ import android.content.Context
 import android.content.Intent
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.jjbaksa.data.BASE_URL
 import com.jjbaksa.data.api.AuthApi
 import com.jjbaksa.data.api.NoAuthApi
 import com.jjbaksa.data.api.RefreshApi
-import com.jjbaksa.data.api.TestNoAuthApi
 import com.jjbaksa.data.database.PreferenceKeys
 import com.jjbaksa.data.database.userDataStore
+import com.jjbaksa.jjbaksa.BuildConfig
 import com.jjbaksa.jjbaksa.JjbaksaApp
 import com.jjbaksa.jjbaksa.ui.login.LoginActivity
 import com.jjbaksa.jjbaksa.util.RefreshManager
@@ -39,10 +38,6 @@ annotation class AUTH
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class NOAUTH
-
-@Qualifier
-@Retention(AnnotationRetention.BINARY)
-annotation class TEST
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
@@ -161,7 +156,7 @@ object NetworkModule {
     fun provideNoAuthRetrofit(@NOAUTH okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .client(okHttpClient)
-            .baseUrl(BASE_URL)
+            .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -173,7 +168,7 @@ object NetworkModule {
     fun provideAuthRetrofit(@AUTH okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .client(okHttpClient)
-            .baseUrl(BASE_URL)
+            .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
@@ -188,36 +183,5 @@ object NetworkModule {
     @Singleton
     fun provideAuthApi(@AUTH retrofit: Retrofit): AuthApi {
         return retrofit.create(AuthApi::class.java)
-    }
-
-    /**
-     * MOCK TEST
-     */
-    @TEST
-    @Provides
-    @Singleton
-    fun testProvideNoAuthOkHttpClient(): OkHttpClient {
-        return OkHttpClient.Builder().apply {
-            connectTimeout(10, TimeUnit.SECONDS)
-            readTimeout(30, TimeUnit.SECONDS)
-            writeTimeout(15, TimeUnit.SECONDS)
-            addInterceptor(httpLoggingInterceptor)
-        }.build()
-    }
-    @TEST
-    @Provides
-    @Singleton
-    fun testProvideNoAuthRetrofit(@TEST okHttpClient: OkHttpClient): Retrofit {
-        return Retrofit.Builder()
-            .client(okHttpClient)
-            .baseUrl("https://run.mocky.io/")
-            .addConverterFactory(ScalarsConverterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
-    @Provides
-    @Singleton
-    fun testProvideNoAuthApi(@TEST retrofit: Retrofit): TestNoAuthApi {
-        return retrofit.create(TestNoAuthApi::class.java)
     }
 }

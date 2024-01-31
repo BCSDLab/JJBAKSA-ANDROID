@@ -122,7 +122,7 @@
                     tools:text="일식집" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/review_star_count_text_view"
+                    android:id="@+id/tv_review_star_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
@@ -154,7 +154,7 @@
                     android:text="@string/bookmark"
                     android:textColor="@color/color_666666"
                     android:textSize="11sp"
-                    app:layout_constraintBottom_toBottomOf="@id/review_star_count_text_view"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_review_star_count"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/bookmark_image_view" />
 
@@ -174,7 +174,7 @@
                     android:layout_height="1dp"
                     android:background="@color/color_eeeeee"
                     android:layout_marginTop="8dp"
-                    app:layout_constraintTop_toBottomOf="@id/review_star_count_text_view"/>
+                    app:layout_constraintTop_toBottomOf="@id/tv_review_star_count"/>
 
                 <TextView
                     android:id="@+id/information_text_view"
@@ -199,17 +199,18 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/address_text_view"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
                     android:ellipsize="end"
-                    android:maxLines="1"
+                    android:layout_marginEnd="16dp"
+                    android:text="@{shop.shopInfo.formattedAddress}"
                     android:textColor="@color/color_000000"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="@+id/location_image_view"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/location_image_view"
                     app:layout_constraintTop_toTopOf="@id/location_image_view"
-                    android:text="@{shop.shopInfo.formattedAddress}"
                     tools:text="서울특별시 강남구 역삼동 123-45" />
 
                 <androidx.appcompat.widget.AppCompatImageView
@@ -229,7 +230,7 @@
                     app:layout_constraintStart_toStartOf="@id/address_text_view"
                     app:layout_constraintTop_toTopOf="@id/phone_image_view"
                     app:layout_constraintBottom_toBottomOf="@id/phone_image_view"
-                    android:text="@{shop.shopInfo.formattedPhoneNumber}"
+                    android:text="@{shop.formattedPhoneNumber}"
                     tools:text="010-0000-0000"/>
 
                 <androidx.appcompat.widget.AppCompatImageView
@@ -249,40 +250,8 @@
                     app:layout_constraintStart_toStartOf="@id/phone_text_view"
                     app:layout_constraintTop_toTopOf="@id/schedule_image_view"
                     app:layout_constraintBottom_toBottomOf="@id/schedule_image_view"
-                    android:text="@{@string/schedule(String.valueOf(shop.shopInfo.period[0].open.time),String.valueOf(shop.shopInfo.period[0].close.time))}"
+                    android:text="@{@string/schedule(shop.period.open.hour, shop.period.open.minute, shop.period.close.hour, shop.period.close.minute)}"
                     tools:text="00:00 - 23:59"/>
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/report_information_image_view"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    app:srcCompat="@drawable/ic_exclamation_circle"
-                    android:layout_marginEnd="2dp"
-                    app:layout_constraintEnd_toStartOf="@id/report_information_text_view"
-                    app:layout_constraintTop_toTopOf="@id/report_information_text_view"
-                    app:layout_constraintBottom_toBottomOf="@id/report_information_text_view" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/report_information_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:textSize="10sp"
-                    android:textColor="@color/color_c4c4c4"
-                    app:layout_constraintTop_toTopOf="@id/schedule_text_view"
-                    app:layout_constraintBottom_toBottomOf="@id/schedule_text_view"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:text="@string/report_wrong_information" />
-
-                <androidx.constraintlayout.helper.widget.Layer
-                    android:id="@+id/report_information_layer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="4dp"
-                    app:constraint_referenced_ids="report_information_image_view,report_information_text_view"
-                    app:layout_constraintBottom_toBottomOf="@+id/schedule_text_view"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/phone_text_view" />
 
                 <View
                     android:id="@+id/dummy_rect_view"
@@ -423,6 +392,7 @@
                     app:layout_constraintTop_toBottomOf="@id/my_latest_visit_text_view" >
 
                     <include
+                        android:layout_marginTop="8dp"
                         android:id="@+id/my_review_layout1"
                         layout="@layout/item_my_review"
                         android:layout_width="match_parent"
@@ -479,6 +449,7 @@
                     android:id="@+id/map_view"
                     android:layout_width="match_parent"
                     android:layout_height="240dp"
+                    android:layout_marginTop="12dp"
                     android:name="com.naver.maps.map.MapFragment"
                     app:layout_constraintTop_toBottomOf="@id/map_text_view" />
             </androidx.constraintlayout.widget.ConstraintLayout>

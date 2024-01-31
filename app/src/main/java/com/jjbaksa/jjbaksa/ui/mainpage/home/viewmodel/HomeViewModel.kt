@@ -2,7 +2,6 @@ package com.jjbaksa.jjbaksa.ui.mainpage.home.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.jjbaksa.domain.model.mainpage.JjCategory
 import com.jjbaksa.domain.model.mainpage.UserLocation
 import com.jjbaksa.domain.repository.HomeRepository
 import com.jjbaksa.domain.usecase.shop.ShopUseCase
@@ -10,26 +9,33 @@ import com.jjbaksa.domain.usecase.user.UserUseCase
 import com.jjbaksa.jjbaksa.base.BaseViewModel
 import com.jjbaksa.jjbaksa.model.ShopContent
 import com.jjbaksa.jjbaksa.util.MyInfo
-import com.jjbaksa.jjbaksa.util.SingleLiveEvent
 import com.jjbaksa.jjbaksa.util.toShopContent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val homeRepository: HomeRepository,
     private val userUseCase: UserUseCase,
-    private val shopUseCase: ShopUseCase
+    private val shopUseCase: ShopUseCase,
 ) : BaseViewModel() {
     val location = MutableLiveData<UserLocation>()
     val lastLocation = MutableLiveData<UserLocation>()
-    val category = SingleLiveEvent<JjCategory>()
+
+    val selectedNearbyStoreCategory = MutableLiveData<Boolean>()
+    val selectedFriendCategory = MutableLiveData<Boolean>()
+    val selectedBookmarkCategory = MutableLiveData<Boolean>()
+
     val moveCamera = MutableLiveData<Boolean>(true)
     val searchCurrentPosition = MutableLiveData<Boolean>()
 
-    private val _mapShops = SingleLiveEvent<List<ShopContent>>()
-    val mapShops: SingleLiveEvent<List<ShopContent>> get() = _mapShops
+    private val _mapShops = MutableSharedFlow<List<ShopContent>>()
+    val mapShops: SharedFlow<List<ShopContent>> get() = _mapShops.asSharedFlow()
 
     fun setLatLng(lat: Double, lng: Double) {
         location.value = UserLocation(lat, lng)
@@ -39,23 +45,19 @@ class HomeViewModel @Inject constructor(
         lastLocation.value = UserLocation(lat, lng)
     }
 
-    fun setCategory(category: JjCategory) {
-        this.category.value = category
-    }
-
     fun getMapShop(
         optionsFriend: Int,
         optionsNearby: Int,
         optionsScrap: Int,
         lat: Double,
-        lng: Double
+        lng: Double,
     ) {
         viewModelScope.launch(ceh) {
             shopUseCase.invoke(optionsFriend, optionsNearby, optionsScrap, lat, lng) { msg ->
                 toastMsg.postValue(msg)
             }.collect {
                 it.onSuccess {
-                    _mapShops.value = it.shopsMapsContent.map { it.toShopContent() }
+                    _mapShops.emit(it.shopsMapsContent.map { it.toShopContent() })
                 }
             }
         }
@@ -73,6 +75,14 @@ class HomeViewModel @Inject constructor(
                     MyInfo.profileImage = homeRepository.getMyInfoProfileImage()
                     MyInfo.token = homeRepository.getMyInfoToken()
                 }
+            }
+        }
+    }
+
+    fun clearDataStoreNoneAutoLogin() {
+        if (!homeRepository.getMyInfoAutoLogin()) {
+            runBlocking {
+                userUseCase.logout()
             }
         }
     }

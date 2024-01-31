@@ -2,10 +2,11 @@ package com.jjbaksa.jjbaksa.ui.shop.viewmodel
 
 import androidx.lifecycle.viewModelScope
 import com.jjbaksa.domain.model.review.FollowerReviewShops
-import com.jjbaksa.domain.model.shop.ShopDetail
 import com.jjbaksa.domain.model.review.MyReviewShops
 import com.jjbaksa.domain.model.review.ReviewShopLastDate
 import com.jjbaksa.domain.model.scrap.AddShopScrap
+import com.jjbaksa.domain.model.shop.Period
+import com.jjbaksa.domain.model.shop.ShopInfo
 import com.jjbaksa.domain.usecase.shop.ShopUseCase
 import com.jjbaksa.domain.usecase.review.ReviewUseCase
 import com.jjbaksa.domain.usecase.scrap.GetShopScrapUseCase
@@ -24,8 +25,8 @@ class ShopViewModel @Inject constructor(
     val placeId = SingleLiveEvent<String>()
     val showProgress = SingleLiveEvent<Boolean>()
 
-    private val _shopInfo = SingleLiveEvent<ShopDetail>()
-    val shopInfo: SingleLiveEvent<ShopDetail> get() = _shopInfo
+    private val _shopInfo = SingleLiveEvent<ShopInfo>()
+    val shopInfo: SingleLiveEvent<ShopInfo> get() = _shopInfo
 
     private val _addScrapInfo = SingleLiveEvent<AddShopScrap>()
     val addScrapInfo: SingleLiveEvent<AddShopScrap> get() = _addScrapInfo
@@ -42,19 +43,27 @@ class ShopViewModel @Inject constructor(
     private val _myLastReviewDate = SingleLiveEvent<ReviewShopLastDate>()
     val myLastReviewDate: SingleLiveEvent<ReviewShopLastDate> get() = _myLastReviewDate
 
-    fun getShopDetail(placeId: String) {
+    private val _shopAverageRate = SingleLiveEvent<Float>()
+    val shopAverageRate: SingleLiveEvent<Float> get() = _shopAverageRate
+
+    val formattedPhoneNumber = SingleLiveEvent<String>()
+    val period = SingleLiveEvent<Period>()
+
+    fun getShopInfo(placeId: String) {
         showProgress.value = true
         viewModelScope.launch(ceh) {
-            shopUseCase.getShopDetail(placeId) { msg ->
+            shopUseCase.getShopInfo(placeId) { msg ->
                 toastMsg.postValue(msg)
             }.collect {
                 it.onSuccess {
                     showProgress.value = false
                     _shopInfo.value = it
+                    formattedPhoneNumber.value = it.formattedPhoneNumber.ifEmpty { "정보 없음" }
+                    period.value = it.todayPeriod
                 }
                 it.onFailure {
                     showProgress.value = false
-                    _shopInfo.value = ShopDetail()
+                    _shopInfo.value = ShopInfo()
                 }
             }
         }
@@ -146,6 +155,20 @@ class ShopViewModel @Inject constructor(
                 it.onSuccess {
                     _addScrapInfo.value = AddShopScrap()
                 }.onFailure {
+                }
+            }
+        }
+    }
+
+    fun getShopRates(placeId: String) {
+        viewModelScope.launch(ceh) {
+            shopUseCase.getShopsRates(placeId) { msg ->
+                toastMsg.postValue(msg)
+            }.collect {
+                it.onSuccess {
+                    _shopAverageRate.value = it
+                }.onFailure {
+                    _shopAverageRate.value = 0f
                 }
             }
         }

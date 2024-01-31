@@ -1,6 +1,7 @@
 package com.jjbaksa.data.model.pin
 
 import com.google.gson.annotations.SerializedName
+import com.jjbaksa.data.model.shop.PeriodResp
 
 data class ShopDetailResp(
     @SerializedName("shopId")

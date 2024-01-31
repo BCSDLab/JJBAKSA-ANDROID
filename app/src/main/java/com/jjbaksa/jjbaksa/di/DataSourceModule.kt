@@ -3,9 +3,9 @@ package com.jjbaksa.jjbaksa.di
 import android.content.Context
 import com.jjbaksa.data.api.AuthApi
 import com.jjbaksa.data.api.NoAuthApi
-import com.jjbaksa.data.api.TestNoAuthApi
 import com.jjbaksa.data.database.UserDao
 import com.jjbaksa.data.datasource.local.HomeLocalDataSource
+import com.jjbaksa.data.datasource.local.SearchLocalDataSource
 import com.jjbaksa.data.datasource.local.UserLocalDataSource
 import com.jjbaksa.data.datasource.remote.FollowerRemoteDataSource
 import com.jjbaksa.data.datasource.remote.HomeRemoteDataSource
@@ -61,7 +61,6 @@ object DataSourceModule {
     fun provideRemoteSearchDataSource(
         authApi: AuthApi,
         noAuthApi: NoAuthApi,
-        testNoAuthApi: TestNoAuthApi
     ): SearchRemoteDataSource {
         return SearchRemoteDataSource(authApi, noAuthApi)
     }
@@ -86,9 +85,8 @@ object DataSourceModule {
     fun provideRemoteShopDataSource(
         authApi: AuthApi,
         noAuthApi: NoAuthApi,
-        testNoAuthApi: TestNoAuthApi
     ): ShopRemoteDataSource {
-        return ShopRemoteDataSource(authApi, noAuthApi, testNoAuthApi)
+        return ShopRemoteDataSource(authApi, noAuthApi)
     }
 
     @Provides
@@ -96,9 +94,8 @@ object DataSourceModule {
     fun provideRemoteScrapDataSource(
         authApi: AuthApi,
         noAuthApi: NoAuthApi,
-        testNoAuthApi: TestNoAuthApi
     ): ScrapRemoteDataSource {
-        return ScrapRemoteDataSource(authApi, noAuthApi, testNoAuthApi)
+        return ScrapRemoteDataSource(authApi, noAuthApi)
     }
 
     @Provides
@@ -108,6 +105,14 @@ object DataSourceModule {
         noAuthApi: NoAuthApi
     ): ReviewRemoteDataSource {
         return ReviewRemoteDataSource(authApi, noAuthApi)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSearchLocalDataSource(
+        @ApplicationContext context: Context
+    ): SearchLocalDataSource {
+        return SearchLocalDataSource(context)
     }
 
     @Provides

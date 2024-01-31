@@ -54,12 +54,8 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
             )
 
             buttonWelcomeComplete.setOnClickListener {
-                signUpViewModel.signUpRequest()
-                signUpViewModel.isSignUpSuccess.observe(viewLifecycleOwner) {
-                    if (it) {
-                        activity?.finish()
-                    }
-                }
+                signUpViewModel.setNewNickname(binding.jEditTextWelcomeName.text)
+                activity?.finish()
             }
         }
     }

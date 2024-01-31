@@ -15,24 +15,22 @@ class FollowerReviewedShopAdapter(
     private val onListChanged: (ReviewShopContent, ReviewDetailAdapter) -> Unit
 ) : ListAdapter<ReviewShopContent, FollowerReviewedShopAdapter.ViewHolder>(diffUtil) {
 
-    private val reviewDetailAdapter: ReviewDetailAdapter by lazy {
-        ReviewDetailAdapter()
-    }
-    var isReviewVisible = false
+    private val reviewDetailAdapter: MutableMap<String, ReviewDetailAdapter> = mutableMapOf()
+
     inner class ViewHolder(private val binding: ItemShopTitleBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(shop: ReviewShopContent) {
             binding.run {
                 tvShopTitle.text = shop.name
                 tvShopCategory.text = shop.category
-                rvShopReviews.adapter = reviewDetailAdapter
+                if (reviewDetailAdapter[shop.placeId] == null)
+                    reviewDetailAdapter[shop.placeId] = ReviewDetailAdapter()
+                rvShopReviews.adapter = reviewDetailAdapter[shop.placeId]
                 root.setOnClickListener {
-                    if (isReviewVisible) {
-                        isReviewVisible = false
+                    if (rvShopReviews.visibility == View.VISIBLE) {
                         ivShopExpand.setImageResource(R.drawable.sel_jj_check_box_more_info_closed)
                         rvShopReviews.visibility = View.GONE
                     } else {
-                        isReviewVisible = true
                         ivShopExpand.setImageResource(R.drawable.sel_jj_check_box_more_info_opened)
                         rvShopReviews.visibility = View.VISIBLE
                     }
@@ -56,7 +54,10 @@ class FollowerReviewedShopAdapter(
         currentList: MutableList<ReviewShopContent>
     ) {
         currentList.forEach { shop ->
-            onListChanged(shop, reviewDetailAdapter)
+            if (reviewDetailAdapter[shop.placeId] == null) reviewDetailAdapter[shop.placeId] = ReviewDetailAdapter()
+            reviewDetailAdapter[shop.placeId]?.let {
+                onListChanged(shop, it)
+            }
         }
     }
 

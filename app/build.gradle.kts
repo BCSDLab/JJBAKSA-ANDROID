@@ -47,6 +47,7 @@ android {
                 "proguard-rules.pro"
             )
             isDebuggable = true
+            buildConfigField("String", "BASE_URL", getPropertyKey("debug_url"))
         }
         getByName("release") {
             isMinifyEnabled = true
@@ -56,6 +57,7 @@ android {
                 "proguard-rules.pro"
             )
             isDebuggable = false
+            buildConfigField("String", "BASE_URL", getPropertyKey("release_url"))
         }
     }
 
@@ -84,6 +86,8 @@ dependencies {
     implementation("com.google.android.gms:play-services-auth:20.3.0")
     implementation("com.navercorp.nid:oauth:5.1.1")
     implementation("com.github.bumptech.glide:glide:4.12.0")
+    kapt("android.arch.lifecycle:compiler:1.1.1")
+    kapt("com.github.bumptech.glide:compiler:4.12.0")
     implementation("io.github.ParkSangGwon:tedclustering-naver:1.0.2")
     implementation(project(mapOf("path" to ":image_selector")))
     annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")

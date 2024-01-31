@@ -48,16 +48,32 @@ class BookmarkFragment : BaseFragment<FragmentBookmarkBinding>() {
                 }
             }
         })
+        refreshBookmark()
+    }
+
+    private fun refreshBookmark() {
+        binding.swipeRlContainer.setOnRefreshListener {
+            viewModel.getScraps(null, null, 10)
+        }
     }
 
     override fun subscribe() {
         viewModel.scrapsShops.observe(viewLifecycleOwner) {
             binding.progressContainer.isVisible = false
+            binding.swipeRlContainer.isRefreshing = false
             if (it.isEmpty()) {
                 binding.jjNoContentView.isVisible = true
             } else {
                 binding.jjNoContentView.isVisible = false
-                bookmarkAdapter.submitList(bookmarkAdapter.currentList + it)
+                if (bookmarkAdapter.currentList.isEmpty()) {
+                    bookmarkAdapter.submitList(it)
+                } else {
+                    if (bookmarkAdapter.currentList[0].equals(it[0])) {
+                        bookmarkAdapter.submitList(it)
+                    } else {
+                        bookmarkAdapter.submitList(bookmarkAdapter.currentList + it)
+                    }
+                }
             }
         }
     }

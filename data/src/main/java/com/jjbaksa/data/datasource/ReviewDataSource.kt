@@ -3,6 +3,7 @@ package com.jjbaksa.data.datasource
 import com.jjbaksa.data.model.follower.FollowerReviewShopsResp
 import com.jjbaksa.data.model.review.ReviewShopLastDateResp
 import com.jjbaksa.data.model.review.MyReviewShopsResp
+import com.jjbaksa.data.model.review.ReviewCountResp
 import com.jjbaksa.data.model.review.ReviewShopDetailResp
 import com.jjbaksa.data.model.review.ReviewShopResp
 import okhttp3.MultipartBody
@@ -42,5 +43,5 @@ interface ReviewDataSource {
         rate: Int,
         reviewImages: List<MultipartBody.Part>
     ): Response<ReviewShopDetailResp>
-    suspend fun getFollowersShopReviewCount(placeId: String): Response<Int>
+    suspend fun getFollowersShopReviewCount(placeId: String): Response<ReviewCountResp>
 }

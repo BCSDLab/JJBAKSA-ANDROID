@@ -5,14 +5,14 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
-import com.bumptech.glide.Glide
+import com.jjbaksa.jjbaksa.GlideApp
 import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.databinding.ItemMarkerBinding
 
 class JjMarker @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
+    defStyleAttr: Int = 0,
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
     private lateinit var binding: ItemMarkerBinding
     private var markerCount: String? = null
@@ -58,11 +58,10 @@ class JjMarker @JvmOverloads constructor(
     }
 
     fun setImageUrl(imageUrl: String) {
-        this.imageUrl = imageUrl
-        Glide.with(binding.shopImageView)
+        GlideApp.with(context)
             .load(imageUrl)
             .circleCrop()
-            .override(30)
+            .placeholder(R.drawable.ic_empty_img)
             .into(binding.shopImageView)
     }
 }
