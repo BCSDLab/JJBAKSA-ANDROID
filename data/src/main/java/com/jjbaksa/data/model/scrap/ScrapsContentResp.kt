@@ -1,6 +1,7 @@
 package com.jjbaksa.data.model.scrap
 
 import com.google.gson.annotations.SerializedName
+import com.jjbaksa.data.model.pin.RateDto
 
 data class ScrapsContentResp(
     @SerializedName("placeId")
@@ -11,10 +12,8 @@ data class ScrapsContentResp(
     val photo: String? = "",
     @SerializedName("category")
     val category: String? = "",
-    @SerializedName("totalRating")
-    val totalRating: Int? = 0,
-    @SerializedName("ratingCount")
-    val ratingCount: Int? = 0,
+    @SerializedName("rate")
+    val rate: RateDto? = RateDto(),
     @SerializedName("address")
     val address: String? = "",
     @SerializedName("scrapId")

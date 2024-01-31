@@ -88,6 +88,10 @@ class UserUseCase @Inject constructor(
         return userRepository.logout()
     }
 
+    suspend fun clearDataStoreNoneAutoLogin() {
+        userRepository.clearDataStoreNoneAutoLogin()
+    }
+
     suspend fun postUserWithdrawalReason(
         withdrawalReason: WithdrawalReasonReq,
         onError: (String) -> Unit

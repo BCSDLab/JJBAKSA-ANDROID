@@ -56,6 +56,7 @@ interface UserRepository {
     suspend fun postUserEmailCheck(email: String): Flow<Result<Login>>
 
     suspend fun logout()
+    suspend fun clearDataStoreNoneAutoLogin()
     fun getAutoLoginFlag(): Boolean
     fun getAccount(): String
     fun getNickname(): String

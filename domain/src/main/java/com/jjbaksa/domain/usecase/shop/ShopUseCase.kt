@@ -26,6 +26,13 @@ class ShopUseCase @Inject constructor(
         return shopRepository.getShopDetail(placeId, onError)
     }
 
+    suspend fun getShopsRates(placeId: String, onError: (String) -> Unit): Flow<Result<Float>> {
+        return shopRepository.getShopsRates(placeId, onError)
+    }
+
+    suspend fun getShopsScraps(placeId: String, onError: (String) -> Unit): Flow<Result<Long>> {
+        return shopRepository.getShopsScraps(placeId, onError)
+    }
     suspend fun getShopInfo(placeId: String, onError: (String) -> Unit): Flow<Result<ShopInfo>> {
         return shopRepository.getShopInfo(placeId, onError)
     }

@@ -28,6 +28,7 @@ class ReviewAdapter(
                 binding.shopImageView.scaleType = ImageView.ScaleType.CENTER_CROP
                 Glide.with(binding.shopImageView)
                     .load(item.photos[0])
+                    .placeholder(R.drawable.ic_empty_img)
                     .into(binding.shopImageView)
             }
             binding.reviewContainer.setOnClickListener {

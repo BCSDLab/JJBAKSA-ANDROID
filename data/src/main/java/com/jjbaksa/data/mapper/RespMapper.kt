@@ -62,9 +62,14 @@ fun List<ShopsMapsResp>?.toMapShopData() = ShopsMaps(
 fun ShopsMapsResp.toMapShopContent() = ShopsMapsContent(
     placeId = placeId ?: "",
     name = name ?: "",
-    lat = geometry.location?.lat ?: 0.0,
-    lng = geometry.location?.lng ?: 0.0,
-    photo = photo ?: "",
+    lat = coordinate.lat ?: 0.0,
+    lng = coordinate.lng ?: 0.0,
+    photo = photo ?: emptyList(),
+    totalRating = rate?.totalRating,
+    ratingCount = rate?.ratingCount,
+    openNow = openNow,
+    formattedAddress = formattedAddress,
+    simpleFormattedAddress = simpleFormattedAddress,
 )
 
 fun PeriodResp.toPeriod() = Period(

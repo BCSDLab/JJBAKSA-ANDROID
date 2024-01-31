@@ -2,7 +2,6 @@ package com.jjbaksa.jjbaksa.ui.mainpage.home.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.jjbaksa.domain.model.mainpage.JjCategory
 import com.jjbaksa.domain.model.mainpage.UserLocation
 import com.jjbaksa.domain.repository.HomeRepository
 import com.jjbaksa.domain.usecase.shop.ShopUseCase
@@ -10,11 +9,14 @@ import com.jjbaksa.domain.usecase.user.UserUseCase
 import com.jjbaksa.jjbaksa.base.BaseViewModel
 import com.jjbaksa.jjbaksa.model.ShopContent
 import com.jjbaksa.jjbaksa.util.MyInfo
-import com.jjbaksa.jjbaksa.util.SingleLiveEvent
 import com.jjbaksa.jjbaksa.util.toShopContent
 import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -26,12 +28,16 @@ class HomeViewModel @Inject constructor(
 ) : BaseViewModel() {
     val location = MutableLiveData<UserLocation>()
     val lastLocation = MutableLiveData<UserLocation>()
-    val category = SingleLiveEvent<JjCategory>()
+
+    val selectedNearbyStoreCategory = MutableLiveData<Boolean>()
+    val selectedFriendCategory = MutableLiveData<Boolean>()
+    val selectedBookmarkCategory = MutableLiveData<Boolean>()
+
     val moveCamera = MutableLiveData<Boolean>(true)
     val searchCurrentPosition = MutableLiveData<Boolean>()
 
-    private val _mapShops = SingleLiveEvent<List<ShopContent>>()
-    val mapShops: SingleLiveEvent<List<ShopContent>> get() = _mapShops
+    private val _mapShops = MutableSharedFlow<List<ShopContent>>()
+    val mapShops: SharedFlow<List<ShopContent>> get() = _mapShops.asSharedFlow()
 
     fun setLatLng(lat: Double, lng: Double) {
         location.value = UserLocation(lat, lng)
@@ -39,10 +45,6 @@ class HomeViewModel @Inject constructor(
 
     fun setLastLocation(lat: Double, lng: Double) {
         lastLocation.value = UserLocation(lat, lng)
-    }
-
-    fun setCategory(category: JjCategory) {
-        this.category.value = category
     }
 
     fun getMapShop(
@@ -57,7 +59,7 @@ class HomeViewModel @Inject constructor(
                 toastMsg.postValue(msg)
             }.collect {
                 it.onSuccess {
-                    _mapShops.value = it.shopsMapsContent.map { it.toShopContent() }
+                    _mapShops.emit(it.shopsMapsContent.map { it.toShopContent() })
                 }
             }
         }
@@ -93,6 +95,12 @@ class HomeViewModel @Inject constructor(
                     MyInfo.nickname = user.kakaoAccount?.profile?.nickname.toString()
                 }
             }
+        }
+    }
+
+    fun clearDataStoreNoneAutoLogin() {
+        runBlocking {
+            userUseCase.clearDataStoreNoneAutoLogin()
         }
     }
 }

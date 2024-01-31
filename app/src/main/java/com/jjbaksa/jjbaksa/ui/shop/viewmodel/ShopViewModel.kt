@@ -156,7 +156,7 @@ class ShopViewModel @Inject constructor(
 
     fun getShopRates(placeId: String) {
         viewModelScope.launch(ceh) {
-            shopUseCase.getShopRates(placeId) { msg ->
+            shopUseCase.getShopsRates(placeId) { msg ->
                 toastMsg.postValue(msg)
             }.collect {
                 it.onSuccess {

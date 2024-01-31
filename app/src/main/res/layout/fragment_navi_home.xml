@@ -8,6 +8,10 @@
         <variable
             name="view"
             type="com.jjbaksa.jjbaksa.ui.mainpage.home.NaviHomeFragment" />
+
+        <variable
+            name="vm"
+            type="com.jjbaksa.jjbaksa.ui.mainpage.home.viewmodel.HomeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -87,31 +91,37 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
+                android:background="?android:attr/selectableItemBackground"
                 android:drawableStart="@drawable/ic_near_store"
                 android:drawablePadding="10dp"
                 android:text="@string/nearby_restaurant"
-                android:textColor="@color/color_666666"
-                android:textSize="14sp" />
+                android:textColor="@{vm.selectedNearbyStoreCategory ? @color/color_ff7f23 : @color/color_666666}"
+                android:textSize="14sp"
+                app:iconTint="@{vm.selectedNearbyStoreCategory}" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/category_friend_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
+                android:background="?android:attr/selectableItemBackground"
                 android:drawableStart="@drawable/ic_friend"
                 android:drawablePadding="10dp"
                 android:text="@string/friend_restaurant"
-                android:textColor="@color/color_666666"
+                android:textColor="@{vm.selectedFriendCategory ? @color/color_ff7f23 : @color/color_666666}"
+                app:iconTint="@{vm.selectedFriendCategory}"
                 android:textSize="14sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/category_bookmark_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
                 android:drawableStart="@drawable/ic_bookmark"
                 android:drawablePadding="16dp"
                 android:text="@string/bookmark_restaurant"
-                android:textColor="@color/color_666666"
+                android:textColor="@{vm.selectedBookmarkCategory ? @color/color_ff7f23 : @color/color_666666}"
+                app:iconTint="@{vm.selectedBookmarkCategory}"
                 android:textSize="14sp" />
 
         </LinearLayout>

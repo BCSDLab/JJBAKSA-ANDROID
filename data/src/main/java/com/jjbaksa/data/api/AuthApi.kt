@@ -1,34 +1,36 @@
 package com.jjbaksa.data.api
 
+import com.jjbaksa.data.model.follower.FollowReq
 import com.jjbaksa.data.model.follower.FollowRequestResp
 import com.jjbaksa.data.model.follower.FollowResp
-import com.jjbaksa.data.model.follower.FollowReq
-import com.jjbaksa.data.model.follower.FollowersListResp
 import com.jjbaksa.data.model.follower.FollowerListResp
 import com.jjbaksa.data.model.follower.FollowerReviewShopsResp
+import com.jjbaksa.data.model.follower.FollowersListResp
 import com.jjbaksa.data.model.inquiry.InquiryContentResp
 import com.jjbaksa.data.model.inquiry.InquiryResp
-import com.jjbaksa.data.model.shop.ShopsMapsResp
-import com.jjbaksa.data.model.review.MyReviewShopsResp
-import com.jjbaksa.data.model.review.ReviewShopLastDateResp
+import com.jjbaksa.data.model.pin.RateDto
+import com.jjbaksa.data.model.pin.ScrapDto
 import com.jjbaksa.data.model.pin.ShopDetailResp
+import com.jjbaksa.data.model.review.MyReviewShopsResp
 import com.jjbaksa.data.model.review.ReviewCountResp
 import com.jjbaksa.data.model.review.ReviewShopDetailResp
+import com.jjbaksa.data.model.review.ReviewShopLastDateResp
 import com.jjbaksa.data.model.review.ReviewShopResp
 import com.jjbaksa.data.model.scrap.AddShopScrapBodyReq
 import com.jjbaksa.data.model.scrap.AddShopScrapResp
 import com.jjbaksa.data.model.scrap.ScrapsResp
 import com.jjbaksa.data.model.scrap.ShopScrapResp
 import com.jjbaksa.data.model.search.LocationBody
+import com.jjbaksa.data.model.shop.ShopsMapsResp
 import com.jjbaksa.data.model.user.UserListResp
-import retrofit2.http.GET
 import com.jjbaksa.data.model.user.UserResp
-import okhttp3.MultipartBody
-import retrofit2.Response
 import com.jjbaksa.domain.model.user.PasswordAndNicknameReq
 import com.jjbaksa.domain.model.user.WithdrawalReasonReq
+import okhttp3.MultipartBody
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
+import retrofit2.http.GET
 import retrofit2.http.HTTP
 import retrofit2.http.Multipart
 import retrofit2.http.PATCH
@@ -63,6 +65,14 @@ interface AuthApi {
     suspend fun getShopDetail(
         @Path("place_id") placeId: String
     ): Response<ShopDetailResp>
+    @GET("shops/rates/{place_id}")
+    suspend fun getShopsRates(
+        @Path("place_id") placeId: String
+    ): Response<RateDto>
+    @GET("shops/scraps/{place_id}")
+    suspend fun getShopsScraps(
+        @Path("place_id") placeId: String
+    ): Response<ScrapDto>
     @POST("shops/maps")
     suspend fun getShopsMaps(
         @Query("options_friend") optionsFriend: Int,

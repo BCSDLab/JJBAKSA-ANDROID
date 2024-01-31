@@ -22,6 +22,7 @@
         android:roundIcon="@mipmap/ic_main_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.JJBAKSAAOS"
+        android:usesCleartextTraffic="true"
         tools:targetApi="33">
         <activity
             android:name=".ui.follower.FollowerProfileActivity"

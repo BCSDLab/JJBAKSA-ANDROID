@@ -15,9 +15,10 @@ import com.jjbaksa.domain.model.shop.ShopInfo
 import com.jjbaksa.domain.model.shop.ShopRates
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
+import kotlin.math.round
 
 class ShopRepositoryImpl @Inject constructor(
-    private val shopRemoteDataSource: ShopRemoteDataSource
+    private val shopRemoteDataSource: ShopRemoteDataSource,
 ) : ShopRepository {
     override suspend fun getShopsMaps(
         optionsFriend: Int,
@@ -25,7 +26,7 @@ class ShopRepositoryImpl @Inject constructor(
         optionsScrap: Int,
         lat: Double,
         lng: Double,
-        onError: (String) -> Unit
+        onError: (String) -> Unit,
     ): Flow<Result<ShopsMaps>> {
         return apiCall(
             call = {
@@ -47,7 +48,11 @@ class ShopRepositoryImpl @Inject constructor(
             }
         )
     }
-    override suspend fun getShopDetail(placeId: String, onError: (String) -> Unit): Flow<Result<ShopDetail>> {
+
+    override suspend fun getShopDetail(
+        placeId: String,
+        onError: (String) -> Unit,
+    ): Flow<Result<ShopDetail>> {
         return apiCall(
             call = {
                 shopRemoteDataSource.getShopDetail(placeId)
@@ -64,7 +69,33 @@ class ShopRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun getShopInfo(placeId: String, onError: (String) -> Unit): Flow<Result<ShopInfo>> {
+    override suspend fun getShopsRates(
+        placeId: String,
+        onError: (String) -> Unit,
+    ): Flow<Result<Float>> {
+        return apiCall(
+            call = {
+                shopRemoteDataSource.getShopsRates(placeId)
+            },
+            mapper = {
+                if (it.isSuccessful) {
+                    if (it.body()?.totalRating == 0 || it.body()?.ratingCount == 0) 0f
+                    else round(it.body()?.totalRating!! / it.body()?.ratingCount!!.toFloat() * 10).div(
+                        10
+                    )
+                } else {
+                    val errorResult = RespMapper.errorMapper(it.errorBody()?.string() ?: "")
+                    onError(errorResult.errorMessage)
+                    0f
+                }
+            }
+        )
+    }
+
+    override suspend fun getShopInfo(
+        placeId: String,
+        onError: (String) -> Unit,
+    ): Flow<Result<ShopInfo>> {
         return apiCall(
             call = {
                 shopRemoteDataSource.getShopInfo(placeId)
@@ -81,7 +112,30 @@ class ShopRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun getShopRates(placeId: String, onError: (String) -> Unit): Flow<Result<ShopRates>> {
+    override suspend fun getShopsScraps(
+        placeId: String,
+        onError: (String) -> Unit,
+    ): Flow<Result<Long>> {
+        return apiCall(
+            call = {
+                shopRemoteDataSource.getShopsScraps(placeId)
+            },
+            mapper = {
+                if (it.isSuccessful) {
+                    it.body()?.scrapId ?: 0L
+                } else {
+                    val errorResult = RespMapper.errorMapper(it.errorBody()?.string() ?: "")
+                    onError(errorResult.errorMessage)
+                    0L
+                }
+            }
+        )
+    }
+
+    override suspend fun getShopRates(
+        placeId: String,
+        onError: (String) -> Unit,
+    ): Flow<Result<ShopRates>> {
         return apiCall(
             call = {
                 shopRemoteDataSource.getShopRates(placeId)
