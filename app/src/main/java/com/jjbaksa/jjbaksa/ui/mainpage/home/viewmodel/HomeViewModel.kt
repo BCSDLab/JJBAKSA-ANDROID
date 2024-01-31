@@ -57,7 +57,8 @@ class HomeViewModel @Inject constructor(
                 toastMsg.postValue(msg)
             }.collect {
                 it.onSuccess {
-                    _mapShops.emit(it.shopsMapsContent.map { it.toShopContent() })
+                    val newShops = it.shopsMapsContent
+                    _mapShops.emit(newShops.map { it.toShopContent() })
                 }
             }
         }

@@ -4,5 +4,5 @@ import com.jjbaksa.domain.model.shop.ShopsMapsContent
 import com.jjbaksa.jjbaksa.model.ShopContent
 
 fun ShopsMapsContent.toShopContent() = ShopContent(
-    placeId = placeId, name = name, lat = lat, lng = lng, photo = photo[0]
+    placeId = placeId, name = name, lat = lat, lng = lng, photo = if (photo.isEmpty()) "" else photo[0]
 )
