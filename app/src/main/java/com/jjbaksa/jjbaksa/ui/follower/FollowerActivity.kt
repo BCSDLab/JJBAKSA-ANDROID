@@ -2,6 +2,7 @@ package com.jjbaksa.jjbaksa.ui.follower
 
 import android.content.Intent
 import android.view.View
+import android.widget.ImageView
 import com.jjbaksa.jjbaksa.R
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,11 +26,6 @@ class FollowerActivity : BaseActivity<ActivityFollowerBinding>() {
     private lateinit var followRequestAdapter: FollowRequestAdapter
     private lateinit var userAdapter: FollowerAdapter
     private lateinit var recentlyActiveAdapter: RecentlyActiveAdapter
-    private lateinit var linearLayoutManager: LinearLayoutManager
-    private lateinit var requestLinearLayoutManager: LinearLayoutManager
-    private lateinit var userLinearLayoutManager: LinearLayoutManager
-    private lateinit var followRequestLinearLayoutManager: LinearLayoutManager
-    private lateinit var recentlyActiveLinearLayoutManager: LinearLayoutManager
     private val viewModel: FollowerViewModel by viewModels()
 
     override fun initView() {
@@ -58,40 +54,20 @@ class FollowerActivity : BaseActivity<ActivityFollowerBinding>() {
 
         recentlyActiveAdapter = RecentlyActiveAdapter()
 
-        linearLayoutManager = LinearLayoutManager(this)
-        requestLinearLayoutManager = LinearLayoutManager(this)
-        userLinearLayoutManager = LinearLayoutManager(this)
-        followRequestLinearLayoutManager = LinearLayoutManager(this)
-        recentlyActiveLinearLayoutManager = LinearLayoutManager(this)
-        recentlyActiveLinearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
-
-        binding.rvAllFollower.apply {
-            layoutManager = linearLayoutManager
-            adapter = followerAdapter
-        }
-        binding.rvRequestFollow.apply {
-            layoutManager = requestLinearLayoutManager
-            adapter = followRequestAdapter
-        }
-
-        binding.rvSearchResult.apply {
-            layoutManager = userLinearLayoutManager
-            adapter = userAdapter
-        }
-
-        binding.rvRecentlyActiveFollower.apply {
-            layoutManager = recentlyActiveLinearLayoutManager
-            adapter = recentlyActiveAdapter
-        }
+        binding.rvAllFollower.adapter = followerAdapter
+        binding.rvRequestFollow.adapter = followRequestAdapter
+        binding.rvSearchResult.adapter = userAdapter
+        binding.rvRecentlyActiveFollower.adapter = recentlyActiveAdapter
     }
 
     override fun subscribe() {
         binding.rvAllFollower.addOnScrollListener(
             object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    val itemCount = linearLayoutManager.itemCount
+                    val itemCount = binding.rvAllFollower.layoutManager?.itemCount ?: 0
                     val lastPosition =
-                        linearLayoutManager.findLastCompletelyVisibleItemPosition()
+                        binding.rvAllFollower.layoutManager?.let { it as LinearLayoutManager }
+                            ?.findLastCompletelyVisibleItemPosition() ?: 0
 
                     if (lastPosition != -1 && lastPosition >= (itemCount - 1) && viewModel.followerHasMore.value == true) {
                         viewModel.followerHasMore.value = false
@@ -107,9 +83,10 @@ class FollowerActivity : BaseActivity<ActivityFollowerBinding>() {
         binding.rvRequestFollow.addOnScrollListener(
             object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    val itemCount = requestLinearLayoutManager.itemCount
+                    val itemCount = binding.rvRequestFollow.layoutManager?.itemCount ?: 0
                     val lastPosition =
-                        requestLinearLayoutManager.findLastCompletelyVisibleItemPosition()
+                        binding.rvAllFollower.layoutManager?.let { it as LinearLayoutManager }
+                            ?.findLastCompletelyVisibleItemPosition() ?: 0
 
                     if (lastPosition != -1 && lastPosition >= (itemCount - 1) && viewModel.receivedFollowRequestHasMore.value == true && viewModel.sendFollowRequestHasMore.value == true) {
                         viewModel.receivedFollowRequestHasMore.value = false
@@ -130,9 +107,10 @@ class FollowerActivity : BaseActivity<ActivityFollowerBinding>() {
         binding.rvSearchResult.addOnScrollListener(
             object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    val itemCount = userLinearLayoutManager.itemCount
+                    val itemCount = binding.rvSearchResult.layoutManager?.itemCount ?: 0
                     val lastPosition =
-                        userLinearLayoutManager.findLastCompletelyVisibleItemPosition()
+                        binding.rvAllFollower.layoutManager?.let { it as LinearLayoutManager }
+                            ?.findLastCompletelyVisibleItemPosition() ?: 0
 
                     if (lastPosition != -1 && lastPosition >= (itemCount - 1)) {
                         viewModel.getUserSearch(
@@ -148,9 +126,10 @@ class FollowerActivity : BaseActivity<ActivityFollowerBinding>() {
         binding.rvRecentlyActiveFollower.addOnScrollListener(
             object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    val itemCount = recentlyActiveLinearLayoutManager.itemCount
+                    val itemCount = binding.rvRecentlyActiveFollower.layoutManager?.itemCount ?: 0
                     val lastPosition =
-                        recentlyActiveLinearLayoutManager.findLastCompletelyVisibleItemPosition()
+                        binding.rvAllFollower.layoutManager?.let { it as LinearLayoutManager }
+                            ?.findLastCompletelyVisibleItemPosition() ?: 0
 
                     if (lastPosition != -1 && lastPosition >= (itemCount - 1) && viewModel.recentlyActiveHasMore.value == true) {
                         viewModel.recentlyActiveHasMore.value = false
@@ -242,6 +221,19 @@ class FollowerActivity : BaseActivity<ActivityFollowerBinding>() {
                 }
             }
         }
+
+        binding.clRecentlyActiveFollower.setOnClickListener {
+            expandView(binding.rvRecentlyActiveFollower, binding.ivRecentlyActiveExpand)
+        }
+        binding.clAllFollower.setOnClickListener {
+            expandView(binding.rvAllFollower, binding.ivAllFollowerExpand)
+        }
+        binding.clRequestFollow.setOnClickListener {
+            expandView(binding.rvRequestFollow, binding.ivRequestFollowExpand)
+        }
+        binding.clSearchResult.setOnClickListener {
+            expandView(binding.rvSearchResult, binding.ivSearchExpand)
+        }
     }
 
     private fun toggleFollow(user: User) {
@@ -261,5 +253,15 @@ class FollowerActivity : BaseActivity<ActivityFollowerBinding>() {
             putExtra("followerCount", user.userCountResponse.friendCount)
         }
         startActivity(intent)
+    }
+
+    private fun expandView(view: View, ivExpand: ImageView) {
+        if (view.visibility == View.VISIBLE) {
+            view.visibility = View.GONE
+            ivExpand.setImageResource(R.drawable.sel_jj_check_box_more_info_opened)
+        } else {
+            view.visibility = View.VISIBLE
+            ivExpand.setImageResource(R.drawable.sel_jj_check_box_more_info_closed)
+        }
     }
 }
