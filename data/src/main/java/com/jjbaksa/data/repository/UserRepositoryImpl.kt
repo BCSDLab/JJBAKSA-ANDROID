@@ -1,6 +1,7 @@
 package com.jjbaksa.data.repository
 
 import android.net.Uri
+import android.util.Log
 import com.jjbaksa.data.datasource.local.UserLocalDataSource
 import com.jjbaksa.data.datasource.remote.UserRemoteDataSource
 import com.jjbaksa.data.mapper.FormDataUtil
@@ -21,7 +22,9 @@ import com.jjbaksa.domain.model.user.User
 import com.jjbaksa.domain.model.user.UserList
 import com.jjbaksa.domain.model.user.WithdrawalReasonReq
 import com.jjbaksa.domain.repository.UserRepository
+import com.kakao.sdk.user.UserApiClient
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
@@ -32,8 +35,20 @@ class UserRepositoryImpl @Inject constructor(
         runCatching {
             userRemoteDataSource.postLoginSNS(token, snsType).toLoginResult()
         }.onSuccess {
+            userLocalDataSource.saveAutoLogin(true)
             userLocalDataSource.saveAccessToken(it.accessToken)
             userLocalDataSource.saveRefreshToken(it.refreshToken)
+            UserApiClient.instance.me { user, error ->
+                if (error != null) {
+                    Log.e("로그", "error $error")
+                } else if (user != null) {
+                    runBlocking {
+                        userLocalDataSource.saveAccount(user.kakaoAccount?.email.toString())
+                        userLocalDataSource.saveProfileImage(user.kakaoAccount?.profile?.thumbnailImageUrl.toString())
+                        userLocalDataSource.saveNickname(user.kakaoAccount?.profile?.nickname.toString())
+                    }
+                }
+            }
         }
 
     override suspend fun getUserMe(): Flow<Result<User>> {
@@ -42,10 +57,14 @@ class UserRepositoryImpl @Inject constructor(
             remoteData = {
                 if (it.isSuccessful) {
                     val user = it.body()?.toUser() ?: User()
-                    userLocalDataSource.saveNickname(user.nickname)
+                    if (userLocalDataSource.getNickname().isEmpty()) {
+                        userLocalDataSource.saveNickname(user.nickname)
+                    }
+                    if (userLocalDataSource.getProfileImage().isEmpty()) {
+                        userLocalDataSource.saveProfileImage(user.profileImage.url.toString())
+                    }
                     userLocalDataSource.saveFollowers(user.userCountResponse.friendCount)
                     userLocalDataSource.saveReviews(user.userCountResponse.reviewCount)
-                    userLocalDataSource.saveProfileImage(user.profileImage.url.toString())
                 }
             },
             mapper = {
@@ -320,12 +339,6 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun logout() {
         userLocalDataSource.clearDataStore()
-    }
-
-    override suspend fun clearDataStoreNoneAutoLogin() {
-        if (!userLocalDataSource.getAutoLoginFlag()) {
-            userLocalDataSource.clearDataStore()
-        }
     }
 
     override fun getAutoLoginFlag(): Boolean {

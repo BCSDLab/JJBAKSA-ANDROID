@@ -10,14 +10,12 @@ import com.jjbaksa.jjbaksa.base.BaseViewModel
 import com.jjbaksa.jjbaksa.model.ShopContent
 import com.jjbaksa.jjbaksa.util.MyInfo
 import com.jjbaksa.jjbaksa.util.toShopContent
-import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -76,31 +74,16 @@ class HomeViewModel @Inject constructor(
                     MyInfo.reviews = homeRepository.getMyInfoReviews()
                     MyInfo.profileImage = homeRepository.getMyInfoProfileImage()
                     MyInfo.token = homeRepository.getMyInfoToken()
-                    getKakaoInfo()
-                }
-            }
-        }
-    }
-
-    fun getKakaoInfo() {
-        UserApiClient.instance.me { user, error ->
-            if (error != null) {
-                Timber.tag("kakao_user_error").e(error)
-            } else if (user != null) {
-                if (homeRepository.getMyInfoAccount().isEmpty()) MyInfo.account =
-                    user.kakaoAccount?.email.toString()
-                if (homeRepository.getMyInfoProfileImage().isEmpty()) MyInfo.profileImage =
-                    user.kakaoAccount?.profile?.thumbnailImageUrl.toString()
-                if (homeRepository.getMyInfoNickname().isEmpty()) {
-                    MyInfo.nickname = user.kakaoAccount?.profile?.nickname.toString()
                 }
             }
         }
     }
 
     fun clearDataStoreNoneAutoLogin() {
-        runBlocking {
-            userUseCase.clearDataStoreNoneAutoLogin()
+        if (!homeRepository.getMyInfoAutoLogin()) {
+            runBlocking {
+                userUseCase.logout()
+            }
         }
     }
 }
