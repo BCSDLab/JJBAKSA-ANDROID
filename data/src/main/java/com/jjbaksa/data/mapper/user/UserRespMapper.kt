@@ -15,6 +15,7 @@ fun UserResp.toUser() = User(
     id = id ?: 0,
     account = account ?: "",
     nickname = nickname ?: "",
+    followedType = followedType ?: "NONE",
     email = email ?: "",
     profileImage = profileImage?.toUserProfileImage() ?: UserProfileImage(),
     userCountResponse = userCountResponse?.toUserCount() ?: UserCount(),

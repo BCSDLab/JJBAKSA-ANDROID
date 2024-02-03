@@ -5,6 +5,6 @@ import com.jjbaksa.domain.model.user.User
 
 data class Follow(
     @SerializedName("follower")
-    val follower: User? = User()
+    val follower: User = User()
 
 )

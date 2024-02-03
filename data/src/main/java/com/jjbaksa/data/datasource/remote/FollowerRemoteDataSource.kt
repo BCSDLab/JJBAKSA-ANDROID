@@ -37,10 +37,6 @@ class FollowerRemoteDataSource @Inject constructor(
         return authApi.followRequestAccept(userId)
     }
 
-    override suspend fun followRequestCheck(page: Int?, pageSize: Int?): Response<FollowersListResp> {
-        return authApi.followRequestReceived(page, pageSize)
-    }
-
     override suspend fun getRecentlyActiveFollowers(pageSize: Int?, cursor: Long?): Response<FollowerListResp> {
         return authApi.getRecentlyActiveFollowers(pageSize, cursor)
     }
@@ -61,11 +57,15 @@ class FollowerRemoteDataSource @Inject constructor(
         return authApi.followRequestReject(userId)
     }
 
-    override suspend fun followRequestReceived(page: Int?, pageSize: Int?): Response<FollowersListResp> {
-        return authApi.followRequestReceived(page, pageSize)
+    override suspend fun getBeRequestedFollowers(page: Int?, pageSize: Int?): Response<FollowersListResp> {
+        return authApi.getBeRequestedFollowers(page, pageSize)
     }
 
-    override suspend fun followRequestSend(page: Int?, pageSize: Int?): Response<FollowersListResp> {
-        return authApi.followRequestSend(page, pageSize)
+    override suspend fun getRequestedFollowers(page: Int?, pageSize: Int?): Response<FollowersListResp> {
+        return authApi.getRequestedFollowers(page, pageSize)
+    }
+
+    override suspend fun followRequestCancel(request_id: String): Response<Unit> {
+        return authApi.followRequestCancel(request_id)
     }
 }

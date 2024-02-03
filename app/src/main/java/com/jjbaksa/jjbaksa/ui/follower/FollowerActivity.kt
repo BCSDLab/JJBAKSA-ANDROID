@@ -31,8 +31,8 @@ class FollowerActivity : BaseActivity<ActivityFollowerBinding>() {
     override fun initView() {
         binding.lifecycleOwner = this
         viewModel.getFollower(null, 20)
-        viewModel.followRequestReceived(null, 20)
-        viewModel.followRequestSend(null, 20)
+        viewModel.getBeRequestedFollowers(null, 20)
+        viewModel.getRequestedFollowers(null, 20)
         viewModel.getRecentlyActiveFollowers(20, null)
 
         followerAdapter = FollowerAdapter({
@@ -91,11 +91,11 @@ class FollowerActivity : BaseActivity<ActivityFollowerBinding>() {
                     if (lastPosition != -1 && lastPosition >= (itemCount - 1) && viewModel.receivedFollowRequestHasMore.value == true && viewModel.sendFollowRequestHasMore.value == true) {
                         viewModel.receivedFollowRequestHasMore.value = false
                         viewModel.sendFollowRequestHasMore.value = false
-                        viewModel.followRequestReceived(
+                        viewModel.getBeRequestedFollowers(
                             null,
                             20
                         )
-                        viewModel.followRequestSend(
+                        viewModel.getRequestedFollowers(
                             null,
                             20
                         )
@@ -161,29 +161,19 @@ class FollowerActivity : BaseActivity<ActivityFollowerBinding>() {
 
         viewModel.followerList.observe(this) {
             binding.loadingView.setLoading(false)
-            if (it.content.isEmpty() && followerAdapter.currentList.isEmpty()) {
-                followerAdapter.submitList(emptyList())
-            } else {
-                followerAdapter.submitList(followerAdapter.currentList + it.content)
-            }
+            followerAdapter.submitList(followerAdapter.currentList + it.content)
+
+
         }
 
-        viewModel.receivedFollowRequestList.observe(this) {
+        viewModel.beRequestedFollowers.observe(this) {
             binding.loadingView.setLoading(false)
-            if (it.content.isEmpty() && followRequestAdapter.currentList.isEmpty()) {
-                followRequestAdapter.submitList(emptyList())
-            } else {
-                followRequestAdapter.submitList(followRequestAdapter.currentList + it.content)
-            }
+            followRequestAdapter.submitList(followRequestAdapter.currentList + it.content)
         }
 
-        viewModel.sendFollowRequestList.observe(this) {
+        viewModel.requestFollowers.observe(this) {
             binding.loadingView.setLoading(false)
-            if (it.content.isEmpty() && followRequestAdapter.currentList.isEmpty()) {
-                followRequestAdapter.submitList(emptyList())
-            } else {
-                followRequestAdapter.submitList(followRequestAdapter.currentList + it.content)
-            }
+            followRequestAdapter.submitList(followRequestAdapter.currentList + it.content)
         }
 
         viewModel.userList.observe(this) {
@@ -197,11 +187,7 @@ class FollowerActivity : BaseActivity<ActivityFollowerBinding>() {
 
         viewModel.recentlyActiveList.observe(this) {
             binding.loadingView.setLoading(false)
-            if (it.content.isEmpty() && recentlyActiveAdapter.currentList.isEmpty()) {
-                recentlyActiveAdapter.submitList(emptyList())
-            } else {
-                recentlyActiveAdapter.submitList(recentlyActiveAdapter.currentList + it.content)
-            }
+            recentlyActiveAdapter.submitList(recentlyActiveAdapter.currentList + it.content)
         }
 
         viewModel.cursor.observe(this) {

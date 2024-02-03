@@ -18,13 +18,13 @@ interface FollowerDataSource {
 
     suspend fun followRequest(req: FollowReq): Response<FollowRequestResp>
     suspend fun followerDelete(req: FollowReq): Response<Unit>
-    suspend fun followRequestCheck(page: Int?, pageSize: Int?): Response<FollowersListResp>
     suspend fun getFollowerReviewCount(id: Long): Response<ReviewCountResp>
     suspend fun getReviewedShops(id: Long): Response<ReviewShopResp>
     suspend fun getShopReview(id: Long, placeId: String): Response<FollowerReviewShopsResp>
     suspend fun followRequestAccept(userId: Long): Response<FollowResp>
     suspend fun followRequestReject(userId: Long): Response<Unit>
-    suspend fun followRequestReceived(page: Int?, pageSize: Int?): Response<FollowersListResp>
-    suspend fun followRequestSend(page: Int?, pageSize: Int?): Response<FollowersListResp>
+    suspend fun getBeRequestedFollowers(page: Int?, pageSize: Int?): Response<FollowersListResp>
+    suspend fun getRequestedFollowers(page: Int?, pageSize: Int?): Response<FollowersListResp>
     suspend fun getRecentlyActiveFollowers(pageSize: Int?, cursor: Long?): Response<FollowerListResp>
+    suspend fun followRequestCancel(request_id: String): Response<Unit>
 }

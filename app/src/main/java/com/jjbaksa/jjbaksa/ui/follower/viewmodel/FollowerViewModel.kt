@@ -1,5 +1,6 @@
 package com.jjbaksa.jjbaksa.ui.follower.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -24,12 +25,14 @@ class FollowerViewModel @Inject constructor(
     private val _followerList = SingleLiveEvent<FollowerList>()
     val followerList: SingleLiveEvent<FollowerList> get() = _followerList
 
-    private val _UserList = MutableLiveData<UserList>()
-    val userList: MutableLiveData<UserList> get() = _UserList
-    private val _receivedFollowRequestList = SingleLiveEvent<Followers>()
-    val receivedFollowRequestList: LiveData<Followers> get() = _receivedFollowRequestList
-    private val _sendFollowRequestList = SingleLiveEvent<Followers>()
-    val sendFollowRequestList: LiveData<Followers> get() = _sendFollowRequestList
+    private val _userList = MutableLiveData<UserList>()
+    val userList: MutableLiveData<UserList> get() = _userList
+
+    private val _beRequestedFollowers = SingleLiveEvent<Followers>()
+    val beRequestedFollowers: LiveData<Followers> get() = _beRequestedFollowers
+
+    private val _requestFollowers = SingleLiveEvent<Followers>()
+    val requestFollowers: LiveData<Followers> get() = _requestFollowers
     private val _recentlyActiveList = SingleLiveEvent<FollowerList>()
     val recentlyActiveList: SingleLiveEvent<FollowerList> get() = _recentlyActiveList
 
@@ -37,7 +40,6 @@ class FollowerViewModel @Inject constructor(
     val receivedFollowRequestHasMore = SingleLiveEvent<Boolean>()
     val sendFollowRequestHasMore = SingleLiveEvent<Boolean>()
     val recentlyActiveHasMore = SingleLiveEvent<Boolean>()
-    val unfollowedUsers = mutableListOf<String>()
     val searchKeyword = SingleLiveEvent<String>()
     val cursor = SingleLiveEvent<UserCursor>()
     fun getFollower(cursor: String?, pageSize: Int) {
@@ -45,6 +47,9 @@ class FollowerViewModel @Inject constructor(
             followerUseCase.getFollower(cursor, pageSize).collect {
                 it.onSuccess {
                     _followerList.value = it
+                    _followerList.value?.content?.forEach { item ->
+                        item.followedType = "FOLLOWED"
+                    }
                     followerHasMore.value = it.content.count() == 20
                 }
             }
@@ -55,7 +60,8 @@ class FollowerViewModel @Inject constructor(
         viewModelScope.launch(ceh) {
             followerUseCase.followerDelete(userAccount).collect {
                 it.onSuccess {
-                    unfollowedUsers.add(userAccount)
+                    (_followerList.value?.content as MutableList)
+                        .removeIf { it.account == userAccount }
                 }
             }
         }
@@ -65,8 +71,18 @@ class FollowerViewModel @Inject constructor(
         viewModelScope.launch(ceh) {
             followerUseCase.followRequest(userAccount).collect {
                 it.onSuccess {
-                    if (unfollowedUsers.contains(userAccount)) {
-                        unfollowedUsers.remove(userAccount)
+                    (_requestFollowers.value?.content as MutableList).add(
+                        FollowContent(
+                            follower = it.user,
+                            id = it.id,
+                            user = it.follower
+                        )
+                    )
+                    _requestFollowers.value?.content?.forEach { item ->
+                        item.user.followedType = "REQUEST_SENT"
+                    }
+                    _requestFollowers.value?.content?.forEach { item ->
+                        Log.d("FollowerViewModel", "followRequest: ${item.user.account}")
                     }
                 }
             }
@@ -86,27 +102,29 @@ class FollowerViewModel @Inject constructor(
         viewModelScope.launch(ceh) {
             followerUseCase.followRequestAccept(userId).collect {
                 it.onSuccess {
-                    unfollowedUsers.remove(userId.toString())
+                    (_beRequestedFollowers.value?.content as MutableList).removeIf {
+                        it.follower.id == userId
+                    }
+                    (_followerList.value?.content as MutableList).add(it.follower)
                 }
             }
         }
     }
 
-    fun followRequestReceived(page: Int?, pageSize: Int?) {
-
+    fun getBeRequestedFollowers(page: Int?, pageSize: Int?) {
         viewModelScope.launch(ceh) {
-            followerUseCase.followRequestRecived(page, pageSize).collect {
+            followerUseCase.getBeRequestedFollowers(page, pageSize).collect {
                 it.onSuccess {
-                    _receivedFollowRequestList.value = it
+                    _beRequestedFollowers.value = it
                     receivedFollowRequestHasMore.value = it.content.count() == 20
                 }
             }
         }
     }
 
-    fun followRequestSend(page: Int?, pageSize: Int?) {
+    fun getRequestedFollowers(page: Int?, pageSize: Int?) {
         viewModelScope.launch(ceh) {
-            followerUseCase.followRequestSend(page, pageSize).collect {
+            followerUseCase.getRequestedFollowers(page, pageSize).collect {
                 it.onSuccess {
                     val list = mutableListOf<FollowContent>()
                     it.content.forEach { item ->
@@ -118,7 +136,7 @@ class FollowerViewModel @Inject constructor(
                             )
                         )
                     }
-                    _sendFollowRequestList.value = Followers(list)
+                    _requestFollowers.value = Followers(list)
                     sendFollowRequestHasMore.value = it.content.count() == 20
                 }
             }
@@ -129,9 +147,10 @@ class FollowerViewModel @Inject constructor(
         viewModelScope.launch(ceh) {
             userUseCase.getUserSearch(keyword, pageSize, cursor).collect {
                 it.onSuccess {
-                    _UserList.value = it
+                    _userList.value = it
                 }
                 searchKeyword.value = keyword
+
             }
         }
     }
@@ -142,6 +161,20 @@ class FollowerViewModel @Inject constructor(
                 it.onSuccess {
                     _recentlyActiveList.value = it
                     recentlyActiveHasMore.value = it.content.count() == 20
+                }
+            }
+        }
+    }
+
+    fun followRequestCancel(request_id: Long) {
+        viewModelScope.launch(ceh) {
+            followerUseCase.followRequestCancel(request_id).collect {
+                it.onSuccess {
+                    _requestFollowers.value = Followers((_requestFollowers.value?.content as MutableList)
+                        .filter { it.user.id != request_id })
+                    _requestFollowers.value?.content?.forEach { item ->
+                        Log.d("followRequestCancel", "followRequest: ${item.user.account}")
+                    }
                 }
             }
         }

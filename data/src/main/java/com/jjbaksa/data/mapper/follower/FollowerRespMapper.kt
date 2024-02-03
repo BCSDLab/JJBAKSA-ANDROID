@@ -10,19 +10,20 @@ import com.jjbaksa.domain.model.follower.Follow
 import com.jjbaksa.domain.model.follower.FollowRequest
 import com.jjbaksa.domain.model.follower.Followers
 import com.jjbaksa.domain.model.follower.FollowerList
+import com.jjbaksa.domain.model.user.User
 
 fun FollowerListResp.toFollower() = FollowerList(
     content = content?.map { it.toUser() }.orEmpty()
 )
 
 fun FollowRequestResp.toFollowRequest() = FollowRequest(
-    follower = follower?.toUser(),
-    user = user?.toUser(),
+    follower = follower?.toUser() ?: User(),
+    user = user?.toUser() ?: User(),
     id = id
 )
 
 fun FollowResp.toFollow() = Follow(
-    follower = follower?.toUser()
+    follower = follower?.toUser() ?: User()
 )
 
 fun FollowersListResp.tofollowRequestRecived() = Followers(

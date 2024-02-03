@@ -213,7 +213,7 @@ interface AuthApi {
     ): Response<Unit>
 
     @GET("follow/requests/receive")
-    suspend fun followRequestReceived(
+    suspend fun getBeRequestedFollowers(
         @Query("page") page: Int?,
         @Query("pageSize") pageSize: Int?
     ): Response<FollowersListResp>
@@ -236,7 +236,7 @@ interface AuthApi {
     ): Response<FollowerReviewShopsResp>
 
     @GET("follow/requests/send")
-    suspend fun followRequestSend(
+    suspend fun getRequestedFollowers(
         @Query("page") page: Int?,
         @Query("pageSize") pageSize: Int?
     ): Response<FollowersListResp>
@@ -246,4 +246,9 @@ interface AuthApi {
         @Query("pageSize") id: Int?,
         @Query("cursor") cursor: Long?
     ): Response<FollowerListResp>
+
+    @DELETE("follow/requests/{request_id}/cancel")
+    suspend fun followRequestCancel(
+        @Path("request_id") request_id: String
+    ): Response<Unit>
 }
