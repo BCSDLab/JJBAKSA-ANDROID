@@ -249,6 +249,6 @@ interface AuthApi {
 
     @DELETE("follow/requests/{request_id}/cancel")
     suspend fun followRequestCancel(
-        @Path("request_id") request_id: String
+        @Path("request_id") request_id: Long
     ): Response<Unit>
 }

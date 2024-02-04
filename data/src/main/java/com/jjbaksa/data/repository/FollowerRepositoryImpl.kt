@@ -116,7 +116,7 @@ class FollowerRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun followRequestCancel(request_id: String): Flow<Result<Unit>> {
+    override suspend fun followRequestCancel(request_id: Long): Flow<Result<Unit>> {
         return apiCall(
             call = { followerRemoteDataSource.followRequestCancel(request_id) },
             mapper = {

@@ -65,7 +65,7 @@ class FollowerRemoteDataSource @Inject constructor(
         return authApi.getRequestedFollowers(page, pageSize)
     }
 
-    override suspend fun followRequestCancel(request_id: String): Response<Unit> {
+    override suspend fun followRequestCancel(request_id: Long): Response<Unit> {
         return authApi.followRequestCancel(request_id)
     }
 }
