@@ -36,21 +36,29 @@ class FollowerActivity : BaseActivity<ActivityFollowerBinding>() {
         viewModel.getRecentlyActiveFollowers(20, null)
 
         followerAdapter = FollowerAdapter({
-            toggleFollow(it)
-        }) {
+            viewModel.followRequest(it.account)
+        }, {
+            viewModel.followerDelete(it.account)
+        }, {
             goToFollowerActivity(it)
-        }
-        followRequestAdapter = FollowRequestAdapter({
-            viewModel.followRequestAccept(it.id)
-        }) {
-            viewModel.followRequestReject(it.id)
-        }
+        })
 
         userAdapter = FollowerAdapter({
-            toggleFollow(it)
-        }) {
+            viewModel.followRequest(it.account)
+        }, {
+            viewModel.followerDelete(it.account)
+        }, {
             goToFollowerActivity(it)
-        }
+        })
+
+        followRequestAdapter = FollowRequestAdapter({
+            viewModel.followRequestAccept(it.id)
+        }, {
+            viewModel.followRequestReject(it.id)
+        }, {
+            viewModel.followRequestCancel(it.id)
+        })
+
 
         recentlyActiveAdapter = RecentlyActiveAdapter()
 
