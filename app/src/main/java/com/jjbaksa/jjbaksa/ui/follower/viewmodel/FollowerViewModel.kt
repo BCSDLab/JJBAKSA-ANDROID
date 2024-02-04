@@ -1,6 +1,5 @@
 package com.jjbaksa.jjbaksa.ui.follower.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -81,9 +80,6 @@ class FollowerViewModel @Inject constructor(
                     _requestFollowers.value?.content?.forEach { item ->
                         item.user.followedType = "REQUEST_SENT"
                     }
-                    _requestFollowers.value?.content?.forEach { item ->
-                        Log.d("FollowerViewModel", "followRequest: ${item.user.account}")
-                    }
                 }
             }
         }
@@ -93,6 +89,8 @@ class FollowerViewModel @Inject constructor(
         viewModelScope.launch(ceh) {
             followerUseCase.followRequestReject(userId).collect {
                 it.onSuccess {
+                    _beRequestedFollowers.value= Followers((_beRequestedFollowers.value?.content as MutableList)
+                        .filter { it.id != userId })
                 }
             }
         }
@@ -106,6 +104,8 @@ class FollowerViewModel @Inject constructor(
                         it.follower.id == userId
                     }
                     (_followerList.value?.content as MutableList).add(it.follower)
+                    _beRequestedFollowers.value= Followers((_beRequestedFollowers.value?.content as MutableList)
+                        .filter { it.id != userId })
                 }
             }
         }
@@ -117,6 +117,9 @@ class FollowerViewModel @Inject constructor(
                 it.onSuccess {
                     _beRequestedFollowers.value = it
                     receivedFollowRequestHasMore.value = it.content.count() == 20
+                    _beRequestedFollowers.value?.content?.forEach { item ->
+                        item.user.followedType = "NONE"
+                    }
                 }
             }
         }
@@ -136,7 +139,12 @@ class FollowerViewModel @Inject constructor(
                             )
                         )
                     }
+
                     _requestFollowers.value = Followers(list)
+                    _requestFollowers.value?.content?.forEach { item ->
+                        item.user.followedType = "REQUEST_SENT"
+                    }
+
                     sendFollowRequestHasMore.value = it.content.count() == 20
                 }
             }
@@ -171,10 +179,8 @@ class FollowerViewModel @Inject constructor(
             followerUseCase.followRequestCancel(request_id).collect {
                 it.onSuccess {
                     _requestFollowers.value = Followers((_requestFollowers.value?.content as MutableList)
-                        .filter { it.user.id != request_id })
-                    _requestFollowers.value?.content?.forEach { item ->
-                        Log.d("followRequestCancel", "followRequest: ${item.user.account}")
-                    }
+                        .filter { it.id != request_id })
+
                 }
             }
         }
