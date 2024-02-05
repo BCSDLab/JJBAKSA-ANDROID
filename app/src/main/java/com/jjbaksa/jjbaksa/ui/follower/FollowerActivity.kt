@@ -1,7 +1,6 @@
 package com.jjbaksa.jjbaksa.ui.follower
 
 import android.content.Intent
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import com.jjbaksa.jjbaksa.R
@@ -59,7 +58,6 @@ class FollowerActivity : BaseActivity<ActivityFollowerBinding>() {
         }, {
             viewModel.followRequestCancel(it.id)
         })
-
 
         recentlyActiveAdapter = RecentlyActiveAdapter()
 
@@ -125,22 +123,22 @@ class FollowerActivity : BaseActivity<ActivityFollowerBinding>() {
         })
 
         binding.rvRecentlyActiveFollower.addOnScrollListener(object :
-            RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                val itemCount = binding.rvRecentlyActiveFollower.layoutManager?.itemCount ?: 0
-                val lastPosition =
-                    binding.rvAllFollower.layoutManager?.let { it as LinearLayoutManager }
-                        ?.findLastCompletelyVisibleItemPosition() ?: 0
+                RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    val itemCount = binding.rvRecentlyActiveFollower.layoutManager?.itemCount ?: 0
+                    val lastPosition =
+                        binding.rvAllFollower.layoutManager?.let { it as LinearLayoutManager }
+                            ?.findLastCompletelyVisibleItemPosition() ?: 0
 
-                if (lastPosition != -1 && lastPosition >= (itemCount - 1) && viewModel.recentlyActiveHasMore.value == true) {
-                    viewModel.recentlyActiveHasMore.value = false
-                    viewModel.getRecentlyActiveFollowers(
-                        20, recentlyActiveAdapter.currentList.last().id
-                    )
-                    binding.loadingView.setLoading(true)
+                    if (lastPosition != -1 && lastPosition >= (itemCount - 1) && viewModel.recentlyActiveHasMore.value == true) {
+                        viewModel.recentlyActiveHasMore.value = false
+                        viewModel.getRecentlyActiveFollowers(
+                            20, recentlyActiveAdapter.currentList.last().id
+                        )
+                        binding.loadingView.setLoading(true)
+                    }
                 }
-            }
-        })
+            })
     }
 
     override fun initEvent() {

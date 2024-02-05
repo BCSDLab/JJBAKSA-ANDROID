@@ -43,7 +43,7 @@ class FollowerUseCase @Inject constructor(
         return followerRepository.getRequestedFollowers(page, pageSize)
     }
 
-    suspend fun followRequestCancel(request_id:Long): Flow<Result<Unit>> {
+    suspend fun followRequestCancel(request_id: Long): Flow<Result<Unit>> {
         return followerRepository.followRequestCancel(request_id)
     }
 

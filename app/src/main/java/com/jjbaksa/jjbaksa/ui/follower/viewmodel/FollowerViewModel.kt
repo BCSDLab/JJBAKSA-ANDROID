@@ -89,8 +89,10 @@ class FollowerViewModel @Inject constructor(
         viewModelScope.launch(ceh) {
             followerUseCase.followRequestReject(userId).collect {
                 it.onSuccess {
-                    _beRequestedFollowers.value= Followers((_beRequestedFollowers.value?.content as MutableList)
-                        .filter { it.id != userId })
+                    _beRequestedFollowers.value = Followers(
+                        (_beRequestedFollowers.value?.content as MutableList)
+                            .filter { it.id != userId }
+                    )
                 }
             }
         }
@@ -104,8 +106,10 @@ class FollowerViewModel @Inject constructor(
                         it.follower.id == userId
                     }
                     (_followerList.value?.content as MutableList).add(it.follower)
-                    _beRequestedFollowers.value= Followers((_beRequestedFollowers.value?.content as MutableList)
-                        .filter { it.id != userId })
+                    _beRequestedFollowers.value = Followers(
+                        (_beRequestedFollowers.value?.content as MutableList)
+                            .filter { it.id != userId }
+                    )
                 }
             }
         }
@@ -158,7 +162,6 @@ class FollowerViewModel @Inject constructor(
                     _userList.value = it
                 }
                 searchKeyword.value = keyword
-
             }
         }
     }
@@ -178,9 +181,10 @@ class FollowerViewModel @Inject constructor(
         viewModelScope.launch(ceh) {
             followerUseCase.followRequestCancel(request_id).collect {
                 it.onSuccess {
-                    _requestFollowers.value = Followers((_requestFollowers.value?.content as MutableList)
-                        .filter { it.id != request_id })
-
+                    _requestFollowers.value = Followers(
+                        (_requestFollowers.value?.content as MutableList)
+                            .filter { it.id != request_id }
+                    )
                 }
             }
         }

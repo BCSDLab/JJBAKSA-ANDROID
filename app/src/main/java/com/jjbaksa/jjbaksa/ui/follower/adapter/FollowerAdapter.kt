@@ -35,19 +35,18 @@ class FollowerAdapter(
 
             binding.followButton.setOnClickListener {
                 onFollowButtonClicked(item)
-                submitList(currentList.filter { it != item } )
+                submitList(currentList.filter { it != item })
             }
 
             binding.followingButton.setOnClickListener {
                 onFollowingButtonClicked(item)
-                submitList(currentList.filter { it != item } )
+                submitList(currentList.filter { it != item })
             }
 
             binding.clItemFollower.setOnClickListener {
                 onItemClicked(item)
             }
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

@@ -28,7 +28,6 @@ class FollowRequestAdapter(
                 .circleCrop()
                 .into(binding.ivProfile)
 
-
             binding.acceptButton.isVisible = item.user.followedType == NONE
             binding.deleteButton.isVisible = item.user.followedType == NONE
             binding.requestedButton.isVisible = item.user.followedType == REQUEST_SENT
@@ -37,15 +36,15 @@ class FollowRequestAdapter(
 
             binding.acceptButton.setOnClickListener {
                 onAcceptButtonClicked(item)
-                submitList(currentList.filter { it != item } )
+                submitList(currentList.filter { it != item })
             }
             binding.deleteButton.setOnClickListener {
                 onDeleteButtonClicked(item)
-                submitList(currentList.filter { it != item } )
+                submitList(currentList.filter { it != item })
             }
             binding.requestedButton.setOnClickListener {
                 onRequestedButtonClicked(item)
-                submitList(currentList.filter { it != item } )
+                submitList(currentList.filter { it != item })
             }
         }
     }

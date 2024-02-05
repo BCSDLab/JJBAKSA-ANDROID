@@ -20,7 +20,7 @@ interface FollowerRepository {
     suspend fun followRequestReject(userId: Long): Flow<Result<Unit>>
     suspend fun getBeRequestedFollowers(page: Int?, pageSize: Int?): Flow<Result<Followers>>
     suspend fun getRequestedFollowers(page: Int?, pageSize: Int?): Flow<Result<Followers>>
-    suspend fun followRequestCancel(request_id:Long): Flow<Result<Unit>>
+    suspend fun followRequestCancel(request_id: Long): Flow<Result<Unit>>
     suspend fun getRecentlyActiveFollowers(pageSize: Int?, cursor: Long?): Flow<Result<FollowerList>>
     suspend fun getFollowerReviewCount(id: Long): Flow<Result<Int>>
     suspend fun getReviewedShops(id: Long): Flow<Result<ReviewShop>>
