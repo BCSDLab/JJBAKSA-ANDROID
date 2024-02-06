@@ -23,7 +23,8 @@
 # Gson uses generic type information stored in a class file when working with fields. Proguard
 # removes such information by default, so configure it to keep all of it.
 -keepattributes Signature
-
+-keepattributes Exceptions
+-dontwarn com.google.**
 
 # Gson specific classes
 -dontwarn sun.misc.**
@@ -44,3 +45,20 @@
   @com.google.gson.annotations.SerializedName <fields>;
 }
 -keep class com.kakao.sdk.**.model.* { <fields>; }
+# Begin: Proguard rules for retrofit2
+-dontwarn java.lang.invoke.**
+# Platform calls Class.forName on types which do not exist on Android to determine platform.
+-dontnote retrofit2.Platform
+# Platform used when running on RoboVM on iOS. Will not be used at runtime.
+-dontnote retrofit2.Platform$IOS$MainThreadExecutor
+# Platform used when running on Java 8 VMs. Will not be used at runtime.
+-dontwarn retrofit2.Platform$Java8
+-keep class okhttp3.** { *; }
+-keep interface okhttp3.** { *; }
+-dontwarn okhttp3.**
+-dontwarn okio.**
+# retrofit2 POJO model error
+-keepclasseswithmembers class * {
+    @retrofit2.http.* <methods>;
+}
+#-
