@@ -84,12 +84,12 @@ class FollowerRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun followRequestRecived(
+    override suspend fun getBeRequestedFollowers(
         page: Int?,
         pageSize: Int?
     ): Flow<Result<Followers>> {
         return apiCall(
-            call = { followerRemoteDataSource.followRequestReceived(page, pageSize) },
+            call = { followerRemoteDataSource.getBeRequestedFollowers(page, pageSize) },
             mapper = {
                 if (it.isSuccessful) {
                     it.body()?.tofollowRequestRecived() ?: Followers()
@@ -100,12 +100,12 @@ class FollowerRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun followRequestSend(
+    override suspend fun getRequestedFollowers(
         page: Int?,
         pageSize: Int?
     ): Flow<Result<Followers>> {
         return apiCall(
-            call = { followerRemoteDataSource.followRequestSend(page, pageSize) },
+            call = { followerRemoteDataSource.getRequestedFollowers(page, pageSize) },
             mapper = {
                 if (it.isSuccessful) {
                     it.body()?.tofollowRequestRecived() ?: Followers()
@@ -116,6 +116,14 @@ class FollowerRepositoryImpl @Inject constructor(
         )
     }
 
+    override suspend fun followRequestCancel(request_id: Long): Flow<Result<Unit>> {
+        return apiCall(
+            call = { followerRemoteDataSource.followRequestCancel(request_id) },
+            mapper = {
+                Unit
+            }
+        )
+    }
     override suspend fun getRecentlyActiveFollowers(pageSize: Int?, cursor: Long?): Flow<Result<FollowerList>> {
         return apiCall(
             call = { followerRemoteDataSource.getRecentlyActiveFollowers(pageSize, cursor) },

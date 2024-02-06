@@ -7,6 +7,8 @@ data class UserResp(
     val id: Long? = 0,
     @SerializedName("account")
     val account: String? = "",
+    @SerializedName("followedType")
+    val followedType: String? = "",
     @SerializedName("nickname")
     val nickname: String? = "",
     @SerializedName("email")

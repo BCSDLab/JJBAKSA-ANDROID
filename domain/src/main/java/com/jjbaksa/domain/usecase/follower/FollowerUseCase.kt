@@ -35,12 +35,16 @@ class FollowerUseCase @Inject constructor(
         return followerRepository.followRequestReject(userId)
     }
 
-    suspend fun followRequestRecived(page: Int?, pageSize: Int?): Flow<Result<Followers>> {
-        return followerRepository.followRequestRecived(page, pageSize)
+    suspend fun getBeRequestedFollowers(page: Int?, pageSize: Int?): Flow<Result<Followers>> {
+        return followerRepository.getBeRequestedFollowers(page, pageSize)
     }
 
-    suspend fun followRequestSend(page: Int?, pageSize: Int?): Flow<Result<Followers>> {
-        return followerRepository.followRequestSend(page, pageSize)
+    suspend fun getRequestedFollowers(page: Int?, pageSize: Int?): Flow<Result<Followers>> {
+        return followerRepository.getRequestedFollowers(page, pageSize)
+    }
+
+    suspend fun followRequestCancel(request_id: Long): Flow<Result<Unit>> {
+        return followerRepository.followRequestCancel(request_id)
     }
 
     suspend fun getRecentlyActiveFollowers(pageSize: Int?, cursor: Long?): Flow<Result<FollowerList>> {

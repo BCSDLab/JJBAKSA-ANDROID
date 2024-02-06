@@ -12,7 +12,8 @@ import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.databinding.ItemFollowBinding
 
 class FollowerAdapter(
-    private val onButtonClicked: (User) -> Unit,
+    private val onFollowButtonClicked: (User) -> Unit,
+    private val onFollowingButtonClicked: (User) -> Unit,
     private val onItemClicked: (User) -> Unit
 ) : ListAdapter<User, FollowerAdapter.ViewHolder>(diffUtil) {
 
@@ -28,26 +29,22 @@ class FollowerAdapter(
                 .circleCrop()
                 .into(binding.ivProfile)
 
-            binding.followingButton.setOnClickListener {
-                onButtonClicked(item)
-                binding.followingButton.isVisible = false
-                binding.followButton.isVisible = true
-                binding.requestedButton.isVisible = false
-            }
+            binding.followingButton.isVisible = item.followedType == FOLLOWED
+            binding.followButton.isVisible = item.followedType == NONE
+            binding.requestedButton.isVisible = item.followedType == REQUEST_SENT
+
             binding.followButton.setOnClickListener {
-                onButtonClicked(item)
-                binding.followingButton.isVisible = false
-                binding.followButton.isVisible = false
-                binding.requestedButton.isVisible = true
+                onFollowButtonClicked(item)
+                submitList(currentList.filter { it != item })
             }
+
+            binding.followingButton.setOnClickListener {
+                onFollowingButtonClicked(item)
+                submitList(currentList.filter { it != item })
+            }
+
             binding.clItemFollower.setOnClickListener {
                 onItemClicked(item)
-            }
-            binding.requestedButton.setOnClickListener {
-                onButtonClicked(item)
-                binding.followingButton.isVisible = false
-                binding.followButton.isVisible = true
-                binding.requestedButton.isVisible = false
             }
         }
     }
@@ -77,5 +74,9 @@ class FollowerAdapter(
                 return oldItem == newItem
             }
         }
+
+        const val FOLLOWED = "FOLLOWED"
+        const val NONE = "NONE"
+        const val REQUEST_SENT = "REQUEST_SENT"
     }
 }

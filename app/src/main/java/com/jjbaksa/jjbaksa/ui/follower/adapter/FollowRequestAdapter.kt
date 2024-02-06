@@ -12,8 +12,9 @@ import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.databinding.ItemFollowBinding
 
 class FollowRequestAdapter(
-    private val onAcceptClicked: (FollowContent) -> Unit,
-    private val onDeleteClicked: (FollowContent) -> Unit,
+    private val onAcceptButtonClicked: (FollowContent) -> Unit,
+    private val onDeleteButtonClicked: (FollowContent) -> Unit,
+    private val onRequestedButtonClicked: (FollowContent) -> Unit
 ) : ListAdapter<FollowContent, FollowRequestAdapter.ViewHolder>(diffUtil) {
 
     inner class ViewHolder(private val binding: ItemFollowBinding) :
@@ -27,15 +28,23 @@ class FollowRequestAdapter(
                 .circleCrop()
                 .into(binding.ivProfile)
 
+            binding.acceptButton.isVisible = item.user.followedType == NONE
+            binding.deleteButton.isVisible = item.user.followedType == NONE
+            binding.requestedButton.isVisible = item.user.followedType == REQUEST_SENT
+            binding.followingButton.isVisible = false
             binding.followButton.isVisible = false
-            binding.acceptButton.isVisible = true
-            binding.deleteButton.isVisible = true
 
             binding.acceptButton.setOnClickListener {
-                onAcceptClicked(item)
+                onAcceptButtonClicked(item)
+                submitList(currentList.filter { it != item })
             }
             binding.deleteButton.setOnClickListener {
-                onDeleteClicked(item)
+                onDeleteButtonClicked(item)
+                submitList(currentList.filter { it != item })
+            }
+            binding.requestedButton.setOnClickListener {
+                onRequestedButtonClicked(item)
+                submitList(currentList.filter { it != item })
             }
         }
     }
@@ -68,5 +77,8 @@ class FollowRequestAdapter(
                 return oldItem == newItem
             }
         }
+        const val FOLLOWED = "FOLLOWED"
+        const val NONE = "NONE"
+        const val REQUEST_SENT = "REQUEST_SENT"
     }
 }
