@@ -151,6 +151,7 @@ class FollowerActivity : BaseActivity<ActivityFollowerBinding>() {
                     showSnackBar(getString(R.string.main_page_search_edit_text_hint))
                     viewModel.cursor.value = UserCursor.FOLLOWER
                 } else {
+                    userAdapter.submitList(emptyList())
                     viewModel.getUserSearch(it.toString(), 20, null)
                     viewModel.cursor.value = UserCursor.ALL
                 }
