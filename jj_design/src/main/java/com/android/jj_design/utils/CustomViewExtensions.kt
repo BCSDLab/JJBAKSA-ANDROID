@@ -22,3 +22,10 @@ val Int.toJjChipType get(): JjChipType? = when (this) {
     5 -> Requested
     else -> null
 }
+
+val Int.toJjMapType get(): JjMapType? = when (this) {
+    1 -> Add
+    2 -> Minus
+    3 -> Position
+    else -> null
+}
