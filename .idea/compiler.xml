@@ -8,6 +8,7 @@
       <module name="JJBAKSA.buildSrc.test" target="17" />
       <module name="JJBAKSA.data" target="17" />
       <module name="JJBAKSA.image_selector" target="17" />
+      <module name="JJBAKSA.jj_design" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>
