@@ -41,7 +41,7 @@ class JjButton @JvmOverloads constructor(
 
     fun setErrorBackground() {
         setTextColor(context.getColor(R.color.color_FF7F23))
-        setBackgroundResource(R.drawable.jj_button_error)
+        setBackgroundResource(R.drawable.jj_button_rect_solid_ffffff_stroke_ff7f23_radius_100)
         elevation = 0f
     }
 

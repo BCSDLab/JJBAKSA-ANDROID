@@ -2,8 +2,8 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:state_enabled="true"
-        android:drawable="@drawable/jj_button_enabled"/>
+        android:drawable="@drawable/jj_button_rect_solid_ff7f23_radius_100"/>
     <item
         android:state_enabled="false"
-        android:drawable="@drawable/jj_button_disabled"/>
+        android:drawable="@drawable/jj_button_rect_solid_c4c4c4_radius_100"/>
 </selector>
