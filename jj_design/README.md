@@ -21,8 +21,8 @@
     android:id="@+id/jj_button"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    app:jjText="1234"
-    app:jjTextColor="@color/color_white"/>
+    android:text="1234"
+    android:textColor="@color/color_white"/>
 ```
 - Programmatically Code
     - Enabled Button   
@@ -69,7 +69,7 @@
 
 - Programmatically Code (use jjChipType)
     ```kotlin
-    binding.jjChipButton.setChipItemType(Confirm)
+    binding.jjChipButton.chipItemType = Delete
     ```
 
 ### JjPlusButton
@@ -78,9 +78,16 @@
 - XML Code
 ```kotlin
 <com.android.jj_design.button.JjPlusButton
+    android:id="@+id/jj_plus_button"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"/>
 ```
+
+- Programmatically Code
+```kotlin
+binding.jjPlusButton.iconDrawable = R.drawable.icon_add
+```
+내부 아이콘을 변경할 수 있음.
 
 ### JjTrendButton
 
