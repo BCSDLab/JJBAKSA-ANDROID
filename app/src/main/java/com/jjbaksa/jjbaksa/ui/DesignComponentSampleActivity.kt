@@ -49,15 +49,15 @@ class DesignComponentSampleActivity : AppCompatActivity() {
     private fun initJjChipButton() {
         CoroutineScope(Dispatchers.Main).launch {
             while (isActive) {
-                binding.jjChipButton.setChipItemType(Delete)
+                binding.jjChipButton.chipItemType = Delete
                 delay(2000)
-                binding.jjChipButton.setChipItemType(Confirm)
+                binding.jjChipButton.chipItemType = Confirm
                 delay(2000)
-                binding.jjChipButton.setChipItemType(Requested)
+                binding.jjChipButton.chipItemType = Requested
                 delay(2000)
-                binding.jjChipButton.setChipItemType(Follow)
+                binding.jjChipButton.chipItemType = Follow
                 delay(2000)
-                binding.jjChipButton.setChipItemType(Following)
+                binding.jjChipButton.chipItemType = Following
                 delay(2000)
             }
         }

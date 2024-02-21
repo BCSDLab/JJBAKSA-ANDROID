@@ -20,6 +20,44 @@ class JjChipButton @JvmOverloads constructor(
     attributeSet: AttributeSet? = null,
     defStyleAttr: Int = 0,
 ) : AppCompatButton(context, attributeSet, defStyleAttr) {
+    var chipItemType: JjChipType? = null
+        set(value) {
+            when (value) {
+                Confirm -> {
+                    text = value.name
+                    setTextColor(ContextCompat.getColor(context, R.color.color_white))
+                    setBackgroundResource(R.drawable.jj_small_button_rect_solid_f6bf54)
+                }
+
+                Delete -> {
+                    text = value.name
+                    setTextColor(ContextCompat.getColor(context, R.color.color_222222))
+                    setBackgroundResource(R.drawable.jj_small_button_rect_solid_eeeeee)
+                }
+
+                Follow -> {
+                    text = value.name
+                    setTextColor(ContextCompat.getColor(context, R.color.color_white))
+                    setBackgroundResource(R.drawable.jj_small_button_rect_solid_ff7f23)
+                }
+
+                Following -> {
+                    text = value.name
+                    setTextColor(ContextCompat.getColor(context, R.color.color_222222))
+                    setBackgroundResource(R.drawable.jj_small_button_rect_solid_eeeeee)
+                }
+
+                Requested -> {
+                    text = value.name
+                    setTextColor(ContextCompat.getColor(context, R.color.color_666666))
+                    setBackgroundResource(R.drawable.jj_small_button__rect_solid_ffffff_stroke_222222)
+                }
+
+                else -> Unit
+            }
+            field = value
+        }
+
     init {
         initSetting()
 
@@ -28,7 +66,7 @@ class JjChipButton @JvmOverloads constructor(
         ).apply {
             this@JjChipButton.let { smallBtnAttr ->
                 // item type
-                setChipItemType(getInt(R.styleable.JjChipButton_jjChipType, 0).toJjChipType)
+                chipItemType = getInt(R.styleable.JjChipButton_jjChipType, 0).toJjChipType
             }
             recycle()
         }
@@ -39,42 +77,6 @@ class JjChipButton @JvmOverloads constructor(
         minWidth = MIN_WIDTH.px
         gravity = Gravity.CENTER
         setPadding(0, VERTICAL_PADDING.px, 0, VERTICAL_PADDING.px)
-    }
-
-    fun setChipItemType(type: JjChipType?) {
-        when (type) {
-            Confirm -> {
-                text = type.name
-                setTextColor(ContextCompat.getColor(context, R.color.color_white))
-                setBackgroundResource(R.drawable.jj_small_button_rect_solid_f6bf54)
-            }
-
-            Delete -> {
-                text = type.name
-                setTextColor(ContextCompat.getColor(context, R.color.color_222222))
-                setBackgroundResource(R.drawable.jj_small_button_rect_solid_eeeeee)
-            }
-
-            Follow -> {
-                text = type.name
-                setTextColor(ContextCompat.getColor(context, R.color.color_white))
-                setBackgroundResource(R.drawable.jj_small_button_rect_solid_ff7f23)
-            }
-
-            Following -> {
-                text = type.name
-                setTextColor(ContextCompat.getColor(context, R.color.color_222222))
-                setBackgroundResource(R.drawable.jj_small_button_rect_solid_eeeeee)
-            }
-
-            Requested -> {
-                text = type.name
-                setTextColor(ContextCompat.getColor(context, R.color.color_666666))
-                setBackgroundResource(R.drawable.jj_small_button__rect_solid_ffffff_stroke_222222)
-            }
-
-            else -> Unit
-        }
     }
 
     companion object {
