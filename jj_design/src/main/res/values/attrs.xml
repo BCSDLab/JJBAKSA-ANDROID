@@ -2,8 +2,6 @@
 <resources>
     <!-- Button -->
     <declare-styleable name="JjButton">
-        <attr name="jjText" format="string|reference"/>
-        <attr name="jjTextColor" format="color|reference"/>
     </declare-styleable>
     <declare-styleable name="JjIconButton">
         <attr name="jjIconText" format="string|reference"/>

@@ -18,10 +18,6 @@ class JjButton @JvmOverloads constructor(
             attributeSet, R.styleable.JjButton, defStyleAttr, 0
         ).apply {
             this@JjButton.let { btnAttr ->
-                // text
-                btnAttr.text = getString(R.styleable.JjButton_jjText)
-                btnAttr.setTextColor(getColor(R.styleable.JjButton_jjTextColor, 0))
-
                 // background
                 btnAttr.setBackgroundResource(R.drawable.jj_button_selector)
 

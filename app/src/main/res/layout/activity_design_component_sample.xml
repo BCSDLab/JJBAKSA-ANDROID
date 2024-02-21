@@ -20,8 +20,8 @@
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:jjText="1234"
-        app:jjTextColor="@color/color_white"/>
+        android:text="1234"
+        android:textColor="@color/color_white"/>
     <com.android.jj_design.button.JjIconButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
