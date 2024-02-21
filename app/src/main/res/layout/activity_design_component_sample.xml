@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.DesignComponentSampleActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="Button Design Component"
+        android:textColor="@color/black"
+        android:background="@color/color_C4C4C4"/>
+
+    <com.android.jj_design.button.JjButton
+        android:id="@+id/jj_button"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1234"
+        android:textColor="@color/color_white"/>
+    <com.android.jj_design.button.JjIconButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:jjIconText="리뷰하기"
+        app:jjIconTextColor="@color/color_666666"
+        app:jjIconDrawableStart="@drawable/icon_pencil"/>
+    <com.android.jj_design.button.JjChipButton
+        android:id="@+id/jj_chip_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:jjChipType="Confirm"/>
+    <com.android.jj_design.button.JjTrendButton
+        android:id="@+id/jj_trend_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"/>
+
+    <com.android.jj_design.button.JjPlusButton
+        android:id="@+id/jj_plus_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"/>
+
+    <com.android.jj_design.button.JjMapButton
+        android:id="@+id/jj_map_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:jjMapType="Add"/>
+</LinearLayout>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="color_white">#FFFFFF</color>
+    <color name="color_black">#000000</color>
+
+    <!-- Grey scale -->
+    <color name="color_222222">#222222</color>
+    <color name="color_666666">#666666</color>
+    <color name="color_C4C4C4">#C4C4C4</color>
+    <color name="color_EEEEEE">#EEEEEE</color>
+    <color name="color_FFFFFF">#FFFFFF</color>
+
+    <!-- Color -->
+    <color name="color_F6BF54">#F6BF54</color>
+    <color name="color_FF7F23">#FF7F23</color>
+    <color name="color_C60000">#C60000</color>
+
+    <!-- Color Transparent -->
+    <color name="color_20F6BF54">#33F6BF54</color> <!-- 20% -->
+    <color name="color_50EEEEEE">#80EEEEEE</color>
+</resources>

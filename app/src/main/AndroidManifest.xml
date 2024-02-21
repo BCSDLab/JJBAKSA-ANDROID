@@ -25,6 +25,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="33">
         <activity
+            android:name=".ui.DesignComponentSampleActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.follower.FollowerProfileActivity"
             android:exported="false" />
         <activity

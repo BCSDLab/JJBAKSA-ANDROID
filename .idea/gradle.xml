@@ -15,6 +15,7 @@
             <option value="$PROJECT_DIR$/data" />
             <option value="$PROJECT_DIR$/domain" />
             <option value="$PROJECT_DIR$/image_selector" />
+            <option value="$PROJECT_DIR$/jj_design" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />
