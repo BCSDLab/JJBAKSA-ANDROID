@@ -6,6 +6,7 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
+import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import com.android.jj_design.R
@@ -18,6 +19,16 @@ class JjPlusButton @JvmOverloads constructor(
 ) : View(context, attributeSet, defStyleAttr) {
     private val plusButtonPaint = Paint()
     private var plusBitmap: Bitmap?
+
+    var iconDrawable: Int? = null
+        set(@DrawableRes value) {
+            plusBitmap = value?.let {
+                ContextCompat.getDrawable(context, it)
+                    ?.toBitmap(PLUS_IMAGE_SIZE.px, PLUS_IMAGE_SIZE.px)
+            }
+            invalidate()
+            field = value
+        }
 
     init {
         plusButtonPaint.apply {

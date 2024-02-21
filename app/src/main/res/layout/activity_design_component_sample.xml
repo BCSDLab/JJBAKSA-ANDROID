@@ -42,6 +42,7 @@
         android:layout_marginTop="10dp"/>
 
     <com.android.jj_design.button.JjPlusButton
+        android:id="@+id/jj_plus_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"/>

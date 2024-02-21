@@ -10,6 +10,7 @@ import com.android.jj_design.utils.button.Following
 import com.android.jj_design.utils.button.Minus
 import com.android.jj_design.utils.button.Position
 import com.android.jj_design.utils.button.Requested
+import com.jjbaksa.jjbaksa.R
 import com.jjbaksa.jjbaksa.databinding.ActivityDesignComponentSampleBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -28,6 +29,7 @@ class DesignComponentSampleActivity : AppCompatActivity() {
         initJjChipButton()
         initJjTrendButton()
         initJjMapButton()
+        initJjPlusButton()
     }
 
     private fun initJjButton() {
@@ -84,6 +86,19 @@ class DesignComponentSampleActivity : AppCompatActivity() {
                 binding.jjMapButton.setJjMapType(Minus)
                 delay(2000)
                 binding.jjMapButton.setJjMapType(Position)
+                delay(2000)
+            }
+        }
+    }
+
+    private fun initJjPlusButton() {
+        CoroutineScope(Dispatchers.Main).launch {
+            while (isActive) {
+                binding.jjPlusButton.iconDrawable = com.android.jj_design.R.drawable.icon_add
+                delay(2000)
+                binding.jjPlusButton.iconDrawable = com.android.jj_design.R.drawable.icon_minus
+                delay(2000)
+                binding.jjPlusButton.iconDrawable = com.android.jj_design.R.drawable.icon_pencil
                 delay(2000)
             }
         }
