@@ -61,4 +61,10 @@ class BookmarkFragment : BaseFragment<FragmentBookmarkBinding>() {
             }
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        bookmarkAdapter.submitList(emptyList())
+        viewModel.getScraps(null, null, 10)
+    }
 }
