@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Button -->
+    <declare-styleable name="JjButton">
+    </declare-styleable>
+    <declare-styleable name="JjIconButton">
+        <attr name="jjIconText" format="string|reference"/>
+        <attr name="jjIconTextColor" format="color|reference"/>
+        <attr name="jjIconDrawableStart" format="reference"/>
+        <attr name="jjIconDrawableEnd" format="reference"/>
+    </declare-styleable>
+    <declare-styleable name="JjChipButton">
+        <attr name="jjChipType" format="string|reference">
+            <enum name="Delete" value="1"/>
+            <enum name="Follow" value="2"/>
+            <enum name="Following" value="3"/>
+            <enum name="Confirm" value="4"/>
+            <enum name="Requested" value="5"/>
+        </attr>
+    </declare-styleable>
+    <declare-styleable name="JjMapButton">
+        <attr name="jjMapType" format="string|reference">
+            <enum name="Add" value="1"/>
+            <enum name="Minus" value="2"/>
+            <enum name="Position" value="3"/>
+        </attr>
+    </declare-styleable>
+</resources>
