@@ -74,5 +74,7 @@ class InquiryMyFragment : BaseFragment<FragmentInquiryMyBinding>() {
     override fun onResume() {
         super.onResume()
         viewModel.inquiryCursor.value = InquiryCursor.MY
+        inquiryMyAdapter.submitList(emptyList())
+        viewModel.getInquiryMe(null, null, 10)
     }
 }
