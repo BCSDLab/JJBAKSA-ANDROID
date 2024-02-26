@@ -151,6 +151,7 @@ class FollowerActivity : BaseActivity<ActivityFollowerBinding>() {
                     showSnackBar(getString(R.string.main_page_search_edit_text_hint))
                     viewModel.cursor.value = UserCursor.FOLLOWER
                 } else {
+                    userAdapter.submitList(emptyList())
                     viewModel.getUserSearch(it.toString(), 20, null)
                     viewModel.cursor.value = UserCursor.ALL
                 }
@@ -189,14 +190,14 @@ class FollowerActivity : BaseActivity<ActivityFollowerBinding>() {
         viewModel.cursor.observe(this) {
             when (it) {
                 UserCursor.ALL -> {
-                    binding.rvRecentlyActiveFollower.visibility = View.GONE
+                    binding.clRecentlyActiveFollower.visibility = View.GONE
                     binding.clAllFollower.visibility = View.GONE
                     binding.clRequestFollow.visibility = View.GONE
                     binding.clSearchResult.visibility = View.VISIBLE
                 }
 
                 UserCursor.FOLLOWER -> {
-                    binding.rvRecentlyActiveFollower.visibility = View.VISIBLE
+                    binding.clRecentlyActiveFollower.visibility = View.VISIBLE
                     binding.clAllFollower.visibility = View.VISIBLE
                     binding.clRequestFollow.visibility = View.VISIBLE
                     binding.clSearchResult.visibility = View.GONE
